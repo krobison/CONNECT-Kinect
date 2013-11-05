@@ -1,6 +1,18 @@
 <?php
 
 /**
+ *	Begin rendering views for CS-CONNECT.
+ */
+ 
+Route::get('csLogin', function() {
+	return View::make('csLogin');
+});
+
+Route::get('csNewUser', function() {
+	return View::make('csNewUser');
+});
+
+/**
  *	LandingController routes.
  *	This controller handles the root page, plus all login related stuff.
  *	That includes signing up and all that shenanigans...yeh.
@@ -14,10 +26,6 @@ Route::post('login', 'LandingController@loginUser');
 
 // GET logout requests.
 Route::get('logout', 'LandingController@logoutUser');
-
-Route::get('testPage', function() { 
-	echo 'Hello world';
-});
 
 /**
  *	These next two routes to LandingController are for debugging purposes only.
