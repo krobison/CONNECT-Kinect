@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://localhost',
+	'url' => 'toilers.mines.edu/connect-laravel-demo/',
 
 	/*
 	|--------------------------------------------------------------------------

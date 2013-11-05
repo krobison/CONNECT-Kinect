@@ -1,0 +1,70 @@
+.goal {
+	float: left;
+	/*background: #0f0;*/
+	width: 134px;
+	height: 200px;
+	margin-right: 15px;
+	overflow: hidden;
+}
+
+.goal_picture {
+	float: left;
+	/*background: #f00;*/
+	width: 100px;
+	height: 100px;
+	margin: 10px 10px 0px 10px;
+	padding: 5px;
+
+	border: 2px solid;
+	border-color: rgba(200, 200, 255, 0);
+	border-radius: 5px;
+	-moz-border-radius: 5px; /* Old Firefox */
+}
+
+.goal_picture:hover {
+	border-color: rgba(200, 200, 255, 1);
+}
+
+.goal_picture img {
+	float: left;
+	width: 100px;
+	height: 100px;
+}
+
+.delete_goal {
+	float: left;
+	position: absolute;
+	/*background: #00f;*/
+	margin-top: 10px;
+	margin-left: 100px;
+}
+
+.delete_goal input {
+	color: rgb(200, 200, 255);
+	font-weight: bold;
+	font-size: 10pt;
+	border: 0px solid;
+	background: none;
+}
+
+.delete_goal input:hover {
+	color: rgb(100, 100, 155);
+}
+
+.goal_name {
+	color: #115;
+	font-weight: bold;
+	font-size: 10pt;
+	text-align: center;
+	float: left;
+	width: 100%;
+}
+
+.goal_type {
+	color: #888;
+	font-size: 9pt;
+	font-style: italic;
+	text-align: center;
+	float: left;
+}
+

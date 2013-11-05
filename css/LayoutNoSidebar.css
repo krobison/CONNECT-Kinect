@@ -1,0 +1,7 @@
+/* Hides the sidebar */
+
+/* Sidebar */
+div#sidebar {
+	float: none;
+	display: none;
+}

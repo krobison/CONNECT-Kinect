@@ -1,0 +1,193 @@
+/* Header */
+#schedule_header {
+	float: left;
+}
+
+#view_my_schedule, #view_map {
+	float: right;
+	margin: 25px 10px 0px 0px;
+	padding: 5px;
+}
+
+#view_my_schedule:hover, #view_map:hover {
+	background: rgba(255, 255, 200, 0.8);
+}
+
+#view_my_schedule a, #view_map a {
+	color: #155;
+}
+
+#view_my_schedule a:hover, #view_map a:hover {
+	color: #155;
+}
+
+#view_my_schedule a img, #view_map a img {
+	vertical-align: middle;
+	margin-bottom: 4px;
+}
+
+/* Events */
+#date_and_events {
+	background: #ddd;
+	float: left;
+	padding: 5px;
+	margin-bottom: 20px;
+	width: 48%;
+	border-radius: 10px;
+	-moz-border-radius: 10px; /* Old Firefox */
+}
+
+hr {
+	width: 97%;
+}
+
+#changeDate {
+	font-weight: bold;
+	background: #f7f7f7;
+	float: left;
+	width: 100%;
+	height: 60px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+  -moz-border-top-left-radius: 5px; /* Old Firefox */
+  -moz-border-top-right-radius: 5px; /* Old Firefox */
+}
+
+#date_picker_prev {
+	float: left;
+	width: 20%;
+	height: 20px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-left: 5%;
+	text-align: left;
+}
+
+#date_picker_date {
+	float: left;
+	width: 50%;
+	height: 20px;
+	padding: 20px 0px;
+	text-align: center;
+}
+
+#date_picker_next {
+	float: right;
+	width: 20%;
+	height: 20px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-right: 5%;
+	text-align: right;
+}
+
+#dayIncNonVis{
+	visibility:hidden;
+}
+
+#dayDecNonVis{
+	visibility:hidden;
+}
+
+#allEvents {
+	width: 100%;
+	height: 500px;
+	overflow-y: scroll;
+}
+
+.timestamp {
+	background: #3F4C6B;
+	padding: 3px 5px;
+	margin: 5px 0px;
+	width: 97%;
+	float: left;
+	color: #fff;
+	font-weight: bold;
+}
+
+.event {
+	margin: 5px;
+	float: left;
+	width: 97%;
+}
+
+.event_location {
+	float: right; 
+}
+
+.event_type {
+	float: left;
+}
+
+.event_name {
+	width: 100%;
+	float: left;
+}
+
+/* Sub Events */
+#subevent_container {
+	background: #ddd;
+	padding: 5px;
+	margin-bottom: 20px;
+	margin-left: 51%;
+	width: 48%;
+	border-radius: 10px;
+	-moz-border-radius: 10px; /* Old Firefox */
+}
+
+#how_to_info {
+	font-style: italic;
+	background: #f7f7f7;
+	padding: 0px 5px;
+	height: 60px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+  -moz-border-top-left-radius: 5px; /* Old Firefox */
+  -moz-border-top-right-radius: 5px; /* Old Firefox */
+}
+
+#subEvents {
+	width: 100%;
+	height: 500px;
+	overflow-y: scroll;
+}
+
+.subevent_header {
+	background: #3F4C6B;
+}
+
+.subevent_title {
+	color: #fff;
+	font-weight: bold;
+	padding: 3px 5px;
+	margin-right: 125px;
+}
+
+.attending_checkbox_container {
+	color: #fff;
+	width: 115px;
+	padding: 3px 5px;
+	text-align: right;
+	float: right;
+}
+
+.subevent_location {
+	color: #fff;
+	font-style: italic;
+	margin-right: 125px;
+	padding: 3px 5px;
+}
+
+.subevent_description {
+	padding: 5px;
+}
+.subevent_presenters {
+	padding: 5px;
+}
+
+.subevent_attendees {
+	padding: 5px 10px;
+	margin-bottom: 10px;
+	text-align: right;
+}
+

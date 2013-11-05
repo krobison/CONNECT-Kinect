@@ -19,6 +19,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password');
 
+	protected $fillable = array('first_name', 'last_name', 'email', 'password');
+
 	/**
 	 * Get the unique identifier for the user.
 	 *
@@ -48,5 +50,41 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	{
 		return $this->email;
 	}
+	
+	/**
+	 *	Begin my shenanigans.
+	 */
+	
+	/**
+	 *	Validation rules.
+	 */
+	 
+	public static $rules = array(
+		'first_name' => 'required',
+		'last_name' => 'required',
+	 	'about' => 'max:500'
+	);
+	 
+	public static function validate($data) {
+	 	$rules = array_add(static::$rules, 'email', 'required|email|unique:users,email,'.$data['id']);
+		return Validator::make($data, $rules);
+	}
+	
+	/**
+	 *	Relationships.
+	 */
+	
+	public function roles() {
+		return $this->belongsToMany('Role');
+	}
+	
+	public function interests() {
+		return $this->belongsToMany('Interest');
+	}
+	
+	public function photo() {
+		return $this->hasOne('Photo');
+	}
+	  
 
 }

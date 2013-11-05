@@ -1,0 +1,62 @@
+fieldset {
+	border: 0;
+}
+
+.checklist {
+	height: 150px;
+	font-size: 10pt;
+}
+
+.content_section {
+	float: left;
+	width: 100%;
+}
+
+#find_meal_events {
+	float: left;
+	width: 100%;
+}
+
+#header_container {
+	float: left;
+	width: 100%;
+}
+
+#search_header {
+	float: left;
+	width: auto;
+}
+
+#search_link {
+	float: right;
+	margin-top: 10px;
+	margin-right: 25%;
+}
+
+#input {
+	width: 100%;
+	float: left;
+}
+
+#input_time_desc_size {
+	width: auto;
+	float: left;
+	margin-right: 4%;
+}
+
+#input_food_types {
+	width: 400px;
+	float: left;
+}
+
+#input_time {
+	padding-bottom: 20px;
+}
+
+#input_description {
+	padding-bottom: 20px;
+}
+
+#input_size {
+	padding-bottom: 20px;
+}

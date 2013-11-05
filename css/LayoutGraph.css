@@ -1,0 +1,212 @@
+#header_name {
+  text-align: center;
+}
+
+.back_to_interests_link {
+  margin: 20px 0px;
+}
+
+#container {
+  width: 1000px;
+  height: 500px;
+  margin: 10px auto;
+  position: relative;
+}
+
+
+/* Info Vis Stuff */
+
+#center_container {
+  background-color: #1a1a1a;
+  color: #ccc;
+  width: 800px;
+  height: 500px;
+  margin: 0px auto;
+  position: absolute;
+  top: 0;
+  left: 100px;
+
+  border: 0px solid;
+  border-radius: 10px;
+  -moz-border-radius: 10px; /* Old Firefox */
+}
+
+#infovis {
+  position: absolute;
+  width: 800px;
+  height: 500px;
+  margin: auto;
+  overflow: hidden;
+}
+
+#log {
+  position: absolute;
+  bottom: 10px;
+  left: 110px;
+  font-size: 9pt;
+  font-weight: bold;
+  color: #ccc;
+  margin: 0px auto;
+}
+
+#legend {
+  position: absolute;
+  top: 10px;
+  left: 110px;
+  padding: 5px;
+
+  border: 0px solid;
+  border-radius: 5px;
+  -moz-border-radius: 5px; /* Old Firefox */
+}
+
+#legend label {
+  color: #ccc;
+  font-size: 9pt;
+  font-weight: bold;
+  float: left;
+  /*clear: both;*/
+}
+
+#notice {
+  color: #fff;
+  font-size: 10pt;
+  text-align: center;
+  position: absolute;
+  top: 290px;
+  left: 330px;
+  width: 330px;
+  padding: 5px;
+
+  border: 0px solid;
+  border-radius: 5px;
+  -moz-border-radius: 5px; /* Old Firefox */
+}
+
+#view_most_connected_person a, #back_to_interests a {
+  color: #222;
+  font-size: 8pt;
+  font-weight: bold;
+  text-align: center;
+
+  background: rgb(181,189,200); /* Old browsers */
+  background: -moz-linear-gradient(top,  rgba(181,189,200,1) 0%, rgba(130,140,149,1) 36%, rgba(40,52,59,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(181,189,200,1)), color-stop(36%,rgba(130,140,149,1)), color-stop(100%,rgba(40,52,59,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(181,189,200,1) 0%,rgba(130,140,149,1) 36%,rgba(40,52,59,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(181,189,200,1) 0%,rgba(130,140,149,1) 36%,rgba(40,52,59,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(181,189,200,1) 0%,rgba(130,140,149,1) 36%,rgba(40,52,59,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(181,189,200,1) 0%,rgba(130,140,149,1) 36%,rgba(40,52,59,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5bdc8', endColorstr='#28343b',GradientType=0 ); /* IE6-9 */
+
+  position: absolute;
+  padding: 10px;
+
+  border: 0px solid;
+  border-radius: 5px;
+  -moz-border-radius: 5px; /* Old Firefox */
+}
+
+#view_most_connected_person a {
+  top: 10px;
+  right: 110px;
+  width: auto;
+}
+
+#back_to_interests a {
+  bottom: 10px;
+  left: 110px;
+  width: auto;
+}
+
+#view_most_connected_person a:hover, #back_to_interests a:hover {
+  background: rgb(208,211,216); /* Old browsers */
+  background: -moz-linear-gradient(top,  rgba(208,211,216,1) 0%, rgba(169,175,181,1) 36%, rgba(90,118,134,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(208,211,216,1)), color-stop(36%,rgba(169,175,181,1)), color-stop(100%,rgba(90,118,134,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(208,211,216,1) 0%,rgba(169,175,181,1) 36%,rgba(90,118,134,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(208,211,216,1) 0%,rgba(169,175,181,1) 36%,rgba(90,118,134,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(208,211,216,1) 0%,rgba(169,175,181,1) 36%,rgba(90,118,134,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(208,211,216,1) 0%,rgba(169,175,181,1) 36%,rgba(90,118,134,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d0d3d8', endColorstr='#5a7686',GradientType=0 ); /* IE6-9 */
+
+  cursor: pointer;
+}
+
+#has_met, #has_messaged, #wants_to_meet {
+  float: left;
+  clear: both;
+  margin: 4px;
+  width: 25px;
+  height: 8px;
+  border: 0px solid;
+  border-radius: 3px;
+  -moz-border-radius: 3px; /* Old Firefox */
+}
+
+#has_met {
+  background: #22B14C;
+}
+
+#has_messaged {
+  background: #FFFF00;
+}
+
+#wants_to_meet {
+  background: #FF0000;
+}
+
+.tip {
+  color: #111;
+  width: auto;
+  background-color: white;
+  border:1px solid #ccc;
+  -moz-box-shadow:#555 2px 2px 8px;
+  -webkit-box-shadow:#555 2px 2px 8px;
+  -o-box-shadow:#555 2px 2px 8px;
+  box-shadow:#555 2px 2px 8px;
+  opacity:0.9;
+  filter:alpha(opacity=90);
+  font-size:10px;
+  font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;
+  padding:7px;
+}
+
+#no_connections {
+  color: #555;
+  text-align: center;
+  font-size: 10pt;
+}
+
+#graph_note {
+  color: #555;
+  font-style: italic;
+  font-size: 10pt;
+  text-align: center;
+}
+
+/* Area below the visualization */
+
+#interest_list_view {
+  width: 800px;
+  margin: 0px auto;
+}
+
+.my_interest {
+  font-weight: bold;    
+}
+
+ul {
+  list-style-type: none;
+}
+
+#interest_list_view a {
+  background: #ccd;
+  display: block;
+  width: auto;
+  margin-bottom: 5px;
+  margin-left: -30px;
+  padding: 2px 5px;
+}
+
+#interest_list_view a:hover {
+  background: #fee;
+}

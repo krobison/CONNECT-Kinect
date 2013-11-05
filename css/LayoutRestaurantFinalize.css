@@ -1,0 +1,111 @@
+fieldset {
+	border: 0;
+}
+
+ul {
+	margin: 0;
+}
+
+.checklist {
+	height: 150px;
+	font-size: 10pt;
+}
+
+.content_section {
+	float: left;
+	width: 100%;
+}
+
+#update_meal_event {
+	float: left;
+	width: 100%;
+}
+
+#header_container {
+	float: left;
+	width: 100%;
+}
+
+#finalize_header {
+	float: left;
+	width: auto;
+}
+
+#back_to_links {
+	float: right;
+	margin-top: 10px;
+	margin-right: 10%;
+}
+#host_header {
+	float: left;
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.meal_group_host {
+	background: #3F4C6B;
+	padding: 3px 5px;
+	margin: 5px 0;
+	width: 33.3%;
+	float: left;
+	color: #fff;
+	font-weight: bold;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+
+.meal_group_host a {
+	color: #fff;
+}
+
+.meal_group_host a:hover {
+	color: #ddd;
+}
+
+#finalize_checkbox {
+	float: right;
+	margin-right: 10%;
+}
+
+#input {
+	width: 100%;
+	float: left;
+	margin-bottom: 20px;
+}
+
+#input_time_desc_size {
+	width: auto;
+	float: left;
+	margin-right: 50px;
+}
+
+#input_checkboxes {
+	float: left;
+}
+
+#input_food_types {
+	width: 400px;
+	float: left;
+	margin-right: 50px;
+}
+
+#input_restaurants {
+	width: 400px;
+	float: left;
+}
+
+#input_time {
+	padding-bottom: 20px;
+}
+
+#input_description {
+	padding-bottom: 20px;
+}
+
+#input_detail {
+	padding-bottom: 20px;
+}
+
+#input_size {
+	padding-bottom: 20px;
+}

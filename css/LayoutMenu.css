@@ -1,0 +1,25 @@
+#menu {	
+	list-style: none;
+	text-align: right;
+	margin: 0px;
+	float: right;
+	min-width: 10000px;
+}
+
+#menu li {
+	float: right;
+	padding: 5px 10px;
+}
+
+#menu li > a {
+	font-weight: bold;
+	font-size: 12pt;
+	color: #fff;
+	text-shadow: 2px 2px 1px #000;
+	display: block;
+}
+
+#menu li:hover {
+	background: rgb(240, 240, 265);
+	background: rgba(255, 255, 255, 0.5);
+}

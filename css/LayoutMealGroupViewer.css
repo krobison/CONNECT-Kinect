@@ -1,0 +1,28 @@
+.meal_event {
+	background: #ddd;
+	width: 99%;
+	padding: .5%;
+	border-radius: 10px;
+	-moz-border-radius: 10px; /* Old Firefox */
+}
+
+.title_link {
+	color:#FFF;
+}
+
+.meal_group_description {
+	background: #3F4C6B;
+	color: #FFF;
+	padding: 5px;
+	font-weight: bold;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	-moz-border-top-left-radius: 5px; /* Old Firefox */
+	-moz-border-top-right-radius: 5px; /* Old Firefox */
+}
+
+.meal_group_host {
+	background: #ADB1BB;
+	padding: 5px;
+}
+

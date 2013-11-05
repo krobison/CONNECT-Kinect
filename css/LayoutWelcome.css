@@ -1,0 +1,19 @@
+.content_section li {
+	margin: 5px 0px;
+}
+
+.conference_name {
+	text-align: center;
+}
+
+.content_section img {
+	background: #bbf;
+	padding: 20px;
+  display: block;
+  margin: 10px auto;
+  width: 30%;
+  max-height: 600px;
+  border: 0px solid;
+	border-radius: 10px;
+	-moz-border-radius: 10px; /* Old Firefox */
+}

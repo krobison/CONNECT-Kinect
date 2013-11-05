@@ -1,0 +1,59 @@
+.conversation {
+	margin: 10px 0px;
+	border: 1px solid;
+	border-color: #ddd;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	-moz-border-top-left-radius: 5px; /* Old Firefox */
+	-moz-border-top-right-radius: 5px; /* Old Firefox */
+}
+
+.conversation_header {
+	background: #3F4C6B;
+	padding: 3px 5px;
+	height: 18px;
+
+	border: 0px solid;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	-moz-border-top-left-radius: 5px; /* Old Firefox */
+	-moz-border-top-right-radius: 5px; /* Old Firefox */
+}
+
+.conversation_header a {
+	color: #fff;
+	font-weight: bold;
+}
+
+.conversation_header a:hover {
+	color: #aab;
+}
+
+.conversation_header em {
+	color: #fff;
+	font-size: 10pt;
+}
+
+.conversation_picture {
+	float: left;
+	width: 75px;
+	height: 75px;
+	text-align: center;
+	overflow: hidden;
+}
+
+.conversation_picture img {
+	max-width: 75px;
+	max-height: 75px;
+}
+
+.conversation_info {
+	font-size: 10pt;
+	margin-left: 75px;
+	padding: 5px;
+}
+
+.conversation_message > div {
+	padding: 2px 10px;
+}
+

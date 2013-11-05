@@ -1,0 +1,86 @@
+#login {	
+	list-style: none;
+	margin: 0px;
+	text-align: right;
+	float: right;
+	position: relative;
+	z-index: 5;
+}
+
+#login li > a {
+	font-weight: bold;
+	font-size: 12pt;
+	color: #fff;
+	text-shadow: 2px 2px 1px #000;
+	padding: 5px 15px;
+	display: block;
+	width: 50px;
+	float: right;
+}
+
+#login li > a:hover {
+	background: rgb(240, 240, 265);
+	background: rgba(255, 255, 255, 0.5);
+}
+
+#login li ul {
+	list-style: none;
+	text-align: left;
+	padding: 10px;
+	float: right;
+	position: relative;
+	display: none;
+
+	background: rgb(0, 0, 0);
+	background: rgba(0, 0, 0, 0.7);
+	border: 0px solid;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	-moz-border-bottom-left-radius: 10px; /* Old Firefox */
+	-moz-border-bottom-right-radius: 10px; /* Old Firefox */
+}
+
+#login_box {
+	margin: 0;
+	padding: 0;
+	width: auto;
+	position: relative;
+	clear: both;
+}
+
+#login_box label {
+	width: 100%;
+	display: block;
+	padding: 3px 0 3px 0;
+}
+
+#login_box label span {
+	color: #fff;
+	font-weight: bold;
+	text-align: right;
+	margin-left: -30px;
+	padding: 0px 10px 0 0;
+	display: block;
+	float: left;
+	width: 130px;
+}
+
+#login_box label .text_input {
+	width: 220px;
+}
+
+#forgot_password {
+	color: #fff;
+	font-size: 10pt;
+	float: right;
+}
+
+#forgot_password:hover {
+	color: #77a;
+}
+
+#login_button {
+	float: right;
+	clear: both;
+}
+
