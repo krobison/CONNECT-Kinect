@@ -1,0 +1,30 @@
+
+.form-control { 
+margin-bottom: 10px; 
+
+}
+
+html, body {
+  background-color: #EFECCA;
+  height:100%;
+}
+
+.scroll {
+border:2px solid #ccc;
+background-color: #FFFFFF; 
+width:400px;
+height: 160px; 
+overflow-y: scroll;
+margin-bottom: 10px; 
+}
+
+.page-header{
+	margin:auto;
+	background-color:#E6E2AF;
+	text-align:center;
+}
+
+.container {
+margin-top: 30px;
+margin-bottom: 100px;
+}
