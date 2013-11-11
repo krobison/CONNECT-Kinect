@@ -1,7 +1,7 @@
 To setup:
 
 ### To clone the repository into Toilers.
-`git clone https://github.com/reikani/CS-Connect.git <csconnect-yournamehere>`
+`git clone https://github.com/CONNECT-Mines/CS-CONNECT.git <csconnect-yournamehere>`
 
 ### Give the server write access to app/storage
 `cd <csconnect-yournamehere>`
