@@ -13,6 +13,12 @@ Route::get('csNewUser', function() {
 	return View::make('csNewUser');
 });
 
+/*For testing the new style to replace the checkboxes*/
+Route::get('csTestBox', function() {
+	return View::make('csTestBox');
+});
+
+
 /**
  *	LandingController routes.
  *	This controller handles the root page, plus all login related stuff.
