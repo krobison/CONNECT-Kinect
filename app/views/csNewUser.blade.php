@@ -16,13 +16,13 @@
 	</div>
 		
 	<div class="container">
-	{{Form::open(array('route' => 'csSignUp', 'files'=> true))}}
+	{{Form::open(array('route' => 'csSignUp', 'files' => true))}}
 	<div class="row">
 		{{Form::label('name', 'Name', array('class' => 'col-xs-5 col-md-4'))}}
 	</div>
 	<div class="row">
 		<div class="col-xs-5 col-md-4">
-			{{Form::text('firstname', null, array(
+			{{Form::text('first', null, array(
 				'class' => 'form-control',
 				'placeholder' => 'First',
 				'autofocus',
@@ -30,7 +30,7 @@
 			))}}
 		</div>
 		<div class="col-xs-5 col-md-4">
-			{{Form::text('lastname', null, array(
+			{{Form::text('last', null, array(
 				'class' => 'form-control',
 				'placeholder' => 'Last',
 				'required'
@@ -57,7 +57,7 @@
 	</div>
 	<div class="row">
 		<div class ="col-xs-10 col-md-8">
-			{{Form::text('password', null, array(
+			{{Form::password('password', array(
 				'class' => 'form-control',
 				'placeholder' => 'Password',
 				'required'
@@ -66,12 +66,12 @@
 	</div>
 
 	<div class="row">
-		{{Form::label('passwordconfirm', 'Password Confirm', array('class' => 'col-xs-5 col-md-4'))}}	
+		{{Form::label('password_confirmation', 'Password Confirm', array('class' => 'col-xs-5 col-md-4'))}}	
 	</div>
 
 	<div class="row">
 		<div class ="col-xs-10 col-md-8">
-			{{Form::text('passwordconfirm', null, array(
+			{{Form::password('password_confirmation', array(
 				'class' => 'form-control',
 				'placeholder' => 'Password Confirm',
 				'required'
@@ -80,11 +80,11 @@
 	</div>
 
 	<div class="row">
-			{{Form::label('degree', 'Degree Type', array('class' => 'col-xs-5 col-md-4'))}}	
+			{{Form::label('degree_type', 'Degree Type', array('class' => 'col-xs-5 col-md-4'))}}	
 	</div>
 	<div class="row">
 		<div class ="col-xs-10 col-md-8">
-			{{Form::text('degree', null, array(
+			{{Form::text('degree_type', null, array(
 				'class' => 'form-control',
 				'placeholder' => 'Bachelors'
 			))}}		
@@ -92,11 +92,11 @@
 	</div>
 	
 	<div class="row">
-			{{Form::label('graddate', 'Graduation Date', array('class' => 'col-xs-5 col-md-4'))}}	
+			{{Form::label('grad_date', 'Graduation Date', array('class' => 'col-xs-5 col-md-4'))}}	
 	</div>
 	<div class="row">
 		<div class ="col-xs-10 col-md-8">
-		{{Form::text('graddate', null, array(
+		{{Form::text('grad_date', null, array(
 				'class' => 'form-control',
 				'placeholder' => 'May 2015'
 			))}}
@@ -212,18 +212,18 @@
 	</div>
 	-->
 	<div class="row">
-		{{Form::label('description', 'Say a few things about yourself:', array('class' => 'col-xs-12 col-md-12'))}}	
+		{{Form::label('bio', 'Say a few things about yourself:', array('class' => 'col-xs-12 col-md-12'))}}	
 	</div>
 	<div class="row">
 		<div class ="col-xs-10 col-md-8">
-			{{Form::textarea('description', null, array(
+			{{Form::textarea('bio', null, array(
 			'class' => 'form-control',
 			'placeholder' => 'About you...',
 			'rows' => '5'
 			))}}
 		</div>
 	</div>
-	
+		
 	<div class="row">
 			{{Form::label('profilepic', 'Profile Picture:', array('class' => 'col-xs-12 col-md-12'))}}	
 	</div>
@@ -232,6 +232,7 @@
 		{{Form::file('profilepic', array())}}		
 		</div>
 	</div>
+	
 	<br />
 	<div class="row">
 		<div class ="col-xs-5 col-md-4">

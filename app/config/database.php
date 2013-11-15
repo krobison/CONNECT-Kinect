@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'cousinit.mines.edu',
-			'database'  => 'cs-connect-demo',
+			'database'  => 'CS_CONNECT',
 			'username'  => 'connectSummer',
 			'password'  => 'connectme',
 			'charset'   => 'utf8',
