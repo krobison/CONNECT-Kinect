@@ -5,7 +5,9 @@
 
 	{{ HTML::style('assets/css/bootstrap.min.css') }}
 	{{ HTML::style('app/views/css/csNewUser.css') }}
-
+	{{ HTML::style('css/select2.css') }}
+	{{ HTML::script('assets/js/jquery-2.0.3.min.js') }}
+	{{ HTML::script('js/select2.js') }}
 </head>
 
 <body>
@@ -14,7 +16,7 @@
 	</div>
 		
 	<div class="container">
-		{{Form::open(array('route' => 'csSignUp'))}}
+	{{Form::open(array('route' => 'csSignUp', 'files'=> true))}}
 	<div class="row">
 		{{Form::label('name', 'Name', array('class' => 'col-xs-5 col-md-4'))}}
 	</div>
@@ -23,15 +25,15 @@
 			{{Form::text('firstname', null, array(
 				'class' => 'form-control',
 				'placeholder' => 'First',
-				'autofocus' => 'autofocus',
-				'required' => 'required'
+				'autofocus',
+				'required'
 			))}}
 		</div>
 		<div class="col-xs-5 col-md-4">
 			{{Form::text('lastname', null, array(
 				'class' => 'form-control',
 				'placeholder' => 'Last',
-				'required' => 'required'
+				'required'
 			))}}		
 		</div>
 	</div>
@@ -45,7 +47,7 @@
 			{{Form::text('email', null, array(
 				'class' => 'form-control',
 				'placeholder' => 'E-mail',
-				'required' => 'required'
+				'required'
 			))}}		
 		</div>
 	</div>
@@ -58,7 +60,7 @@
 			{{Form::text('password', null, array(
 				'class' => 'form-control',
 				'placeholder' => 'Password',
-				'required' => 'required'
+				'required'
 			))}}		
 		</div>
 	</div>
@@ -72,7 +74,7 @@
 			{{Form::text('passwordconfirm', null, array(
 				'class' => 'form-control',
 				'placeholder' => 'Password Confirm',
-				'required' => 'required'
+				'required'
 			))}}		
 		</div>
 	</div>
@@ -121,15 +123,37 @@
 			{{Form::text('minor', null, array(
 				'class' => 'form-control',
 				'placeholder' => 'BELS, Physics'
-			))}}		</div>
-	</div>
-	
-	<div class="row">
-		<div class ="col-xs-12 col-md-12">
-			<label>Please check classes that you are currently enrolled in:</label>
+			))}}		
 		</div>
 	</div>
 	
+	<?php 
+		$classes = array(
+		1 => 'CSCI-101 (Intro to Computer Science)',
+		2 => 'CSCI-261 (Programming Concepts)',
+		3 => 'CSCI-262 (Data Structures)',
+		4 => 'CSCI-274 (Introduction to the Linux Operating System)',
+		5 => 'CSCI-306 (Software Engineering)',
+		6 => 'CSCI-341 (Computer Organization)',
+		7 => 'CSCI-400 (Principles of Programming Languages)'
+	);
+	?>
+	<div class="row">
+		{{Form::label('classes', 'Please select classes that you are currently enrolled in:', array('class' => 'col-xs-12 col-md-12'))}}	
+	</div>
+	
+	<div class="row">
+		<div class ="col-xs-10 col-md-8">
+			{{Form::select('classes[]', $classes, null, array(
+				'class' => 'form-control',
+				'size' => '5',
+				'multiple'
+				
+			))}}		
+		</div>
+	</div>
+	
+	<!--
 	<div class="scroll">
 		<div class="checkbox">
 			<input class="checkbox" type="checkbox" value="csci101"> CSCI-101 (Intro to Computer Science)
@@ -186,39 +210,36 @@
 		</div>
 		
 	</div>
-	
+	-->
 	<div class="row">
-		<div class ="col-xs-10 col-md-10">
-			<label>Say a few things about yourself:</label>
-		</div>
+		{{Form::label('description', 'Say a few things about yourself:', array('class' => 'col-xs-12 col-md-12'))}}	
 	</div>
 	<div class="row">
 		<div class ="col-xs-10 col-md-8">
-			<textarea name="description" class="form-control" rows="5">About you...</textarea>
+			{{Form::textarea('description', null, array(
+			'class' => 'form-control',
+			'placeholder' => 'About you...',
+			'rows' => '5'
+			))}}
 		</div>
 	</div>
 	
 	<div class="row">
-		<div class ="col-xs-10 col-md-10">
-			<label>Profile Picture:</label>
-		</div>
+			{{Form::label('profilepic', 'Profile Picture:', array('class' => 'col-xs-12 col-md-12'))}}	
 	</div>
 	<div class="row">
 		<div class ="col-xs-5 col-md-4">
-				 <input type="file" id="profilepic" name="profilepic">		
+		{{Form::file('profilepic', array())}}		
 		</div>
 	</div>
 	<br />
 	<div class="row">
 		<div class ="col-xs-5 col-md-4">
-				<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>		
+			{{Form::submit('Register', array('class' => 'btn btn-lg btn-primary btn-block'))}}			</div>
 		</div>
-	</div>
-	</form>
-	
+	{{ Form::close() }}	
 </div>
 	
 	
-	{{ HTML::script('assets/js/jquery-2.0.3.min.js') }}
 </body>
 </html>
