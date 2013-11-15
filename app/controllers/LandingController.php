@@ -6,6 +6,9 @@
  */
 
 class LandingController extends BaseController {
+	public function csSignUpUser() {
+		return View::make('csLogin');
+	}
 	
 	public function showLanding() {
 			// If the user is already logged in,

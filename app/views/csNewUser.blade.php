@@ -14,74 +14,114 @@
 	</div>
 		
 	<div class="container">
-	<form role="form">
+		{{Form::open(array('route' => 'csSignUp'))}}
 	<div class="row">
-		<div class ="col-xs-5 col-md-4">
-			<label>Name</label>
-		</div>
+		{{Form::label('name', 'Name', array('class' => 'col-xs-5 col-md-4'))}}
 	</div>
 	<div class="row">
 		<div class="col-xs-5 col-md-4">
-			<input class="form-control" name="firstname" placeholder="First" type="text" required autofocus />
+			{{Form::text('firstname', null, array(
+				'class' => 'form-control',
+				'placeholder' => 'First',
+				'autofocus' => 'autofocus',
+				'required' => 'required'
+			))}}
 		</div>
 		<div class="col-xs-5 col-md-4">
-			<input class="form-control" name="lastname" placeholder="Last" type="text" required />
+			{{Form::text('lastname', null, array(
+				'class' => 'form-control',
+				'placeholder' => 'Last',
+				'required' => 'required'
+			))}}		
+		</div>
+	</div>
+	
+
+	<div class="row">
+		{{Form::label('email', 'E-mail', array('class' => 'col-xs-5 col-md-4'))}}
+	</div>
+	<div class="row">
+		<div class ="col-xs-10 col-md-8">
+			{{Form::text('email', null, array(
+				'class' => 'form-control',
+				'placeholder' => 'E-mail',
+				'required' => 'required'
+			))}}		
+		</div>
+	</div>
+
+	<div class="row">
+		{{Form::label('password', 'Password', array('class' => 'col-xs-5 col-md-4'))}}
+	</div>
+	<div class="row">
+		<div class ="col-xs-10 col-md-8">
+			{{Form::text('password', null, array(
+				'class' => 'form-control',
+				'placeholder' => 'Password',
+				'required' => 'required'
+			))}}		
+		</div>
+	</div>
+
+	<div class="row">
+		{{Form::label('passwordconfirm', 'Password Confirm', array('class' => 'col-xs-5 col-md-4'))}}	
+	</div>
+
+	<div class="row">
+		<div class ="col-xs-10 col-md-8">
+			{{Form::text('passwordconfirm', null, array(
+				'class' => 'form-control',
+				'placeholder' => 'Password Confirm',
+				'required' => 'required'
+			))}}		
+		</div>
+	</div>
+
+	<div class="row">
+			{{Form::label('degree', 'Degree Type', array('class' => 'col-xs-5 col-md-4'))}}	
+	</div>
+	<div class="row">
+		<div class ="col-xs-10 col-md-8">
+			{{Form::text('degree', null, array(
+				'class' => 'form-control',
+				'placeholder' => 'Bachelors'
+			))}}		
 		</div>
 	</div>
 	
 	<div class="row">
-		<div class ="col-xs-5 col-md-4">
-			<label>E-mail</label>
-		</div>
+			{{Form::label('graddate', 'Graduation Date', array('class' => 'col-xs-5 col-md-4'))}}	
 	</div>
 	<div class="row">
 		<div class ="col-xs-10 col-md-8">
-			<input class="form-control" name="email" placeholder="E-mail" type="text" required />
+		{{Form::text('graddate', null, array(
+				'class' => 'form-control',
+				'placeholder' => 'May 2015'
+			))}}
+		</div>
+	</div>
+
+	<div class="row">
+		{{Form::label('major', 'Major(s)', array('class' => 'col-xs-5 col-md-4'))}}	
+	</div>
+	<div class="row">
+		<div class ="col-xs-10 col-md-8">
+			{{Form::text('major', null, array(
+				'class' => 'form-control',
+				'placeholder' => 'Computer Science'
+			))}}		
 		</div>
 	</div>
 	
 	<div class="row">
-		<div class ="col-xs-5 col-md-4">
-			<label>Degree Type</label>
-		</div>
+		{{Form::label('minor', 'Minor(s)', array('class' => 'col-xs-5 col-md-4'))}}	
 	</div>
 	<div class="row">
 		<div class ="col-xs-10 col-md-8">
-			<input class="form-control" name="degree" placeholder="Bachelors" type="text"/>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class ="col-xs-5 col-md-4">
-			<label>Graduation Date</label>
-		</div>
-	</div>
-	<div class="row">
-		<div class ="col-xs-10 col-md-8">
-			<input class="form-control" name="graddate" placeholder="May 2015" type="text"/>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class ="col-xs-5 col-md-4">
-			<label>Major(s)</label>
-		</div>
-	</div>
-	<div class="row">
-		<div class ="col-xs-10 col-md-8">
-			<input class="form-control" name="major" placeholder="Computer Science" type="text"/>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class ="col-xs-5 col-md-4">
-			<label>Minor(s)</label>
-		</div>
-	</div>
-	<div class="row">
-		<div class ="col-xs-10 col-md-8">
-			<input class="form-control" name="minor" placeholder="BELS, Physics" type="text"/>
-		</div>
+			{{Form::text('minor', null, array(
+				'class' => 'form-control',
+				'placeholder' => 'BELS, Physics'
+			))}}		</div>
 	</div>
 	
 	<div class="row">
@@ -92,87 +132,57 @@
 	
 	<div class="scroll">
 		<div class="checkbox">
-			<label>
-				<input type="checkbox" value="csci101"> CSCI-101 (Intro to Computer Science)
-			</label>
+			<input class="checkbox" type="checkbox" value="csci101"> CSCI-101 (Intro to Computer Science)
+		</div>
+		<div class="checkbox">
+			<input type="checkbox" value="csci261"> CSCI-261 (Programming Concepts)
+		</div>
+		<div class="checkbox">
+			<input type="checkbox" value="csci262"> CSCI-262 (Data Structures)
 		</div>
 		
 		<div class="checkbox">
-			<label>
-				<input type="checkbox" value="csci261"> CSCI-261 (Programming Concepts)
-			</label>
+			<input type="checkbox" value="csci274"> CSCI-274 (Introduction to the Linux Operating System)
 		</div>
 		
 		<div class="checkbox">
-			<label>
-				<input type="checkbox" value="csci262"> CSCI-262 (Data Structures)
-			</label>
+			<input type="checkbox" value="csci306"> CSCI-306 (Software Engineering)
 		</div>
 		
 		<div class="checkbox">
-			<label>
-				<input type="checkbox" value="csci274"> CSCI-274 (Introduction to the Linux Operating System)
-			</label>
+			<input type="checkbox" value="csci341"> CSCI-341 (Computer Organization)
 		</div>
 		
 		<div class="checkbox">
-			<label>
-				<input type="checkbox" value="csci306"> CSCI-306 (Software Engineering)
-			</label>
+			<input type="checkbox" value="csci400"> CSCI-400 (Principles of Programming Languages)
 		</div>
 		
 		<div class="checkbox">
-			<label>
-				<input type="checkbox" value="csci341"> CSCI-341 (Computer Organization)
-			</label>
+			<input type="checkbox" value="csci403"> CSCI-403 (Database Management)
 		</div>
 		
 		<div class="checkbox">
-			<label>
-				<input type="checkbox" value="csci400"> CSCI-400 (Principles of Programming Languages)
-			</label>
+			<input type="checkbox" value="csci404"> CSCI-404 (Artificial Intelligence)
 		</div>
 		
 		<div class="checkbox">
-			<label>
-				<input type="checkbox" value="csci403"> CSCI-403 (Database Management)
-			</label>
+			<input type="checkbox" value="csci406"> CSCI-406 (Algorithms)
 		</div>
 		
 		<div class="checkbox">
-			<label>
-				<input type="checkbox" value="csci404"> CSCI-404 (Artificial Intelligence)
-			</label>
+			<input type="checkbox" value="csci410"> CSCI-410 (Elements of Computing Systems)
 		</div>
 		
 		<div class="checkbox">
-			<label>
-				<input type="checkbox" value="csci406"> CSCI-406 (Algorithms)
-			</label>
+			<input type="checkbox" value="csci442"> CSCI-442 (Operating Systems)
 		</div>
 		
 		<div class="checkbox">
-			<label>
-				<input type="checkbox" value="csci410"> CSCI-410 (Elements of Computing Systems)
-			</label>
+			<input type="checkbox" value="csci445"> CSCI-445 (Web Programming)
 		</div>
 		
 		<div class="checkbox">
-			<label>
-				<input type="checkbox" value="csci442"> CSCI-442 (Operating Systems)
-			</label>
-		</div>
-		
-		<div class="checkbox">
-			<label>
-				<input type="checkbox" value="csci445"> CSCI-445 (Web Programming)
-			</label>
-		</div>
-		
-		<div class="checkbox">
-			<label>
-				<input type="checkbox" value="csci446"> CSCI-446 (Web Applications)
-			</label>
+			<input type="checkbox" value="csci446"> CSCI-446 (Web Applications)
 		</div>
 		
 	</div>
