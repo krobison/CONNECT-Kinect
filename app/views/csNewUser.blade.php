@@ -13,15 +13,20 @@
 <body>
 	<div class="page-header">
 		<img class="logo" src="http://toilers.mines.edu/csconnect-jlyons/img/Connect_Logo.png">
-	</div>
-		
+	</div>	
+	
+	@if(Session::has('message'))		
+		<p> There has been a problem registering your information please try again later. </p>
+	@endif
+	
+	
 	<div class="container">
 	{{Form::open(array('route' => 'csSignUp', 'files' => true))}}
 	<div class="row">
-		{{Form::label('name', 'Name', array('class' => 'col-xs-5 col-md-4'))}}
+		{{Form::label('name', 'Name', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}
 	</div>
 	<div class="row">
-		<div class="col-xs-5 col-md-4">
+		<div class="col-xs-5 col-md-4 col-md-offset-2">
 			{{Form::text('first', null, array(
 				'class' => 'form-control',
 				'placeholder' => 'First',
@@ -37,13 +42,20 @@
 			))}}		
 		</div>
 	</div>
-	
+	@if($errors->has('first')||$errors->has('last'))
+		<div class="row">
+			<div class="error col-xs-10 col-md-8 col-md-offset-2">
+			{{$errors->first('first')}}
+			{{$errors->first('last')}}
+			</div>
+		</div>
+	@endif
 
 	<div class="row">
-		{{Form::label('email', 'E-mail', array('class' => 'col-xs-5 col-md-4'))}}
+		{{Form::label('email', 'E-mail', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}
 	</div>
 	<div class="row">
-		<div class ="col-xs-10 col-md-8">
+		<div class ="col-xs-10 col-md-8 col-md-offset-2">
 			{{Form::text('email', null, array(
 				'class' => 'form-control',
 				'placeholder' => 'E-mail',
@@ -51,12 +63,19 @@
 			))}}		
 		</div>
 	</div>
+	@if($errors->has('email'))
+		<div class="row">
+			<div class="error col-xs-10 col-md-8 col-md-offset-2">
+			{{$errors->first('email')}}
+			</div>
+		</div>	
+	@endif
 
 	<div class="row">
-		{{Form::label('password', 'Password', array('class' => 'col-xs-5 col-md-4'))}}
+		{{Form::label('password', 'Password', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}
 	</div>
 	<div class="row">
-		<div class ="col-xs-10 col-md-8">
+		<div class ="col-xs-10 col-md-8 col-md-offset-2">
 			{{Form::password('password', array(
 				'class' => 'form-control',
 				'placeholder' => 'Password',
@@ -64,13 +83,18 @@
 			))}}		
 		</div>
 	</div>
-
+	@if($errors->has('password'))
+		<div class="row">
+			<div class="error col-xs-10 col-md-8 col-md-offset-2">
+			{{$errors->first('password')}}
+			</div>
+		</div>	
+	@endif
 	<div class="row">
-		{{Form::label('password_confirmation', 'Password Confirm', array('class' => 'col-xs-5 col-md-4'))}}	
+		{{Form::label('password_confirmation', 'Password Confirm', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
 	</div>
-
 	<div class="row">
-		<div class ="col-xs-10 col-md-8">
+		<div class ="col-xs-10 col-md-8 col-md-offset-2">
 			{{Form::password('password_confirmation', array(
 				'class' => 'form-control',
 				'placeholder' => 'Password Confirm',
@@ -78,12 +102,19 @@
 			))}}		
 		</div>
 	</div>
+	@if($errors->has('password_confirmation'))
+		<div class="row">
+			<div class="error col-xs-10 col-md-8 col-md-offset-2">
+			{{$errors->first('password_confirmation')}}
+			</div>
+		</div>	
+	@endif
 
 	<div class="row">
-			{{Form::label('degree_type', 'Degree Type', array('class' => 'col-xs-5 col-md-4'))}}	
+			{{Form::label('degree_type', 'Degree Type', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
 	</div>
 	<div class="row">
-		<div class ="col-xs-10 col-md-8">
+		<div class ="col-xs-10 col-md-8 col-md-offset-2">
 			{{Form::text('degree_type', null, array(
 				'class' => 'form-control',
 				'placeholder' => 'Bachelors'
@@ -92,10 +123,10 @@
 	</div>
 	
 	<div class="row">
-			{{Form::label('grad_date', 'Graduation Date', array('class' => 'col-xs-5 col-md-4'))}}	
+			{{Form::label('grad_date', 'Graduation Date', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
 	</div>
 	<div class="row">
-		<div class ="col-xs-10 col-md-8">
+		<div class ="col-xs-10 col-md-8 col-md-offset-2">
 		{{Form::text('grad_date', null, array(
 				'class' => 'form-control',
 				'placeholder' => 'May 2015'
@@ -104,10 +135,10 @@
 	</div>
 
 	<div class="row">
-		{{Form::label('major', 'Major(s)', array('class' => 'col-xs-5 col-md-4'))}}	
+		{{Form::label('major', 'Major(s)', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
 	</div>
 	<div class="row">
-		<div class ="col-xs-10 col-md-8">
+		<div class ="col-xs-10 col-md-8 col-md-offset-2">
 			{{Form::text('major', null, array(
 				'class' => 'form-control',
 				'placeholder' => 'Computer Science'
@@ -116,10 +147,10 @@
 	</div>
 	
 	<div class="row">
-		{{Form::label('minor', 'Minor(s)', array('class' => 'col-xs-5 col-md-4'))}}	
+		{{Form::label('minor', 'Minor(s)', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
 	</div>
 	<div class="row">
-		<div class ="col-xs-10 col-md-8">
+		<div class ="col-xs-10 col-md-8 col-md-offset-2">
 			{{Form::text('minor', null, array(
 				'class' => 'form-control',
 				'placeholder' => 'BELS, Physics'
@@ -139,11 +170,11 @@
 	);
 	?>
 	<div class="row">
-		{{Form::label('classes', 'Please select classes that you are currently enrolled in:', array('class' => 'col-xs-12 col-md-12'))}}	
+		{{Form::label('classes', 'Please select classes that you are currently enrolled in:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10'))}}	
 	</div>
 	
 	<div class="row">
-		<div class ="col-xs-10 col-md-8">
+		<div class ="col-xs-10 col-md-8 col-md-offset-2">
 			{{Form::select('classes[]', $classes, null, array(
 				'class' => 'form-control',
 				'size' => '5',
@@ -212,10 +243,10 @@
 	</div>
 	-->
 	<div class="row">
-		{{Form::label('bio', 'Say a few things about yourself:', array('class' => 'col-xs-12 col-md-12'))}}	
+		{{Form::label('bio', 'Say a few things about yourself:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10'))}}	
 	</div>
 	<div class="row">
-		<div class ="col-xs-10 col-md-8">
+		<div class ="col-xs-10 col-md-8 col-md-offset-2">
 			{{Form::textarea('bio', null, array(
 			'class' => 'form-control',
 			'placeholder' => 'About you...',
@@ -223,19 +254,26 @@
 			))}}
 		</div>
 	</div>
+	@if($errors->has('bio'))
+		<div class="row">
+			<div class="error col-xs-10 col-md-8 col-md-offset-2">
+			{{$errors->first('bio')}}
+			</div>
+		</div>	
+	@endif
 		
 	<div class="row">
-			{{Form::label('profilepic', 'Profile Picture:', array('class' => 'col-xs-12 col-md-12'))}}	
+			{{Form::label('profilepic', 'Profile Picture:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10'))}}	
 	</div>
 	<div class="row">
-		<div class ="col-xs-5 col-md-4">
+		<div class ="col-xs-5 col-md-4 col-md-offset-2">
 		{{Form::file('profilepic', array())}}		
 		</div>
 	</div>
 	
 	<br />
 	<div class="row">
-		<div class ="col-xs-5 col-md-4">
+		<div class ="col-xs-5 col-md-4 col-md-offset-2">
 			{{Form::submit('Register', array('class' => 'btn btn-lg btn-primary btn-block'))}}			</div>
 		</div>
 	{{ Form::close() }}	

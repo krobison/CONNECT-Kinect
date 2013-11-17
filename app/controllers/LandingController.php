@@ -14,7 +14,7 @@ class LandingController extends BaseController {
 			$user = new User;
 			$user->first = Input::get('first');
 			$user->last = Input::get('last');
-			//$user->email = Input::get('email');               no email yet in database
+			$user->email = Input::get('email');               //no email yet in database
 			$user->password = Hash::make(Input::get('password'));
 			$user->instructor = '0';
 			$user->degree_type = Input::get('degree_type');
@@ -23,13 +23,13 @@ class LandingController extends BaseController {
 			$user->minor = Input::get('minor');
 			$user->bio = Input::get('bio');
 			$user->save();
-			return Redirect::to('/');
+			return Redirect::to('csNewUser');
 			
 			}catch( Exception $e ) {
-                return View::make('csNewUser');
-			}
+                return Redirect::back()->with('message', 'Login Failed');
+			} 
 		} else {
-			return View::make('csLogin');
+			return Redirect::back()->withErrors($validator);
 		}
 	}
 	

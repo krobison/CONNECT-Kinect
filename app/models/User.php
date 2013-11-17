@@ -60,11 +60,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	 
 	public static $rules = array(
-		'first' => 'required',
-		'last' => 'required',
-		'email' => 'required',
-		'password' => 'required|confirmed',
-		'password_confirmation' => 'required',
+		'first' => 'required|alpha|max:20',
+		'last' => 'required|alpha|max:20',
+		'email' => 'required|email',
+		'password' => 'required|alpha_num|between:4,32|confirmed',
+		'password_confirmation' => 'required|alpha_num|between:4,32',
 	 	'bio' => 'max:500'
 	);
 	
