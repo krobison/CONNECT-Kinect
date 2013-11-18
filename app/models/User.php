@@ -6,9 +6,7 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
+	 * Automatically uses users table based on naming conventions
 	 */
 	protected $table = 'users';
 
@@ -19,8 +17,26 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password');
 
-	protected $fillable = array('first_name', 'last_name', 'email', 'password');
-
+	/**
+	 *	Relationships.
+	 */
+	
+	public function courses() {
+		return $this->belongsToMany('Course');
+	}
+	
+	public function hashtags() {
+		return $this->belongsToMany('Hashtag');
+	}
+	
+	public function posts() {
+		return $this->hasMany('Post');
+	}
+	
+	public function comments() {
+		return $this->hasMany('Comment');
+	}
+	
 	/**
 	 * Get the unique identifier for the user.
 	 *
@@ -51,40 +67,4 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->email;
 	}
 	
-	/**
-	 *	Begin my shenanigans.
-	 */
-	
-	/**
-	 *	Validation rules.
-	 */
-	 
-	public static $rules = array(
-		'first_name' => 'required',
-		'last_name' => 'required',
-	 	'about' => 'max:500'
-	);
-	 
-	public static function validate($data) {
-	 	$rules = array_add(static::$rules, 'email', 'required|email|unique:users,email,'.$data['id']);
-		return Validator::make($data, $rules);
-	}
-	
-	/**
-	 *	Relationships.
-	 */
-	
-	public function roles() {
-		return $this->belongsToMany('Role');
-	}
-	
-	public function interests() {
-		return $this->belongsToMany('Interest');
-	}
-	
-	public function photo() {
-		return $this->hasOne('Photo');
-	}
-	  
-
 }

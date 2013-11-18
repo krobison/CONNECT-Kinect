@@ -12,6 +12,8 @@ Route::get('csNewUser', function() {
 	return View::make('csNewUser');
 });
 
+Route::get('post', 'PostController@showPost');
+Route::post('newuser', 'PostController@addUser');
 /**
  *	LandingController routes.
  *	This controller handles the root page, plus all login related stuff.
