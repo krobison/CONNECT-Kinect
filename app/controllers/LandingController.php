@@ -6,6 +6,32 @@
  */
 
 class LandingController extends BaseController {
+	public function csSignUpUser() {
+		$validator = Validator::make(Input::all(), User::$rules);
+		
+		if($validator->passes()) {
+			try {
+			$user = new User;
+			$user->first = Input::get('first');
+			$user->last = Input::get('last');
+			//$user->email = Input::get('email');               no email yet in database
+			$user->password = Hash::make(Input::get('password'));
+			$user->instructor = '0';
+			$user->degree_type = Input::get('degree_type');
+			$user->grad_date = Input::get('grad_date');
+			$user->major = Input::get('major');
+			$user->minor = Input::get('minor');
+			$user->bio = Input::get('bio');
+			$user->save();
+			return Redirect::to('csLogin');
+			
+			}catch( Exception $e ) {
+                return Redirect::back()->with('message', 'Login Failed');
+			} 
+		} else {
+			return Redirect::back()->withErrors($validator);
+		}
+	}
 	
 	public function showLanding() {
 			// If the user is already logged in,

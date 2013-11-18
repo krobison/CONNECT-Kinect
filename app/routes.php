@@ -4,6 +4,7 @@
  *	Begin rendering views for CS-CONNECT.
  */
  
+ 
 Route::get('csLogin', function() {
 	return View::make('csLogin');
 });
@@ -14,6 +15,12 @@ Route::get('csNewUser', function() {
 
 Route::get('post', 'PostController@showPost');
 Route::post('newuser', 'PostController@addUser');
+
+/*For testing the new style to replace the checkboxes*/
+Route::get('csTestBox', function() {
+	return View::make('csTestBox');
+});
+
 /**
  *	LandingController routes.
  *	This controller handles the root page, plus all login related stuff.
@@ -29,6 +36,11 @@ Route::post('login', 'LandingController@loginUser');
 // GET logout requests.
 Route::get('logout', 'LandingController@logoutUser');
 
+//Sign up for cs-connect
+Route::post('csSignUp', array(
+  'uses' => 'LandingController@csSignUpUser',
+  'as' => 'csSignUp'
+));
 /**
  *	These next two routes to LandingController are for debugging purposes only.
  * 	They should NOT go to production by any means.
