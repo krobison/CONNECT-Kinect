@@ -22,8 +22,8 @@
 	
 	<div class="container">
 	{{Form::open(array('route' => 'csSignUp', 'files' => true))}}
-	<div class="row">
-		{{Form::label('name', 'Name', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}
+	<div class="rowlabel">
+		{{Form::label('name', 'Name', array('class' => 'col-md-offset-2')).'<span class="requiredtext"> *Required</span>'}}  
 	</div>
 	<div class="row">
 		<div class="col-xs-5 col-md-4 col-md-offset-2">
@@ -51,8 +51,8 @@
 		</div>
 	@endif
 
-	<div class="row">
-		{{Form::label('email', 'E-mail', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}
+	<div class="rowlabel">
+		{{Form::label('email', 'E-mail', array('class' => 'col-md-offset-2')).'<span class="requiredtext"> *Required</span>'}}
 	</div>
 	<div class="row">
 		<div class ="col-xs-10 col-md-8 col-md-offset-2">
@@ -71,8 +71,8 @@
 		</div>	
 	@endif
 
-	<div class="row">
-		{{Form::label('password', 'Password', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}
+	<div class="rowlabel">
+		{{Form::label('password', 'Password', array('class' => 'col-md-offset-2')).'<span class="requiredtext"> *Required</span>'}}
 	</div>
 	<div class="row">
 		<div class ="col-xs-10 col-md-8 col-md-offset-2">
@@ -90,8 +90,8 @@
 			</div>
 		</div>	
 	@endif
-	<div class="row">
-		{{Form::label('password_confirmation', 'Password Confirm', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
+	<div class="rowlabel">
+		{{Form::label('password_confirmation', 'Password Confirm', array('class' => 'col-md-offset-2')).'<span class="requiredtext"> *Required</span>'}}	
 	</div>
 	<div class="row">
 		<div class ="col-xs-10 col-md-8 col-md-offset-2">
@@ -195,7 +195,7 @@
 	</div>
 	@if($errors->has('bio'))
 		<div class="row">
-			<div class="error col-xs-10 col-md-8 col-md-offset-2">
+			<div class="error col-xs-10 col-md-8 col-md-offset-2"> 
 			{{$errors->first('bio')}}
 			</div>
 		</div>	

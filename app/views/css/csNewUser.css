@@ -38,3 +38,12 @@ margin-bottom: 10px;
 .classSelect{
 	width:100%;
 }
+
+.requiredtext{
+	color:#FF0000;
+	font-size:11px;
+}
+
+.rowlabel{
+	margin-left:6px;
+}
