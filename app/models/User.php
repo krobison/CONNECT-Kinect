@@ -1,6 +1,6 @@
 <?php
 
-class User extends Eloquent implements UserInterface, RemindableInterface {
+class User extends Eloquent implements {
 
 	/**
 	 * Automatically uses users table based on naming conventions
