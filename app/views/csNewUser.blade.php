@@ -158,90 +158,29 @@
 		</div>
 	</div>
 	
-	<?php 
-		$classes = array(
-		1 => 'CSCI-101 (Intro to Computer Science)',
-		2 => 'CSCI-261 (Programming Concepts)',
-		3 => 'CSCI-262 (Data Structures)',
-		4 => 'CSCI-274 (Introduction to the Linux Operating System)',
-		5 => 'CSCI-306 (Software Engineering)',
-		6 => 'CSCI-341 (Computer Organization)',
-		7 => 'CSCI-400 (Principles of Programming Languages)'
-	);
-	?>
+
 	<div class="row">
 		{{Form::label('classes', 'Please select classes that you are currently enrolled in:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10'))}}	
 	</div>
-	
 	<div class="row">
 		<div class ="col-xs-10 col-md-8 col-md-offset-2">
-			{{Form::select('classes[]', $classes, null, array(
-				'class' => 'form-control',
-				'size' => '5',
-				'multiple'
-				
-			))}}		
+			<select multiple class="select2-container classSelect" id="classSelect">
+				<optgroup label="Computer Science">
+					<option>CSCI 101 - Introduction to Computer Science</option>
+					<option>CSCI 261 - Programming Concepts</option>
+					<option>CSCI 262 - Data Structures</option>
+				</optgroup>
+			</select>
 		</div>
-	</div>
+	</div><br>
+	<script>
+        $(document).ready(function() { 
+			$("#classSelect").select2({
+			placeholder: "Select Your Classes"
+			});
+		});
+    </script>
 	
-	<!--
-	<div class="scroll">
-		<div class="checkbox">
-			<input class="checkbox" type="checkbox" value="csci101"> CSCI-101 (Intro to Computer Science)
-		</div>
-		<div class="checkbox">
-			<input type="checkbox" value="csci261"> CSCI-261 (Programming Concepts)
-		</div>
-		<div class="checkbox">
-			<input type="checkbox" value="csci262"> CSCI-262 (Data Structures)
-		</div>
-		
-		<div class="checkbox">
-			<input type="checkbox" value="csci274"> CSCI-274 (Introduction to the Linux Operating System)
-		</div>
-		
-		<div class="checkbox">
-			<input type="checkbox" value="csci306"> CSCI-306 (Software Engineering)
-		</div>
-		
-		<div class="checkbox">
-			<input type="checkbox" value="csci341"> CSCI-341 (Computer Organization)
-		</div>
-		
-		<div class="checkbox">
-			<input type="checkbox" value="csci400"> CSCI-400 (Principles of Programming Languages)
-		</div>
-		
-		<div class="checkbox">
-			<input type="checkbox" value="csci403"> CSCI-403 (Database Management)
-		</div>
-		
-		<div class="checkbox">
-			<input type="checkbox" value="csci404"> CSCI-404 (Artificial Intelligence)
-		</div>
-		
-		<div class="checkbox">
-			<input type="checkbox" value="csci406"> CSCI-406 (Algorithms)
-		</div>
-		
-		<div class="checkbox">
-			<input type="checkbox" value="csci410"> CSCI-410 (Elements of Computing Systems)
-		</div>
-		
-		<div class="checkbox">
-			<input type="checkbox" value="csci442"> CSCI-442 (Operating Systems)
-		</div>
-		
-		<div class="checkbox">
-			<input type="checkbox" value="csci445"> CSCI-445 (Web Programming)
-		</div>
-		
-		<div class="checkbox">
-			<input type="checkbox" value="csci446"> CSCI-446 (Web Applications)
-		</div>
-		
-	</div>
-	-->
 	<div class="row">
 		{{Form::label('bio', 'Say a few things about yourself:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10'))}}	
 	</div>
