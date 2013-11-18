@@ -1,6 +1,6 @@
 <?php
 
-class User extends Eloquent implements {
+class User extends Eloquent {
 
 	/**
 	 * Automatically uses users table based on naming conventions
