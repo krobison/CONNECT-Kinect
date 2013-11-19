@@ -16,15 +16,15 @@
 	</div>
 	<div class="content">
 		<div class="container" id="signmein">
-			<form class="form-signin">
+		<form class="form-signin" action=<?php echo asset('/index.php/csSignIn'); ?> method="post">
 				<h2 class="form-signin-heading" id="welcome">Welcome to CS CONNECT!</h2>
-				<input type="text" class="form-control" placeholder="Username" required autofocus>
-				<input type="password" class="form-control" placeholder="Password" required>
+				<input type="text" name="email" class="form-control" placeholder="Email" required autofocus>
+				<input type="password" name="password" class="form-control" placeholder="Password" required>
 				<label class="checkbox">
 					<input type="checkbox" value="remember-me"> Remember me
 				</label>
 				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-			</form>
+		</form>
 		<hr class="separatron">
 		</div>
 		<div class="container" id="signmein">

@@ -13,6 +13,22 @@ Route::get('csNewUser', function() {
 	return View::make('csNewUser');
 });
 
+Route::get('landing', function() {
+	return View::make('landing');
+});
+
+//Sign up for cs-connect
+Route::post('csSignUp', array(
+  'uses' => 'LandingController@csSignUpUser',
+  'as' => 'csSignUp'
+));
+
+Route::post('csSignIn', array(
+	'uses' => 'LandingController@csSignInUser',
+	'as' => 'csSignIn'
+));
+
+
 Route::get('post', 'PostController@showPost');
 Route::post('newuser', 'PostController@addUser');
 
@@ -21,6 +37,8 @@ Route::get('csTestBox', function() {
 	return View::make('csTestBox');
 });
 
+
+
 /**
  *	LandingController routes.
  *	This controller handles the root page, plus all login related stuff.
@@ -28,19 +46,14 @@ Route::get('csTestBox', function() {
  */
 
 // GET initial landing page.
-Route::get('/', 'LandingController@showLanding');
+//Route::get('/', 'LandingController@showLanding');
 
 // POST login requests.
-Route::post('login', 'LandingController@loginUser');
+//Route::post('login', 'LandingController@loginUser');
 
 // GET logout requests.
-Route::get('logout', 'LandingController@logoutUser');
+//Route::get('logout', 'LandingController@logoutUser');
 
-//Sign up for cs-connect
-Route::post('csSignUp', array(
-  'uses' => 'LandingController@csSignUpUser',
-  'as' => 'csSignUp'
-));
 /**
  *	These next two routes to LandingController are for debugging purposes only.
  * 	They should NOT go to production by any means.

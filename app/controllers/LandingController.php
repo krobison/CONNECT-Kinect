@@ -14,7 +14,7 @@ class LandingController extends BaseController {
 			$user = new User;
 			$user->first = Input::get('first');
 			$user->last = Input::get('last');
-			//$user->email = Input::get('email');               no email yet in database
+			$user->email = Input::get('email');               
 			$user->password = Hash::make(Input::get('password'));
 			$user->instructor = '0';
 			$user->degree_type = Input::get('degree_type');
@@ -33,22 +33,24 @@ class LandingController extends BaseController {
 		}
 	}
 	
-	public function showLanding() {
-			// If the user is already logged in,
-			// redirect them to the profile page.
-			if (Auth::check()) {
-				return Redirect::to('home');
-			}
-			// Else render landing page for login.
-			return View::make('landing');
+	public function csSignInUser() {
+		$userdata = array(
+			'email' => Input::get('email'),
+			'password' => Input::get('password'));
+		if (Auth::attempt($userdata)) {
+			return Redirect::to('landing');
+		} else {
+			return Redirect::to('csLogin');
+		}
 	}
+	
 	
 	public function loginUser() {
 		$userdata = array(
 			'email' => Input::get('email'),
 			'password' => Input::get('password'));
 		if (Auth::attempt($userdata)) {
-			return Redirect::to('profile');
+			return Redirect::to('csNewUser');
 		} else {
 			return Redirect::to('/')
 				->with('message', 'Login combination not found, please try again.');
