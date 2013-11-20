@@ -39,17 +39,24 @@
 		<hr class="separatron">
 		</div>
 		<div class="container" id="signmein">
-			<form class="form-signin">
+		
+			{{ Form::open(array('url' => 'signup',
+								'method' => 'get',
+								'class' => 'form-signin')) }}
+									
 				<h2 class="form-signin-heading" id="registernow">Register Today!</h2>
-					<button class="btn btn-lg btn-primary btn-block" type="submit" id="newuserbutton">Create New Account</button>
-				<!--<div class="orseparator">
-					<span class="label label-info">Or</span>
-				</div>-->
+			
+				{{ Form::submit('Create New Account', array('class' => 'btn btn-lg btn-primary btn-block')) }}
+				
+				<br>
+				
 				<div class="connectbuttons">
 					<button class="btn btn-facebook"><i class="fa fa-facebook"></i> | Connect</button>
 					<button class="btn btn-twitter"><i class="fa fa-twitter"></i> | Connect</button>
 				</div>
-			</form>
+				
+			{{ Form::close() }}
+			
 		</div>
 		<div class="container" id="video">
 			<iframe width="420" height="315" src="http://www.youtube.com/embed/qb_hqexKkw8?rel=0" frameborder="0" allowfullscreen></iframe>
