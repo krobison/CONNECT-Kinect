@@ -8,6 +8,7 @@
 	{{ HTML::style('assets/css/select2.css') }}
 	{{ HTML::script('assets/js/jquery-2.0.3.min.js') }}
 	{{ HTML::script('assets/js/select2.js') }}
+	
 </head>
 
 <body>
@@ -21,7 +22,7 @@
 	
 	
 	<div class="container">
-	{{Form::open(array('route' => 'csSignUp', 'files' => true))}}
+	{{ Form::open(array('url' => 'signup', 'files' => true)) }}
 	<div class="rowlabel">
 		{{Form::label('name', 'Name', array('class' => 'col-md-offset-2')).'<span class="requiredtext"> *Required</span>'}}  
 	</div>

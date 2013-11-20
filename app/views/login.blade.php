@@ -16,6 +16,7 @@
 	</div>
 	<div class="content">
 		<div class="container" id="signmein">
+		
 		<form class="form-signin" action=<?php echo asset('/index.php/csSignIn'); ?> method="post">
 				<h2 class="form-signin-heading" id="welcome">Welcome to CS CONNECT!</h2>
 				<input type="text" name="email" class="form-control" placeholder="Email" required autofocus>
@@ -25,6 +26,7 @@
 				</label>
 				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 		</form>
+		
 		<hr class="separatron">
 		</div>
 		<div class="container" id="signmein">

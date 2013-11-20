@@ -1,96 +1,49 @@
 <?php
 
 /**
- *	Begin rendering views for CS-CONNECT.
+ *	Primary routes!
+ *	These routes are in place for production!
  */
- 
- 
-Route::get('csLogin', function() {
-	return View::make('csLogin');
-});
 
-Route::get('csNewUser', function() {
-	return View::make('csNewUser');
-});
+// GET root, login page
+Route::get('/', function() { return View::make('login'); });
 
-Route::get('landing', function() {
-	return View::make('landing');
-});
-
-//Sign up for cs-connect
-Route::post('csSignUp', array(
-  'uses' => 'LandingController@csSignUpUser',
-  'as' => 'csSignUp'
-));
-
+// POST login requests
 Route::post('csSignIn', array(
 	'uses' => 'LandingController@csSignInUser',
 	'as' => 'csSignIn'
 ));
 
+// GET signup page
+Route::get('signup', function() { return View::make('signup'); });
 
+// POST signup request
+Route::post('signup', 'LandingController@csSignUpUser');
+
+// Before accessing these pages, authentication is required.
+Route::group(array('before' => 'auth'), function() {
+
+	// GET newsfeed page
+	Route::get('newsfeed', function() { return View::make('newsfeed'); });
+	
+	// GET logout and redirect to root
+	Route::get('logout', function() { 
+		Auth::logout();
+		return Redirect::to('/');
+	});
+	
+});
+
+/**
+ *	Experimental routes.
+ *	Stuff that we are still testing out, and shit.
+ */
+
+// stuff that thomas is working on?
 Route::get('post', 'PostController@showPost');
 Route::post('newuser', 'PostController@addUser');
 
-/*For testing the new style to replace the checkboxes*/
+// For testing the new style to replace the checkboxes
 Route::get('csTestBox', function() {
 	return View::make('csTestBox');
-});
-
-
-
-/**
- *	LandingController routes.
- *	This controller handles the root page, plus all login related stuff.
- *	That includes signing up and all that shenanigans...yeh.
- */
-
-// GET initial landing page.
-//Route::get('/', 'LandingController@showLanding');
-
-// POST login requests.
-//Route::post('login', 'LandingController@loginUser');
-
-// GET logout requests.
-//Route::get('logout', 'LandingController@logoutUser');
-
-/**
- *	These next two routes to LandingController are for debugging purposes only.
- * 	They should NOT go to production by any means.
- *
- *	However, these are a good example of how using RESTful routes can clean up
- *	our URLs. We are using a GET and POST request to the same URL but executing
- *	completely different code...
- */
- 
-// GET signup page.
-Route::get('signup', 'LandingController@signupUserPage');
-
-// POST signup request.
-Route::post('signup', 'LandingController@signupUser');
-
-// DELETE signup request.
-Route::delete('deleteUser', 'LandingController@deleteUser');
-
-/**
- *	After being logged in.
- *	Home doesn't have a controller since it is just a static page.
- *	However the People tab and the Profile tab both have distinct controllers.
- */
-
-// All require authentication.
-Route::group(array('before' => 'auth'), function() {
-	
-	// GET home page.
-	Route::get('home', function() { return View::make('home'); });
-	
-	// GET people page.
-	Route::get('people', 'PeopleController@showPeople');
-
-	// GET profile page.
-	Route::get('profile', 'ProfileController@showProfile');
-
-	// PUT profile request. PUT = UPDATE
-	Route::put('profile', 'ProfileController@editProfile');
-	
 });
