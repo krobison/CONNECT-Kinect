@@ -1,13 +1,14 @@
 <?php
 
 /**
- *	This controller handles the landing page,
- *	POST login requests, and logout requests.
+ *	This controller handles all interactions with users.
+ *	As well as CRUD operations, login and logout.
  */
 
-class LandingController extends BaseController {
+class UserController extends BaseController {
 
-	public function csSignUpUser() {
+	// Create a new user in the database, with validations
+	public function createUser() {
 		$validator = Validator::make(Input::all(), User::$rules);
 		
 		if($validator->passes()) {
@@ -34,7 +35,8 @@ class LandingController extends BaseController {
 		}
 	}
 	
-	public function csSignInUser() {
+	// Login user and redirect.
+	public function loginUser() {
 		$userdata = array(
 			'email' => Input::get('email'),
 			'password' => Input::get('password'));
@@ -43,6 +45,12 @@ class LandingController extends BaseController {
 		} else {
 			return Redirect::to('/');
 		}
+	}
+	
+	// Logout user and redirect.
+	public function logoutUser() {
+		Auth::logout();
+		return Redirect::to('/')->with('message', 'You have successfully been logged out.');
 	}
 		
 }

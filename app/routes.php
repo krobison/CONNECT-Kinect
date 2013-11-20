@@ -9,13 +9,13 @@
 Route::get('/', function() { return View::make('login'); });
 
 // POST login requests
-Route::post('/', 'LandingController@csSignInUser');
+Route::post('/', 'UserController@loginUser');
 
 // GET signup page
 Route::get('signup', function() { return View::make('signup'); });
 
 // POST signup request
-Route::post('signup', 'LandingController@csSignUpUser');
+Route::post('signup', 'UserController@createUser');
 
 /**
  *	Routes after being logged in.
@@ -28,10 +28,7 @@ Route::group(array('before' => 'auth'), function() {
 	Route::get('newsfeed', function() { return View::make('newsfeed'); });
 	
 	// GET logout and redirect to root
-	Route::get('logout', function() { 
-		Auth::logout();
-		return Redirect::to('/')->with('message', 'You have successfully been logged out.');
-	});
+	Route::get('logout', 'UserController@logoutUser');
 	
 });
 
