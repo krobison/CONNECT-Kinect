@@ -29,7 +29,7 @@ Route::group(array('before' => 'auth'), function() {
 	// GET logout and redirect to root
 	Route::get('logout', function() { 
 		Auth::logout();
-		return Redirect::to('/');
+		return Redirect::to('/')->with('message', 'You have successfully been logged out.');
 	});
 	
 });
