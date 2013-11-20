@@ -4,10 +4,10 @@
 <head>
 
 	{{ HTML::style('assets/css/bootstrap.min.css') }}
-	{{ HTML::style('app/views/css/csNewUser.css') }}
-	{{ HTML::style('css/select2.css') }}
+	{{ HTML::style('assets/css/csNewUser.css') }}
+	{{ HTML::style('assets/css/select2.css') }}
 	{{ HTML::script('assets/js/jquery-2.0.3.min.js') }}
-	{{ HTML::script('js/select2.js') }}
+	{{ HTML::script('assets/js/select2.js') }}
 </head>
 
 <body>

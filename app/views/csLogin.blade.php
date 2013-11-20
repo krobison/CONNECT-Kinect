@@ -4,8 +4,8 @@
 <head>
 
 	{{ HTML::style('assets/css/bootstrap.min.css') }}
-	{{ HTML::style('app/views/css/signin.css') }}
-	{{ HTML::style('app/views/css/social-buttons.css') }}
+	{{ HTML::style('assets/css/signin.css') }}
+	{{ HTML::style('assets/css/social-buttons.css') }}
 	{{ HTML::style('assets/css/font-awesome.min.css') }}
 
 </head>
