@@ -1,18 +1,15 @@
 <?php
 
 /**
- *	Primary routes!
- *	These routes are in place for production!
+ *	Routes before being logged in.
+ *	This includes root, signing up, and blah.
  */
 
 // GET root, login page
 Route::get('/', function() { return View::make('login'); });
 
 // POST login requests
-Route::post('csSignIn', array(
-	'uses' => 'LandingController@csSignInUser',
-	'as' => 'csSignIn'
-));
+Route::post('/', 'LandingController@csSignInUser');
 
 // GET signup page
 Route::get('signup', function() { return View::make('signup'); });
@@ -20,7 +17,11 @@ Route::get('signup', function() { return View::make('signup'); });
 // POST signup request
 Route::post('signup', 'LandingController@csSignUpUser');
 
-// Before accessing these pages, authentication is required.
+/**
+ *	Routes after being logged in.
+ *	These routes all have a before filter that checks to see if user is logged in.
+ */
+
 Route::group(array('before' => 'auth'), function() {
 
 	// GET newsfeed page
@@ -39,7 +40,7 @@ Route::group(array('before' => 'auth'), function() {
  *	Stuff that we are still testing out, and shit.
  */
 
-// stuff that thomas is working on?
+// stuff that thomas is working on..? ...yeah...derp
 Route::get('post', 'PostController@showPost');
 Route::post('newuser', 'PostController@addUser');
 

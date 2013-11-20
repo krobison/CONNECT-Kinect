@@ -17,15 +17,24 @@
 	<div class="content">
 		<div class="container" id="signmein">
 		
-		<form class="form-signin" action=<?php echo asset('/index.php/csSignIn'); ?> method="post">
+		{{ Form::open(array('url' => '/',
+							'class' => 'form-signin')) }}
+			
 				<h2 class="form-signin-heading" id="welcome">Welcome to CS CONNECT!</h2>
-				<input type="text" name="email" class="form-control" placeholder="Email" required autofocus>
-				<input type="password" name="password" class="form-control" placeholder="Password" required>
+				
+				{{ Form::text('email', '', array('class' => 'form-control',
+											     'placeholder' => 'Email',
+											     'autofocus' => 'true')) }}
+				{{ Form::password('password', array('class' => 'form-control',
+													'placeholder' => 'Password')) }}
+													
 				<label class="checkbox">
 					<input type="checkbox" value="remember-me"> Remember me
 				</label>
-				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-		</form>
+				
+				{{ Form::submit('Sign in', array('class' => 'btn btn-lg btn-primary btn-block')) }}
+				
+		{{ Form::close() }}
 		
 		<hr class="separatron">
 		</div>
