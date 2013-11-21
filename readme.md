@@ -43,4 +43,3 @@ The *routes.php* file will probably be open at all times during a development se
 Some quick links:
 - Laravel documentation: http://laravel.com/docs
 - Laravel cheat sheet: http://cheats.jesse-obrien.ca
-- 
