@@ -4,9 +4,11 @@ An internal social networking website developed by and for Colorado School of Mi
 ### Technical Details
 CS CONNECT currently uses a generic LAMP stack to operate, with MySQL as the database and PHP as the scripting language behind the scenes. The databases are located on CousinIT on the Mines campus so in order for this code to be operational the code must reside behind the campus firewall. Typically both production and  development environments are located on the Toiler's server so this should not be an issue.
 
-The framework surrounding the code is Laravel: http://laravel.com.
+The backend framework used is Laravel: http://laravel.com.
 
 Laravel is very similiar to Ruby on Rails in many aspects including object-relational mapping, MVC framework, RESTful actions, and etcetera. Laravel can simply be viewed as a PHP flavor of Ruby on Rails. With that being said, before diving into the code it is important to understand some conventions that Laravel use. Ultimately, by abiding by certain conventions it should much quicker and easier for new developers to get themselves acquainted with the system so they can be productive right away...that's what it's suppose to do.
+
+The frontend framework used is Bootstrap: http://getbootstrap.com.
 
 ### Setting Up Development Environment
 To quickly get going on Toiler's, follow these instructions.
@@ -45,3 +47,4 @@ Some quick links:
   - Database - Query Builder: http://laravel.com/docs/queries
   - Database - Eloquent ORM: http://laravel.com/docs/eloquent
 - Laravel cheat sheet: http://cheats.jesse-obrien.ca
+- Bootstrap: http://getbootstrap.com/getting-started/
