@@ -45,3 +45,5 @@ Route::post('newuser', 'PostController@addUser');
 Route::get('csTestBox', function() {
 	return View::make('csTestBox');
 });
+
+Route::get('phptest', function() { return View::make('phptest'); });
