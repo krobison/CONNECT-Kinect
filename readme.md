@@ -42,6 +42,6 @@ The *routes.php* file will probably be open at all times during a development se
 
 Some quick links:
 - Laravel documentation: http://laravel.com/docs
-  - Database: Query Builder: http://laravel.com/docs/queries
-  - Database: Eloquent ORM: http://laravel.com/docs/eloquent
+  - Database - Query Builder: http://laravel.com/docs/queries
+  - Database - Eloquent ORM: http://laravel.com/docs/eloquent
 - Laravel cheat sheet: http://cheats.jesse-obrien.ca
