@@ -11,8 +11,8 @@ html, body{
 }
 
 .content{
-	width:70%;
-	margin-left:15%;
+	width:50%;
+	margin-left:25%;
 	min-width:600px;
 	background-color:rgba(0,0,0,0.05);
 	border:2px rgba(0,0,0,0.15) solid;
@@ -32,7 +32,29 @@ html, body{
 }
 
 .picture{
+	float:left;
 	width:258px;
 	height:258px;
-	border:1px #000000 solid;
+	border:1px rgba(0,0,0,0.55) solid;
+}
+.basic{
+	background-color:rgba(255,255,255,0.25);
+	width:100%;
+	min-height:270px;
+	border:2px rgba(0,0,0,0.15) solid;
+	padding:4px;
+}
+.info{
+	margin-left:262px;
+	word-wrap: break-word;
+	padding:4px;
+}
+.infolabel{
+	padding:4px;
+	background-color:rgba(0,0,0,0.15);
+	border:1px rgba(0,0,0,0.15) solid;
+	font-family:"Trebuchet MS", Helvetica, sans-serif;
+	font-weight:bold;
+	display:inline-block;
+	margin-bottom:2px;
 }

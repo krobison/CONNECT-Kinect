@@ -14,8 +14,22 @@
 	</div>
 
 	<div class="content"> 
-		<div class="picture">
-			{{ HTML::image('assets/img/dummy.png') }}
+		<div class="basic">
+			<div class="picture">
+				{{ HTML::image('assets/img/dummy.png') }}
+			</div>
+			<div class="info">
+				<span class="infolabel">Name:</span>
+					<span>Darth Vader</span><br>
+				<span class="infolabel">Degree:</span>
+					<span>Bachelors</span><br>
+				<span class="infolabel">Graduation Date:</span>
+					<span>May 2015</span><br>
+				<span class="infolabel">Major:</span>
+					<span>Computer Science</span><br>
+				<span class="infolabel">Minor:</span>
+					<span>BELS , Energy</span><br>
+			</div>
 		</div>
 	</div>
 	
