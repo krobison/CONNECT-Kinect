@@ -13,7 +13,12 @@
 		{{ HTML::image('assets/img/Connect_Logo.png') }}
 	</div>
 
+	<div class="content"> 
+		<div class="picture">
+			{{ HTML::image('assets/img/dummy.png') }}
+		</div>
 	</div>
+	
 	<div id="footer">
 		<div class="container">
 			<p class="text-muted credit">©2013 Toilers research group, Colorado School of Mines 		{{ HTML::image('assets/img/mines_logo.png') }}	{{ HTML::image('assets/img/toilers.png') }} </p>

@@ -21,6 +21,7 @@ margin-bottom: 10px;
 
 .page-header{
 	margin:auto;
+	min-width:1050px;
 	background-color:#E6E2AF;
 	text-align:center;
 }
