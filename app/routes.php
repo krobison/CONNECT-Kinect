@@ -13,6 +13,10 @@ Route::get('csNewUser', function() {
 	return View::make('csNewUser');
 });
 
+Route::get('csProfile', function() {
+	return View::make('csProfile');
+});
+
 Route::get('post', 'PostController@showPost');
 Route::post('newuser', 'PostController@addUser');
 

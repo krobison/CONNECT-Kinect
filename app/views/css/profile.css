@@ -1,0 +1,112 @@
+html, body{
+  background-color: #EFECCA;
+  height:100%;
+}
+
+.form-signin {
+  max-width: 280px;
+  padding: 15px;
+}
+
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+
+#welcome{
+	min-width: 400px;
+	margin-left:-52px;
+	padding-bottom:12px;
+}
+
+#registernow{
+	margin-left:22px;
+	padding-bottom:12px;
+}
+
+.btn-primary { 
+	background-color: #07B3E8;
+	height:42px;
+	padding:0px;
+}
+.btn-primary:hover{ 
+	background-color: #0698C4;
+}
+
+
+.separatron{
+	width:350px;
+	margin-left:-32px;
+	border:2px #2483A0 solid;
+	margin-top:8px;
+	margin-bottom:-16px;
+}
+
+#mineslogo{
+	margin-left:20px;
+}
+
+#newuserbutton{
+	margin-bottom:12px;
+}
+
+.container{
+	width:auto;
+  height: auto;
+}
+
+.connectbuttons{
+	text-align:center;
+}
+
+.page-header{
+	margin:auto;
+	background-color:#E6E2AF;
+	text-align:center;
+}
+
+.content{
+min-width:600px;
+margin-left:auto;
+margin-right:auto;
+width:50%;
+  padding: 0 0 250px;
+}
+
+#video{
+	margin-left:500px;
+	margin-top:-400px;
+}
+
+#footer {
+  height: 70px;
+  background-color: #E6E2AF;
+  text-align:center;
+}
+
+.container .credit {
+  margin: 14px 0;
+}
