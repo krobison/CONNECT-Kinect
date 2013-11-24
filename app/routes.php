@@ -51,3 +51,9 @@ Route::get('phptest', function() { return View::make('phptest'); });
 Route::get('csProfile', function() {
 	return View::make('csProfile');
 });
+
+Route::get('csProfile', function() {
+	return View::make('csProfile');
+});
+
+
