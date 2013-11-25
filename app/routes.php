@@ -58,9 +58,4 @@ Route::get('csProfile', function() {
 	return View::make('csProfile');
 });
 
-Route::get('csProfile', function() {
-	return View::make('csProfile');
-});
-
-
 
