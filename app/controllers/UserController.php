@@ -40,9 +40,9 @@ class UserController extends BaseController {
 			$user->picture = $newFilename;
 			// Write all fields in user to the database
 			$user->save();
-			
+
 			return Redirect::to('/')->with('message', 'A new account has been created!');
-			
+
 			//}catch( Exception $e ) {
             //    return Redirect::back()->with('message', 'Login Failed');
 			//} 
@@ -53,10 +53,12 @@ class UserController extends BaseController {
 	
 	// Login user and redirect.
 	public function loginUser() {
+		return Redirect::to('phptest');
 		$userdata = array(
 			'email' => Input::get('email'),
 			'password' => Input::get('password'));
 		if (Auth::attempt($userdata)) {
+			dd("???");
 			return Redirect::to('newsfeed');
 		} else {
 			return Redirect::to('/')->with('message', 'Login Failed');

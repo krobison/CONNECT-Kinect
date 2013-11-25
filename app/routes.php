@@ -27,18 +27,21 @@ Route::group(array('before' => 'auth'), function() {
 	// GET newsfeed page
 	Route::get('newsfeed', 'DashboardController@showNewsfeed');
 	
-	// GET logout and redirect to root
-	Route::get('logout', 'UserController@logoutUser');
+	// GET profile
+	Route::get('profile', 'DashboardController@showProfile');
 	
-	// GET logout and redirect to root
+	// GET cs question?
 	Route::get('CSQuestion', 'CSQuestionController@showCSQuestion');
 	
-	Route::get('helpcenter', function() {
-	return View::make('helpcenter');
-	});
-
+	// GET help center
+	Route::get('helpCenter', 'DashboardController@showHelpCenter');
+	
+	// POST help center posts
 	Route::post('createhelppost', 'PostController@createHelpPost');
 	
+	// GET logout and redirect to root
+	Route::get('logout', 'UserController@logoutUser');
+
 });
 
 /**
@@ -56,9 +59,5 @@ Route::get('csTestBox', function() {
 });
 
 Route::get('phptest', function() { return View::make('phptest'); });
-
-Route::get('csProfile', function() {
-	return View::make('csProfile');
-});
 
 
