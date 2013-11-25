@@ -43,7 +43,7 @@ class UserController extends BaseController {
 		if (Auth::attempt($userdata)) {
 			return Redirect::to('newsfeed');
 		} else {
-			return Redirect::to('/');
+			return Redirect::to('/')->with('message', 'Login Failed');
 		}
 	}
 	

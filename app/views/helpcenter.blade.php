@@ -15,6 +15,9 @@
 
 	<div class="content"> 
 		<div class="newpost">
+			<h3>New Help Post</h3>
+			<hr>
+			
 			{{ Form::open(array('url' => 'createhelppost')) }}
 			
 			<div class="form-group">

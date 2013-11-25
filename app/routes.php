@@ -9,7 +9,7 @@
 Route::get('/', function() { return View::make('login'); });
 
 // POST login requests
-Route::post('/', 'UserController@loginUser');
+Route::post('loginuser', 'UserController@loginUser');
 
 // GET signup page
 Route::get('signup', function() { return View::make('signup'); });

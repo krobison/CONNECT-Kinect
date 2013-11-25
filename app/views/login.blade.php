@@ -17,7 +17,7 @@
 	<div class="content">
 		<div class="container" id="signmein">
 		
-		{{ Form::open(array('url' => '/',
+		{{ Form::open(array('url' => 'loginuser',
 							'class' => 'form-signin')) }}
 			
 				<h2 class="form-signin-heading" id="welcome">Welcome to CS CONNECT!</h2>
