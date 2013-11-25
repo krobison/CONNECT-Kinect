@@ -43,15 +43,12 @@
 		<div class="row">
 			
 			<div class="col-xs-3">
-				<p>sup breh </p>
 				<p>{{ $user->first }} {{ $user->last }}</p>
 				<p>{{ $user->email }}</p>
-				<p>mini profile view</p>
 				<ul class="nav">
-					<li><a href="#">Hello</a></li>
-					<li><a href="#">World</a></li>
-					<li><a href="#">Again</a></li>
-					<li><a href="#">Two</a></li>
+					<li><a href="{{ URL::to('profile') }}">Profile</a></li>
+					<li><a href="{{ URL::to('CSQuestion') }}"> CS Question</a></li>
+					<li><a href="{{ URL::to('helpCenter') }}">Help Center</a></li>
 				</ul>
 			</div>
 			
