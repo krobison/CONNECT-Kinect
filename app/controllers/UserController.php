@@ -53,12 +53,10 @@ class UserController extends BaseController {
 	
 	// Login user and redirect.
 	public function loginUser() {
-		return Redirect::to('phptest');
 		$userdata = array(
 			'email' => Input::get('email'),
 			'password' => Input::get('password'));
 		if (Auth::attempt($userdata)) {
-			dd("???");
 			return Redirect::to('newsfeed');
 		} else {
 			return Redirect::to('/')->with('message', 'Login Failed');
