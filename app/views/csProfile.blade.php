@@ -30,13 +30,17 @@
 					<span>Computer Science</span><br>
 				<span class="infolabel">Minor:</span>
 					<span>BELS , Energy</span><br>
-				<h3>Courses</h3>
-				<span class="courselabel">CSCI406 - Algorithms</span>
-				<span class="courselabel">CSCI306 - Software Engineering</span>
-				<span class="courselabel">CSCI404 - Aritificial Intelligence</span>
-				<span class="courselabel">CSCI445 - Web Programming</span>
-				<span class="courselabel">CSCI358 - Discrete Mathematics</span>
 			</div>
+			<div class="courses">
+				<h3>Courses</h3>
+					<span class="courselabel">CSCI406 - Algorithms</span>
+					<span class="courselabel">CSCI306 - Software Engineering</span>
+					<span class="courselabel">CSCI404 - Aritificial Intelligence</span>
+					<span class="courselabel">CSCI445 - Web Programming</span>
+					<span class="courselabel">CSCI358 - Discrete Mathematics</span>
+			</div>
+		</div>
+		<div class="custom">
 		</div>
 	</div>
 	
