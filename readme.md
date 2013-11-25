@@ -24,8 +24,6 @@ chmod o+w -R storage
 ```
 Once done, access at this link: http://toilers.mines.edu/csconnect-yourusernamehere/index.php
 
-**NOTE:** Currently, pretty URLs are not functional so the `index.php` at the end of the link is required. This requires some work with Apache on Toiler's and once this is done this note will be removed.
-
 ### Code Structure & Development Cycle
 Quick overview of important folders and files.
 
