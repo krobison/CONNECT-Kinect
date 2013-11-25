@@ -64,6 +64,9 @@
 				<p>I really really love computer science!!</p>
 				
 		</div>
+		<div class="feed">
+			<h2>Posts go here</h2>
+		</div>
 	</div>
 	
 	<div id="footer">
