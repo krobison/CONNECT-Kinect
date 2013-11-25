@@ -11,8 +11,8 @@ html, body{
 }
 
 .content{
-	width:50%;
-	margin-left:25%;
+	width:60%;
+	margin-left:20%;
 	min-width:600px;
 	background-color:rgba(0,0,0,0.05);
 	border:2px rgba(0,0,0,0.15) solid;
@@ -48,8 +48,9 @@ html, body{
 	margin-left:262px;
 	word-wrap: break-word;
 	padding:4px;
+	padding-top:0px;
 }
-.infolabel{
+.infolabel,.courselabel{
 	padding:4px;
 	background-color:rgba(0,0,0,0.15);
 	border:1px rgba(0,0,0,0.15) solid;
@@ -57,4 +58,8 @@ html, body{
 	font-weight:bold;
 	display:inline-block;
 	margin-bottom:2px;
+}
+
+.infolabel{
+	width:156px;
 }
