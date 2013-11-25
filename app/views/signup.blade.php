@@ -203,7 +203,7 @@
 	@endif
 		
 	<div class="row">
-			{{Form::label('profilepic', 'Profile Picture:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10'))}}	
+		{{Form::label('profilepic', 'Profile Picture:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10'))}}	
 	</div>
 	<div class="row">
 		<div class ="col-xs-5 col-md-4 col-md-offset-2">
@@ -214,8 +214,9 @@
 	<br />
 	<div class="row">
 		<div class ="col-xs-5 col-md-4 col-md-offset-2">
-			{{Form::submit('Register', array('class' => 'btn btn-lg btn-primary btn-block'))}}			</div>
+			{{Form::submit('Register', array('class' => 'btn btn-lg btn-primary btn-block'))}}
 		</div>
+	</div>
 	{{ Form::close() }}	
 </div>
 	
