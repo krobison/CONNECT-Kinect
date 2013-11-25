@@ -22,7 +22,7 @@ git clone https://github.com/CONNECT-Mines/CS-CONNECT.git <csconnect-yourusernam
 cd <csconnect-yourusernamehere>/app
 chmod o+w -R storage
 ```
-Once done, access at this link: http://toilers.mines.edu/csconnect-yourusernamehere/index.php
+Once done, access at this link: http://toilers.mines.edu/csconnect-yourusernamehere/
 
 ### Code Structure & Development Cycle
 Quick overview of important folders and files.
