@@ -2,6 +2,22 @@
 
 class PostController extends BaseController {
 	
+	public function createHelpPost() {
+	
+		try {
+		$post = new Post;
+		$post->user_id = Auth::user()->id;
+		$post->anonymous = Input::get('anonymous');
+		$post->post_type = '2';
+		$post->help_request = Input::get('help_request');
+		$post->content = Input::get('content');
+		$post->save();
+		return Redirect::back()->with('message', 'Your post has been successfully created.');
+		}catch( Exception $e ) {
+			return Redirect::back()->with('message', 'Your post cannot be created at this time, please try again later.');
+		}
+	}
+	
 	// Render the view
 	public function showPost() {
 		return View::make('post');

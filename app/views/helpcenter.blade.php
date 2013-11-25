@@ -15,7 +15,7 @@
 
 	<div class="content"> 
 		<div class="newpost">
-			{{ Form::open(array('url' => 'createpost')) }}
+			{{ Form::open(array('url' => 'createhelppost')) }}
 			
 			<div class="form-group">
 				<label class="radio-inline">

@@ -30,6 +30,12 @@ Route::group(array('before' => 'auth'), function() {
 	// GET logout and redirect to root
 	Route::get('logout', 'UserController@logoutUser');
 	
+	Route::get('helpcenter', function() {
+	return View::make('helpcenter');
+	});
+
+	Route::post('createhelppost', 'PostController@createHelpPost');
+	
 });
 
 /**
@@ -48,10 +54,6 @@ Route::get('csTestBox', function() {
 
 Route::get('phptest', function() { return View::make('phptest'); });
 
-Route::get('helpcenter', function() {
-	return View::make('helpcenter');
-});
-
 Route::get('csProfile', function() {
 	return View::make('csProfile');
 });
@@ -59,5 +61,6 @@ Route::get('csProfile', function() {
 Route::get('csProfile', function() {
 	return View::make('csProfile');
 });
+
 
 
