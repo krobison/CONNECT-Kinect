@@ -25,7 +25,7 @@ Route::post('signup', 'UserController@createUser');
 Route::group(array('before' => 'auth'), function() {
 
 	// GET newsfeed page
-	Route::get('newsfeed', function() { return View::make('newsfeed'); });
+	Route::get('newsfeed', 'DashboardController@showNewsfeed');
 	
 	// GET logout and redirect to root
 	Route::get('logout', 'UserController@logoutUser');
