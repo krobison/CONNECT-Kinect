@@ -17,6 +17,9 @@ Route::get('signup', function() { return View::make('signup'); });
 // POST signup request
 Route::post('signup', 'UserController@createUser');
 
+// GET request for CSQuestion
+Route::get('CSQuestion', 'CSQuestionController@showCSQuestion');
+
 /**
  *	Routes after being logged in.
  *	These routes all have a before filter that checks to see if user is logged in.
@@ -29,10 +32,7 @@ Route::group(array('before' => 'auth'), function() {
 	
 	// GET logout and redirect to root
 	Route::get('logout', 'UserController@logoutUser');
-	
-	// GET logout and redirect to root
-	Route::get('CSQuestion', 'CSQuestionController@showCSQuestion');
-	
+		
 	Route::get('helpcenter', function() {
 	return View::make('helpcenter');
 	});
