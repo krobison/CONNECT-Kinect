@@ -48,6 +48,10 @@ Route::get('csTestBox', function() {
 
 Route::get('phptest', function() { return View::make('phptest'); });
 
+Route::get('helpcenter', function() {
+	return View::make('helpcenter');
+});
+
 Route::get('csProfile', function() {
 	return View::make('csProfile');
 });
