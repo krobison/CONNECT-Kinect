@@ -30,6 +30,9 @@ Route::group(array('before' => 'auth'), function() {
 	// GET logout and redirect to root
 	Route::get('logout', 'UserController@logoutUser');
 	
+	// GET logout and redirect to root
+	Route::get('CSQuestion', 'CSQuestionController@showCSQuestion');
+	
 	Route::get('helpcenter', function() {
 	return View::make('helpcenter');
 	});
