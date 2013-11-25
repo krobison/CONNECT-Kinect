@@ -52,8 +52,6 @@ html, body{
 }
 .infolabel,.courselabel{
 	padding:4px;
-	background-color:rgba(0,0,0,0.15);
-	border:1px rgba(0,0,0,0.15) solid;
 	font-family:"Trebuchet MS", Helvetica, sans-serif;
 	font-weight:bold;
 	display:inline-block;
@@ -62,6 +60,10 @@ html, body{
 
 .infolabel{
 	width:156px;
+}
+.courselabel{
+	background-color:rgba(0,0,0,0.15); 
+	border:1px rgba(0,0,0,0.15) solid;
 }
 
 h3{
