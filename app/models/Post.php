@@ -11,8 +11,8 @@ class Post extends Eloquent {
 	 *	Relationships.
 	 */
 	 
-	public function posts() {
-		return $this->hasOne('User');
+	public function user() {
+		return $this->belongsTo('User');
 	}
 		
 	public function comments() {

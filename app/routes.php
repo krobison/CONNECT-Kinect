@@ -9,7 +9,7 @@
 Route::get('/', function() { return View::make('login'); });
 
 // POST login requests
-Route::post('/', 'UserController@loginUser');
+Route::post('loginuser', 'UserController@loginUser');
 
 // GET signup page
 Route::get('signup', function() { return View::make('signup'); });
@@ -30,15 +30,21 @@ Route::group(array('before' => 'auth'), function() {
 	// GET newsfeed page
 	Route::get('newsfeed', 'DashboardController@showNewsfeed');
 	
-	// GET logout and redirect to root
-	Route::get('logout', 'UserController@logoutUser');
-		
-	Route::get('helpcenter', function() {
-	return View::make('helpcenter');
-	});
-
+	// GET profile
+	Route::get('profile', 'DashboardController@showProfile');
+	
+	// GET cs question?
+	Route::get('CSQuestion', 'CSQuestionController@showCSQuestion');
+	
+	// GET help center
+	Route::get('helpCenter', 'DashboardController@showHelpCenter');
+	
+	// POST help center posts
 	Route::post('createhelppost', 'PostController@createHelpPost');
 	
+	// GET logout and redirect to root
+	Route::get('logout', 'UserController@logoutUser');
+
 });
 
 /**
@@ -56,9 +62,5 @@ Route::get('csTestBox', function() {
 });
 
 Route::get('phptest', function() { return View::make('phptest'); });
-
-Route::get('csProfile', function() {
-	return View::make('csProfile');
-});
 
 
