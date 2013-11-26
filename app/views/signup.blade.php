@@ -13,12 +13,14 @@
 
 <body>
 	<div class="page-header">
-		<img class="logo" src="http://toilers.mines.edu/csconnect-jlyons/img/Connect_Logo.png">
+		{{ HTML::image('assets/img/Connect_Logo.png') }}
 	</div>	
 	
-	@if(Session::has('message'))		
-		<p> There has been a problem registering your information please try again later. </p>
+	<div class="span6" style="text-align:center">
+	@if(Session::has('message'))	
+		<p> {{Session::get('message');}} </p>
 	@endif
+	</div>	
 	
 	
 	<div class="container">

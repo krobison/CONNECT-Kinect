@@ -14,6 +14,13 @@
 	<div class="page-header">
 		{{ HTML::image('assets/img/Connect_Logo.png') }}
 	</div>
+	
+	<div class="span6" style="text-align:center">
+	@if(Session::has('message'))	
+		<p> {{Session::get('message');}} </p>
+	@endif
+	</div>	
+	
 	<div class="content">
 		<div class="container" id="signmein">
 		
