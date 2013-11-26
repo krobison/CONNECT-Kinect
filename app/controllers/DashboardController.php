@@ -9,11 +9,13 @@ class DashboardController extends BaseController {
 	}
 	
 	public function showProfile() {
-		return View::make('profile');
+		return View::make('profile')
+			->with('user', Auth::user());
 	}
 	
 	public function showHelpCenter() {
-		return View::make('helpCenter');
+		return View::make('helpCenter')
+			->with('user', Auth::user());
 	}
 	
 }
