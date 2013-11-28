@@ -78,10 +78,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		'email' => 'required|email|unique:users',
 		'password' => 'required|alpha_num|between:4,32|confirmed',
 		'password_confirmation' => 'required|alpha_num|between:4,32',
-	 	'bio' => 'max:500'
+	 	'bio' => 'max:500',
+		'profilepic' => 'image|size:200'
 	);
-	
-		
+
 	public static function validate($data) {
 	 	$rules = array_add(static::$rules, 'email', 'required|email|unique:users,email,'.$data['id']);
 		return Validator::make($data, $rules);

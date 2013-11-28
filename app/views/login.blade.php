@@ -2,12 +2,11 @@
 <html>
 
 <head>
-
+	<!-- Loading CSS-->
 	{{ HTML::style('assets/css/bootstrap.min.css') }}
 	{{ HTML::style('assets/css/signin.css') }}
 	{{ HTML::style('assets/css/social-buttons.css') }}
 	{{ HTML::style('assets/css/font-awesome.min.css') }}
-
 </head>
 
 <body>
@@ -71,12 +70,13 @@
 	</div>
 	<div id="footer">
 		<div class="container">
-			<p class="text-muted credit">©2013 Toilers research group, Colorado School of Mines 		{{ HTML::image('assets/img/mines_logo.png') }}
- 		{{ HTML::image('assets/img/toilers.png') }}
- </p>
+			<p class="text-muted credit">©2013 Toilers research group, Colorado School of Mines 
+				{{ HTML::image('assets/img/mines_logo.png') }}
+				{{ HTML::image('assets/img/toilers.png') }}
+			</p>
 		</div>
 	</div>
-	
-	{{ HTML::script('assets/js/jquery-2.0.3.min.js') }}
+	<!-- Loading all scripts at the end for performance-->
+	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
 </body>
 </html>

@@ -9,8 +9,9 @@ class UserController extends BaseController {
 
 	// Create a new user in the database, with validations
 	public function createUser() {
+		$data = Input::all();	
 		$validator = Validator::make(Input::all(), User::$rules);
-		
+
 		if($validator->passes()) {
 			try {
 				$user = new User;
@@ -28,7 +29,6 @@ class UserController extends BaseController {
 				// Get the profile picture upload from the file array
 				$file = Input::file('profilepic');
 				if($file) {
-					//$oldFilename = $file->getClientOriginalName();
 					$extension = $file->getClientOriginalExtension();
 					$newFilename = str_random(25) . "." . $extension;
 					$destinationPath = base_path() . '/assets/img/profile_images';
@@ -44,9 +44,10 @@ class UserController extends BaseController {
 				
 			} catch( Exception $e ) {
 				Log::error('New User Error: ' . $e);
-                return Redirect::back()->with('message', 'Login Failed: '.$e->getMessage());
+				return Redirect::back()->with('message', 'Login Failed: '.$e->getMessage());
 			}
 		} else {
+			Log::error("Here is the data:".implode(User::$rules)." ".$validator->messages()." end");
 			return Redirect::back()->withErrors($validator);
 		}
 	}

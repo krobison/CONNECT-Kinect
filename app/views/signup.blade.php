@@ -2,13 +2,10 @@
 <html>
 
 <head>
-
+	<!-- Loading CSS-->
 	{{ HTML::style('assets/css/bootstrap.min.css') }}
 	{{ HTML::style('assets/css/csNewUser.css') }}
 	{{ HTML::style('assets/css/select2.css') }}
-	{{ HTML::script('assets/js/jquery-2.0.3.min.js') }}
-	{{ HTML::script('assets/js/select2.js') }}
-	
 </head>
 
 <body>
@@ -176,14 +173,7 @@
 			</select>
 		</div>
 	</div><br>
-	<script>
-        $(document).ready(function() { 
-			$("#classSelect").select2({
-			placeholder: "Select Your Classes"
-			});
-		});
-    </script>
-	
+		
 	<div class="row">
 		{{Form::label('bio', 'Say a few things about yourself:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10'))}}	
 	</div>
@@ -205,13 +195,21 @@
 	@endif
 		
 	<div class="row">
-		{{Form::label('profilepic', 'Profile Picture:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10'))}}	
+		{{Form::label('profilepic', 'Profile Picture: (jpeg, png, bmp, or gif && 2MB Maximum size)', array('class' => 'col-md-offset-2 col-xs-12 col-md-10'))}}	
 	</div>
 	<div class="row">
 		<div class ="col-xs-5 col-md-4 col-md-offset-2">
 		{{Form::file('profilepic', array())}}		
 		</div>
 	</div>
+	
+	@if($errors->has('profilepic'))
+		<div class="row">
+			<div class="error col-xs-10 col-md-8 col-md-offset-2">
+			{{$errors->first('profilepic')}}
+			</div>
+		</div>
+	@endif
 	
 	<br />
 	<div class="row">
@@ -221,7 +219,17 @@
 	</div>
 	{{ Form::close() }}	
 </div>
-	
+
+<!-- Loading all scripts at the end for performance-->
+{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
+{{ HTML::script('assets/js/select2.js') }}
+<script>
+	$(document).ready(function() { 
+		$("#classSelect").select2({
+		placeholder: "Select Your Classes"
+		});
+	});
+</script>
 	
 </body>
 </html>
