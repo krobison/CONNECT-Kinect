@@ -33,12 +33,20 @@ class UserController extends BaseController {
 					$newFilename = str_random(25) . "." . $extension;
 					$destinationPath = base_path() . '/assets/img/profile_images';
 					$uploadSuccess = Input::file('profilepic')->move($destinationPath, $newFilename);
+					if($uploadSuccess) {
+						$user->picture = $newFilename;
+					}
 				}
-
-				// Save the name of the picture to the database
-				$user->picture = $newFilename;
+							
 				// Write all fields in user to the database
 				$user->save();
+				
+				// Attach Classes
+				$courses = Input::get("classes");
+				foreach($courses as $course) {
+					//$user->courses()->attach($course, 1); 
+					$user->courses()->attach($course);
+				}
 				
 				return Redirect::to('/')->with('message', 'A new account has been created! Please try logging in.');
 				
@@ -47,7 +55,7 @@ class UserController extends BaseController {
 				return Redirect::back()->with('message', 'Login Failed: '.$e->getMessage());
 			}
 		} else {
-			Log::error("Here is the data:".implode(User::$rules)." ".$validator->messages()." end");
+			Log::error("Validation Failure: ".$validator->messages());
 			return Redirect::back()->withErrors($validator);
 		}
 	}

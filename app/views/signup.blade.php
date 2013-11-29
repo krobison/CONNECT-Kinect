@@ -14,7 +14,7 @@
 	</div>	
 	
 	<div class="span6" style="text-align:center">
-	@if(Session::has('message'))	
+	@if(Session::has('message'))
 		<p> {{Session::get('message');}} </p>
 	@endif
 	</div>	
@@ -60,7 +60,7 @@
 				'class' => 'form-control',
 				'placeholder' => 'E-mail',
 				'required'
-			))}}		
+			))}}
 		</div>
 	</div>
 	@if($errors->has('email'))
@@ -127,7 +127,7 @@
 	</div>
 	<div class="row">
 		<div class ="col-xs-10 col-md-8 col-md-offset-2">
-		{{Form::text('grad_date', null, array(
+			{{Form::text('grad_date', null, array(
 				'class' => 'form-control',
 				'placeholder' => 'May 2015'
 			))}}
@@ -160,15 +160,15 @@
 	
 
 	<div class="row">
-		{{Form::label('classes', 'Please select classes that you are currently enrolled in:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10'))}}	
+		{{ Form::label('classes', 'Please select the CS classes that you are currently enrolled in:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10')) }}	
 	</div>
 	<div class="row">
 		<div class ="col-xs-10 col-md-8 col-md-offset-2">
-			<select multiple class="select2-container classSelect" id="classSelect">
+			<select multiple class="select2-container classSelect" name="classes[]">
 				<optgroup label="Computer Science">
-					<option>CSCI 101 - Introduction to Computer Science</option>
-					<option>CSCI 261 - Programming Concepts</option>
-					<option>CSCI 262 - Data Structures</option>
+					@foreach(Course::all() as $course)
+						<option value={{ $course->id }}>{{ $course->prefix }}{{ $course->number }} - {{ $course->name }}</option>
+					@endforeach
 				</optgroup>
 			</select>
 		</div>
@@ -225,7 +225,7 @@
 {{ HTML::script('assets/js/select2.js') }}
 <script>
 	$(document).ready(function() { 
-		$("#classSelect").select2({
+		$(".select2-container").select2({
 		placeholder: "Select Your Classes"
 		});
 	});
