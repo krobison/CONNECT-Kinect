@@ -79,7 +79,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		'password' => 'required|alpha_num|between:4,32|confirmed',
 		'password_confirmation' => 'required|alpha_num|between:4,32',
 	 	'bio' => 'max:500',
-		'profilepic' => 'image|size:200'
+		'profilepic' => 'image|max:2000'
 	);
 
 	public static function validate($data) {

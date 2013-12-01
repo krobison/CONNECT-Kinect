@@ -19,7 +19,6 @@
 	@endif
 	</div>	
 	
-	
 	<div class="container">
 	{{ Form::open(array('url' => 'signup', 'files' => true)) }}
 	<div class="rowlabel">
@@ -109,71 +108,113 @@
 			</div>
 		</div>	
 	@endif
-
+	
 	<div class="row">
+		{{Form::label('student', 'Are you a student?', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
+	</div>
+	<div class="row">
+		<div class ="col-xs-10 col-md-8 col-md-offset-2">
+		<ul class="list-inline student_switch">
+		  <li> {{ Form::radio('student', 'yes') }} Yes  </li>
+		  <li> {{ Form::radio('student', 'no', true) }} No </li>
+		</ul>
+		</div>
+	</div>
+
+	<div id="student_panel" style="display: none">
+		<div class="row">
 			{{Form::label('degree_type', 'Degree Type', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
-	</div>
-	<div class="row">
-		<div class ="col-xs-10 col-md-8 col-md-offset-2">
-			{{Form::text('degree_type', null, array(
-				'class' => 'form-control',
-				'placeholder' => 'Bachelors'
-			))}}		
 		</div>
-	</div>
-	
-	<div class="row">
-			{{Form::label('grad_date', 'Graduation Date', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
-	</div>
-	<div class="row">
-		<div class ="col-xs-10 col-md-8 col-md-offset-2">
-			{{Form::text('grad_date', null, array(
-				'class' => 'form-control',
-				'placeholder' => 'May 2015'
-			))}}
+		<div class="row">
+			<div class ="col-xs-10 col-md-8 col-md-offset-2">
+				{{Form::text('degree_type', null, array(
+					'class' => 'form-control',
+					'placeholder' => 'Bachelors'
+				))}}		
+			</div>
 		</div>
-	</div>
-
-	<div class="row">
-		{{Form::label('major', 'Major(s)', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
-	</div>
-	<div class="row">
-		<div class ="col-xs-10 col-md-8 col-md-offset-2">
-			{{Form::text('major', null, array(
-				'class' => 'form-control',
-				'placeholder' => 'Computer Science'
-			))}}		
-		</div>
-	</div>
-	
-	<div class="row">
-		{{Form::label('minor', 'Minor(s)', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
-	</div>
-	<div class="row">
-		<div class ="col-xs-10 col-md-8 col-md-offset-2">
-			{{Form::text('minor', null, array(
-				'class' => 'form-control',
-				'placeholder' => 'BELS, Physics'
-			))}}		
-		</div>
-	</div>
-	
-
-	<div class="row">
-		{{ Form::label('classes', 'Please select the CS classes that you are currently enrolled in:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10')) }}	
-	</div>
-	<div class="row">
-		<div class ="col-xs-10 col-md-8 col-md-offset-2">
-			<select multiple class="select2-container classSelect" name="classes[]">
-				<optgroup label="Computer Science">
-					@foreach(Course::all() as $course)
-						<option value={{ $course->id }}>{{ $course->prefix }}{{ $course->number }} - {{ $course->name }}</option>
-					@endforeach
-				</optgroup>
-			</select>
-		</div>
-	</div><br>
 		
+		<div class="row">
+				{{Form::label('grad_date', 'Graduation Date', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
+		</div>
+		<div class="row">
+			<div class ="col-xs-10 col-md-8 col-md-offset-2">
+				{{Form::text('grad_date', null, array(
+					'class' => 'form-control',
+					'placeholder' => 'May 2015'
+				))}}
+			</div>
+		</div>
+
+		<div class="row">
+			{{Form::label('major', 'Major(s)', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
+		</div>
+		<div class="row">
+			<div class ="col-xs-10 col-md-8 col-md-offset-2">
+				{{Form::text('major', null, array(
+					'class' => 'form-control',
+					'placeholder' => 'Computer Science'
+				))}}		
+			</div>
+		</div>
+		
+		<div class="row">
+			{{Form::label('minor', 'Minor(s)', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
+		</div>
+		<div class="row">
+			<div class ="col-xs-10 col-md-8 col-md-offset-2">
+				{{Form::text('minor', null, array(
+					'class' => 'form-control',
+					'placeholder' => 'BELS, Physics'
+				))}}		
+			</div>
+		</div>
+		
+		<div class="row">
+			{{ Form::label('classes', 'Please select the CS classes that you are currently enrolled in:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10')) }}	
+		</div>
+		<div class="row">
+			<div class ="col-xs-10 col-md-8 col-md-offset-2">
+				<select multiple class="select2-container classSelect" name="classes[]">
+					<optgroup label="Computer Science">
+						@foreach(Course::all() as $course)
+							<option value={{ $course->id }}>{{ $course->prefix }}{{ $course->number }} - {{ $course->name }}</option>
+						@endforeach
+					</optgroup>
+				</select>
+			</div>
+		</div><br>
+	</div>
+	
+	<div class="row">
+		{{Form::label('instructor', 'Are you a CS instructor?', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
+	</div>
+	<div class="row">
+		<div class ="col-xs-10 col-md-8 col-md-offset-2">
+		<ul class="list-inline instructor_switch">
+			<li> {{ Form::radio('instructor', 'yes'}} Yes  </li>
+			<li> {{ Form::radio('instructor', 'no', true }} No </li>
+		</ul>
+		</div>
+	</div>
+	
+	<div id="instructor_panel" style="display: none">
+		<div class="row">
+			{{ Form::label('classes_instructor', 'Please select the CS classes for which you are an instructor:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10')) }}	
+		</div>
+		<div class="row">
+			<div class ="col-xs-10 col-md-8 col-md-offset-2">
+				<select multiple class="select2-container classSelect" name="classes_instructor[]">
+					<optgroup label="Computer Science">
+						@foreach(Course::all() as $course)
+							<option value={{ $course->id }}>{{ $course->prefix }}{{ $course->number }} - {{ $course->name }}</option>
+						@endforeach
+					</optgroup>
+				</select>
+			</div>
+		</div><br>
+	</div>
+
 	<div class="row">
 		{{Form::label('bio', 'Say a few things about yourself:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10'))}}	
 	</div>
@@ -211,7 +252,7 @@
 		</div>
 	@endif
 	
-	<br />
+	<br/>
 	<div class="row">
 		<div class ="col-xs-5 col-md-4 col-md-offset-2">
 			{{Form::submit('Register', array('class' => 'btn btn-lg btn-primary btn-block'))}}
@@ -226,7 +267,13 @@
 <script>
 	$(document).ready(function() { 
 		$(".select2-container").select2({
-		placeholder: "Select Your Classes"
+			placeholder: "Select Your Classes"
+		});
+		$(".instructor_switch").change(function() {
+			$("#instructor_panel").slideToggle();
+		});
+		$(".student_switch").change(function() {
+			$("#student_panel").slideToggle();
 		});
 	});
 </script>

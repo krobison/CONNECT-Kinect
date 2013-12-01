@@ -15,16 +15,21 @@ class UserController extends BaseController {
 		if($validator->passes()) {
 			try {
 				$user = new User;
+				
+				// Add entries the the database that belong to everyone
 				$user->first = Input::get('first');
 				$user->last = Input::get('last');
 				$user->email = Input::get('email');               
 				$user->password = Hash::make(Input::get('password'));
-				$user->instructor = '0';
-				$user->degree_type = Input::get('degree_type');
-				$user->grad_date = Input::get('grad_date');
-				$user->major = Input::get('major');
-				$user->minor = Input::get('minor');
 				$user->bio = Input::get('bio');
+				
+				// Add entries to the database that only belong to students
+				if(Input::get("student") == "yes") {
+					$user->degree_type = Input::get('degree_type');
+					$user->grad_date = Input::get('grad_date');
+					$user->major = Input::get('major');
+					$user->minor = Input::get('minor');
+				}
 				
 				// Get the profile picture upload from the file array
 				$file = Input::file('profilepic');
@@ -41,11 +46,20 @@ class UserController extends BaseController {
 				// Write all fields in user to the database
 				$user->save();
 				
-				// Attach Classes
-				$courses = Input::get("classes");
-				foreach($courses as $course) {
-					//$user->courses()->attach($course, 1); 
-					$user->courses()->attach($course);
+				// Update classes for the student
+				if(Input::get("student") == "yes") {
+					$courses = Input::get("classes");
+					foreach($courses as $course) {
+						$user->courses()->attach($course, array("instructor"=>0)); 
+					}
+				}
+				
+				// Update classes for the instructor
+				if(Input::get("instructor") == "yes") {
+					$courses = Input::get("classes_instructor");
+					foreach($courses as $course) {
+						$user->courses()->attach($course, array("instructor"=>1)); 
+					}
 				}
 				
 				return Redirect::to('/')->with('message', 'A new account has been created! Please try logging in.');
