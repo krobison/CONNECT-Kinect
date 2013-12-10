@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+@extends('common.master')
+
+@section('content')
+
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -77,3 +80,5 @@
     <script src="http://getbootstrap.com/docs-assets/js/holder.js"></script>
   </body>
 </html>
+
+@stop

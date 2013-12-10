@@ -37,7 +37,7 @@ Route::group(array('before' => 'auth'), function() {
 	Route::get('CSQuestion', 'CSQuestionController@showCSQuestion');
 	
 	// GET help center
-	Route::get('helpCenter', 'DashboardController@showHelpCenter');
+	Route::get('helpCenter', 'HelpCenterController@showHelp');
 	
 	// POST help center posts
 	Route::post('createhelppost', 'PostController@createHelpPost');
@@ -51,10 +51,6 @@ Route::group(array('before' => 'auth'), function() {
  *	Experimental routes.
  *	Stuff that we are still testing out, and shit.
  */
-
-// stuff that thomas is working on..? ...yeah...derp
-Route::get('post', 'PostController@showPost');
-Route::post('newuser', 'PostController@addUser');
 
 // For testing the new style to replace the checkboxes
 Route::get('csTestBox', function() {

@@ -192,8 +192,8 @@
 	<div class="row">
 		<div class ="col-xs-10 col-md-8 col-md-offset-2">
 		<ul class="list-inline instructor_switch">
-			<li> {{ Form::radio('instructor', 'yes'}} Yes  </li>
-			<li> {{ Form::radio('instructor', 'no', true }} No </li>
+			<li> {{ Form::radio('instructor', 'yes') }} Yes  </li>
+			<li> {{ Form::radio('instructor', 'no', true) }} No </li>
 		</ul>
 		</div>
 	</div>

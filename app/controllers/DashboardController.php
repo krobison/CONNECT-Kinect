@@ -14,8 +14,8 @@ class DashboardController extends BaseController {
 	}
 	
 	public function showHelpCenter() {
-		return View::make('helpCenter')
+		return View::make('help')
 			->with('user', Auth::user());
 	}
-	
+
 }
