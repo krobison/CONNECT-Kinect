@@ -16,10 +16,10 @@ To quickly get going on Toiler's, follow these instructions.
 First log onto Toiler's through SSH then make sure you are in the /home/www/ directory.
 ```shell
 # Clone the repository from GitHub through HTTPS.
-git clone https://github.com/CONNECT-Mines/CS-CONNECT.git <csconnect-yourusernamehere>
+git clone https://github.com/CONNECT-Mines/CS-CONNECT.git csconnect-yourusernamehere
 
 # Give Laravel write access to the storage folder.
-cd <csconnect-yourusernamehere>/app
+cd csconnect-yourusernamehere/app
 chmod o+w -R storage
 ```
 Once done, access at this link: http://toilers.mines.edu/csconnect-yourusernamehere/
