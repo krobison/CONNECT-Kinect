@@ -17,6 +17,35 @@ class PostController extends BaseController {
 			return Redirect::back()->with('message', 'Your post cannot be created at this time, please try again later.');
 		}
 	}
+
+	public function createComment() {
+
+		try {
+
+			$comment = new Comment;
+
+			$comment->content = Input::get('content');
+			$comment->user_id = Input::get('user_id');
+			$comment->post_id = Input::get('post_id');
+
+			$comment->save();
+
+			return Redirect::back()->with('message', "You have commented successfully");
+
+		} catch( Exception $e ) {
+
+			dd($e);
+
+			return Redirect::back()->with('message', "You have commented unsuccessfully");
+		}
+		
+	}
+
+	public function showSinglePost($id) {
+		return View::make('singlepost')
+			->with('user', Auth::user())
+			->with('post', Post::find($id));
+	}
 	
 	// Render the view
 	public function showPost() {

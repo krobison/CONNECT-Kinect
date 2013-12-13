@@ -45,6 +45,10 @@ Route::group(array('before' => 'auth'), function() {
 	// GET logout and redirect to root
 	Route::get('logout', 'UserController@logoutUser');
 
+	Route::get('singlepost/{id}', 'PostController@showSinglePost');
+
+	Route::post('createComment', 'PostController@createComment');
+
 });
 
 /**
@@ -58,5 +62,4 @@ Route::get('csTestBox', function() {
 });
 
 Route::get('phptest', function() { return View::make('phptest'); });
-
 
