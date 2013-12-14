@@ -7,7 +7,11 @@
 @section('content')
 	<div class="basic">
 	    <div class="picture">
-	    	{{ HTML::image('assets/img/dummy.png') }}
+			@if(is_null($currentuser->picture))
+				{{ HTML::image('assets/img/dummy.png') }}
+			@else
+				{{ HTML::image('assets/img/profile_images/'.$currentuser->picture) }}
+			@endif
 	    </div>
 	    <div class="info">
 	    	<h3>Basic Information</h3>
