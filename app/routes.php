@@ -31,7 +31,7 @@ Route::group(array('before' => 'auth'), function() {
 	Route::get('newsfeed', 'DashboardController@showNewsfeed');
 	
 	// GET profile
-	Route::get('profile', 'DashboardController@showProfile');
+	Route::get('profile/{id}', 'DashboardController@showProfile');
 	
 	// GET cs question?
 	Route::get('CSQuestion', 'CSQuestionController@showCSQuestion');

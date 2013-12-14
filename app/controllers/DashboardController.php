@@ -8,9 +8,10 @@ class DashboardController extends BaseController {
 			->with('posts', Post::orderBy('created_at', 'DESC')->get());
 	}
 	
-	public function showProfile() {
+	public function showProfile($id) {
 		return View::make('profile')
-			->with('user', Auth::user());
+			->with('user', Auth::user())
+			->with('currentuser', User::find($id));
 	}
 	
 	public function showHelpCenter() {
