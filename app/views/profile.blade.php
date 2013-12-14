@@ -12,15 +12,15 @@
 	    <div class="info">
 	    	<h3>Basic Information</h3>
 	    	<span class="infolabel">Name:</span>
-	    		<span>Darth Vader</span><br>
+	    		<span>{{$currentuser->first}} {{$currentuser->last}}</span><br>
 	    	<span class="infolabel">Degree:</span>
-	    		<span>Bachelors</span><br>
+	    		<span>{{$currentuser->degree_type}}</span><br>
 	    	<span class="infolabel">Graduation Date:</span>
-	    		<span>May 2015</span><br>
+	    		<span>{{$currentuser->grad_date}}</span><br>
 	    	<span class="infolabel">Major:</span>
-	    		<span>Computer Science</span><br>
+	    		<span>{{$currentuser->major}}</span><br>
 	    	<span class="infolabel">Minor:</span>
-	    		<span>BELS , Energy</span><br>
+	    		<span>{{$currentuser->minor}}</span><br>
 	    </div>
 	    <div class="courses">
 	    	<h3>Courses</h3>
