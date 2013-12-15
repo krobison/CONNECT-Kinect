@@ -8,10 +8,10 @@
 	<div class="basic">
 	    <div class="picture">
 			@if(is_null($currentuser->picture))
-				{{ HTML::image('assets/img/dummy.png') }}
+				{{ HTML::image('assets/img/dummy.png', 'profile picture', array('width' => '256', 'height' => '256')) }}
 			@else
-				{{ HTML::image('assets/img/profile_images/'.$currentuser->picture) }}
-			@endif
+				{{ HTML::image('assets/img/profile_images/'.$currentuser->picture, 'profile picture', array('width' => '256', 'height' => '256')) }}
+			@endif 
 	    </div>
 	    <div class="info">
 	    	<h3>Basic Information</h3>
