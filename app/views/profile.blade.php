@@ -12,9 +12,16 @@
 			@else
 				{{ HTML::image('assets/img/profile_images/'.$currentuser->picture, 'profile picture', array('width' => '256', 'height' => '256')) }}
 			@endif 
-	    </div>
+		</div>
 	    <div class="info">
-	    	<h3>Basic Information</h3>
+			
+			<h3>
+			Basic Information
+			@if ($currentuser==$user)
+			<span class="editbutton"> <a href="{{ URL::to('editprofile') }}">Edit Profile</a> </span>
+			@endif
+			</h3>
+			
 	    	<span class="infolabel">Name:</span>
 	    		<span>{{$currentuser->first}} {{$currentuser->last}}</span><br>
 	    	<span class="infolabel">Degree:</span>

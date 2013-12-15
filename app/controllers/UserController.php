@@ -91,5 +91,9 @@ class UserController extends BaseController {
 		Auth::logout();
 		return Redirect::to('/')->with('message', 'You have successfully been logged out.');
 	}
-		
+	
+	public function editUser() {
+		return View::make('editProfile')->with('user', Auth::user());
+	}
+
 }

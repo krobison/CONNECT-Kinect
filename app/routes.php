@@ -33,6 +33,9 @@ Route::group(array('before' => 'auth'), function() {
 	// GET profile
 	Route::get('profile/{id}', 'DashboardController@showProfile');
 	
+	// GET edit profile page
+	Route::get('editprofile', 'UserController@editUser');
+	
 	// GET cs question?
 	Route::get('CSQuestion', 'CSQuestionController@showCSQuestion');
 	

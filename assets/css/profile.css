@@ -69,6 +69,13 @@
 	border:1px rgba(0,0,0,0.15) solid;
 }
 
+.editbutton{
+	padding:4px;
+	margin-left:108px;
+	font-size:medium;
+	
+}
+
 h3{
 	font-family:"Trebuchet MS", Helvetica, sans-serif;
 }
