@@ -28,11 +28,9 @@
 	    </div>
 	    <div class="courses">
 	    	<h3>Courses</h3>
-	    		<span class="courselabel">CSCI406 - Algorithms</span>
-	    		<span class="courselabel">CSCI306 - Software Engineering</span>
-	    		<span class="courselabel">CSCI404 - Aritificial Intelligence</span>
-	    		<span class="courselabel">CSCI445 - Web Programming</span>
-	    		<span class="courselabel">CSCI358 - Discrete Mathematics</span>
+			@foreach ($currentuser->courses as $course)
+	    		<span class="courselabel">{{$course->prefix}}{{$course->number}} - {{$course->name}}</span>
+	    	@endforeach
 	    </div>
 	</div>
 	<div class="custom">
