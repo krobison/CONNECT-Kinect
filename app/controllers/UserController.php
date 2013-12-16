@@ -97,17 +97,51 @@ class UserController extends BaseController {
 	}
 	
 	public function changedAccount(){
-		//UPDATE USER
-			DB::table('users')->where('id',Auth::user()->id)
-			->update(array
-				('first' => Input::get("first"),
-				'last' => Input::get("last"),
-				'degree_type' => Input::get("degree"),
-				'grad_date' => Input::get("grad"),
-				'major' => Input::get("major"),
-				'minor' => Input::get("minor")
-			));
-		return Redirect::to('profile/'.Auth::user()->id);
+		if (Input::get('old') != ""){
+			$validator = Validator::make(Input::all(), User::$editrules);
+			if (Hash::check(Input::get('old'),Auth::user()->password)){
+				if($validator->passes()) {
+					//UPDATE USER
+					DB::table('users')->where('id',Auth::user()->id)
+					->update(array
+						('first' => Input::get("first"),
+						'last' => Input::get("last"),
+						'degree_type' => Input::get("degree"),
+						'grad_date' => Input::get("grad"),
+						'major' => Input::get("major"),
+						'minor' => Input::get("minor")
+					));
+					return Redirect::to('profile/'.Auth::user()->id);
+				}
+				else{
+					return Redirect::back()->withErrors($validator);
+				}
+			}
+			else{
+				return Redirect::to('badpasswordedit');
+			}
+		}else{
+			$validator = Validator::make(Input::all(), User::$editrulesnopass);
+			if($validator->passes()) {
+				//UPDATE USER
+				DB::table('users')->where('id',Auth::user()->id)
+				->update(array
+					('first' => Input::get("first"),
+					'last' => Input::get("last"),
+					'degree_type' => Input::get("degree"),
+					'grad_date' => Input::get("grad"),
+					'major' => Input::get("major"),
+					'minor' => Input::get("minor")
+				));
+				return Redirect::to('profile/'.Auth::user()->id);
+			}
+			else{
+				return Redirect::back()->withErrors($validator);
+			}
+		}
 	}
-
+	
+	public function badPassword(){
+		return View::make('editProfile')->with('user', Auth::user())->with('badPassword','true');
+	}
 }

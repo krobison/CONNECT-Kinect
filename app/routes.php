@@ -53,6 +53,8 @@ Route::group(array('before' => 'auth'), function() {
 	Route::post('createComment', 'PostController@createComment');
 	
 	Route::post('changedAccount','UserController@changedAccount');
+	
+	Route::get('badpasswordedit','UserController@badPassword');
 
 });
 
