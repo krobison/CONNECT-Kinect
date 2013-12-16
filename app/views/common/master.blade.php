@@ -77,7 +77,7 @@
 	
 	</div>
 	
-	{{ HTML::script('assets/js/jquery-2.0.3.min.js') }}
+	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
 	{{ HTML::script('assets/js/bootstrap.min.js') }}
 
 </body>
