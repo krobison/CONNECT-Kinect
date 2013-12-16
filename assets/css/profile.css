@@ -70,12 +70,14 @@
 }
 
 .editbutton{
-	padding:4px;
-	margin-left:108px;
-	font-size:medium;
-	
+	font-size:small;
 }
 
 h3{
 	font-family:"Trebuchet MS", Helvetica, sans-serif;
+}
+
+.editheader{
+	margin-left:32px;
+	margin-bottom:16px;
 }

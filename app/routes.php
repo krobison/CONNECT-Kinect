@@ -51,6 +51,8 @@ Route::group(array('before' => 'auth'), function() {
 	Route::get('singlepost/{id}', 'PostController@showSinglePost');
 
 	Route::post('createComment', 'PostController@createComment');
+	
+	Route::post('changedAccount','UserController@changedAccount');
 
 });
 
