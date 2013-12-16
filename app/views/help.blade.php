@@ -2,6 +2,14 @@
 
 @section('additionalHeaders')
 	{{ HTML::style('assets/css/helpcenter.css') }}
+	{{ HTML::style('assets/css/select2.css') }}
+	
+	<style type="text/css" media="screen">
+    #editor { 
+		width: 100%;
+		height: 100px;
+    }
+</style>
 @stop
 
 @section('content')
@@ -62,9 +70,23 @@
 													 'placeholder' => 'Content...',
 													 'rows' => '5')) }}
 	    </div>
-	    
+		
+		<div id = "code-bloc">
+			<select class="select2-container" name="language">
+				@foreach(scandir(getcwd() . '/assets/js/ace/') as $file)
+					<option value={{ $file }}>{{ $file }}</option>
+				@endforeach
+			</select>
+			<div id="editor">
+				function foo(items) {
+					var x = "All this is syntax highlighted";
+					return x;
+				}
+			</div>
+		</div>
+   
 	    <hr>
-	    
+		
 	    <div class="row">
 	    	<div class ="col-xs-5 col-md-4">
 	    	{{Form::submit('Post', array('class' => 'btn btn-lg btn-primary btn-block'))}}			
@@ -72,4 +94,23 @@
 	    </div>
 	    	    	
 	</div>
+	
+	<!-- Loading all scripts at the end for performance-->
+	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
+	{{ HTML::script('assets/js/select2.js') }}
+	{{ HTML::script('assets/js/ace/ace.js') }}
+	
+	
+	<script>
+		var editor = ace.edit("editor");
+		editor.getSession().setUseWorker(false);
+		editor.setTheme("ace/theme/eclipse");
+		editor.getSession().setMode("ace/mode/java");
+		//editor.setReadOnly(true);
+	</script>
+	<script>
+		$(document).ready(function() { 
+			$(".select2-container").select2();
+		});
+	</script>
 @stop
