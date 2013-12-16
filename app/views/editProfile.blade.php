@@ -5,5 +5,6 @@
 @stop
 
 @section('content')
-	Edit profile page
+	<div class="basic">
+	</div>
 @stop
