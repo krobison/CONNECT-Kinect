@@ -9,7 +9,7 @@
 		width: 100%;
 		height: 100px;
     }
-</style>
+	</style>
 @stop
 
 @section('content')
@@ -67,14 +67,19 @@
 	    
 	    <div class="form-group">
 	   		{{ Form::textarea('content', null, array('class' => 'form-control',
-													 'placeholder' => 'Content...',
+													 'placeholder' => 'What do you need help with?',
 													 'rows' => '5')) }}
 	    </div>
 		
 		<div id = "code-bloc">
-			<select class="select2-container" name="language">
-				@foreach(scandir(getcwd() . '/assets/js/ace/') as $file)
-					<option value={{ $file }}>{{ $file }}</option>
+			Language: 
+			<select id="language-select" class="select2-container" name="language">
+				@foreach(Post::getSupportedLanguages() as $language)
+					@if ($language === "plain_text")
+						<option selected value={{ $language }}>{{ ucfirst($language) }}</option>
+					@else
+						<option value={{ $language }}>{{ ucfirst($language) }}</option>
+					@endif
 				@endforeach
 			</select>
 			<div id="editor">
@@ -100,15 +105,15 @@
 	{{ HTML::script('assets/js/select2.js') }}
 	{{ HTML::script('assets/js/ace/ace.js') }}
 	
-	
 	<script>
 		var editor = ace.edit("editor");
 		editor.getSession().setUseWorker(false);
 		editor.setTheme("ace/theme/eclipse");
-		editor.getSession().setMode("ace/mode/java");
+		editor.getSession().setMode("ace/mode/plain_text");
 		//editor.setReadOnly(true);
-	</script>
-	<script>
+		$('#language-select').change(function() {
+			editor.getSession().setMode("ace/mode/" + $('#language-select').val());
+		});
 		$(document).ready(function() { 
 			$(".select2-container").select2();
 		});
