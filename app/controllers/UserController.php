@@ -95,5 +95,19 @@ class UserController extends BaseController {
 	public function editUser() {
 		return View::make('editProfile')->with('user', Auth::user());
 	}
+	
+	public function changedAccount(){
+		//UPDATE USER
+			DB::table('users')->where('id',Auth::user()->id)
+			->update(array
+				('first' => Input::get("first"),
+				'last' => Input::get("last"),
+				'degree_type' => Input::get("degree"),
+				'grad_date' => Input::get("grad"),
+				'major' => Input::get("major"),
+				'minor' => Input::get("minor")
+			));
+		return Redirect::to('profile/'.Auth::user()->id);
+	}
 
 }
