@@ -38,6 +38,10 @@ Route::group(array('before' => 'auth'), function() {
 	
 	// GET cs question?
 	Route::get('CSQuestion', 'CSQuestionController@showCSQuestion');
+
+	Route::get('questiondetails/{id}', 'CSQuestionController@showQuestionDetails');
+
+	Route::post('createCommentQuestion', 'CSQuestionController@createCommentQuestion');
 	
 	// GET help center
 	Route::get('helpCenter', 'HelpCenterController@showHelp');

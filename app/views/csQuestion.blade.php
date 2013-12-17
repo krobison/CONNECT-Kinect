@@ -39,31 +39,42 @@
         <li data-target="#myCarousel" data-slide-to="2"></li>
       </ol>
       <div class="carousel-inner">
-        <div class="item active">
-          <img data-src="holder.js/900x500/auto/#777:#7a7a7a/text:First slide" alt="First slide">
+      	<div class="item active">
+      		<div class="container">
+            	<!-- <a href="//facebook.com"><div class="carousel-caption">
+              		<h1>December 8th, 2013</h1>
+			  		{{ HTML::image('assets/img/InterviewQuestion.png') }}
+            	</div></a> -->
+				{{ View::make('common.csQuestionDetails')->with('question', $questions[0]) }}
+          	</div>
+      	</div>
+        <!-- <div class="item active">
+          <a href="//facebook.com"><img data-src="holder.js/900x500/auto/#777:#7a7a7a/text:First slide" alt="First slide"></a>
           <div class="container">
-            <div class="carousel-caption">
+            <a href="//facebook.com"><div class="carousel-caption">
               <h1>December 8th, 2013</h1>
 			  {{ HTML::image('assets/img/InterviewQuestion.png') }}
-            </div>
+            </div></a>
           </div>
-        </div>
+        </div> -->
         <div class="item">
-          <img data-src="holder.js/900x500/auto/#666:#6a6a6a/text:Second slide" alt="Second slide">
+          <!-- <img data-src="holder.js/900x500/auto/#666:#6a6a6a/text:Second slide" alt="Second slide"> -->
           <div class="container">
-            <div class="carousel-caption">
+            <!-- <div class="carousel-caption">
               <h1>December 15th, 2013</h1>
 			  {{ HTML::image('assets/img/dummy.png') }}
-            </div>
+            </div> -->
+            {{ View::make('common.csQuestionDetails')->with('question', $questions[1]) }}
           </div>
         </div>
         <div class="item">
-          <img data-src="holder.js/900x500/auto/#555:#5a5a5a/text:Third slide" alt="Third slide">
+          <!-- <img data-src="holder.js/900x500/auto/#555:#5a5a5a/text:Third slide" alt="Third slide"> -->
           <div class="container">
-            <div class="carousel-caption">
+            <!-- <div class="carousel-caption">
               <h1>December 25th, 2013</h1>
 			  {{ HTML::image('assets/img/dummy.png') }}
-            </div>
+            </div> -->
+            {{ View::make('common.csQuestionDetails')->with('question', $questions[2]) }}
           </div>
         </div>
       </div>
