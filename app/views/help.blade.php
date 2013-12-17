@@ -82,7 +82,7 @@
 					@endif
 				@endforeach
 			</select>
-			<div id="editor">
+			<div id="editor" name="code">
 				function foo(items) {
 					var x = "All this is syntax highlighted";
 					return x;

@@ -13,6 +13,10 @@ class Post extends Eloquent {
 	public function comments() {
 		return $this->hasMany('Comment');
 	}
+	
+	public function postable() {
+        return $this->morphTo();
+    }
 
 	// This really isn't a model function, however, I need to do a bunch of logic on 
 	// data from the file system and it would be worse to put the logic in the blade template
