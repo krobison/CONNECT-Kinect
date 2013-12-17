@@ -82,11 +82,11 @@
 					@endif
 				@endforeach
 			</select>
-			<div id="editor" name="code">
-				function foo(items) {
-					var x = "All this is syntax highlighted";
-					return x;
-				}
+			<div id="hidden-editor_div">
+				<input id="hidden-editor" type="hidden" name="code">
+			</div>
+			<div id="editor">
+				// Add your code here
 			</div>
 		</div>
    
@@ -106,17 +106,28 @@
 	{{ HTML::script('assets/js/ace/ace.js') }}
 	
 	<script>
+		// Setting up the ace text editor
 		var editor = ace.edit("editor");
 		editor.getSession().setUseWorker(false);
 		editor.setTheme("ace/theme/eclipse");
 		editor.getSession().setMode("ace/mode/plain_text");
+		//editor.setReadOnly(true);
 		editor.setOptions({
 			maxLines: 50
 		});
-		//editor.setReadOnly(true);
+		
+		// Every time the content of the editor changes, update the value of the hidden form field to match
+		editor.getSession().on('change', function(){
+			var code = editor.getSession().getValue();
+			$('#hidden-editor').val(code);
+		});
+		
+		// Handel language select
 		$('#language-select').change(function() {
 			editor.getSession().setMode("ace/mode/" + $('#language-select').val());
 		});
+		
+		// Set up select2 menu (not currently working...)
 		$(document).ready(function() { 
 			$(".select2-container").select2();
 		});
