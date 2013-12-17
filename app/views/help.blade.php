@@ -110,6 +110,9 @@
 		editor.getSession().setUseWorker(false);
 		editor.setTheme("ace/theme/eclipse");
 		editor.getSession().setMode("ace/mode/plain_text");
+		editor.setOptions({
+			maxLines: 50
+		});
 		//editor.setReadOnly(true);
 		$('#language-select').change(function() {
 			editor.getSession().setMode("ace/mode/" + $('#language-select').val());
