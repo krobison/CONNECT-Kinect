@@ -41,7 +41,7 @@
 		</div>
 	    
 		<div id="help-request" class="panel-body">
-			{{ Form::open(array('url' => 'createhelppost')) }}
+			{{ Form::open(array('url' => 'createhelprequestpost')) }}
 			
 			<div class="form-group">
 				<b> How would you like to recieve help? </b> <br>
@@ -114,14 +114,21 @@
 					{{Form::submit('Post', array('class' => 'btn btn-lg btn-primary btn-block'))}}			
 				</div>
 			</div>
+			{{ Form::close() }}
 		</div> 
 		
 		<div id="help-offer" class="panel-body">
-			{{ Form::open(array('url' => 'createhelppost')) }}
+			{{ Form::open(array('url' => 'createhelpofferpost')) }}
 									
 			<div class="form-group">
 				{{ Form::textarea('content', null, array('class' => 'form-control',
-														 'placeholder' => 'What do you want to help other people with? When are you available to help?',
+														 'placeholder' => 'What do you want to help other people with?',
+														 'rows' => '5')) }}
+			</div>
+
+			<div class="form-group">
+				{{ Form::textarea('availability', null, array('class' => 'form-control',
+														 'placeholder' => 'When are you available to help?',
 														 'rows' => '5')) }}
 			</div>
 			
@@ -132,6 +139,7 @@
 					{{Form::submit('Post', array('class' => 'btn btn-lg btn-primary btn-block'))}}			
 				</div>
 			</div>
+			{{ Form::close() }}
 		</div>  	
 	</div>
 	
