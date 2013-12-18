@@ -38,8 +38,8 @@ class DashboardController extends BaseController {
 			->with('teacherClasses',$teacherClasses)
 			->with('posts', 
 				Post::orderBy('created_at', 'DESC')
-				->where('user_id','=',$id)
-				->get()
+					->where('user_id','=',$id)
+					->get()
 				);
 	}
 	
