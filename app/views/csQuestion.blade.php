@@ -37,6 +37,7 @@
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
         <li data-target="#myCarousel" data-slide-to="1"></li>
         <li data-target="#myCarousel" data-slide-to="2"></li>
+        <li data-target="#myCarousel" data-slide-to="3"></li>
       </ol>
       <div class="carousel-inner">
       	<div class="item active">
@@ -75,6 +76,16 @@
 			  {{ HTML::image('assets/img/dummy.png') }}
             </div> -->
             {{ View::make('common.csQuestionDetails')->with('question', $questions[2]) }}
+          </div>
+        </div>
+        <div class="item">
+          <!-- <img data-src="holder.js/900x500/auto/#555:#5a5a5a/text:Third slide" alt="Third slide"> -->
+          <div class="container">
+            <!-- <div class="carousel-caption">
+              <h1>December 25th, 2013</h1>
+        {{ HTML::image('assets/img/dummy.png') }}
+            </div> -->
+            {{ View::make('common.csQuestionSeeAll') }}
           </div>
         </div>
       </div>
