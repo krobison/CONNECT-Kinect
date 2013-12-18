@@ -49,6 +49,9 @@ Route::group(array('before' => 'auth'), function() {
 	// POST help center posts
 	Route::post('createhelppost', 'PostController@createHelpPost');
 	
+	// GET search page
+	Route::get('search', 'DashboardController@showSearch');
+	
 	// GET logout and redirect to root
 	Route::get('logout', 'UserController@logoutUser');
 
