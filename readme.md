@@ -21,6 +21,10 @@ git clone https://github.com/CONNECT-Mines/CS-CONNECT.git csconnect-yourusername
 # Give Laravel write access to the storage folder.
 cd csconnect-yourusernamehere/app
 chmod o+w -R storage
+
+# Give HTML Purify write access as well.
+cd csconnect-yourusernamehere/app
+chmod o+w purify/HTMLPurifier/DefinitionCache/Serializer
 ```
 Once done, access at this link: http://toilers.mines.edu/csconnect-yourusernamehere/
 
