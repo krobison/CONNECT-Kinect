@@ -147,4 +147,18 @@ class UserController extends BaseController {
 	public function badPassword(){
 		return View::make('editProfile')->with('user', Auth::user())->with('badPassword','true');
 	}
+	
+	public function showLogin() {
+		if(Auth::check()) {
+			return Redirect::to('newsfeed');
+		}
+		return View::make('login');
+	}
+	
+	public function showSignUp() {
+		if(Auth::check()) {
+			return Redirect::to('newsfeed');
+		}
+		return View::make('signup');
+	}
 }
