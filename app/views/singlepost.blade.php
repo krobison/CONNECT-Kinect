@@ -5,9 +5,6 @@
 		<div>
 			<h1>CS Interview Question of the Week</h1>
 		</div>
-		<!-- <div style="float:right">
-			test
-		</div> -->
 	@else
     	<h1>Hello world</h1>
 	@endif
@@ -23,12 +20,23 @@
 
 	{{ Form::close() }}
 
-	<div class="well">
-		@foreach ($post->comments as $comment)
+	@foreach ($post->comments as $comment)
+		<div class="well">
+			<div style="float:left; padding-right: 10px">
+			@if (!empty($comment->user->picture))
+				@if ( File::exists('assets/img/profile_images/' . $comment->user->picture ))
+					{{ HTML::image('assets/img/profile_images/'.$comment->user->picture, '$comment->user->id', array('width' => '70', 'height' => '70')) }}
+				@else
+					{{ HTML::image('assets/img/dummy.png', $comment->user->id , array('width' => '70', 'height' => '70')) }}
+				@endif
+			@else
+				{{ HTML::image('assets/img/dummy.png', $comment->user->id , array('width' => '70', 'height' => '70')) }}
+			@endif
+			</div>
 			<p>{{$comment->content}}</p>
 			<p>Posted by {{$comment->user->first}} {{$comment->user->last}} at {{$comment->created_at}}</p>
-		@endforeach
-	</div>
+		</div>
+	@endforeach
 
 	<div class="well">
 		{{ Form::open(array('url' => 'createComment', 'method'=>'post')) }}
@@ -44,3 +52,10 @@
 		{{ Form::close() }}
 	</div>
 @stop
+
+@if ($post->postable_type == 'PostQuestion')
+	@section('seeall')
+		<hr>
+		<li><a href="{{URL::to('showPreviousQuestions')}}">Show Previous Questions</a></li>
+	@stop
+@endif
