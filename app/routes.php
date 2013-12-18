@@ -47,7 +47,8 @@ Route::group(array('before' => 'auth'), function() {
 	Route::get('helpCenter', 'HelpCenterController@showHelp');
 	
 	// POST help center posts
-	Route::post('createhelppost', 'PostController@createHelpPost');
+	Route::post('createhelprequestpost', 'PostController@createHelpRequestPost');
+	Route::post('createhelpofferpost', 'PostController@createHelpOfferPost');
 	
 	// GET logout and redirect to root
 	Route::get('logout', 'UserController@logoutUser');
