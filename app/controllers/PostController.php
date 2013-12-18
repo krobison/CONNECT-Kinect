@@ -168,6 +168,13 @@ class PostController extends BaseController {
 			->with('user', Auth::user())
 			->with('post', $post);
 	}
+
+	public function showPreviousQuestions() {
+		$posts = Post::orderBy('created_at', 'DESC')->where('postable_type', '=', 'PostQuestion')->get();
+		return View::make('newsfeed')
+			->with('user', Auth::user())
+			->with('posts', $posts);
+	}
 	
 	// Render the view
 	public function showPost() {

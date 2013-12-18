@@ -6,13 +6,13 @@
  */
 
 // GET root, login page
-Route::get('/', 'UserController@showLogin');
+Route::get('/', function() { return View::make('login'); });
 
 // POST login requests
 Route::post('loginuser', 'UserController@loginUser');
 
 // GET signup page
-Route::get('signup', 'UserController@showSignUp');
+Route::get('signup', function() { return View::make('signup'); });
 
 // POST signup request
 Route::post('signup', 'UserController@createUser');
@@ -35,6 +35,8 @@ Route::group(array('before' => 'auth'), function() {
 	
 	// GET cs question?
 	Route::get('CSQuestion', 'PostController@showCSQuestion');
+
+	Route::get('showPreviousQuestions', 'PostController@showPreviousQuestions');
 	
 	// GET help center
 	Route::get('helpCenter', 'HelpCenterController@showHelp');

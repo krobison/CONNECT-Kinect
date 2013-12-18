@@ -5,20 +5,24 @@
 		<div>
 			<h1>CS Interview Question of the Week</h1>
 		</div>
-		<!-- <div style="float:right">
-			test
-		</div> -->
 	@else
     	<h1>Hello world</h1>
 	@endif
 	{{View::make('common.newsfeedPost')->with('post', $post)}}
 
-	<div class="well">
-		@foreach ($post->comments as $comment)
-			<p>{{$comment->content}}</p>
-			<p>Posted by {{$comment->user->first}} {{$comment->user->last}} at {{$comment->created_at}}</p>
-		@endforeach
-	</div>
+	{{ Form::open(array('url' => 'upvote', 'method'=>'post')) }}
+
+	{{ Form::hidden('user_id', $user->id) }}
+
+	{{ Form::hidden('post_id', $post->id) }}
+
+	{{ Form::submit('Upvote', array('class' => 'btn btn-lg btn-primary btn-block')) }}
+
+	{{ Form::close() }}
+
+	@foreach ($post->comments as $comment)
+		{{View::make('common.comment')->with('comment', $comment)}}
+	@endforeach
 
 	<div class="well">
 		{{ Form::open(array('url' => 'createComment', 'method'=>'post')) }}
@@ -34,3 +38,10 @@
 		{{ Form::close() }}
 	</div>
 @stop
+
+@if ($post->postable_type == 'PostQuestion')
+	@section('seeall')
+		<hr>
+		<li><a href="{{URL::to('showPreviousQuestions')}}">Show Previous</a></li>
+	@stop
+@endif
