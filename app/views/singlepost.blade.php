@@ -13,16 +13,6 @@
 	@endif
 	{{View::make('common.newsfeedPost')->with('post', $post)}}
 
-	{{ Form::open(array('url' => 'upvote', 'method'=>'post')) }}
-
-	{{ Form::hidden('user_id', $user->id) }}
-
-	{{ Form::hidden('post_id', $post->id) }}
-
-	{{ Form::submit('Upvote', array('class' => 'btn btn-lg btn-primary btn-block')) }}
-
-	{{ Form::close() }}
-
 	<div class="well">
 		@foreach ($post->comments as $comment)
 			<p>{{$comment->content}}</p>

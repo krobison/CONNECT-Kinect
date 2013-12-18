@@ -1,14 +1,23 @@
-<a href="{{URL::to('singlepost', $post->id)}}">
-
-	<div class="well">
+<div class="well">
+	<a href="{{URL::to('singlepost', $post->id)}}">
 		<p> {{ $post->content }} </p>
 		<p> Posted by {{ $post->user->first }} {{ $post->user->last }} at {{ $post->created_at }} </p>
+	</a>
 
-		<a href="{{Request::url()}}">
-			{{ HTML::image('assets/img/upvote.png', 'upvote', array('width' => '22', 'height' => '22')) }}
-		</a>
+	<p> Upvote count: {{ $post->postupvotes->count() }} </p>
 
-		<p> Upvote count: {{ $post->postupvotes->count() }} </p>
-		
-	</div>
-</a>
+	<!-- <span class="glyphicon glyphicon-hand-up"></span> -->
+
+	{{ Form::open(array('url' => 'upvote', 'method'=>'post')) }}
+
+	{{ Form::hidden('user_id', Auth::user()->id) }}
+
+	{{ Form::hidden('post_id', $post->id) }}
+
+	<button type="submit" class="btn btn-primary">
+		<i class="glyphicon glyphicon-hand-up"></i> Upvote
+	</button>
+
+	{{ Form::close() }}
+	
+</div>
