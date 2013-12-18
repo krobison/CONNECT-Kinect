@@ -1,75 +1,53 @@
-<a href="{{URL::to('singlepost', $post->id)}}">
+<div class="well">
 
-	@if ($post->postable_type == "PostHelpRequest")
-	
-		<div class="well">
-			This is a PostHelpRequest post!
-			<p> {{ $post->content }} </p>
-			<p> Posted by {{ $post->user->first }} {{ $post->user->last }} at {{ $post->created_at }} </p>
+@if ($post->postable_type == "PostHelpRequest")
 
-			<p> Upvote count: {{ $post->postupvotes->count() }} </p>
+    <p>This is a PostHelpRequest post!</p>
+ 
+    <p>Language: {{$post->postable->language}}</p>
 
-			{{ Form::open(array('url' => 'upvote', 'method'=>'post')) }}
+@elseif ($post->postable_type == "PostHelpOffer")
 
-			{{ Form::hidden('user_id', Auth::user()->id) }}
+    <p>This is a PostHelpOffer post!</p>
+    		
+@else
 
-			{{ Form::hidden('post_id', $post->id) }}
+    <p>This is a Unspecified post!</p>
+    
+@endif
 
-			<button type="submit" class="btn btn-primary">
-				<i class="glyphicon glyphicon-hand-up"></i> Upvote
-			</button>
-
-			{{ Form::close() }}
-			
-			Langauge: {{$post->postable->language}}
-		</div>
-
-	@elseif ($post->postable_type == "PostHelpOffer")
-	
-		<div class="well">
-			This is a PostHelpOffer post!
-			<p> {{ $post->content }} </p>
-			<p> Posted by {{ $post->user->first }} {{ $post->user->first }} {{ $post->user->last }} at {{ $post->created_at }} </p>
-
-			<p> Upvote count: {{ $post->postupvotes->count() }} </p>
-
-			{{ Form::open(array('url' => 'upvote', 'method'=>'post')) }}
-
-			{{ Form::hidden('user_id', Auth::user()->id) }}
-
-			{{ Form::hidden('post_id', $post->id) }}
-
-			<button type="submit" class="btn btn-primary">
-				<i class="glyphicon glyphicon-hand-up"></i> Upvote
-			</button>
-
-			{{ Form::close() }}
-			
-		</div>
-		
+    <a href="{{URL::to('singlepost', $post->id)}}"> <p> {{ $post->content }} </p> </a>
+  
+    <div style="float:left; padding-right: 10px">
+	@if (!empty($post->user->picture))
+		@if ( File::exists('assets/img/profile_images/' . $post->user->picture ))
+			{{ HTML::image('assets/img/profile_images/'.$post->user->picture, '$comment->user->id', array('width' => '70', 'height' => '70')) }}
+		@else
+			{{ HTML::image('assets/img/dummy.png', $post->user->id , array('width' => '70', 'height' => '70')) }}
+		@endif
 	@else
-	
-		<div class="well">
-			This is a Unspecified post!
-			<p> {{ $post->content }} </p>
-			<p> Posted by {{ $post->user->first }} {{ $post->user->first }} {{ $post->user->first }} {{ $post->user->last }} at {{ $post->created_at }} </p>
-			
-			<p> Upvote count: {{ $post->postupvotes->count() }} </p>
-
-			{{ Form::open(array('url' => 'upvote', 'method'=>'post')) }}
-
-			{{ Form::hidden('user_id', Auth::user()->id) }}
-
-			{{ Form::hidden('post_id', $post->id) }}
-
-			<button type="submit" class="btn btn-primary">
-				<i class="glyphicon glyphicon-hand-up"></i> Upvote
-			</button>
-
-			{{ Form::close() }}
-			
-		</div>
-		
+		{{ HTML::image('assets/img/dummy.png', $post->user->id , array('width' => '70', 'height' => '70')) }}
 	@endif
+	</div>
 	
-</a>
+	{{ Form::open(array('url' => 'upvote', 'method'=>'post')) }}
+
+    {{ Form::hidden('user_id', Auth::user()->id) }}
+
+    {{ Form::hidden('post_id', $post->id) }}
+
+    <button type="submit" class="btn btn-primary">
+        <i class="glyphicon glyphicon-hand-up"></i> Upvote - {{ $post->postupvotes->count() }}
+    </button>
+
+    {{ Form::close() }}
+    <br>
+
+	<p>{{ $post->user->first }} {{ $post->user->last }}, {{ $post->created_at->diffForHumans() }}</p>
+    
+    {{-- Need to clean up --}}
+    
+    
+    
+
+</div>

@@ -12,6 +12,7 @@
 	@else
 		<h1>Post Details</h1>
 	@endif
+	
 	{{View::make('common.newsfeedPost')->with('post', $post)}}
 	
 	@if ($post->postable_type == 'PostHelpRequest' && $post->postable->code != "")
@@ -28,12 +29,9 @@
 		</div>
 	@endif
 
-	<div class="well">
-		@foreach ($post->comments as $comment)
-			<p>{{$comment->content}}</p>
-			<p>Posted by {{$comment->user->first}} {{$comment->user->last}} at {{$comment->created_at}}</p>
-		@endforeach
-	</div>
+	@foreach ($post->comments as $comment)
+		{{ View::make('common.comment')->with('comment', $comment) }}
+	@endforeach
 
 	<div class="well">
 		{{ Form::open(array('url' => 'createComment', 'method'=>'post')) }}
@@ -49,6 +47,13 @@
 		{{ Form::close() }}
 	</div>
 	
+	@if ($post->postable_type == 'PostQuestion')
+		@section('seeall')
+			<hr>
+			<li><a href="{{URL::to('showPreviousQuestions')}}">Show Previous</a></li>
+		@stop
+	@endif
+	
 	{{ HTML::script('assets/js/ace/ace.js') }}
 	<script>
 		// Setting up the ace text editor language
@@ -63,4 +68,7 @@
 			maxLines: 50
 		});
 	</script>
+	
 @stop
+
+

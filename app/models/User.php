@@ -78,7 +78,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		'email' => 'required|email|unique:users',
 		'password' => 'required|alpha_num|between:4,32|confirmed',
 		'password_confirmation' => 'required|alpha_num|between:4,32',
-	 	'bio' => 'max:500',
 		'profilepic' => 'image|max:2000'
 	);
 	
@@ -87,13 +86,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		'last' => 'required|alpha|max:20',
 		'new' => 'required|alpha_num|between:4,32|confirmed',
 		'new_confirmation' => 'required|alpha_num|between:4,32',
-		'bio' => 'max:500'
 	);
 	
 	public static $editrulesnopass = array(
 		'first' => 'required|alpha|max:20',
 		'last' => 'required|alpha|max:20',
-		'bio' => 'max:500'
 	);
 
 	public static function validate($data) {
