@@ -65,6 +65,7 @@
 					<li><a href="{{ URL::to('CSQuestion') }}"> CS Question</a></li>
 					<li><a href="{{ URL::to('helpCenter') }}">Help Center</a></li>
 					<li><a href="{{ URL::to('search') }}">Search</a></li>
+					@yield('seeall')
 				</ul>
 				
 				</div>
