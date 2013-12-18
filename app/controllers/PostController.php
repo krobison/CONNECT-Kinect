@@ -15,17 +15,12 @@ class PostController extends BaseController {
 			// Then add a Post to the Posts table, associating it with the PostHelpRequest through a polymorphic relationship
 			$post = new Post;
 			$post->user_id = Auth::user()->id;
-			$post->anonymous = Input::get('anonymous');
-			$post->post_type = '2';
-			$post->help_request = Input::get('help_request');
 			$post->content = Input::get('content');
 			$post_HR->post()->save($post);
 			
 		//}catch( Exception $e ) {
 		//	return Redirect::back()->with('message', 'Your post cannot be created at this time, please try again later.');
 		//}
-		
-		
 		
 		// Make the specific post data (e.g., helpPost, project, etc...)
 		return Redirect::back()->with('message', 'Your post has been successfully created.');
