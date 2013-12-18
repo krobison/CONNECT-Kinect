@@ -46,6 +46,29 @@
 			{{ Form::close() }}
 			
 		</div>
+
+	@elseif ($post->postable_type == "PostQuestion")
+
+		<div class="well">
+			<p> {{ $post->content }} </p>
+			
+			<p> Sponsored by {{ $post->postable->company_sponser }} </p>
+
+			<p> Upvote count: {{ $post->postupvotes->count() }} </p>
+
+			{{ Form::open(array('url' => 'upvote', 'method'=>'post')) }}
+
+			{{ Form::hidden('user_id', Auth::user()->id) }}
+
+			{{ Form::hidden('post_id', $post->id) }}
+
+			<button type="submit" class="btn btn-primary">
+				<i class="glyphicon glyphicon-hand-up"></i> Upvote
+			</button>
+
+			{{ Form::close() }}
+			
+		</div>
 		
 	@else
 	
