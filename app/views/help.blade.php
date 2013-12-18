@@ -142,6 +142,18 @@
 			{{ Form::close() }}
 		</div>  	
 	</div>
+
+	<h4>Help Requests</h4>
+	
+	@foreach (Post::where('postable_type', '=', 'PostHelpRequest')->get() as $post)
+		{{ View::make('common.newsfeedPost')->with('post', $post) }}
+	@endforeach
+	
+	<h4>Help Offers</h4>
+	
+	@foreach (Post::where('postable_type', '=', 'PostHelpOffer')->get() as $post)
+		{{ View::make('common.newsfeedPost')->with('post', $post) }}
+	@endforeach
 	
 	<!-- Loading all scripts at the end for performance-->
 	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
