@@ -41,28 +41,7 @@
 	    </div>
 	</div>
 	<div class="custom">
-	    <!-- THIS IS SAMPLE CUSTOM CODE -->
-	    	<h3 class="hellotext">Welcome to rainbowworld</h3>
-	    	<style type="text/css">
-	    			@-webkit-keyframes superbackground{
-	    				0%{background-color:#0000FF;color:#00FF00;}
-	    				50%{background-color:#FF0000;color:#0000FF;}
-	    				100%{background-color:#00FF00;color:#FF0000;}
-	    			}
-	    			.custom{
-	    				cursor: url("http://downloads.totallyfreecursors.com/cursor_files/atom.ani"), url("http://downloads.totallyfreecursors.com/thumbnails/atom.gif"), auto;
-	    				
-	    				-webkit-animation-name: superbackground;
-	    				-webkit-animation-duration: 5s;
-	    				-webkit-animation-timing-function: linear;
-	    				-webkit-animation-delay: 2s;
-	    				-webkit-animation-iteration-count: infinite;
-	    				-webkit-animation-direction: alternate;
-	    				-webkit-animation-play-state: running;
-	    			}
-	    	</style>
-	    	<p>I really really love computer science!!</p>
-	    	
+	   {{$currentuser->bio}} 	
 	</div>
 	<div class="feed">
 	    <h2>Posts go here</h2>

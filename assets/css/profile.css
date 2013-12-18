@@ -86,3 +86,9 @@ h3{
 	color:#FF0000;
 	margin-left:172px;
 }
+
+#bio{
+	max-width:500px;
+	width:400px;
+	height:150px;
+}

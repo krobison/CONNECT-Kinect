@@ -16,7 +16,7 @@
 			<div class="form-group">
 				<label for="first" class="col-sm-3 control-label">First</label>
 					<div class="col-sm-4">
-						<input type="text" class="form-control" id="first" name="first" value="{{$user->first}}">
+						<input type="text" class="form-control" id="first" name="first" value="{{$user->first}}"/>
 					</div>
 			</div>
 			
@@ -28,31 +28,31 @@
 			<div class="form-group">
 				<label for="last" class="col-sm-3 control-label">Last</label>
 					<div class="col-sm-4">
-						<input type="text" class="form-control" id="last" name="last" value="{{$user->last}}">
+						<input type="text" class="form-control" id="last" name="last" value="{{$user->last}}"/>
 					</div>
 			</div>
 			<div class="form-group">
 				<label for="degree" class="col-sm-3 control-label">Degree</label>
 					<div class="col-sm-4">
-						<input type="text" class="form-control" id="degree" name="degree" value="{{$user->degree_type}}">
+						<input type="text" class="form-control" id="degree" name="degree" value="{{$user->degree_type}}"/>
 					</div>
 			</div>
 			<div class="form-group">
 				<label for="grad" class="col-sm-3 control-label">Graduation</label>
 					<div class="col-sm-4">
-						<input type="text" class="form-control" id="grad" name="grad" value="{{$user->grad_date}}">
+						<input type="text" class="form-control" id="grad" name="grad" value="{{$user->grad_date}}"/>
 					</div>
 			</div>
 			<div class="form-group">
 				<label for="major" class="col-sm-3 control-label">Major</label>
 					<div class="col-sm-4">
-						<input type="text" class="form-control" id="major" name="major" value="{{$user->major}}">
+						<input type="text" class="form-control" id="major" name="major" value="{{$user->major}}"/>
 					</div>
 			</div>
 			<div class="form-group">
 				<label for="minor" class="col-sm-3 control-label">Minor</label>
 					<div class="col-sm-4">
-						<input type="text" class="form-control" id="minor" name="minor" value="{{$user->minor}}">
+						<input type="text" class="form-control" id="minor" name="minor" value="{{$user->minor}}"/>
 					</div>
 			</div>
 			<hr>
@@ -64,7 +64,7 @@
 				<div class="form-group">
 				<label for="old" class="col-sm-3 control-label">Current Password</label>
 					<div class="col-sm-4">
-						<input type="password" class="form-control" id="old" name="old" value="">
+						<input type="password" class="form-control" id="old" name="old" value=""/>
 					</div>
 				</div>
 				
@@ -76,7 +76,7 @@
 				<div class="form-group">
 				<label for="last" class="col-sm-3 control-label">New Password</label>
 					<div class="col-sm-4">
-						<input type="password" class="form-control" id="new" name="new">
+						<input type="password" class="form-control" id="new" name="new"/>
 					</div>
 				</div>
 				@if($errors->has('new_confirmation'))
@@ -87,7 +87,20 @@
 				<div class="form-group">
 				<label for="new_confirmation" class="col-sm-3 control-label">Confirm Password</label>
 					<div class="col-sm-4">
-						<input type="password" class="form-control" id="new_confirmation" name="new_confirmation">
+						<input type="password" class="form-control" id="new_confirmation" name="new_confirmation"/>
+					</div>
+				</div>
+				<hr>
+				
+				@if($errors->has('bio'))
+				<span class="errormessage">
+					{{$errors->first('bio')}}
+				</span>
+				@endif
+				<div class="form-group">
+				<label for="bio" class="col-sm-3 control-label">Bio</label>
+					<div class="col-sm-4">
+						<textarea type="text" class="form-control" id="bio" name="bio">{{$user->bio}}</textarea>
 					</div>
 				</div>
 			<hr>

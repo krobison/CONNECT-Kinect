@@ -110,6 +110,7 @@ class UserController extends BaseController {
 						'grad_date' => Input::get("grad"),
 						'major' => Input::get("major"),
 						'minor' => Input::get("minor"),
+						'bio' => Input::get("bio"),
 						'password' => Hash::make(Input::get('new'))
 					));
 					return Redirect::to('profile/'.Auth::user()->id);
@@ -132,7 +133,8 @@ class UserController extends BaseController {
 					'degree_type' => Input::get("degree"),
 					'grad_date' => Input::get("grad"),
 					'major' => Input::get("major"),
-					'minor' => Input::get("minor")
+					'minor' => Input::get("minor"),
+					'bio' => Input::get("bio")
 				));
 				return Redirect::to('profile/'.Auth::user()->id);
 			}
