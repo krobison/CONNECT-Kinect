@@ -55,6 +55,9 @@ Route::group(array('before' => 'auth'), function() {
 	Route::get('singlepost/{id}', 'PostController@showSinglePost');
 
 	Route::post('createComment', 'PostController@createComment');
+
+	// POST to update upvotes for a post
+	Route::post('upvote', 'PostController@upvote');
 	
 	Route::post('changedAccount','UserController@changedAccount');
 	
