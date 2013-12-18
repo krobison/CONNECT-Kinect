@@ -13,6 +13,9 @@
 
 <body>
 
+	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
+	{{ HTML::script('assets/js/bootstrap.min.js') }}
+
 	{{-- Top Navigation Bar --}}
 	
 	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -81,9 +84,6 @@
 		</div>
 	
 	</div>
-	
-	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
-	{{ HTML::script('assets/js/bootstrap.min.js') }}
 
 </body>
 </html>

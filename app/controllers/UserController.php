@@ -95,10 +95,39 @@ class UserController extends BaseController {
 	}
 	
 	public function editUser() {
-		return View::make('editProfile')->with('user', Auth::user());
+		$id = Auth::User()->id;
+
+		$studentClasses = "";
+		$studentTable = DB::table('course_user')
+		 	->where('user_id','=',$id)
+		 	->where('instructor','=','0');
+			$course_ids = $studentTable->lists('course_id');
+		if (!empty($course_ids)){
+			$studentClasses = DB::table('courses')
+				->whereIn('id',$course_ids)
+				->get();
+		}
+
+		$teacherClasses = "";
+		$teacherTable = DB::table('course_user')
+		 	->where('user_id','=',$id)
+		 	->where('instructor','=','1');
+			$course_ids = $teacherTable->lists('course_id');
+		if (!empty($course_ids)){
+			$teacherClasses = DB::table('courses')
+				->whereIn('id',$course_ids)
+				->get();
+		}
+
+
+		return View::make('editProfile')
+		->with('user', Auth::user())
+		->with('studentClasses',$studentClasses)
+		->with('teacherClasses',$teacherClasses);
 	}
 	
 	public function changedAccount(){
+		$id = Auth::User()->id;
 		if (Input::get('old') != ""){
 			$validator = Validator::make(Input::all(), User::$editrules);
 			if (Hash::check(Input::get('old'),Auth::user()->password)){
@@ -107,6 +136,24 @@ class UserController extends BaseController {
 					$pureconfig = HTMLPurifier_Config::createDefault();
 					$purifier = new HTMLPurifier($pureconfig);
 					$bioclean = $purifier->purify(Input::get('bio'));
+
+					DB::table('course_user')->where('user_id', '=',$id)->delete();
+
+					// Update classes for the student
+					$courses = Input::get("classesStudent");
+					if (!empty($courses)){
+						foreach($courses as $course) {
+							Auth::user()->courses()->attach($course, array("instructor"=>0)); 
+						}
+					}
+				
+					// Update classes for the instructor
+					$courses = Input::get("classesTeacher");
+					if (!empty($courses)){
+						foreach($courses as $course) {
+							Auth::user()->courses()->attach($course, array("instructor"=>1)); 
+						}
+					}
 
 					//UPDATE USER
 					DB::table('users')->where('id',Auth::user()->id)
@@ -136,6 +183,24 @@ class UserController extends BaseController {
 					$pureconfig = HTMLPurifier_Config::createDefault();
 					$purifier = new HTMLPurifier($pureconfig);
 					$bioclean = $purifier->purify(Input::get('bio'));
+
+				DB::table('course_user')->where('user_id', '=',$id)->delete();
+
+				// Update classes for the student
+				$courses = Input::get("classesStudent");
+				if (!empty($courses)){
+					foreach($courses as $course) {
+						Auth::user()->courses()->attach($course, array("instructor"=>0)); 
+					}
+				}
+			
+				// Update classes for the instructor
+				$courses = Input::get("classesTeacher");
+				if (!empty($courses)){
+					foreach($courses as $course) {
+						Auth::user()->courses()->attach($course, array("instructor"=>1)); 
+					}
+				}
 
 				//UPDATE USER
 				DB::table('users')->where('id',Auth::user()->id)

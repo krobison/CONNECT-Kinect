@@ -2,6 +2,7 @@
 
 @section('additionalHeaders')
 	{{ HTML::style('assets/css/profile.css') }}
+	{{ HTML::style('assets/css/select2.css') }}
 @stop
 
 @section('content')
@@ -104,12 +105,64 @@
 					</div>
 				</div>
 			<hr>
+				<div class="form-group">
+				<label for="classesStudent[]" class="col-sm-3 control-label">Courses Taking</label>
+					<div class="col-sm-4">
+						<select multiple class="select2-container-student classSelect" name="classesStudent[]" id="studentSelect">
+							<optgroup label="Computer Science">
+								@foreach(Course::all() as $course)
+									<option value={{ $course->id }}>{{ $course->prefix }}{{ $course->number }} - {{ $course->name }}</option>
+								@endforeach
+							</optgroup>
+							@if (!empty($studentClasses))
+								@foreach($studentClasses as $course)
+									<option selected value={{ $course->id }}>
+										{{$course->prefix}}{{$course->number}} - {{$course->name}}
+									</option>
+								@endforeach
+							@endif
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+				<label for="classesTeacher[]" class="col-sm-3 control-label">Courses Teaching</label>
+					<div class="col-sm-4">
+						<select multiple class="select2-container-teacher classSelect" name="classesTeacher[]" id="teacherSelect">
+							<optgroup label="Computer Science">
+								@foreach(Course::all() as $course)
+									<option value={{ $course->id }}>{{ $course->prefix }}{{ $course->number }} - {{ $course->name }}</option>
+								@endforeach
+							</optgroup>
+							@if (!empty($teacherClasses))
+								@foreach($teacherClasses as $course)
+									<option selected value={{ $course->id }}>
+										{{$course->prefix}}{{$course->number}} - {{$course->name}}
+									</option>
+								@endforeach
+							@endif
+						</select>
+					</div>
+				</div>
 			<br>
 			<button type="submit" class="btn btn-primary" style="float:right">Save Changes</button>
 		</form>
 		<form action="">
 			<button type="submit" class="btn btn-danger">Cancel</button>
 		</form>
-
 	</div>
+	<!-- Loading all scripts at the end for performance-->
+	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
+	{{ HTML::script('assets/js/select2.js') }}
+	<script>
+		$(document).ready(function() { 
+			$(".select2-container-student").select2({
+				placeholder: "Select Your Classes"
+			});
+		});
+		$(document).ready(function() { 
+			$(".select2-container-teacher").select2({
+				placeholder: "Select Your Classes"
+			});
+		});
+	</script>
 @stop
