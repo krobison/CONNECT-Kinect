@@ -6,13 +6,13 @@
  */
 
 // GET root, login page
-Route::get('/', function() { return View::make('login'); });
+Route::get('/', 'UserController@showLogin');
 
 // POST login requests
 Route::post('loginuser', 'UserController@loginUser');
 
 // GET signup page
-Route::get('signup', function() { return View::make('signup'); });
+Route::get('signup', 'UserController@showSignUp');
 
 // POST signup request
 Route::post('signup', 'UserController@createUser');

@@ -5,6 +5,8 @@
  *	As well as CRUD operations, login and logout.
  */
 
+include(app_path().'/purify/HTMLPurifier.auto.php');
+
 class UserController extends BaseController {
 
 	// Create a new user in the database, with validations
@@ -101,6 +103,11 @@ class UserController extends BaseController {
 			$validator = Validator::make(Input::all(), User::$editrules);
 			if (Hash::check(Input::get('old'),Auth::user()->password)){
 				if($validator->passes()) {
+					//PURIFY
+					$pureconfig = HTMLPurifier_Config::createDefault();
+					$purifier = new HTMLPurifier($pureconfig);
+					$bioclean = $purifier->purify(Input::get('bio'));
+
 					//UPDATE USER
 					DB::table('users')->where('id',Auth::user()->id)
 					->update(array
@@ -110,7 +117,7 @@ class UserController extends BaseController {
 						'grad_date' => Input::get("grad"),
 						'major' => Input::get("major"),
 						'minor' => Input::get("minor"),
-						'bio' => Input::get("bio"),
+						'bio' => $bioclean,
 						'password' => Hash::make(Input::get('new'))
 					));
 					return Redirect::to('profile/'.Auth::user()->id);
@@ -125,6 +132,11 @@ class UserController extends BaseController {
 		}else{
 			$validator = Validator::make(Input::all(), User::$editrulesnopass);
 			if($validator->passes()) {
+				//PURIFY
+					$pureconfig = HTMLPurifier_Config::createDefault();
+					$purifier = new HTMLPurifier($pureconfig);
+					$bioclean = $purifier->purify(Input::get('bio'));
+
 				//UPDATE USER
 				DB::table('users')->where('id',Auth::user()->id)
 				->update(array
@@ -134,7 +146,7 @@ class UserController extends BaseController {
 					'grad_date' => Input::get("grad"),
 					'major' => Input::get("major"),
 					'minor' => Input::get("minor"),
-					'bio' => Input::get("bio")
+					'bio' => $bioclean
 				));
 				return Redirect::to('profile/'.Auth::user()->id);
 			}
@@ -146,5 +158,19 @@ class UserController extends BaseController {
 	
 	public function badPassword(){
 		return View::make('editProfile')->with('user', Auth::user())->with('badPassword','true');
+	}
+	
+	public function showLogin() {
+		if(Auth::check()) {
+			return Redirect::to('newsfeed');
+		}
+		return View::make('login');
+	}
+	
+	public function showSignUp() {
+		if(Auth::check()) {
+			return Redirect::to('newsfeed');
+		}
+		return View::make('signup');
 	}
 }
