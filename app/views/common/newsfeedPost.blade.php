@@ -37,7 +37,7 @@
     {{ Form::hidden('post_id', $post->id) }}
 
     <button type="submit" class="btn btn-primary">
-        <i class="glyphicon glyphicon-hand-up"></i> Upvote - {{ $post->postupvotes->count() }}
+        <i class="glyphicon glyphicon-hand-up"></i> Upvote: {{ $post->postupvotes->count() }}
     </button>
 
     {{ Form::close() }}
