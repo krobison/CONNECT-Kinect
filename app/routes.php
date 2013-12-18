@@ -55,6 +55,8 @@ Route::group(array('before' => 'auth'), function() {
 	// GET search page
 	Route::get('search', 'DashboardController@showSearch');
 	
+	Route::get('searchfilter', 'SearchController@processSearch');
+	
 	// GET logout and redirect to root
 	Route::get('logout', 'UserController@logoutUser');
 
