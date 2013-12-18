@@ -18,6 +18,10 @@ class Post extends Eloquent {
         return $this->morphTo();
     }
 
+    public function postupvotes() {
+    	return $this->hasMany('Upvote');
+    }
+
 	// This really isn't a model function, however, I need to do a bunch of logic on 
 	// data from the file system and it would be worse to put the logic in the blade template
 	public static function getSupportedLanguages() {

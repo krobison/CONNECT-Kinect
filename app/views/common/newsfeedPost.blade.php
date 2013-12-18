@@ -7,5 +7,8 @@
 		<a href="{{Request::url()}}">
 			{{ HTML::image('assets/img/upvote.png', 'upvote', array('width' => '22', 'height' => '22')) }}
 		</a>
+
+		<p> Upvote count: {{ $post->postupvotes->count() }} </p>
+		
 	</div>
 </a>

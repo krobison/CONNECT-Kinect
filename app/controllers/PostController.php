@@ -74,31 +74,69 @@ class PostController extends BaseController {
 	}
 
 	public function upvote() {
+		$post = Post::find(Input::get('post_id'));
+		$user = Auth::user();
 
-		try {
+		$upvote = in_array($user->id, $post->postupvotes->lists('user_id'));
 
-			$upvote = new Upvote;
-
-			$upvote->user_id = Input::get('user_id');
-			$upvote->post_id = Input::get('post_id');
-
-			$upvote->save();
-
+		if ($upvote) {
+			Upvote::where('user_id', '=', $user->id)->where('post_id', '=', $post->id)->delete();
 			return Redirect::back()->with('message', "You have upvoted successfully");
+		}
 
-		} catch( Exception $e ) {
+		else {
+			try {
 
-			dd($e);
+				$upvote = new Upvote;
 
-			return Redirect::back()->with('message', "You have upvoted unsuccessfully");
+				$upvote->user_id = Input::get('user_id');
+				$upvote->post_id = Input::get('post_id');
+
+				$upvote->save();
+
+				return Redirect::back()->with('message', "You have upvoted successfully");
+
+			} catch( Exception $e ) {
+
+				dd($e);
+
+				return Redirect::back()->with('message', "You have upvoted unsuccessfully");
+			}
 		}
 		
 	}
 
 	public function showSinglePost($id) {
+		$post = Post::find($id);
+		$user = Auth::user();
+
+		// $upvotes = Upvote::all();
+
+		// $votes = $post->postupvotes;
+		// //dd($votes);
+
+		// $postUpvotes = array();
+
+		// foreach ($upvotes as $upvote) {
+		// 	if ($upvote->post_id == $id) {
+		// 		array_push($postUpvotes, $upvote->user_id);
+		// 	}
+		// }
+
+		// $upvote = in_array($user->id, $postUpvotes);
+		// $upvoteCount = sizeof($postUpvotes);
+
+		// $upvotes = $post->comments;
+
+		// $upvote = in_array($user->id, $post->postupvotes->lists('user_id'));
+
+		// if ($upvote) {
+		// 	Upvote::where('user_id', '=', $user->id)->where('post_id', '=', $id)->delete();
+		// }
+
 		return View::make('singlepost')
-			->with('user', Auth::user())
-			->with('post', Post::find($id));
+			->with('user', $user)
+			->with('post', $post);
 	}
 	
 	// Render the view
