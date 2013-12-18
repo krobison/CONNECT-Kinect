@@ -35,7 +35,12 @@ class DashboardController extends BaseController {
 			->with('user', Auth::user())
 			->with('currentuser', User::find($id))
 			->with('studentClasses',$studentClasses)
-			->with('teacherClasses',$teacherClasses);
+			->with('teacherClasses',$teacherClasses)
+			->with('posts', 
+				Post::orderBy('created_at', 'DESC')
+				->where('user_id','=',$id)
+				->get()
+				);
 	}
 	
 	public function showHelpCenter() {

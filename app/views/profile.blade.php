@@ -54,6 +54,8 @@
 	   {{$currentuser->bio}} 	
 	</div>
 	<div class="feed">
-	    <h2>Posts go here</h2>
+	    @foreach ($posts as $post)
+			{{ View::make('common.newsfeedPost')->with('post', $post) }}
+		@endforeach
 	</div>
 @stop
