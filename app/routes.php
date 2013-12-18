@@ -41,6 +41,8 @@ Route::group(array('before' => 'auth'), function() {
 
 	Route::get('questiondetails/{id}', 'CSQuestionController@showQuestionDetails');
 
+	Route::get('allquestions', 'CSQuestionController@showAllQuestions');
+
 	Route::post('createCommentQuestion', 'CSQuestionController@createCommentQuestion');
 	
 	// GET help center
