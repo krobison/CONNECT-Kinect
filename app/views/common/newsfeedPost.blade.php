@@ -1,23 +1,75 @@
-<div class="well">
-	<a href="{{URL::to('singlepost', $post->id)}}">
-		<p> {{ $post->content }} </p>
-		<p> Posted by {{ $post->user->first }} {{ $post->user->last }} at {{ $post->created_at }} </p>
-	</a>
+<a href="{{URL::to('singlepost', $post->id)}}">
 
-	<p> Upvote count: {{ $post->postupvotes->count() }} </p>
-
-	<!-- <span class="glyphicon glyphicon-hand-up"></span> -->
-
-	{{ Form::open(array('url' => 'upvote', 'method'=>'post')) }}
-
-	{{ Form::hidden('user_id', Auth::user()->id) }}
-
-	{{ Form::hidden('post_id', $post->id) }}
-
-	<button type="submit" class="btn btn-primary">
-		<i class="glyphicon glyphicon-hand-up"></i> Upvote
-	</button>
-
-	{{ Form::close() }}
+	@if ($post->postable_type == "PostHelpRequest")
 	
-</div>
+		<div class="well">
+			This is a PostHelpRequest post!
+			<p> {{ $post->content }} </p>
+			<p> Posted by {{ $post->user->first }} {{ $post->user->last }} at {{ $post->created_at }} </p>
+
+			<p> Upvote count: {{ $post->postupvotes->count() }} </p>
+
+			{{ Form::open(array('url' => 'upvote', 'method'=>'post')) }}
+
+			{{ Form::hidden('user_id', Auth::user()->id) }}
+
+			{{ Form::hidden('post_id', $post->id) }}
+
+			<button type="submit" class="btn btn-primary">
+				<i class="glyphicon glyphicon-hand-up"></i> Upvote
+			</button>
+
+			{{ Form::close() }}
+			
+			Langauge: {{$post->postable->language}}
+		</div>
+
+	@elseif ($post->postable_type == "PostHelpOffer")
+	
+		<div class="well">
+			This is a PostHelpOffer post!
+			<p> {{ $post->content }} </p>
+			<p> Posted by {{ $post->user->first }} {{ $post->user->first }} {{ $post->user->last }} at {{ $post->created_at }} </p>
+
+			<p> Upvote count: {{ $post->postupvotes->count() }} </p>
+
+			{{ Form::open(array('url' => 'upvote', 'method'=>'post')) }}
+
+			{{ Form::hidden('user_id', Auth::user()->id) }}
+
+			{{ Form::hidden('post_id', $post->id) }}
+
+			<button type="submit" class="btn btn-primary">
+				<i class="glyphicon glyphicon-hand-up"></i> Upvote
+			</button>
+
+			{{ Form::close() }}
+			
+		</div>
+		
+	@else
+	
+		<div class="well">
+			This is a Unspecified post!
+			<p> {{ $post->content }} </p>
+			<p> Posted by {{ $post->user->first }} {{ $post->user->first }} {{ $post->user->first }} {{ $post->user->last }} at {{ $post->created_at }} </p>
+			
+			<p> Upvote count: {{ $post->postupvotes->count() }} </p>
+
+			{{ Form::open(array('url' => 'upvote', 'method'=>'post')) }}
+
+			{{ Form::hidden('user_id', Auth::user()->id) }}
+
+			{{ Form::hidden('post_id', $post->id) }}
+
+			<button type="submit" class="btn btn-primary">
+				<i class="glyphicon glyphicon-hand-up"></i> Upvote
+			</button>
+
+			{{ Form::close() }}
+			
+		</div>
+		
+	@endif
+	
+</a>
