@@ -2,17 +2,15 @@
 
 @if ($post->postable_type == "PostHelpRequest")
 
-    <p>This is a PostHelpRequest post!</p>
- 
-    <p>Language: {{$post->postable->language}}</p>
+    {{-- This is a PostHelpRequest post! --}}
 
 @elseif ($post->postable_type == "PostHelpOffer")
 
-    <p>This is a PostHelpOffer post!</p>
+    {{-- This is a PostHelpOffer post! --}}
     		
 @else
 
-    <p>This is a Unspecified post!</p>
+    {{-- This is a Unspecified post! --}}
     
 @endif
 
@@ -21,12 +19,12 @@
     <div style="float:left; padding-right: 10px">
 	@if (!empty($post->user->picture))
 		@if ( File::exists('assets/img/profile_images/' . $post->user->picture ))
-			{{ HTML::image('assets/img/profile_images/'.$post->user->picture, '$comment->user->id', array('width' => '70', 'height' => '70')) }}
+			{{ HTML::image('assets/img/profile_images/'.$post->user->picture, '$comment->user->id', array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
 		@else
-			{{ HTML::image('assets/img/dummy.png', $post->user->id , array('width' => '70', 'height' => '70')) }}
+			{{ HTML::image('assets/img/dummy.png', $post->user->id , array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
 		@endif
 	@else
-		{{ HTML::image('assets/img/dummy.png', $post->user->id , array('width' => '70', 'height' => '70')) }}
+		{{ HTML::image('assets/img/dummy.png', $post->user->id , array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
 	@endif
 	</div>
 	
@@ -41,13 +39,9 @@
     </button>
 
     {{ Form::close() }}
+
     <br>
 
 	<p>{{ $post->user->first }} {{ $post->user->last }}, {{ $post->created_at->diffForHumans() }}</p>
-    
-    {{-- Need to clean up --}}
-    
-    
-    
 
 </div>

@@ -2,12 +2,12 @@
 	<div style="float:left; padding-right: 10px">
 	@if (!empty($comment->user->picture))
 		@if ( File::exists('assets/img/profile_images/' . $comment->user->picture ))
-			{{ HTML::image('assets/img/profile_images/'.$comment->user->picture, '$comment->user->id', array('width' => '70', 'height' => '70')) }}
+			{{ HTML::image('assets/img/profile_images/'.$comment->user->picture, '$comment->user->id', array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
 		@else
-			{{ HTML::image('assets/img/dummy.png', $comment->user->id , array('width' => '70', 'height' => '70')) }}
+			{{ HTML::image('assets/img/dummy.png', $comment->user->id , array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
 		@endif
 	@else
-		{{ HTML::image('assets/img/dummy.png', $comment->user->id , array('width' => '70', 'height' => '70')) }}
+		{{ HTML::image('assets/img/dummy.png', $comment->user->id , array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
 	@endif
 	</div>
 
