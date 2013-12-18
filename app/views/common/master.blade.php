@@ -4,6 +4,7 @@
 <head>
 
 	{{ HTML::style('assets/css/bootstrap.min.css') }}
+	{{ HTML::script('assets/js/moment.min.js') }}
 	
 	@yield('additionalHeaders')
 	
