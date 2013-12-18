@@ -73,6 +73,28 @@ class PostController extends BaseController {
 		
 	}
 
+	public function upvote() {
+
+		try {
+
+			$upvote = new Upvote;
+
+			$upvote->user_id = Input::get('user_id');
+			$upvote->post_id = Input::get('post_id');
+
+			$upvote->save();
+
+			return Redirect::back()->with('message', "You have upvoted successfully");
+
+		} catch( Exception $e ) {
+
+			dd($e);
+
+			return Redirect::back()->with('message', "You have upvoted unsuccessfully");
+		}
+		
+	}
+
 	public function showSinglePost($id) {
 		return View::make('singlepost')
 			->with('user', Auth::user())
