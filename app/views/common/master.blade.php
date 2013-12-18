@@ -50,10 +50,12 @@
 	
 		<div class="row">
 			
-			<div class="col-xs-3">
+			<div class="col-xs-2">
 			
 				{{-- Side Bar --}}
 			
+				<div class="affix">
+				
 				<p>{{ $user->first }} {{ $user->last }}</p>
 				<p>{{ $user->email }}</p>
 				<ul class="nav">
@@ -64,9 +66,11 @@
 					<li><a href="{{ URL::to('search') }}">Search</a></li>
 				</ul>
 				
+				</div>
+				
 			</div>
 			
-			<div class="col-xs-9">
+			<div class="col-xs-10">
 				
 				{{-- Main Content Container --}}
 			

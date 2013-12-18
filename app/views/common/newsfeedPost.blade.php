@@ -1,7 +1,7 @@
 <a href="{{URL::to('singlepost', $post->id)}}">
 
-<<<<<<< HEAD
 	@if ($post->postable_type == "PostHelpRequest")
+	
 		<div class="well">
 			This is a PostHelpRequest post!
 			<p> {{ $post->content }} </p>
@@ -17,6 +17,7 @@
 		</div>
 
 	@elseif ($post->postable_type == "PostHelpOffer")
+	
 		<div class="well">
 			This is a PostHelpOffer post!
 			<p> {{ $post->content }} </p>
@@ -29,7 +30,9 @@
 			<p> Upvote count: {{ $post->postupvotes->count() }} </p>
 			
 		</div>
+		
 	@else
+	
 		<div class="well">
 			This is a Unspecified post!
 			<p> {{ $post->content }} </p>
@@ -42,5 +45,7 @@
 			<p> Upvote count: {{ $post->postupvotes->count() }} </p>
 			
 		</div>
+		
 	@endif
+	
 </a>
