@@ -31,75 +31,27 @@
 
     <!-- Carousel
     ================================================== -->
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-      <!-- Indicators -->
-      <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-        <li data-target="#myCarousel" data-slide-to="3"></li>
-      </ol>
-      <div class="carousel-inner">
-      	<div class="item active">
-      		<div class="container">
-            	<!-- <a href="//facebook.com"><div class="carousel-caption">
-              		<h1>December 8th, 2013</h1>
-			  		{{ HTML::image('assets/img/InterviewQuestion.png') }}
-            	</div></a> -->
-				{{ View::make('common.csQuestionDetails')->with('question', $questions[0]) }}
-          	</div>
-      	</div>
-        <!-- <div class="item active">
-          <a href="//facebook.com"><img data-src="holder.js/900x500/auto/#777:#7a7a7a/text:First slide" alt="First slide"></a>
-          <div class="container">
-            <a href="//facebook.com"><div class="carousel-caption">
-              <h1>December 8th, 2013</h1>
-			  {{ HTML::image('assets/img/InterviewQuestion.png') }}
-            </div></a>
-          </div>
-        </div> -->
-        <div class="item">
-          <!-- <img data-src="holder.js/900x500/auto/#666:#6a6a6a/text:Second slide" alt="Second slide"> -->
-          <div class="container">
-            <!-- <div class="carousel-caption">
-              <h1>December 15th, 2013</h1>
-			  {{ HTML::image('assets/img/dummy.png') }}
-            </div> -->
-            {{ View::make('common.csQuestionDetails')->with('question', $questions[1]) }}
-          </div>
-        </div>
-        <div class="item">
-          <!-- <img data-src="holder.js/900x500/auto/#555:#5a5a5a/text:Third slide" alt="Third slide"> -->
-          <div class="container">
-            <!-- <div class="carousel-caption">
-              <h1>December 25th, 2013</h1>
-			  {{ HTML::image('assets/img/dummy.png') }}
-            </div> -->
-            {{ View::make('common.csQuestionDetails')->with('question', $questions[2]) }}
-          </div>
-        </div>
-        <div class="item">
-          <!-- <img data-src="holder.js/900x500/auto/#555:#5a5a5a/text:Third slide" alt="Third slide"> -->
-          <div class="container">
-            <!-- <div class="carousel-caption">
-              <h1>December 25th, 2013</h1>
-        {{ HTML::image('assets/img/dummy.png') }}
-            </div> -->
-            {{ View::make('common.csQuestionSeeAll') }}
-          </div>
-        </div>
-      </div>
-      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-    </div><!-- /.carousel -->
 
+  {{ View::make('common.newsfeedPost')->with('post', $questions[0]) }}
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
-    <script src="http://getbootstrap.com/docs-assets/js/holder.js"></script>
+  <div class="well">
+      @foreach ($questions[0]->comments as $comment)
+        <p>{{$comment->content}}</p>
+        <p>Posted by {{$comment->user->first}} {{$comment->user->last}} at {{$comment->created_at}}</p>
+      @endforeach
+    </div>
+
+    <div class="well">
+      {{ Form::open(array('url' => 'createComment', 'method'=>'post')) }}
+
+      {{ Form::textarea('content', 'hello world') }}
+
+      {{ Form::hidden('user_id', $user->id) }}
+
+      {{ Form::hidden('post_id', $questions[0]->id) }}
+
+      {{ Form::submit('Comment', array('class' => 'btn btn-lg btn-primary btn-block')) }}
+    </div>
   </body>
 </html>
 

@@ -1,7 +1,16 @@
 @extends('common.master')
 
 @section('content')
-	<h1>Hello world</h1>
+	@if ($post->postable_type == 'PostQuestion')
+		<div>
+			<h1>CS Interview Question of the Week</h1>
+		</div>
+		<div style="float:right">
+			test
+		</div>
+	@else
+    	<h1>Hello world</h1>
+	@endif
 	{{View::make('common.newsfeedPost')->with('post', $post)}}
 
 	{{ Form::open(array('url' => 'upvote', 'method'=>'post')) }}
@@ -11,6 +20,8 @@
 	{{ Form::hidden('post_id', $post->id) }}
 
 	{{ Form::submit('Upvote', array('class' => 'btn btn-lg btn-primary btn-block')) }}
+
+	{{ Form::close() }}
 
 	<div class="well">
 		@foreach ($post->comments as $comment)
@@ -29,5 +40,7 @@
 		{{ Form::hidden('post_id', $post->id) }}
 
 		{{ Form::submit('Comment', array('class' => 'btn btn-lg btn-primary btn-block')) }}
+
+		{{ Form::close() }}
 	</div>
 @stop

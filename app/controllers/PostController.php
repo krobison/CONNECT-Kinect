@@ -50,8 +50,30 @@ class PostController extends BaseController {
 		return Redirect::back()->with('message', 'Your post has been successfully created.');
 	}
 
-	public function createComment() {
+	public function createQuestionPost() {
+	
+		try {
+			// First add a PostHelpRequest to the PostHelpRequest table
+			$post_Q = new PostQuestion;
+			$post_Q->company_sponser = Input::get('company_sponser');
+			$post_Q->save();
 
+			// Then add a Post to the Posts table, associating it with the PostQuestion through a polymorphic relationship
+			$post = new Post;
+			$post->user_id = Auth::user()->id;
+			$post->content = Input::get('content');
+			$post_Q->post()->save($post);
+			
+		} catch( Exception $e ) {
+			return View::make('debug', array('data' => Input::all()));
+			//return Redirect::back()->with('message', 'Your post cannot be created at this time, please try again later.');
+		}
+		
+		// Make the specific post data (e.g., helpPost, project, etc...)
+		return Redirect::back()->with('message', 'Your post has been successfully created.');
+	}
+
+	public function createComment() {
 		try {
 
 			$comment = new Comment;
@@ -99,6 +121,14 @@ class PostController extends BaseController {
 		return View::make('singlepost')
 			->with('user', Auth::user())
 			->with('post', Post::find($id));
+	}
+
+	public function showCSQuestion() {
+		$post = Post::orderBy('created_at', 'DESC')->where('postable_type', '=', 'PostQuestion')->take(1)->get();
+		$post = $post->first();
+		return View::make('singlepost')
+			->with('user', Auth::user())
+			->with('post', $post);
 	}
 	
 	// Render the view
