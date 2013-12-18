@@ -24,11 +24,13 @@
 @stop
 
 @section('content')
-	<h3>Help Center</h3>
+	<h2>Help Center</h2>
 
+	<hr>
+	
+	<h4>New Help Post<h4>
 	<div id="new-post" class="panel panel-default">
 	    <div class="panel-heading">
-			New Help Post:
 			<div class="btn-toolbar" role="toolbar">
 				<div class="btn-group">
 					<button id="need-help-button" type="button" class="btn btn-default">I Need Help</button>
@@ -143,17 +145,29 @@
 		</div>  	
 	</div>
 
-	<h4>Help Requests</h4>
+	<h4>Recent Help Requests</h4>
 	
-	@foreach (Post::where('postable_type', '=', 'PostHelpRequest')->get() as $post)
+	{{-- $post_counter = 0; --}}
+	@foreach (Post::where('postable_type', '=', 'PostHelpRequest')->take(5)->orderBy('id', 'DESC')->get() as $post)
 		{{ View::make('common.newsfeedPost')->with('post', $post) }}
+		{{-- $post_counter = $post_counter + 1 --}}
 	@endforeach
 	
-	<h4>Help Offers</h4>
+	{{-- @if( $post_counter >= 5 ) --}}
+		<button type="button" class="btn btn-default">Load more...</button>
+	{{-- @endif --}}
 	
-	@foreach (Post::where('postable_type', '=', 'PostHelpOffer')->get() as $post)
+	<h4>Recent Help Offers</h4>
+	
+	{{-- @$post_counter = 0; --}}
+	@foreach (Post::where('postable_type', '=', 'PostHelpOffer')->take(5)->orderBy('id', 'DESC')->get() as $post)
 		{{ View::make('common.newsfeedPost')->with('post', $post) }}
+		{{-- $post_counter = $post_counter + 1 --}}
 	@endforeach
+	
+	{{--@if( $post_counter >= 5 )--}}
+		<button type="button" class="btn btn-default">Load more...</button>
+	{{--@endif--}}
 	
 	<!-- Loading all scripts at the end for performance-->
 	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
