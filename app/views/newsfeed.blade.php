@@ -4,5 +4,4 @@
 	@foreach ($posts as $post)
 		{{ View::make('common.newsfeedPost')->with('post', $post) }}
 	@endforeach
-	{{ $posts->links() }}
 @stop
