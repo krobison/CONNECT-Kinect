@@ -72,7 +72,7 @@ class UserController extends BaseController {
 			}
 		} else {
 			Log::error("Validation Failure: ".$validator->messages());
-			return Redirect::back()->withErrors($validator);
+			return Redirect::back()->withErrors($validator)->withInput();
 		}
 	}
 	
