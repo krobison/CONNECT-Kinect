@@ -3,9 +3,11 @@
 class CSQuestionController extends BaseController {
 	
 	public function showCSQuestion() {
-		return View::make('csQuestion')
+		$post = Post::orderBy('created_at', 'DESC')->where('postable_type', '=', 'PostQuestion')->take(1)->get();
+		$post = $post->first();
+		return View::make('singlepost')
 			->with('user', Auth::user())
-			->with('questions', Question::orderBy('created_at', 'DESC')->take(3)->get());
+			->with('post', $post);
 	}
 
 	public function showQuestionDetails($id) {
