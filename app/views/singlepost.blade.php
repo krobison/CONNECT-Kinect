@@ -5,9 +5,9 @@
 		<div>
 			<h1>CS Interview Question of the Week</h1>
 		</div>
-		<div style="float:right">
+		<!-- <div style="float:right">
 			test
-		</div>
+		</div> -->
 	@else
     	<h1>Hello world</h1>
 	@endif
