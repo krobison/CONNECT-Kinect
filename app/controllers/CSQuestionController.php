@@ -14,6 +14,12 @@ class CSQuestionController extends BaseController {
 			->with('question', Question::find($id));
 	}
 
+	public function showAllQuestions() {
+		return View::make('allQuestions')
+			->with('user', Auth::user())
+			->with('questions', Question::orderBy('created_at', 'DESC')->get());
+	}
+
 	public function createCommentQuestion() {
 
 		try {

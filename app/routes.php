@@ -41,6 +41,8 @@ Route::group(array('before' => 'auth'), function() {
 
 	Route::get('questiondetails/{id}', 'CSQuestionController@showQuestionDetails');
 
+	Route::get('allquestions', 'CSQuestionController@showAllQuestions');
+
 	Route::post('createCommentQuestion', 'CSQuestionController@createCommentQuestion');
 	
 	// GET help center
@@ -49,6 +51,9 @@ Route::group(array('before' => 'auth'), function() {
 	// POST help center posts
 	Route::post('createhelprequestpost', 'PostController@createHelpRequestPost');
 	Route::post('createhelpofferpost', 'PostController@createHelpOfferPost');
+	
+	// GET search page
+	Route::get('search', 'DashboardController@showSearch');
 	
 	// GET logout and redirect to root
 	Route::get('logout', 'UserController@logoutUser');

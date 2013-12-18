@@ -18,5 +18,10 @@ class DashboardController extends BaseController {
 		return View::make('help')
 			->with('user', Auth::user());
 	}
+	
+	public function showSearch() {
+		return View::make('search')
+			->with('user', Auth::user());
+	}
 
 }

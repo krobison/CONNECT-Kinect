@@ -61,6 +61,7 @@
 					<li><a href="{{ URL::to('profile/'.Auth::user()->id) }}">Profile</a></li>
 					<li><a href="{{ URL::to('CSQuestion') }}"> CS Question</a></li>
 					<li><a href="{{ URL::to('helpCenter') }}">Help Center</a></li>
+					<li><a href="{{ URL::to('search') }}">Search</a></li>
 				</ul>
 				
 			</div>
