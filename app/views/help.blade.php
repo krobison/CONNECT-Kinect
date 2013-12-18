@@ -90,7 +90,7 @@
 					<input id="hidden-editor" type="hidden" name="code">
 				</div>
 
-				<div id="editor" class="panel panel-default code-collapse">
+				<div id="editor" class="code-collapse">
 				
 				Select your language below
 				Then add your code here!

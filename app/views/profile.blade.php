@@ -33,17 +33,29 @@
 	    	<span class="infolabel">Minor:</span>
 	    		<span>{{$currentuser->minor}}</span><br>
 	    </div>
-	    <div class="courses">
-	    	<h3>Courses</h3>
-			@foreach ($currentuser->courses as $course)
-	    		<span class="courselabel">{{$course->prefix}}{{$course->number}} - {{$course->name}}</span>
-	    	@endforeach
-	    </div>
+	    @if (!empty($studentClasses))
+		    <div class="courses">
+		    	<h3>Courses Taken</h3>
+				@foreach ($studentClasses as $course)
+		    		<span class="courselabel">{{$course->prefix}}{{$course->number}} - {{$course->name}}</span>
+		    	@endforeach
+		    </div>
+	    @endif
+	    @if (!empty($teacherClasses))
+		   <div>
+		    	<h3>Courses Taught</h3>
+				@foreach ($teacherClasses as $course)
+		    		<span class="courselabel">{{$course->prefix}}{{$course->number}} - {{$course->name}}</span>
+		    	@endforeach
+		    </div>
+	    @endif
 	</div>
 	<div class="custom">
 	   {{$currentuser->bio}} 	
 	</div>
 	<div class="feed">
-	    <h2>Posts go here</h2>
+	    @foreach ($posts as $post)
+			{{ View::make('common.newsfeedPost')->with('post', $post) }}
+		@endforeach
 	</div>
 @stop

@@ -21,21 +21,7 @@
 	{{ Form::close() }}
 
 	@foreach ($post->comments as $comment)
-		<div class="well">
-			<div style="float:left; padding-right: 10px">
-			@if (!empty($comment->user->picture))
-				@if ( File::exists('assets/img/profile_images/' . $comment->user->picture ))
-					{{ HTML::image('assets/img/profile_images/'.$comment->user->picture, '$comment->user->id', array('width' => '70', 'height' => '70')) }}
-				@else
-					{{ HTML::image('assets/img/dummy.png', $comment->user->id , array('width' => '70', 'height' => '70')) }}
-				@endif
-			@else
-				{{ HTML::image('assets/img/dummy.png', $comment->user->id , array('width' => '70', 'height' => '70')) }}
-			@endif
-			</div>
-			<p>{{$comment->content}}</p>
-			<p>Posted by {{$comment->user->first}} {{$comment->user->last}} at {{$comment->created_at}}</p>
-		</div>
+		{{View::make('common.comment')->with('comment', $comment)}}
 	@endforeach
 
 	<div class="well">
@@ -56,6 +42,6 @@
 @if ($post->postable_type == 'PostQuestion')
 	@section('seeall')
 		<hr>
-		<li><a href="{{URL::to('showPreviousQuestions')}}">Show Previous Questions</a></li>
+		<li><a href="{{URL::to('showPreviousQuestions')}}">Show Previous</a></li>
 	@stop
 @endif

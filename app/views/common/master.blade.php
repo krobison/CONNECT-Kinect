@@ -50,10 +50,12 @@
 	
 		<div class="row">
 			
-			<div class="col-xs-3">
+			<div class="col-xs-2">
 			
 				{{-- Side Bar --}}
 			
+				<div class="affix">
+				
 				<p>{{ $user->first }} {{ $user->last }}</p>
 				<p>{{ $user->email }}</p>
 				<ul class="nav">
@@ -65,9 +67,11 @@
 					@yield('seeall')
 				</ul>
 				
+				</div>
+				
 			</div>
 			
-			<div class="col-xs-8">
+			<div class="col-xs-10">
 				
 				{{-- Main Content Container --}}
 			
