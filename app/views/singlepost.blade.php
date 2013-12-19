@@ -22,6 +22,20 @@
 				{{ $post->postable->code }}
 			</div>
 		</div>
+		{{ HTML::script('assets/js/ace/ace.js') }}
+		<script>
+			// Setting up the ace text editor language
+			var editor = ace.edit("editor{{$post->id}}");
+			editor.getSession().setUseWorker(false);
+			editor.setTheme("ace/theme/eclipse");
+			var language = "{{$post->postable->language}}";
+			//var language = "java";
+			editor.getSession().setMode("ace/mode/" + language);
+			editor.setReadOnly(true);
+			editor.setOptions({
+				maxLines: 50
+			});
+		</script>
 	@elseif ($post->postable_type == 'PostHelpOffer')
 		<div class="well">
 			Availability:
@@ -53,21 +67,6 @@
 			<li><a href="{{URL::to('showPreviousQuestions')}}">Show Previous</a></li>
 		@stop
 	@endif
-	
-	{{ HTML::script('assets/js/ace/ace.js') }}
-	<script>
-		// Setting up the ace text editor language
-		var editor = ace.edit("editor{{$post->id}}");
-		editor.getSession().setUseWorker(false);
-		editor.setTheme("ace/theme/eclipse");
-		var language = "{{$post->postable->language}}";
-		//var language = "java";
-		editor.getSession().setMode("ace/mode/" + language);
-		editor.setReadOnly(true);
-		editor.setOptions({
-			maxLines: 50
-		});
-	</script>
 	
 @stop
 
