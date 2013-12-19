@@ -35,7 +35,7 @@
 													'placeholder' => 'Password')) }}
 													
 				<label class="checkbox">
-					<input type="checkbox" value="remember-me"> Remember me
+					<input type="checkbox" value="remember-me"> Remember me <i> Not Working </i>
 				</label>
 				
 				{{ Form::submit('Sign in', array('class' => 'btn btn-lg btn-primary btn-block')) }}
@@ -57,8 +57,8 @@
 				<br>
 				
 				<div class="connectbuttons">
-					<button class="btn btn-facebook"><i class="fa fa-facebook"></i> | Connect</button>
-					<button class="btn btn-twitter"><i class="fa fa-twitter"></i> | Connect</button>
+					<button class="btn btn-facebook"><i class="fa fa-facebook"></i> | Connect <i> Not Working </i></button>
+					<button class="btn btn-twitter"><i class="fa fa-twitter"></i> | Connect <i> Not Working </i></button>
 				</div>
 				
 			{{ Form::close() }}
