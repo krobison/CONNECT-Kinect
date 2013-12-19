@@ -62,12 +62,10 @@
 				{{ Form::checkbox('help_type[]', '3') }}
 					Skype/Hangouts/Video Chat
 				</label>
-				
 			</div>
 					
 			<div class="form-group">
 				<b> How would you like to be displayed? </b> <br>
-				<i> Not Working </i> <br>
 				<label class="radio-inline">
 				{{ Form::radio('anonymous', '0', array('checked' => 'true')) }}
 					Post as {{ $user->first }} {{ $user->last }}

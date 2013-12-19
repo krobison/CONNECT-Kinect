@@ -55,7 +55,9 @@
 	</div>
 	<div class="feed">
 	    @foreach ($posts as $post)
-			{{ View::make('common.newsfeedPost')->with('post', $post) }}
+			@if ($post->postable_type != "PostHelpRequest" || $post->postable->anonymous != 1)
+				{{ View::make('common.newsfeedPost')->with('post', $post) }}
+			@end
 		@endforeach
 	</div>
 @stop
