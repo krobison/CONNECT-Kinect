@@ -57,7 +57,7 @@
 	    @foreach ($posts as $post)
 			@if ($post->postable_type != "PostHelpRequest" || $post->postable->anonymous != 1)
 				{{ View::make('common.newsfeedPost')->with('post', $post) }}
-			@end
+			@endif
 		@endforeach
 	</div>
 @stop

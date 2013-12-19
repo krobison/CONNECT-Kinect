@@ -31,7 +31,7 @@
 
     <br>
 	
-	{{-- Display the name of the user who made the post --}}
+	{{-- Display the name of the user who made the post (if the user is not anonymous) --}}
 	@if ($post->postable_type == "PostHelpRequest" && $post->postable->anonymous == 1)
 		<p>Anonymous, {{ $post->created_at->diffForHumans() }}</p>
 	@else
