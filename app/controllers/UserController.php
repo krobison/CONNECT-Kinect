@@ -64,7 +64,7 @@ class UserController extends BaseController {
 					}
 				}
 				
-				return Redirect::to('/')->with('message', 'A new account has been created! Please try logging in.');
+				return Redirect::to('/')->with('message', '<div class="alert alert-success"> A new account has been created! Please try logging in. </div>');
 				
 			} catch( Exception $e ) {
 				Log::error('New User Error: ' . $e);
@@ -91,7 +91,7 @@ class UserController extends BaseController {
 	// Logout user and redirect.
 	public function logoutUser() {
 		Auth::logout();
-		return Redirect::to('/')->with('message', 'You have successfully been logged out.');
+		return Redirect::to('/')->with('message', '<div class="alert alert-success"> You have successfully been logged out. </div>');
 	}
 	
 	public function editUser() {
