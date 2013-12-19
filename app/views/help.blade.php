@@ -49,6 +49,7 @@
 			
 			<div class="form-group">
 				<b> How would you like to recieve help? </b> <br>
+				<i> Not Working </i> <br>
 				<label class="checkbox-inline">
 				{{ Form::checkbox('help_type[]', '1', array('checked' => 'true')) }}
 					In the comments
@@ -61,10 +62,12 @@
 				{{ Form::checkbox('help_type[]', '3') }}
 					Skype/Hangouts/Video Chat
 				</label>
+				
 			</div>
 					
 			<div class="form-group">
 				<b> How would you like to be displayed? </b> <br>
+				<i> Not Working </i> <br>
 				<label class="radio-inline">
 				{{ Form::radio('anonymous', '0', array('checked' => 'true')) }}
 					Post as {{ $user->first }} {{ $user->last }}
@@ -159,7 +162,7 @@
 			@endforeach
 			
 			{{-- @if( $post_counter >= 5 ) --}}
-				<button type="button" class="btn btn-default">Load more...</button>
+				<button type="button" class="btn btn-default">Load more... <i> Not Working </i> </button>
 			{{-- @endif --}}
 		</div>
 	</div>
@@ -176,7 +179,7 @@
 			@endforeach
 			
 			{{--@if( $post_counter >= 5 )--}}
-				<button type="button" class="btn btn-default">Load more...</button>
+				<button type="button" class="btn btn-default">Load more... <i> Not Working </i></button>
 			{{--@endif--}}
 		</div>
 	</div>
