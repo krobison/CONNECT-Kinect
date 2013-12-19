@@ -11,12 +11,12 @@ html, body {
 }
 
 .scroll {
-border:2px solid #ccc;
-background-color: #FFFFFF; 
-width:400px;
-height: 160px; 
-overflow-y: scroll;
-margin-bottom: 10px; 
+	border:2px solid #ccc;
+	background-color: #FFFFFF; 
+	width:400px;
+	height: 160px; 
+	overflow-y: scroll;
+	margin-bottom: 10px; 
 }
 
 .page-header{
@@ -27,13 +27,13 @@ margin-bottom: 10px;
 }
 
 .container {
-margin-top: 30px;
-margin-bottom: 100px;
+	margin-top: 30px;
+	margin-bottom: 100px;
 }
 
 .error {
-color:red;
-margin-bottom: 10px;
+	color:red;
+	margin-bottom: 10px;
 }
 
 .classSelect{
@@ -47,4 +47,8 @@ margin-bottom: 10px;
 
 .rowlabel{
 	margin-left:6px;
+}
+
+#status{
+	text-align:center;
 }

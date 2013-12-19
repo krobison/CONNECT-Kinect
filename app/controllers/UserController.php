@@ -63,8 +63,7 @@ class UserController extends BaseController {
 						$user->courses()->attach($course, array("instructor"=>1)); 
 					}
 				}
-				
-				return Redirect::to('/')->with('message', '<div class="alert alert-success"> A new account has been created! Please try logging in. </div>');
+				return Redirect::to('/')->with('message', '<div class="alert alert-success"> A new account has been created! Please try logging in. ');				
 				
 			} catch( Exception $e ) {
 				Log::error('New User Error: ' . $e);
@@ -84,7 +83,7 @@ class UserController extends BaseController {
 		if (Auth::attempt($userdata)) {
 			return Redirect::to('newsfeed');
 		} else {
-			return Redirect::to('/')->with('message', 'Login Failed');
+			return Redirect::to('/')->with('message', '<div class="alert alert-danger">Login Failed: Invalid credentials</div>');
 		}
 	}
 	
