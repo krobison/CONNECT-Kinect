@@ -47,13 +47,11 @@
     	</div>
     </div>
 	
-
-	
 	<div class="container" style="padding-top: 70px; max-width: none !important; width: 970px">
 	
 		<div class="row">
 			
-			<div class="col-xs-2">
+			<div class="col-xs-3">
 			
 				{{-- Side Bar --}}
 			
@@ -74,7 +72,7 @@
 				
 			</div>
 			
-			<div class="col-xs-10">
+			<div class="col-xs-9">
 				
 				{{-- Main Content Container --}}
 			
