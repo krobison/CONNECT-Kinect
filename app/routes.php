@@ -29,6 +29,9 @@ Route::group(array('before' => 'auth'), function() {
 	
 	// GET profile
 	Route::get('profile/{id}', 'DashboardController@showProfile');
+
+	// GET inbox page
+	Route::get('inbox', 'InboxController@showInbox');
 	
 	// GET edit profile page
 	Route::get('editprofile', 'UserController@editUser');

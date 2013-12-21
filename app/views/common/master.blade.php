@@ -34,7 +34,7 @@
     		<div class="navbar-collapse bs-navbar-collapse collapse">
     	
     			<ul class="nav navbar-nav">
-        			<li><a href="#">Messages <i> Not Working </i></a></li>
+        			<li><a href="{{ URL::to('inbox') }}">Messages <i> Not Working </i></a></li>
     				<li><a href="#">Notifications <i> Not Working </i></a></li>
     				</ul>
       
