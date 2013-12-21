@@ -22,7 +22,7 @@
 			@else
 				{{ HTML::image('assets/img/profile_images/'.$result->picture, 'profile picture', array('width' => '128', 'height' => '128')) }}
 			@endif 
-			<span> {{ $result->first }} {{ $result->last }} </span>
+			<span> {{{ $result->first }}} {{{ $result->last }}} </span>
 		</div>
 		</a>
 		@endforeach

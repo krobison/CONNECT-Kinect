@@ -19,7 +19,7 @@
 		<div class="well">
 			Language: {{ $post->postable->language }}
 			<div id="editor{{$post->id}}">
-				{{ $post->postable->code }}
+				{{{ $post->postable->code }}}
 			</div>
 		</div>
 		{{ HTML::script('assets/js/ace/ace.js') }}
@@ -29,7 +29,6 @@
 			editor.getSession().setUseWorker(false);
 			editor.setTheme("ace/theme/eclipse");
 			var language = "{{$post->postable->language}}";
-			//var language = "java";
 			editor.getSession().setMode("ace/mode/" + language);
 			editor.setReadOnly(true);
 			editor.setOptions({
@@ -50,7 +49,7 @@
 	<div class="well">
 		{{ Form::open(array('url' => 'createComment', 'method'=>'post')) }}
 
-		{{ Form::textarea('content', 'hello world') }}
+		{{ Form::textarea('content', null, array('placeholder' => 'Enter your comments here','class' => 'row')) }}
 
 		{{ Form::hidden('user_id', $user->id) }}
 

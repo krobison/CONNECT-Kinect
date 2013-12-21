@@ -57,14 +57,14 @@
 			
 				<div class="affix">
 				
-				<p>{{ $user->first }} {{ $user->last }}</p>
+				<p><a href="{{ URL::to('profile/'.Auth::user()->id) }}">{{{ $user->first }}} {{{ $user->last }}}</a></li></p>
 				<p>{{ $user->email }}</p>
 				<ul class="nav">
-					<li><a href="{{ URL::to('newsfeed') }}">News Feed</a></li>
-					<li><a href="{{ URL::to('profile/'.Auth::user()->id) }}">Profile</a></li>
-					<li><a href="{{ URL::to('CSQuestion') }}"> CS Question</a></li>
-					<li><a href="{{ URL::to('helpCenter') }}">Help Center</a></li>
-					<li><a href="{{ URL::to('search') }}">Search</a></li>
+					<li><a href="{{ URL::to('newsfeed') }}"><span class="glyphicon glyphicon glyphicon-list"></span>  News Feed</a></li>
+					<li><a href="{{ URL::to('CSQuestion') }}"><span class="glyphicon glyphicon glyphicon-pencil"></span>  CS Question</a></li>
+					<li><a href="{{ URL::to('projects') }}"><span class="glyphicon glyphicon glyphicon-folder-open"></span>  CS Projects</a></li>
+					<li><a href="{{ URL::to('helpCenter') }}"><span class="glyphicon glyphicon glyphicon-bullhorn"></span>  Help Center</a></li>
+					<li><a href="{{ URL::to('search') }}"><span class="glyphicon glyphicon-search"></span>  Search</a></li>
 					@yield('seeall')
 				</ul>
 				

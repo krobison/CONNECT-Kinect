@@ -10,11 +10,11 @@
 			<p>Posted by {{$comment->user->first}} {{$comment->user->last}} at {{$comment->created_at}}</p>
 		@endforeach
 	</div>
-
+This is the questiondetails
 	<div class="well">
 		{{ Form::open(array('url' => 'createCommentQuestion', 'method'=>'post')) }}
 
-		{{ Form::textarea('content', 'hello world') }}
+		{{ Form::textarea('content', null, array('placeholder' => 'Enter your comments here') }}
 
 		{{ Form::hidden('user_id', $user->id) }}
 
