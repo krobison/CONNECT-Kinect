@@ -224,6 +224,12 @@ class UserController extends BaseController {
 		$id = Auth::User()->id;
 		Auth::logout();
 		DB::table('users')->where('id','=',$id)->delete();
+		DB::table('posts')->where('user_id','=',$id)->delete();
+		DB::table('questions')->where('user_id','=',$id)->delete();
+		DB::table('upvotes')->where('user_id','=',$id)->delete();
+		DB::table('user_hashtag')->where('user_id','=',$id)->delete();
+		DB::table('user_messages')->where('user_id','=',$id)->delete();
+		DB::table('comments')->where('user_id','=',$id)->delete();
 		return Redirect::to('/');
 	}
 	
