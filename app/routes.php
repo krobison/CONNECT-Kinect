@@ -38,6 +38,9 @@ Route::group(array('before' => 'auth'), function() {
 
 	Route::get('showPreviousQuestions', 'PostController@showPreviousQuestions');
 	
+	// GET cs projects
+	Route::get('projects', 'ProjectsController@showProjects');
+	
 	// GET help center
 	Route::get('helpCenter', 'HelpCenterController@showHelp');
 	

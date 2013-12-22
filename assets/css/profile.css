@@ -30,6 +30,7 @@
 	float:left;
 	width:258px;
 	height:258px;
+	margin:10px;
 	border:1px rgba(0,0,0,0.55) solid;
 }
 .basic,.custom,.feed{
@@ -44,7 +45,8 @@
 }
 
 .courses{
-	margin-top:64px;
+	margin:10px;
+	
 }
 
 .info{
