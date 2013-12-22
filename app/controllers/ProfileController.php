@@ -1,12 +1,6 @@
 <?php
 
-class DashboardController extends BaseController {
-	
-	public function showNewsfeed() {
-		return View::make('newsfeed')
-			->with('user', Auth::user())
-			->with('posts', Post::orderBy('created_at', 'DESC')->get());
-	}
+class ProfileController extends BaseController {
 	
 	public function showProfile($id) {
 		$studentClasses = "";
@@ -43,14 +37,4 @@ class DashboardController extends BaseController {
 				);
 	}
 	
-	public function showHelpCenter() {
-		return View::make('help')
-			->with('user', Auth::user());
-	}
-	
-	public function showSearch() {
-		return View::make('search')
-			->with('user', Auth::user());
-	}
-
 }

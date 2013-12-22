@@ -24,48 +24,48 @@ Route::post('signup', 'UserController@createUser');
 
 Route::group(array('before' => 'auth'), function() {
 
-	// GET newsfeed page
-	Route::get('newsfeed', 'DashboardController@showNewsfeed');
-	
-	// GET profile
-	Route::get('profile/{id}', 'DashboardController@showProfile');
-	
-	// GET edit profile page
+	// GET user
+	Route::post('changedAccount','UserController@changedAccount');
+	Route::get('badpasswordedit','UserController@badPassword');
+	Route::get('logout', 'UserController@logoutUser');
 	Route::get('editprofile', 'UserController@editUser');
 	
+	// GET profile
+	Route::get('profile/{id}', 'ProfileController@showProfile');
+	
+	// GET CS CONNECT
+	Route::get('cs_connect', 'CSConnectController@showCs_connect');
+	
+	// GET newsfeed page
+	Route::get('newsfeed', 'NewsfeedController@showNewsfeed');
+	
 	// GET cs question?
-	Route::get('CSQuestion', 'PostController@showCSQuestion');
-
-	Route::get('showPreviousQuestions', 'PostController@showPreviousQuestions');
+	Route::get('CSQuestion', 'CSQuestionController@showCSQuestion');
+	Route::get('showPreviousQuestions', 'CSQuestionController@showPreviousQuestions');
 	
 	// GET cs projects
 	Route::get('projects', 'ProjectsController@showProjects');
 	
 	// GET help center
-	Route::get('helpCenter', 'HelpCenterController@showHelp');
-	
+	Route::get('helpCenter', 'HelpCenterController@showHelpCenter');
+
 	// POST help center posts
-	Route::post('createhelprequestpost', 'PostController@createHelpRequestPost');
-	Route::post('createhelpofferpost', 'PostController@createHelpOfferPost');
+	Route::post('createhelprequestpost', 'HelpCenterController@createHelpRequestPost');
+	Route::post('createhelpofferpost', 'HelpCenterController@createHelpOfferPost');
+	
+	// GET community
+	Route::get('community', 'CommunityController@showCommunity');
 	
 	// GET search page
-	Route::get('search', 'DashboardController@showSearch');
-	
+	Route::get('search', 'SearchController@showSearch');
 	Route::get('searchfilter', 'SearchController@processSearch');
 	
-	// GET logout and redirect to root
-	Route::get('logout', 'UserController@logoutUser');
-
+	// GET post
 	Route::get('singlepost/{id}', 'PostController@showSinglePost');
-
+	
+	// POST post
 	Route::post('createComment', 'PostController@createComment');
-
-	// POST to update upvotes for a post
 	Route::post('upvote', 'PostController@upvote');
-	
-	Route::post('changedAccount','UserController@changedAccount');
-	
-	Route::get('badpasswordedit','UserController@badPassword');
 
 });
 

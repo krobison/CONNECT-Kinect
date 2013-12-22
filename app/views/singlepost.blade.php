@@ -1,5 +1,16 @@
 @extends('common.master')
 
+@section('additionalHeaders')
+	<style>
+	#comment-box {
+		float:left;
+		width:84%;
+		height:60px;
+		margin:10px;
+	}
+	</style>
+@stop
+
 @section('content')
 	@if ($post->postable_type == 'PostQuestion')
 		<h1>CS Question of the Week</h1>
@@ -48,8 +59,16 @@
 
 	<div class="well">
 		{{ Form::open(array('url' => 'createComment', 'method'=>'post')) }}
+		
+		<div style="float:left; padding-right: 10px">
+			@if(is_null(Auth::user()->picture))
+				{{ HTML::image('assets/img/dummy.png', 'profile picture', array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
+			@else
+				{{ HTML::image('assets/img/profile_images/'.Auth::user()->picture, 'profile picture', array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
+			@endif 
+		</div>
 
-		{{ Form::textarea('content', null, array('placeholder' => 'Enter your comments here','class' => 'row')) }}
+		{{ Form::textarea('content', null, array('class' => 'span4' ,'placeholder' => 'Enter your comment here','id' => 'comment-box')) }}
 
 		{{ Form::hidden('user_id', $user->id) }}
 

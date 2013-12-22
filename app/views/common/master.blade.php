@@ -58,13 +58,15 @@
 				<div class="affix">
 				
 				<p><a href="{{ URL::to('profile/'.Auth::user()->id) }}">{{{ $user->first }}} {{{ $user->last }}}</a></li></p>
-				<p>{{ $user->email }}</p>
+				<p>{{{ $user->email }}}</p>
 				<ul class="nav">
-					<li><a href="{{ URL::to('newsfeed') }}"><span class="glyphicon glyphicon glyphicon-list"></span>  News Feed</a></li>
-					<li><a href="{{ URL::to('CSQuestion') }}"><span class="glyphicon glyphicon glyphicon-pencil"></span>  CS Question</a></li>
-					<li><a href="{{ URL::to('projects') }}"><span class="glyphicon glyphicon glyphicon-folder-open"></span>  CS Projects</a></li>
-					<li><a href="{{ URL::to('helpCenter') }}"><span class="glyphicon glyphicon glyphicon-bullhorn"></span>  Help Center</a></li>
-					<li><a href="{{ URL::to('search') }}"><span class="glyphicon glyphicon-search"></span>  Search</a></li>
+					<li><a href="{{ URL::to('cs_connect') }}"><span class="glyphicon glyphicon-home"></span>   CS CONNECT</a></li>
+					<li><a href="{{ URL::to('newsfeed') }}"><span class="glyphicon glyphicon-list"></span>   News Feed</a></li>
+					<li><a href="{{ URL::to('CSQuestion') }}"><span class="glyphicon glyphicon-pencil"></span>   CS Question</a></li>
+					<li><a href="{{ URL::to('projects') }}"><span class="glyphicon glyphicon-folder-open"></span>   CS Projects</a></li>
+					<li><a href="{{ URL::to('helpCenter') }}"><span class="glyphicon glyphicon-bullhorn"></span>   Help Center</a></li>
+					<li><a href="{{ URL::to('community') }}"><span class="glyphicon glyphicon-globe"></span>   Community</a></li>
+					<li><a href="{{ URL::to('search') }}"><span class="glyphicon glyphicon-search"></span>   Search</a></li>
 					@yield('seeall')
 				</ul>
 				
