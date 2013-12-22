@@ -219,6 +219,13 @@ class UserController extends BaseController {
 			}
 		}
 	}
+
+	public function deleteaccount(){
+		$id = Auth::User()->id;
+		Auth::logout();
+		DB::table('users')->where('id','=',$id)->delete();
+		return Redirect::to('/');
+	}
 	
 	public function badPassword(){
 		return View::make('editProfile')->with('user', Auth::user())->with('badPassword','true');

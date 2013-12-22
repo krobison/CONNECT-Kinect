@@ -7,6 +7,9 @@
 
 @section('content')
 	<div class="basic">
+		<form class="form-horizontal" role="form" action="{{ URL::to('deleteaccount/')}}" method="post">
+			<button type="submit" class="btn btn-danger" style="float:right;margin-top:16px;" onclick="return confirm('Are you sure you would like to delete your account FOREVER?');">Delete Account</button>
+		</form>
 		<h3 class="editheader">Edit Profile <small>{{$user->first.' '.$user->last.' ('.$user->email.')'}}</small></h3>
 		<form class="form-horizontal" role="form" action="<?php echo asset('changedAccount'); ?>" method="post">
 			@if($errors->has('first'))

@@ -29,6 +29,7 @@ Route::group(array('before' => 'auth'), function() {
 	Route::get('badpasswordedit','UserController@badPassword');
 	Route::get('logout', 'UserController@logoutUser');
 	Route::get('editprofile', 'UserController@editUser');
+	Route::post('deleteaccount','UserController@deleteaccount');
 	
 	// GET profile
 	Route::get('profile/{id}', 'ProfileController@showProfile');
