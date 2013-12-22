@@ -222,6 +222,9 @@ class UserController extends BaseController {
 
 	public function deleteaccount(){
 		$id = Auth::User()->id;
+
+		unlink(base_path().'/assets/img/profile_images/'.Auth::User()->picture);
+
 		Auth::logout();
 		DB::table('users')->where('id','=',$id)->delete();
 		DB::table('posts')->where('user_id','=',$id)->delete();
@@ -230,6 +233,7 @@ class UserController extends BaseController {
 		DB::table('user_hashtag')->where('user_id','=',$id)->delete();
 		DB::table('user_messages')->where('user_id','=',$id)->delete();
 		DB::table('comments')->where('user_id','=',$id)->delete();
+
 		return Redirect::to('/');
 	}
 	
