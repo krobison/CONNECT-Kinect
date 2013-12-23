@@ -45,7 +45,7 @@
 	@if ($post->postable_type == "PostHelpRequest" && $post->postable->anonymous == 1)
 		<p>Anonymous, {{ $post->created_at->diffForHumans() }}</p>
 	@else
-		<p>{{ $post->user->first }} {{ $post->user->last }}, {{ $post->created_at->diffForHumans() }}</p>
+		<p><a href="{{URL::to('profile', $post->user->id)}}">{{ $post->user->first }} {{ $post->user->last }}</a>, {{ $post->created_at->diffForHumans() }}</p>
 	@endif
 
 </div>
