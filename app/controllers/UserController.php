@@ -148,7 +148,9 @@ class UserController extends BaseController {
 						//delete all current course_user records
 						DB::table('course_user')->where('user_id','=',$id)->where('instructor','=','0')->delete();
 						foreach($courses as $course) {
-							Auth::user()->courses()->attach($course, array("instructor"=>0)); 
+							if (sizeof(DB::table('course_user')->where('course_id','=',$course)->where('user_id','=',$id)->get() == 0)){
+								Auth::user()->courses()->attach($course, array("instructor"=>0)); 
+							}
 						}
 					}
 				
@@ -158,7 +160,9 @@ class UserController extends BaseController {
 						//delete all current course_user records
 						DB::table('course_user')->where('user_id','=',$id)->where('instructor','=','1')->delete();
 						foreach($courses as $course) {
-							Auth::user()->courses()->attach($course, array("instructor"=>1)); 
+							if (siezof(DB::table('course_user')->where('course_id','=',$course)->where('user_id','=',$id)->get() == 0)){
+								Auth::user()->courses()->attach($course, array("instructor"=>1)); 
+							}
 						}
 					}
 
@@ -215,7 +219,9 @@ class UserController extends BaseController {
 					//delete all current course_user records
 					DB::table('course_user')->where('user_id','=',$id)->where('instructor','=','0')->delete();
 					foreach($courses as $course) {
-						Auth::user()->courses()->attach($course, array("instructor"=>0)); 
+						if (sizeof(DB::table('course_user')->where('course_id','=',$course)->where('user_id','=',$id)->get() == 0)){
+							Auth::user()->courses()->attach($course, array("instructor"=>0)); 
+						}
 					}
 				}
 			
@@ -225,7 +231,9 @@ class UserController extends BaseController {
 					//delete all current course_user records
 					DB::table('course_user')->where('user_id','=',$id)->where('instructor','=','1')->delete();
 					foreach($courses as $course) {
-						Auth::user()->courses()->attach($course, array("instructor"=>1)); 
+						if (sizeof(DB::table('course_user')->where('course_id','=',$course)->where('user_id','=',$id)->get() == 0)){
+							Auth::user()->courses()->attach($course, array("instructor"=>1)); 
+						}
 					}
 				}
 
