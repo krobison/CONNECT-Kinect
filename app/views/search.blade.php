@@ -7,14 +7,24 @@
 @section('content')
 	<h1> Search Page </h1>
 	{{ Form::open(array('url' => 'searchfilter', 'method' => 'GET')) }}
+	@if(!empty($name))
+	{{ Form::text('name', $name, array( 'placeholder' => 'Search Users')) }}
+	@else
 	{{ Form::text('name', null, array( 'placeholder' => 'Search Users')) }}
-	
+	@endif
 					<select multiple class="select2-container classSelect" name="classes[]">
 						<optgroup label="Computer Science">
 							@foreach(Course::all() as $course)
 								<option value={{ $course->id }}>{{ $course->prefix }}{{ $course->number }} - {{ $course->name }}</option>
 							@endforeach
 						</optgroup>
+						@if (!empty($courses))
+							@foreach($courses as $course)
+								<option selected value={{{ $course->id }}}>
+									{{{$course->prefix}}}{{{$course->number}}} - {{{$course->name}}}
+								</option>
+							@endforeach
+						@endif
 					</select>
 				
 	{{ Form::Submit('Search') }}
