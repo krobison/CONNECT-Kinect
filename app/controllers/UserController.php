@@ -145,6 +145,8 @@ class UserController extends BaseController {
 					// Update classes for the student
 					$courses = Input::get("classesStudent");
 					if (!empty($courses)){
+						//delete all current course_user records
+						DB::table('course_user')->where('user_id','=',$id)->where('instructor','=','0')->delete();
 						foreach($courses as $course) {
 							Auth::user()->courses()->attach($course, array("instructor"=>0)); 
 						}
@@ -153,6 +155,8 @@ class UserController extends BaseController {
 					// Update classes for the instructor
 					$courses = Input::get("classesTeacher");
 					if (!empty($courses)){
+						//delete all current course_user records
+						DB::table('course_user')->where('user_id','=',$id)->where('instructor','=','1')->delete();
 						foreach($courses as $course) {
 							Auth::user()->courses()->attach($course, array("instructor"=>1)); 
 						}
@@ -208,6 +212,8 @@ class UserController extends BaseController {
 				// Update classes for the student
 				$courses = Input::get("classesStudent");
 				if (!empty($courses)){
+					//delete all current course_user records
+					DB::table('course_user')->where('user_id','=',$id)->where('instructor','=','0')->delete();
 					foreach($courses as $course) {
 						Auth::user()->courses()->attach($course, array("instructor"=>0)); 
 					}
@@ -216,6 +222,8 @@ class UserController extends BaseController {
 				// Update classes for the instructor
 				$courses = Input::get("classesTeacher");
 				if (!empty($courses)){
+					//delete all current course_user records
+					DB::table('course_user')->where('user_id','=',$id)->where('instructor','=','1')->delete();
 					foreach($courses as $course) {
 						Auth::user()->courses()->attach($course, array("instructor"=>1)); 
 					}
