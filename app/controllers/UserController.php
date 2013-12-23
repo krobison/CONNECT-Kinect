@@ -51,16 +51,20 @@ class UserController extends BaseController {
 				// Update classes for the student
 				if(Input::get("student") == "yes") {
 					$courses = Input::get("classes");
-					foreach($courses as $course) {
-						$user->courses()->attach($course, array("instructor"=>0)); 
+					if (!is_null($courses)){
+						foreach($courses as $course) {
+							$user->courses()->attach($course, array("instructor"=>0)); 
+						}
 					}
 				}
 				
 				// Update classes for the instructor
 				if(Input::get("instructor") == "yes") {
 					$courses = Input::get("classes_instructor");
-					foreach($courses as $course) {
-						$user->courses()->attach($course, array("instructor"=>1)); 
+					if (!is_null($courses)){
+						foreach($courses as $course) {
+							$user->courses()->attach($course, array("instructor"=>1)); 
+						}
 					}
 				}
 				return Redirect::to('/')->with('message', '<div class="alert alert-success"> A new account has been created! Please try logging in. ');				
