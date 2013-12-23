@@ -2,6 +2,7 @@
 
 @section('additionalHeaders')
 	{{ HTML::style('assets/css/select2.css') }}
+	{{ HTML::style('assets/css/profile.css') }}
 @stop
 
 @section('content')
