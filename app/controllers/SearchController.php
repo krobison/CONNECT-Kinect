@@ -11,7 +11,7 @@ class SearchController extends BaseController {
 		$name = Input::get('name');
 		$courses = Input::get('classes');
 		$results = "";
-		$coursess = "";
+		$searchCourses = "";
 		if (empty($courses) && empty($name)) {
 			return View::make('search')->with('user', Auth::user());
 		
@@ -36,14 +36,14 @@ class SearchController extends BaseController {
 			ORDER BY COUNT(1) DESC"
 			);
 			
-			$coursess = DB::table('courses')
+			$searchCourses = DB::table('courses')
 				->whereIn('id',$courses)
 				->get();
 		}
 		
 		return View::make('search')
 			->with('results', $results)
-			->with('courses', $coursess)
+			->with('searchCourses', $searchCourses)
 			->with('name', $name)
 			->with('user', Auth::user());
 	}

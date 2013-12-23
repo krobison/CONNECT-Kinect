@@ -1,0 +1,34 @@
+
+.picture{
+	float:left;
+	width:128px;
+	height:128px;
+	margin:10px;
+	
+}
+
+.courselabel, .courselabelmatch{
+	padding:4px;
+	font-family:"Trebuchet MS", Helvetica, sans-serif;
+	font-size:small;
+	font-weight:bold;
+	display:inline-block;
+	margin-bottom:2px;
+	
+}
+
+.courselabel{
+	background-color:rgba(0,0,0,0.15); 
+	border:1px rgba(0,0,0,0.15) solid;
+}
+
+.courselabelmatch{
+	background-color:rgba(0,255,0,0.15); 
+	border:1px rgba(0,0,0,0.15) solid;
+}
+
+h3{
+	font-family:"Trebuchet MS", Helvetica, sans-serif;
+}
+
+
