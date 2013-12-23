@@ -8,7 +8,6 @@
 	@if ($post->postable_type == "PostHelpRequest" && $post->postable->anonymous == 1)
 		{{ HTML::image('assets/img/anonymous.png', 'anonymous' , array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
 	@else
-		<a href="{{URL::to('profile', $post->user->id)}}">
 		@if (!empty($post->user->picture))
 			@if ( File::exists('assets/img/profile_images/' . $post->user->picture ))
 				{{ HTML::image('assets/img/profile_images/'.$post->user->picture, '$comment->user->id', array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
@@ -18,7 +17,6 @@
 		@else
 			{{ HTML::image('assets/img/dummy.png', $post->user->id , array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
 		@endif
-		</a>
 	@endif
 	</div>
 	
@@ -26,14 +24,15 @@
 	{{ Form::open(array('url' => 'upvote', 'method'=>'post')) }}
 		{{ Form::hidden('user_id', Auth::user()->id) }}
 		{{ Form::hidden('post_id', $post->id) }}
-		<button type="submit" class="btn btn-primary">
 			<?php
 				$result = DB::table('upvotes')->where('user_id','=',Auth::User()->id)->where('post_id','=',$post->id)->get();
 			?>
 			@if (sizeof($result) == 0)
+				<button type="submit" class="btn btn-primary">
 				<i class="glyphicon glyphicon-hand-up"></i> Upvote: {{ $post->postupvotes->count() }}
 			@else
-				<i class="glyphicon glyphicon-hand-down"></i> Remove Upvote: {{ $post->postupvotes->count() }}
+				<button type="submit" class="btn btn-danger">
+				<i class="glyphicon glyphicon-hand-down"></i> Undo Upvote: {{ $post->postupvotes->count() }}
 			@endif
 		</button>
     {{ Form::close() }}
@@ -44,7 +43,7 @@
 	@if ($post->postable_type == "PostHelpRequest" && $post->postable->anonymous == 1)
 		<p>Anonymous, {{ $post->created_at->diffForHumans() }}</p>
 	@else
-		<p><a href="{{URL::to('profile', $post->user->id)}}">{{ $post->user->first }} {{ $post->user->last }}</a>, {{ $post->created_at->diffForHumans() }}</p>
+		<p>{{ $post->user->first }} {{ $post->user->last }}, {{ $post->created_at->diffForHumans() }}</p>
 	@endif
 
 </div>
