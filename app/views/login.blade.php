@@ -43,6 +43,9 @@
 		{{ Form::close() }}
 		
 		<hr class="separatron">
+			<br>
+			<a href="{{asset('password/reset')}}"><i>I forgot my password</i></a>
+		<hr class="separatron">
 		</div>
 		<div class="container" id="signmein">
 		
