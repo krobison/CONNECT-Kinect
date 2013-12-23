@@ -8,6 +8,7 @@
 	@if ($post->postable_type == "PostHelpRequest" && $post->postable->anonymous == 1)
 		{{ HTML::image('assets/img/anonymous.png', 'anonymous' , array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
 	@else
+		<a href="{{URL::to('profile', $post->user->id)}}">
 		@if (!empty($post->user->picture))
 			@if ( File::exists('assets/img/profile_images/' . $post->user->picture ))
 				{{ HTML::image('assets/img/profile_images/'.$post->user->picture, '$comment->user->id', array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
@@ -17,6 +18,7 @@
 		@else
 			{{ HTML::image('assets/img/dummy.png', $post->user->id , array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
 		@endif
+		</a>
 	@endif
 	</div>
 	
@@ -35,7 +37,7 @@
 	@if ($post->postable_type == "PostHelpRequest" && $post->postable->anonymous == 1)
 		<p>Anonymous, {{ $post->created_at->diffForHumans() }}</p>
 	@else
-		<p>{{ $post->user->first }} {{ $post->user->last }}, {{ $post->created_at->diffForHumans() }}</p>
+		<p><a href="{{URL::to('profile', $post->user->id)}}">{{ $post->user->first }} {{ $post->user->last }}</a>, {{ $post->created_at->diffForHumans() }}</p>
 	@endif
 
 </div>
