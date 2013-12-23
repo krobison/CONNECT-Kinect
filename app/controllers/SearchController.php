@@ -9,7 +9,21 @@ class SearchController extends BaseController {
 	
 	public function processSearch() {
 		$name = Input::get('name');
-		$results = DB::select("SELECT * FROM users WHERE CONCAT(first, ' ', last) LIKE '%$name%' OR last LIKE '%$name%'");
+		$courses = Input::get('classes');
+		$courseIds = implode(",", $courses);
+		$results = DB::select(
+		"SELECT u.* 
+		FROM users u
+		JOIN course_user l ON u.id = l.user_id
+		JOIN courses c ON c.id = l.course_id
+		WHERE c.id IN ( '$courseIds' )
+		AND ( CONCAT(first, ' ', last) LIKE '%$name%' 
+		OR last LIKE '%$name%')"
+		);
+		
+		
+		
+		
 		return View::make('search')->with('results', $results)->with('user', Auth::user());
 	}
 
