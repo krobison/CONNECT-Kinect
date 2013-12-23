@@ -25,7 +25,14 @@
 		{{ Form::hidden('user_id', Auth::user()->id) }}
 		{{ Form::hidden('post_id', $post->id) }}
 		<button type="submit" class="btn btn-primary">
-			<i class="glyphicon glyphicon-hand-up"></i> Upvote: {{ $post->postupvotes->count() }}
+			<?php
+				$result = DB::table('upvotes')->where('user_id','=',Auth::User()->id)->where('post_id','=',$post->id)->get();
+			?>
+			@if (sizeof($result) == 0)
+				<i class="glyphicon glyphicon-hand-up"></i> Upvote: {{ $post->postupvotes->count() }}
+			@else
+				<i class="glyphicon glyphicon-hand-down"></i> Remove Upvote: {{ $post->postupvotes->count() }}
+			@endif
 		</button>
     {{ Form::close() }}
 
