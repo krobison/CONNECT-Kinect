@@ -155,6 +155,22 @@ class UserController extends BaseController {
 					}
 
 					//UPDATE USER
+					$file = Input::file('profilepic');
+					if($file) {
+						if(!is_null(Auth::User()->picture)){
+							unlink(base_path().'/assets/img/profile_images/'.Auth::User()->picture);	//delete old picture
+						}
+						$extension = $file->getClientOriginalExtension();
+						$newFilename = str_random(25) . "." . $extension;
+						$destinationPath = base_path() . '/assets/img/profile_images';
+						$uploadSuccess = Input::file('profilepic')->move($destinationPath, $newFilename);
+						if($uploadSuccess) {
+							DB::table('users')
+            				->where('id', '=', $id)
+            				->update(array('picture' => $newFilename));
+						}
+					}
+
 					DB::table('users')->where('id',Auth::user()->id)
 					->update(array
 						('first' => Input::get("first"),
@@ -202,6 +218,22 @@ class UserController extends BaseController {
 				}
 
 				//UPDATE USER
+				$file = Input::file('profilepic');
+				if($file) {
+					if(!is_null(Auth::User()->picture)){
+						unlink(base_path().'/assets/img/profile_images/'.Auth::User()->picture);	//delete old picture
+					}
+					$extension = $file->getClientOriginalExtension();
+					$newFilename = str_random(25) . "." . $extension;
+					$destinationPath = base_path() . '/assets/img/profile_images';
+					$uploadSuccess = Input::file('profilepic')->move($destinationPath, $newFilename);
+					if($uploadSuccess) {
+						DB::table('users')
+        				->where('id', '=', $id)
+        				->update(array('picture' => $newFilename));
+					}
+				}
+
 				DB::table('users')->where('id',Auth::user()->id)
 				->update(array
 					('first' => Input::get("first"),

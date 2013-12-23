@@ -86,11 +86,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		'last' => 'required|alpha|max:20',
 		'new' => 'required|alpha_num|between:4,32|confirmed',
 		'new_confirmation' => 'required|alpha_num|between:4,32',
+		'profilepic' => 'image|max:2000'
 	);
 	
 	public static $editrulesnopass = array(
 		'first' => 'required|alpha|max:20',
 		'last' => 'required|alpha|max:20',
+		'profilepic' => 'image|max:2000'
 	);
 
 	public static function validate($data) {
