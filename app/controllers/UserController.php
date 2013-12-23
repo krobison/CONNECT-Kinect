@@ -67,7 +67,7 @@ class UserController extends BaseController {
 						}
 					}
 				}
-				return Redirect::to('/')->with('message', '<div class="alert alert-success"> A new account has been created! Please try logging in. ');				
+				return Redirect::to('/')->with('message', '<div class="alert alert-success"> A new account has been created! Please try logging in.</div> ');				
 				
 			} catch( Exception $e ) {
 				Log::error('New User Error: ' . $e);
@@ -259,7 +259,9 @@ class UserController extends BaseController {
 	public function deleteaccount(){
 		$id = Auth::User()->id;
 
-		unlink(base_path().'/assets/img/profile_images/'.Auth::User()->picture);
+		if(!is_null(Auth::User()->picture)){
+			unlink(base_path().'/assets/img/profile_images/'.Auth::User()->picture);
+		}
 
 		Auth::logout();
 		DB::table('users')->where('id','=',$id)->delete();

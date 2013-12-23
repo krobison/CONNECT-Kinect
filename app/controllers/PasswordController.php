@@ -22,7 +22,7 @@ class PasswordController extends BaseController {
 	    	$user->password = Hash::make($password);
 	 
 	    	$user->save();
-			return Redirect::to('login')->with('flash', 'Your password has been reset');
+			return Redirect::to('/')->with('message', '<div class="alert alert-success"> Your password has been reset </div>');
 	  	});
 	}
 
