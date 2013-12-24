@@ -51,19 +51,23 @@ class UserController extends BaseController {
 				// Update classes for the student
 				if(Input::get("student") == "yes") {
 					$courses = Input::get("classes");
-					foreach($courses as $course) {
-						$user->courses()->attach($course, array("instructor"=>0)); 
+					if (!is_null($courses)){
+						foreach($courses as $course) {
+							$user->courses()->attach($course, array("instructor"=>0)); 
+						}
 					}
 				}
 				
 				// Update classes for the instructor
 				if(Input::get("instructor") == "yes") {
 					$courses = Input::get("classes_instructor");
-					foreach($courses as $course) {
-						$user->courses()->attach($course, array("instructor"=>1)); 
+					if (!is_null($courses)){
+						foreach($courses as $course) {
+							$user->courses()->attach($course, array("instructor"=>1)); 
+						}
 					}
 				}
-				return Redirect::to('/')->with('message', '<div class="alert alert-success"> A new account has been created! Please try logging in. ');				
+				return Redirect::to('/')->with('message', '<div class="alert alert-success"> A new account has been created! Please try logging in.</div> ');				
 				
 			} catch( Exception $e ) {
 				Log::error('New User Error: ' . $e);
@@ -141,20 +145,44 @@ class UserController extends BaseController {
 					// Update classes for the student
 					$courses = Input::get("classesStudent");
 					if (!empty($courses)){
+						//delete all current course_user records
+						DB::table('course_user')->where('user_id','=',$id)->where('instructor','=','0')->delete();
 						foreach($courses as $course) {
-							Auth::user()->courses()->attach($course, array("instructor"=>0)); 
+							if (sizeof(DB::table('course_user')->where('course_id','=',$course)->where('user_id','=',$id)->get() == 0)){
+								Auth::user()->courses()->attach($course, array("instructor"=>0)); 
+							}
 						}
 					}
 				
 					// Update classes for the instructor
 					$courses = Input::get("classesTeacher");
 					if (!empty($courses)){
+						//delete all current course_user records
+						DB::table('course_user')->where('user_id','=',$id)->where('instructor','=','1')->delete();
 						foreach($courses as $course) {
-							Auth::user()->courses()->attach($course, array("instructor"=>1)); 
+							if (siezof(DB::table('course_user')->where('course_id','=',$course)->where('user_id','=',$id)->get() == 0)){
+								Auth::user()->courses()->attach($course, array("instructor"=>1)); 
+							}
 						}
 					}
 
 					//UPDATE USER
+					$file = Input::file('profilepic');
+					if($file) {
+						if(!is_null(Auth::User()->picture)){
+							unlink(base_path().'/assets/img/profile_images/'.Auth::User()->picture);	//delete old picture
+						}
+						$extension = $file->getClientOriginalExtension();
+						$newFilename = str_random(25) . "." . $extension;
+						$destinationPath = base_path() . '/assets/img/profile_images';
+						$uploadSuccess = Input::file('profilepic')->move($destinationPath, $newFilename);
+						if($uploadSuccess) {
+							DB::table('users')
+            				->where('id', '=', $id)
+            				->update(array('picture' => $newFilename));
+						}
+					}
+
 					DB::table('users')->where('id',Auth::user()->id)
 					->update(array
 						('first' => Input::get("first"),
@@ -188,20 +216,44 @@ class UserController extends BaseController {
 				// Update classes for the student
 				$courses = Input::get("classesStudent");
 				if (!empty($courses)){
+					//delete all current course_user records
+					DB::table('course_user')->where('user_id','=',$id)->where('instructor','=','0')->delete();
 					foreach($courses as $course) {
-						Auth::user()->courses()->attach($course, array("instructor"=>0)); 
+						if (sizeof(DB::table('course_user')->where('course_id','=',$course)->where('user_id','=',$id)->get() == 0)){
+							Auth::user()->courses()->attach($course, array("instructor"=>0)); 
+						}
 					}
 				}
 			
 				// Update classes for the instructor
 				$courses = Input::get("classesTeacher");
 				if (!empty($courses)){
+					//delete all current course_user records
+					DB::table('course_user')->where('user_id','=',$id)->where('instructor','=','1')->delete();
 					foreach($courses as $course) {
-						Auth::user()->courses()->attach($course, array("instructor"=>1)); 
+						if (sizeof(DB::table('course_user')->where('course_id','=',$course)->where('user_id','=',$id)->get() == 0)){
+							Auth::user()->courses()->attach($course, array("instructor"=>1)); 
+						}
 					}
 				}
 
 				//UPDATE USER
+				$file = Input::file('profilepic');
+				if($file) {
+					if(!is_null(Auth::User()->picture)){
+						unlink(base_path().'/assets/img/profile_images/'.Auth::User()->picture);	//delete old picture
+					}
+					$extension = $file->getClientOriginalExtension();
+					$newFilename = str_random(25) . "." . $extension;
+					$destinationPath = base_path() . '/assets/img/profile_images';
+					$uploadSuccess = Input::file('profilepic')->move($destinationPath, $newFilename);
+					if($uploadSuccess) {
+						DB::table('users')
+        				->where('id', '=', $id)
+        				->update(array('picture' => $newFilename));
+					}
+				}
+
 				DB::table('users')->where('id',Auth::user()->id)
 				->update(array
 					('first' => Input::get("first"),
@@ -218,6 +270,25 @@ class UserController extends BaseController {
 				return Redirect::back()->withErrors($validator);
 			}
 		}
+	}
+
+	public function deleteaccount(){
+		$id = Auth::User()->id;
+
+		if(!is_null(Auth::User()->picture)){
+			unlink(base_path().'/assets/img/profile_images/'.Auth::User()->picture);
+		}
+
+		Auth::logout();
+		DB::table('users')->where('id','=',$id)->delete();
+		DB::table('posts')->where('user_id','=',$id)->delete();
+		DB::table('questions')->where('user_id','=',$id)->delete();
+		DB::table('upvotes')->where('user_id','=',$id)->delete();
+		DB::table('user_hashtag')->where('user_id','=',$id)->delete();
+		DB::table('user_messages')->where('user_id','=',$id)->delete();
+		DB::table('comments')->where('user_id','=',$id)->delete();
+
+		return Redirect::to('/');
 	}
 	
 	public function badPassword(){

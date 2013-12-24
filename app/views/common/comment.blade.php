@@ -11,6 +11,6 @@
 	@endif
 	</div>
 
-	<p>{{ $comment->content }}</p>
-	<p>{{ $comment->user->first }} {{ $comment->user->last }}, {{ $comment->created_at->diffForHumans() }}</p>
+	<p>{{{ $comment->content }}}</p>
+	<p>{{{ $comment->user->first }}} {{{ $comment->user->last }}}, {{{ $comment->created_at->diffForHumans() }}}</p>
 </div>

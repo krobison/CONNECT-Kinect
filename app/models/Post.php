@@ -13,6 +13,10 @@ class Post extends Eloquent {
 	public function comments() {
 		return $this->hasMany('Comment');
 	}
+	    
+    public function images() {
+        return $this->hasMany('Images');
+    }
 	
 	public function postable() {
         return $this->morphTo();
@@ -23,7 +27,8 @@ class Post extends Eloquent {
     }
 
 	// This really isn't a model function, however, I need to do a bunch of logic on 
-	// data from the file system and it would be worse to put the logic in the blade template
+	// data from the file system and it would be worse to put the logic in the blade template -- Thomas
+	// (probably should move to controller though it any one is interested)
 	public static function getSupportedLanguages() {
 		// Look in the "assets/js/ace" directory to see what languages have supporting .js files
 		$files = scandir(getcwd() . '/assets/js/ace/');

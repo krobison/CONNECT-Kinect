@@ -68,7 +68,7 @@
 				<b> How would you like to be displayed? </b> <br>
 				<label class="radio-inline">
 				{{ Form::radio('anonymous', '0', array('checked' => 'true')) }}
-					Post as {{ $user->first }} {{ $user->last }}
+					Post as {{{ $user->first }}} {{{ $user->last }}}
 				</label>
 				<label class="radio-inline">
 				{{ Form::radio('anonymous', '1') }} 
@@ -103,9 +103,9 @@
 					<select id="language-select" class="select2-container" name="language">
 						@foreach(Post::getSupportedLanguages() as $language)
 							@if ($language === "plain_text")
-								<option selected value={{ $language }}>{{ ucfirst($language) }}</option>
+								<option selected value={{{ $language }}}>{{{ ucfirst($language) }}}</option>
 							@else
-								<option value={{ $language }}>{{ ucfirst($language) }}</option>
+								<option value={{ $language }}>{{{ ucfirst($language) }}}</option>
 							@endif
 						@endforeach
 					</select>
@@ -239,7 +239,7 @@
 		// Set up select2 menu (not currently working...)
 		$(document).ready(function() { 
 
-			//$(".select2-container").select2();
+		$(".select2-container").select2();
 		});
 	</script>
 @stop

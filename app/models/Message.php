@@ -1,11 +1,10 @@
 <?php
-
-class Message extends Elequent {
-	public function from() {
+class Message extends Eloquent {
+	public function fromUser() {
 		return $this->belongsTo('User', 'from');
 	}
 
-	public function to() {
+	public function toUser() {
 		return $this->belongsTo('User', 'to');
 	}
 }
