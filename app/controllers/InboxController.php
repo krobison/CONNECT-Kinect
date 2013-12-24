@@ -12,17 +12,23 @@ class InboxController extends BaseController {
 
 		// $message = Message::find(1);
 		// dd($message->toUser);
-
-		$user = Auth::user();
 	
-		$sentMessages = Message::where('from', '=', $user->id)->get();
-		$receivedMessages = Message::where('to', '=', $user->id)->get();
+		$messages = Message::where('from', '=', Auth::user()->id)
+			->orWhere('to', '=', Auth::user()->id)
+			->get();
+		$users = User::select('id', 'first', 'last')->get();
 
-
+		foreach ($messages as $message) {
+			foreach ($users as $user) {
+				if($user['id'] == $message['to'] || $user['id'] == $message['from']) {
+					$conv_users[$user['id']] = $user['first'] . " " . $user['last'];
+				}
+			}
+		}
 		return View::make('inbox')
 			->with('user', Auth::user())
-			->with('sentMessages', $sentMessages)
-			->with('receivedMessages', $receivedMessages);
+			->with('messages', $messages)
+			->with('users', $conv_users);
 	}
 
 	// Show the user individual conversation
