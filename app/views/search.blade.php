@@ -54,19 +54,23 @@
 				<div>
 
 					@foreach(User::find($result->id)->courses as $course)
-						@foreach($searchCourses as $searchCourse)
-							@if($course->id == $searchCourse->id)
-								<span class="courselabelmatch">{{{$course->prefix}}}{{{$course->number}}} - {{{$course->name}}}</span>
-							@endif
-						@endforeach 
+						@if (!empty($searchCourses))
+							@foreach($searchCourses as $searchCourse)
+								@if($course->id == $searchCourse->id)
+									<span class="courselabelmatch">{{{$course->prefix}}}{{{$course->number}}} - {{{$course->name}}}</span>
+								@endif
+							@endforeach 
+						@endif
 					@endforeach
 					@foreach(User::find($result->id)->courses as $course)
 						<?php $t = false ?>
-						@foreach($searchCourses as $searchCourse)
-							@if($course->id == $searchCourse->id)
-								<?php $t = true ?>
-							@endif
-						@endforeach 
+						@if (!empty($searchCourses))
+							@foreach($searchCourses as $searchCourse)
+								@if($course->id == $searchCourse->id)
+									<?php $t = true ?>
+								@endif
+							@endforeach 
+						@endif
 						@if(!$t)
 							<span class="courselabel">{{{$course->prefix}}}{{{$course->number}}} - {{{$course->name}}}</span>
 						@endif
