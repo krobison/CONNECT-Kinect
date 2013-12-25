@@ -25,6 +25,11 @@ class UserController extends BaseController {
 				$user->password = Hash::make(Input::get('password'));
 				$user->bio = Input::get('bio');
 				
+				//PURIFY
+				$pureconfig = HTMLPurifier_Config::createDefault();
+				$purifier = new HTMLPurifier($pureconfig);
+				$user->bio = $purifier->purify($user->bio);
+				
 				// Add entries to the database that only belong to students
 				if(Input::get("student") == "yes") {
 					$user->degree_type = Input::get('degree_type');
@@ -106,6 +111,22 @@ class UserController extends BaseController {
 				->whereIn('id',$course_ids)
 				->get();
 		}
+		
+		// Generate some html for a select object in an HTML form
+		$studentHTML = array();
+		foreach(Course::all() as $course) {
+			$notSelected = true;
+			foreach($course_ids as $courseTakingId) {
+				if($course->id == $courseTakingId) {
+					array_push($studentHTML, "<option selected value=".$course->id.">".$course->prefix.$course->number." - ".$course->name."</option>");
+					$notSelected = false;
+					break;
+				}
+			}
+			if($notSelected) {
+				array_push($studentHTML, "<option value=".$course->id.">".$course->prefix.$course->number." - ".$course->name."</option>");
+			}
+		}
 
 		$teacherClasses = "";
 		$teacherTable = DB::table('course_user')
@@ -117,12 +138,29 @@ class UserController extends BaseController {
 				->whereIn('id',$course_ids)
 				->get();
 		}
-
+		
+		// Generate some html for a select object in an HTML form
+		$teacherHTML = array();
+		foreach(Course::all() as $course) {
+			$notSelected = true;
+			foreach($course_ids as $courseTaughtId) {
+				if($course->id == $courseTaughtId) {
+					array_push($teacherHTML, "<option selected value=".$course->id.">".$course->prefix.$course->number." - ".$course->name."</option>");
+					$notSelected = false;
+					break;
+				}
+			}
+			if($notSelected) {
+				array_push($teacherHTML, "<option value=".$course->id.">".$course->prefix.$course->number." - ".$course->name."</option>");
+			}
+		}
 
 		return View::make('editProfile')
 		->with('user', Auth::user())
 		->with('studentClasses',$studentClasses)
-		->with('teacherClasses',$teacherClasses);
+		->with('teacherClasses',$teacherClasses)
+		->with('studentSelectHTML',$studentHTML)
+		->with('teacherSelectHTML',$teacherHTML);
 	}
 	
 	public function changedAccount(){
@@ -137,10 +175,11 @@ class UserController extends BaseController {
 					$bioclean = $purifier->purify(Input::get('bio'));
 
 					DB::table('course_user')->where('user_id', '=',$id)->delete();
-
+					
 					// Update classes for the student
 					$courses = Input::get("classesStudent");
 					if (!empty($courses)){
+						Log::error(implode($courses));
 						foreach($courses as $course) {
 							Auth::user()->courses()->attach($course, array("instructor"=>0)); 
 						}
@@ -179,12 +218,12 @@ class UserController extends BaseController {
 			$validator = Validator::make(Input::all(), User::$editrulesnopass);
 			if($validator->passes()) {
 				//PURIFY
-					$pureconfig = HTMLPurifier_Config::createDefault();
-					$purifier = new HTMLPurifier($pureconfig);
-					$bioclean = $purifier->purify(Input::get('bio'));
+				$pureconfig = HTMLPurifier_Config::createDefault();
+				$purifier = new HTMLPurifier($pureconfig);
+				$bioclean = $purifier->purify(Input::get('bio'));
 
 				DB::table('course_user')->where('user_id', '=',$id)->delete();
-
+						
 				// Update classes for the student
 				$courses = Input::get("classesStudent");
 				if (!empty($courses)){
@@ -223,7 +262,9 @@ class UserController extends BaseController {
 	public function deleteaccount(){
 		$id = Auth::User()->id;
 
-		unlink(base_path().'/assets/img/profile_images/'.Auth::User()->picture);
+		if(!is_null(Auth::User()->picture)) {
+			unlink(base_path().'/assets/img/profile_images/'.Auth::User()->picture);
+		}
 
 		Auth::logout();
 		DB::table('users')->where('id','=',$id)->delete();
@@ -233,8 +274,9 @@ class UserController extends BaseController {
 		DB::table('user_hashtag')->where('user_id','=',$id)->delete();
 		DB::table('user_messages')->where('user_id','=',$id)->delete();
 		DB::table('comments')->where('user_id','=',$id)->delete();
+		DB::table('course_user')->where('user_id','=',$id)->delete();
 
-		return Redirect::to('/');
+		return Redirect::to('/')->with('message', '<div class="alert alert-success"> You have successfully deleted your account. </div>');
 	}
 	
 	public function badPassword(){

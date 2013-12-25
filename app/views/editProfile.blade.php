@@ -8,7 +8,7 @@
 @section('content')
 	<div class="basic">
 		<form class="form-horizontal" role="form" action="{{ URL::to('deleteaccount/')}}" method="post">
-			<button type="submit" class="btn btn-danger" style="float:right;margin-top:16px;" onclick="return confirm('Are you sure you would like to delete your account FOREVER?');">Delete Account</button>
+			<button type="submit" class="btn btn-danger" style="float:right;margin-top:16px;" onclick="return confirm('Are you sure you would like to delete your account FOREVER? This includes deletion of all posts, comments, and up-votes as well as uploaded projects and pictures.');">Delete Account</button>
 		</form>
 		<h3 class="editheader">Edit Profile <small>{{$user->first.' '.$user->last.' ('.$user->email.')'}}</small></h3>
 		<form class="form-horizontal" role="form" action="<?php echo asset('changedAccount'); ?>" method="post">
@@ -112,18 +112,9 @@
 				<label for="classesStudent[]" class="col-sm-3 control-label">Courses Taking</label>
 					<div class="col-sm-4">
 						<select multiple class="select2-container-student classSelect" name="classesStudent[]" id="studentSelect">
-							<optgroup label="Computer Science">
-								@foreach(Course::all() as $course)
-									<option value={{{ $course->id }}}>{{{ $course->prefix }}}{{{ $course->number }}} - {{{ $course->name }}}</option>
-								@endforeach
-							</optgroup>
-							@if (!empty($studentClasses))
-								@foreach($studentClasses as $course)
-									<option selected value={{{ $course->id }}}>
-										{{{$course->prefix}}}{{{$course->number}}} - {{{$course->name}}}
-									</option>
-								@endforeach
-							@endif
+							@foreach($studentSelectHTML as $html)
+								{{$html}}
+							@endforeach
 						</select>
 					</div>
 				</div>
@@ -132,17 +123,10 @@
 					<div class="col-sm-4">
 						<select multiple class="select2-container-teacher classSelect" name="classesTeacher[]" id="teacherSelect">
 							<optgroup label="Computer Science">
-								@foreach(Course::all() as $course)
-									<option value={{{ $course->id }}}>{{{ $course->prefix }}}{{{ $course->number }}} - {{{ $course->name }}}</option>
+								@foreach($teacherSelectHTML as $html)
+									{{$html}}
 								@endforeach
 							</optgroup>
-							@if (!empty($teacherClasses))
-								@foreach($teacherClasses as $course)
-									<option selected value={{{ $course->id }}}>
-										{{{$course->prefix}}}{{{$course->number}}} - {{{$course->name}}}
-									</option>
-								@endforeach
-							@endif
 						</select>
 					</div>
 				</div>
@@ -155,17 +139,15 @@
 	</div>
 	<!-- Loading all scripts at the end for performance-->
 	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
-	{{ HTML::script('assets/js/select2.js') }}
+	{{ HTML::script('assets/js/select2.min.js') }}
 	<script>
 		$(document).ready(function() { 
 			$(".select2-container-student").select2({
 				placeholder: "Select Your Classes"
 			});
-		});
-		$(document).ready(function() { 
 			$(".select2-container-teacher").select2({
 				placeholder: "Select Your Classes"
-			});
+			});		
 		});
 	</script>
 @stop
