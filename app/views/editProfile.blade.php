@@ -11,7 +11,24 @@
 			<button type="submit" class="btn btn-danger" style="float:right;margin-top:16px;" onclick="return confirm('Are you sure you would like to delete your account FOREVER? This includes deletion of all posts, comments, and up-votes as well as uploaded projects and pictures.');">Delete Account</button>
 		</form>
 		<h3 class="editheader">Edit Profile <small>{{$user->first.' '.$user->last.' ('.$user->email.')'}}</small></h3>
-		<form class="form-horizontal" role="form" action="<?php echo asset('changedAccount'); ?>" method="post">
+		{{ Form::open(array('url' => 'changedAccount', 'files' => true, 'class' => 'form-horizontal')) }}
+			@if(is_null(Auth::User()->picture))
+				{{ HTML::image('assets/img/dummy.png', 'profile picture', array('width' => '256', 'height' => '256', 'class' => 'editimage')) }}
+			@else
+				{{ HTML::image('assets/img/profile_images/'.Auth::User()->picture, 'profile picture', array('width' => '256', 'height' => '256', 'class' => 'editimage')) }}
+			@endif 
+			<div class="form-group">
+				<label for="first" class="col-sm-3 control-label">Profile Picture</label>
+					<div class="col-sm-4">
+						{{Form::file('profilepic', array())}}	
+					</div>
+			</div>
+			@if($errors->has('profilepic'))
+				<span class="errormessage">
+					{{$errors->first('profilepic')}}
+				</span>
+			@endif
+			<hr>
 			@if($errors->has('first'))
 				<span class="errormessage">
 					{{$errors->first('first')}}
@@ -23,7 +40,6 @@
 						<input type="text" class="form-control" id="first" name="first" value="{{{$user->first}}}"/>
 					</div>
 			</div>
-			
 			@if($errors->has('last'))
 				<span class="errormessage">
 					{{$errors->first('last')}}

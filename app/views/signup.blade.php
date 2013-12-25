@@ -121,7 +121,7 @@
 		<div class="row">
 			<div class ="col-xs-10 col-md-8 col-md-offset-2">
 			<ul class="list-inline student_switch">
-			  <li> {{ Form::radio('student', 'yes') }} Yes  </li>
+			  <li> {{ Form::radio('student', 'yes', false) }} Yes  </li>
 			  <li> {{ Form::radio('student', 'no', true) }} No </li>
 			</ul>
 			</div>
@@ -198,7 +198,7 @@
 		<div class="row">
 			<div class ="col-xs-10 col-md-8 col-md-offset-2">
 			<ul class="list-inline instructor_switch">
-				<li> {{ Form::radio('instructor', 'yes') }} Yes  </li>
+				<li> {{ Form::radio('instructor', 'yes', false) }} Yes  </li>
 				<li> {{ Form::radio('instructor', 'no', true) }} No </li>
 			</ul>
 			</div>

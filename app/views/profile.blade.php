@@ -43,6 +43,9 @@
 					<span>{{{$currentuser->minor}}}</span><br>
 				@endif
 			</div>
+			<div class="info">
+				<a href="{{ URL::to('messageUser', $currentuser->id) }}">Message This User</a>
+			</div>
 		</div>
 		<div class="row">
 			@if (!empty($studentClasses))

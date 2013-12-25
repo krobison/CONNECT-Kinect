@@ -68,7 +68,33 @@ Route::group(array('before' => 'auth'), function() {
 	Route::post('createComment', 'PostController@createComment');
 	Route::post('upvote', 'PostController@upvote');
 
+	// GET inbox page
+	Route::get('inbox', 'InboxController@showInbox');
+
+	// GET 
+	Route::get('messageUser/{id}', 'InboxController@messageUser');
+
+	// POST
+	Route::post('messageTo', 'InboxController@createMessage');
 });
+
+//PASSWORD REMINDER
+	Route::get('password/reset', array(
+  		'uses' => 'PasswordController@remind',
+  		'as' => 'password.remind'
+	));
+	Route::post('password/reset', array(
+  		'uses' => 'PasswordController@request',
+  		'as' => 'password.request'
+	));
+	Route::get('password/reset/{token}', array(
+		'uses' => 'PasswordController@reset',
+		'as' => 'password.reset'
+	));
+	Route::post('password/reset/{token}', array(
+		'uses' => 'PasswordController@update',
+	 	'as' => 'password.update'
+	));
 
 /**
  *	Experimental routes.

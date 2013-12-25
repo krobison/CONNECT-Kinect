@@ -34,11 +34,12 @@
     		<div class="navbar-collapse bs-navbar-collapse collapse">
     	
     			<ul class="nav navbar-nav">
-        			<li><a href="#">Messages <i> Not Working </i></a></li>
+        			<li><a href="{{ URL::to('inbox') }}">Messages <i> Not Working </i></a></li>
     				<li><a href="#">Notifications <i> Not Working </i></a></li>
     				</ul>
       
     				<ul class="nav navbar-nav navbar-right">
+    					<li><a href="{{URL::to('profile')}}/{{$user->id}}">{{{$user->first}}} {{{$user->last}}} ({{{$user->email}}})</a></li>
     					<li><a href="{{ URL::to('logout') }}">Logout</a></li>
     				</ul>
     	
@@ -56,10 +57,9 @@
 				{{-- Side Bar --}}
 			
 				<div class="affix">
-				
-				<p><a href="{{ URL::to('profile/'.Auth::user()->id) }}">{{{ $user->first }}} {{{ $user->last }}}</a></li></p>
-				<p>{{{ $user->email }}}</p>
 				<ul class="nav">
+					<li><a href="{{ URL::to('profile/'.Auth::user()->id) }}"><span class="glyphicon glyphicon-user"></span>   {{{ $user->first }}} {{{ $user->last }}}</a></li>
+					<li>&nbsp;</li>		
 					<li><a href="{{ URL::to('cs_connect') }}"><span class="glyphicon glyphicon-home"></span>   CS CONNECT</a></li>
 					<li><a href="{{ URL::to('newsfeed') }}"><span class="glyphicon glyphicon-list"></span>   News Feed</a></li>
 					<li><a href="{{ URL::to('CSQuestion') }}"><span class="glyphicon glyphicon-pencil"></span>   CS Question</a></li>
