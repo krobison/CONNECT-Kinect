@@ -39,6 +39,7 @@
     				</ul>
       
     				<ul class="nav navbar-nav navbar-right">
+    					<li><a href="{{URL::to('profile')}}/{{$user->id}}">{{{$user->first}}} {{{$user->last}}} ({{{$user->email}}})</a></li>
     					<li><a href="{{ URL::to('logout') }}">Logout</a></li>
     				</ul>
     	
