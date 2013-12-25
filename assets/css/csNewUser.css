@@ -6,7 +6,7 @@ margin-right: auto;
 }
 
 html, body {
-  background-color: #EFECCA;
+  background-color: #EEEEEE;
   height:100%;
 }
 
@@ -22,7 +22,7 @@ html, body {
 .page-header{
 	margin:auto;
 	min-width:1050px;
-	background-color:#E6E2AF;
+	background-color:#BBBBBB;
 	text-align:center;
 }
 
