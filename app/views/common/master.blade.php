@@ -56,10 +56,9 @@
 				{{-- Side Bar --}}
 			
 				<div class="affix">
-				
-				<p><a href="{{ URL::to('profile/'.Auth::user()->id) }}">{{{ $user->first }}} {{{ $user->last }}}</a></li></p>
-				<p>{{{ $user->email }}}</p>
 				<ul class="nav">
+					<li><a href="{{ URL::to('profile/'.Auth::user()->id) }}"><span class="glyphicon glyphicon-user"></span>   {{{ $user->first }}} {{{ $user->last }}}</a></li>
+					<li>&nbsp;</li>		
 					<li><a href="{{ URL::to('cs_connect') }}"><span class="glyphicon glyphicon-home"></span>   CS CONNECT</a></li>
 					<li><a href="{{ URL::to('newsfeed') }}"><span class="glyphicon glyphicon-list"></span>   News Feed</a></li>
 					<li><a href="{{ URL::to('CSQuestion') }}"><span class="glyphicon glyphicon-pencil"></span>   CS Question</a></li>
