@@ -72,7 +72,9 @@
 }
 
 .editbutton{
-	font-size:small;
+	float:right;
+	margin-right:32px;
+	margin-top:-32px;
 }
 
 h3{
@@ -106,5 +108,4 @@ h3{
 .editimage{
 	margin-left:72px;
 	margin-bottom:8px;
-}
 }

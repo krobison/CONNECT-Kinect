@@ -34,13 +34,20 @@
     		<div class="navbar-collapse bs-navbar-collapse collapse">
     	
     			<ul class="nav navbar-nav">
-        			<li><a href="{{ URL::to('inbox') }}">Messages <i> Not Working </i></a></li>
-    				<li><a href="#">Notifications <i> Not Working </i></a></li>
+        			<li><a href="{{ URL::to('inbox') }}">
+        				<span class="glyphicon glyphicon-envelope"></span> Messages <i> Not Working </i>
+        			</a></li>
+    				<li><a href="#"> 
+    					<span class="glyphicon glyphicon-exclamation-sign"></span> Notifications <i> Not Working </i>
+    				</a></li>
     				</ul>
       
     				<ul class="nav navbar-nav navbar-right">
-    					<li><a href="{{URL::to('profile')}}/{{$user->id}}">{{{$user->first}}} {{{$user->last}}} ({{{$user->email}}})</a></li>
-    					<li><a href="{{ URL::to('logout') }}">Logout</a></li>
+    					<li>
+    						<a href="{{ URL::to('logout') }}">
+    							Logout {{{$user->email}}}  <span class="glyphicon glyphicon-log-out"></span>
+    						</a>
+    					</li>
     				</ul>
     	
     		</div>
@@ -62,8 +69,8 @@
 					<li>&nbsp;</li>		
 					<li><a href="{{ URL::to('cs_connect') }}"><span class="glyphicon glyphicon-home"></span>   CS CONNECT</a></li>
 					<li><a href="{{ URL::to('newsfeed') }}"><span class="glyphicon glyphicon-list"></span>   News Feed</a></li>
-					<li><a href="{{ URL::to('CSQuestion') }}"><span class="glyphicon glyphicon-pencil"></span>   CS Question</a></li>
-					<li><a href="{{ URL::to('projects') }}"><span class="glyphicon glyphicon-folder-open"></span>   CS Projects</a></li>
+					<li><a href="{{ URL::to('CSQuestion') }}"><span class="glyphicon glyphicon-question-sign"></span>   CS Question</a></li>
+					<li><a href="{{ URL::to('projects') }}"><span class="glyphicon glyphicon-hdd"></span> CS Projects</a></li>
 					<li><a href="{{ URL::to('helpCenter') }}"><span class="glyphicon glyphicon-bullhorn"></span>   Help Center</a></li>
 					<li><a href="{{ URL::to('community') }}"><span class="glyphicon glyphicon-globe"></span>   Community</a></li>
 					<li><a href="{{ URL::to('search') }}"><span class="glyphicon glyphicon-search"></span>   Search</a></li>

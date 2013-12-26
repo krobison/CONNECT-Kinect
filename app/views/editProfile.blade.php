@@ -8,7 +8,9 @@
 @section('content')
 	<div class="basic">
 		<form class="form-horizontal" role="form" action="{{ URL::to('deleteaccount/')}}" method="post">
-			<button type="submit" class="btn btn-danger" style="float:right;margin-top:16px;" onclick="return confirm('Are you sure you would like to delete your account FOREVER? This includes deletion of all posts, comments, and up-votes as well as uploaded projects and pictures.');">Delete Account</button>
+			<button type="submit" class="btn btn-danger" style="float:right;margin-top:16px;" onclick="return confirm('Are you sure you would like to delete your account FOREVER? This includes deletion of all posts, comments, and up-votes as well as uploaded projects and pictures.');">
+				<span class="glyphicon glyphicon-trash"></span> Delete Account
+			</button>
 		</form>
 		<h3 class="editheader">Edit Profile <small>{{$user->first.' '.$user->last.' ('.$user->email.')'}}</small></h3>
 		{{ Form::open(array('url' => 'changedAccount', 'files' => true, 'class' => 'form-horizontal')) }}
@@ -147,10 +149,14 @@
 					</div>
 				</div>
 			<br>
-			<button type="submit" class="btn btn-primary" style="float:right">Save Changes</button>
+			<button type="submit" class="btn btn-primary" style="float:right">
+				<span class="glyphicon glyphicon-ok"></span> Save Changes
+			</button>
 		</form>
 		<form action="">
-			<button type="submit" class="btn btn-danger">Cancel</button>
+			<button type="submit" class="btn btn-danger">
+				<span class="glyphicon glyphicon-remove"></span> Cancel
+			</button>
 		</form>
 	</div>
 	<!-- Loading all scripts at the end for performance-->

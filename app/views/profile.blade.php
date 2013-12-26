@@ -19,7 +19,11 @@
 				<h3>
 				Basic Information
 				@if ($currentuser==$user)
-					<span class="editbutton"> <a href="{{ URL::to('editprofile') }}">Edit Profile</a> </span>
+					<form class="form-horizontal" role="form" action="{{ URL::to('editprofile') }}" method="get">
+						<button type="submit" class="btn btn-default btn editbutton">
+							<span class="glyphicon glyphicon-edit"></span> Edit Profile
+						</button>
+					</form>
 				@endif
 				</h3>
 				
