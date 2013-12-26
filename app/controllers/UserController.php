@@ -90,7 +90,7 @@ class UserController extends BaseController {
 			'email' => Input::get('email'),
 			'password' => Input::get('password'));
 		if (Auth::attempt($userdata)) {
-			return Redirect::to('newsfeed');
+			return Redirect::to('newsfeed')->with('newsPage','true');
 		} else {
 			return Redirect::to('/')->with('message', '<div class="alert alert-danger">Login Failed: Invalid credentials</div>');
 		}

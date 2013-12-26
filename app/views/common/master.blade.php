@@ -60,25 +60,58 @@
 		<div class="row">
 			
 			<div class="col-xs-3">
-			
 				{{-- Side Bar --}}
-			
-				<div class="affix">
-				<ul class="nav">
-					<li><a href="{{ URL::to('profile/'.Auth::user()->id) }}"><span class="glyphicon glyphicon-user"></span>   {{{ $user->first }}} {{{ $user->last }}}</a></li>
-					<li>&nbsp;</li>		
-					<li><a href="{{ URL::to('cs_connect') }}"><span class="glyphicon glyphicon-home"></span>   CS CONNECT</a></li>
-					<li><a href="{{ URL::to('newsfeed') }}"><span class="glyphicon glyphicon-list"></span>   News Feed</a></li>
-					<li><a href="{{ URL::to('CSQuestion') }}"><span class="glyphicon glyphicon-question-sign"></span>   CS Question</a></li>
-					<li><a href="{{ URL::to('projects') }}"><span class="glyphicon glyphicon-hdd"></span> CS Projects</a></li>
-					<li><a href="{{ URL::to('helpCenter') }}"><span class="glyphicon glyphicon-bullhorn"></span>   Help Center</a></li>
-					<li><a href="{{ URL::to('community') }}"><span class="glyphicon glyphicon-globe"></span>   Community</a></li>
-					<li><a href="{{ URL::to('search') }}"><span class="glyphicon glyphicon-search"></span>   Search</a></li>
-					@yield('seeall')
-				</ul>
-				
+				<div class="list-group">
+					@if (substr(Request::path(),0,7) == "profile" || Request::path() == "editprofile")
+						<a href="{{ URL::to('profile/'.Auth::user()->id) }}" class="list-group-item active"><span class="glyphicon glyphicon-user"></span>   {{{ $user->first }}} {{{ $user->last }}}</a>
+					@else
+						<a href="{{ URL::to('profile/'.Auth::user()->id) }}" class="list-group-item"><span class="glyphicon glyphicon-user"></span>   {{{ $user->first }}} {{{ $user->last }}}</a>
+					@endif
+
+					@if (Request::path() == "cs_connect")
+						<a href="{{ URL::to('cs_connect') }}" class="list-group-item active"><span class="glyphicon glyphicon-home"></span>   CS CONNECT</a>
+					@else
+						<a href="{{ URL::to('cs_connect') }}" class="list-group-item"><span class="glyphicon glyphicon-home"></span>   CS CONNECT</a>
+					@endif
+
+					@if (Request::path() == "newsfeed")
+						<a href="{{ URL::to('newsfeed') }}" class="list-group-item active"><span class="glyphicon glyphicon-list"></span>   News Feed</a>
+					@else
+						<a href="{{ URL::to('newsfeed') }}" class="list-group-item"><span class="glyphicon glyphicon-list"></span>   News Feed</a>
+					@endif
+
+					@if (Request::path() == "CSQuestion" || Request::path() == "showPreviousQuestions")
+						<a href="{{ URL::to('CSQuestion') }}" class="list-group-item active"><span class="glyphicon glyphicon-question-sign"></span>   CS Question</a>
+					@else
+						<a href="{{ URL::to('CSQuestion') }}" class="list-group-item"><span class="glyphicon glyphicon-question-sign"></span>   CS Question</a>
+					@endif
+
+					@if (Request::path() == "projects")
+						<a href="{{ URL::to('projects') }}" class="list-group-item active"><span class="glyphicon glyphicon-hdd"></span> CS Projects</a>
+					@else
+						<a href="{{ URL::to('projects') }}" class="list-group-item"><span class="glyphicon glyphicon-hdd"></span> CS Projects</a>
+					@endif
+
+					@if (Request::path() == "helpCenter")
+						<a href="{{ URL::to('helpCenter') }}" class="list-group-item active"><span class="glyphicon glyphicon-bullhorn"></span>   Help Center</a>
+					@else
+						<a href="{{ URL::to('helpCenter') }}" class="list-group-item"><span class="glyphicon glyphicon-bullhorn"></span>   Help Center</a>
+					@endif	
+
+					@if (Request::path() == "community")
+						<a href="{{ URL::to('community') }}" class="list-group-item active"><span class="glyphicon glyphicon-globe"></span>   Community</a>
+					@else
+						<a href="{{ URL::to('community') }}" class="list-group-item"><span class="glyphicon glyphicon-globe"></span>   Community</a>
+					@endif
+
+					@if (Request::path() == "search")
+						<a href="{{ URL::to('search') }}" class="list-group-item active"><span class="glyphicon glyphicon-search"></span>   Search</a>
+					@else
+						<a href="{{ URL::to('search') }}" class="list-group-item"><span class="glyphicon glyphicon-search"></span>   Search</a>
+					@endif
+						@yield('seeall')
 				</div>
-				
+	
 			</div>
 			
 			<div class="col-xs-9">

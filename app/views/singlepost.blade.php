@@ -82,7 +82,7 @@
 	@if ($post->postable_type == 'PostQuestion')
 		@section('seeall')
 			<hr>
-			<li><a href="{{URL::to('showPreviousQuestions')}}">Show Previous</a></li>
+			<a href="{{ URL::to('showPreviousQuestions') }}" class="list-group-item"><span class="glyphicon glyphicon-arrow-left"></span>   Previous Question</a>
 		@stop
 	@endif
 	
