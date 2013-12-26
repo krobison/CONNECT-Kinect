@@ -44,7 +44,11 @@
 				@endif
 			</div>
 			<div class="info">
-				<a href="{{ URL::to('messageUser', $currentuser->id) }}">Message This User</a>
+				<form class="form-horizontal" role="form" action="{{ URL::to('messageUser', $currentuser->id) }}" method="get">
+					<button type="submit" class="btn btn-default btn-lg">
+						<span class="glyphicon glyphicon-envelope"></span> Message {{{$currentuser->first}}} {{{$currentuser->last}}}
+					</button>
+				</form>
 			</div>
 		</div>
 		<div class="row">
