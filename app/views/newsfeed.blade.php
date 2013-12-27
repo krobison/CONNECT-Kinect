@@ -39,7 +39,7 @@
 					
 			<div class="panel-footer code-collapse">
 				Tags: 
-				<select multiple id="language-select" class="select2-container" name="language" placeholder="Please select some tags for your post this is soggk">
+				<select style="width:80%;" multiple id="language-select" class="select2-container" name="language" placeholder="Please select some tags for your post this is soggk">
 					@foreach(Hashtag::all() as $tag)
 						<option value={{{ $tag->name }}}>{{{ $tag->name }}}</option>
 					@endforeach
