@@ -6,34 +6,34 @@ margin-right: auto;
 }
 
 html, body {
-  background-color: #EFECCA;
+  background-color: #EEEEEE;
   height:100%;
 }
 
 .scroll {
-border:2px solid #ccc;
-background-color: #FFFFFF; 
-width:400px;
-height: 160px; 
-overflow-y: scroll;
-margin-bottom: 10px; 
+	border:2px solid #ccc;
+	background-color: #FFFFFF; 
+	width:400px;
+	height: 160px; 
+	overflow-y: scroll;
+	margin-bottom: 10px; 
 }
 
 .page-header{
 	margin:auto;
 	min-width:1050px;
-	background-color:#E6E2AF;
+	background-color:#BBBBBB;
 	text-align:center;
 }
 
 .container {
-margin-top: 30px;
-margin-bottom: 100px;
+	margin-top: 30px;
+	margin-bottom: 100px;
 }
 
 .error {
-color:red;
-margin-bottom: 10px;
+	color:red;
+	margin-bottom: 10px;
 }
 
 .classSelect{
@@ -47,4 +47,8 @@ margin-bottom: 10px;
 
 .rowlabel{
 	margin-left:6px;
+}
+
+#status{
+	text-align:center;
 }

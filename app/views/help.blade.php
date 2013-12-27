@@ -49,6 +49,7 @@
 			
 			<div class="form-group">
 				<b> How would you like to recieve help? </b> <br>
+				<i> Not Working </i> <br>
 				<label class="checkbox-inline">
 				{{ Form::checkbox('help_type[]', '1', array('checked' => 'true')) }}
 					In the comments
@@ -67,7 +68,7 @@
 				<b> How would you like to be displayed? </b> <br>
 				<label class="radio-inline">
 				{{ Form::radio('anonymous', '0', array('checked' => 'true')) }}
-					Post as {{ $user->first }} {{ $user->last }}
+					Post as {{{ $user->first }}} {{{ $user->last }}}
 				</label>
 				<label class="radio-inline">
 				{{ Form::radio('anonymous', '1') }} 
@@ -102,9 +103,9 @@
 					<select id="language-select" class="select2-container" name="language">
 						@foreach(Post::getSupportedLanguages() as $language)
 							@if ($language === "plain_text")
-								<option selected value={{ $language }}>{{ ucfirst($language) }}</option>
+								<option selected value={{{ $language }}}>{{{ ucfirst($language) }}}</option>
 							@else
-								<option value={{ $language }}>{{ ucfirst($language) }}</option>
+								<option value={{ $language }}>{{{ ucfirst($language) }}}</option>
 							@endif
 						@endforeach
 					</select>
@@ -159,7 +160,7 @@
 			@endforeach
 			
 			{{-- @if( $post_counter >= 5 ) --}}
-				<button type="button" class="btn btn-default">Load more...</button>
+				<button type="button" class="btn btn-default">Load more... <i> Not Working </i> </button>
 			{{-- @endif --}}
 		</div>
 	</div>
@@ -176,7 +177,7 @@
 			@endforeach
 			
 			{{--@if( $post_counter >= 5 )--}}
-				<button type="button" class="btn btn-default">Load more...</button>
+				<button type="button" class="btn btn-default">Load more... <i> Not Working </i></button>
 			{{--@endif--}}
 		</div>
 	</div>
@@ -238,7 +239,7 @@
 		// Set up select2 menu (not currently working...)
 		$(document).ready(function() { 
 
-			//$(".select2-container").select2();
+		$(".select2-container").select2();
 		});
 	</script>
 @stop

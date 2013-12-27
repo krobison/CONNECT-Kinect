@@ -1,12 +1,56 @@
 html, body{
-  background-color: #EFECCA;
-  height:100%;
+  background-color: #EEEEEE;
 }
 
-.form-signin {
-  max-width: 280px;
-  padding: 15px;
+/*
+##################Panel Style#############
+*/
+#leftPanel{
+    width:40%;
+    margin-left:2%;
+    min-width:256px;
+    min-height:600px;
+    text-align:center;
+    padding:32px;
 }
+
+#rightPanel{
+    padding:32px;
+    width:54%;
+    left:2%;
+    margin-right:2%;
+    min-width:560px;
+    float:right;
+}
+
+
+/*
+###################Button Style###########
+*/
+.btn-primary { 
+	height:42px;
+	padding:0px;
+}
+
+.button-div{
+    width:75%;
+    margin:auto;
+}
+
+/*
+##################Header Style##############
+*/
+
+.page-header{
+	margin:auto;
+	min-width:1050px;
+	background-color:#BBBBBB;
+	text-align:center;
+}
+
+/*
+#################Form Style#################
+*/
 
 .form-signin .checkbox {
   font-weight: normal;
@@ -35,79 +79,37 @@ html, body{
   border-top-right-radius: 0;
 }
 
-
-#welcome{
-	min-width: 400px;
-	margin-left:-52px;
-	padding-bottom:12px;
+/*
+################Video Style#################
+*/
+.video-container {     
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    height: 0;
+    overflow: hidden;
+}   
+.video-container iframe, 
+.video-container object, 
+.video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
-#registernow{
-	margin-left:22px;
-	padding-bottom:12px;
-}
 
-.btn-primary { 
-	background-color: #07B3E8;
-	height:42px;
-	padding:0px;
-}
-.btn-primary:hover{ 
-	background-color: #0698C4;
-}
-
-
-.separatron{
-	width:350px;
-	margin-left:-32px;
-	border:2px #2483A0 solid;
-	margin-top:8px;
-	margin-bottom:-16px;
-}
+/*
+################Footer Style#################
+*/
 
 #mineslogo{
-	margin-left:20px;
-}
-
-#newuserbutton{
-	margin-bottom:12px;
-}
-
-.container{
-	width:auto;
-  height: auto;
-}
-
-.connectbuttons{
-	text-align:center;
-}
-
-.page-header{
-	margin:auto;
-	min-width:1050px;
-	background-color:#E6E2AF;
-	text-align:center;
-}
-
-.content{
-min-width:600px;
-margin-left:auto;
-margin-right:auto;
-width:50%;
-  padding: 0 0 250px;
-}
-
-#video{
-	margin-left:500px;
-	margin-top:-400px;
+    margin-left:20px;
 }
 
 #footer {
   height: 70px;
-  background-color: #E6E2AF;
+  background-color: #CCCCCC;
   text-align:center;
-}
-
-.container .credit {
-  margin: 14px 0;
 }

@@ -13,67 +13,61 @@
 	<div class="page-header">
 		{{ HTML::image('assets/img/Connect_Logo.png') }}
 	</div>
-	
-	<div class="span6" style="text-align:center">
-	@if(Session::has('message'))	
-		<p> {{Session::get('message');}} </p>
-	@endif
-	</div>	
-	
 	<div class="content">
-		<div class="container" id="signmein">
-		
-		{{ Form::open(array('url' => 'loginuser',
-							'class' => 'form-signin')) }}
-			
-				<h2 class="form-signin-heading" id="welcome">Welcome to CS CONNECT!</h2>
-				
-				{{ Form::text('email', '', array('class' => 'form-control',
-											     'placeholder' => 'Email',
-											     'autofocus' => 'true')) }}
-				{{ Form::password('password', array('class' => 'form-control',
-													'placeholder' => 'Password')) }}
-													
-				<label class="checkbox">
-					<input type="checkbox" value="remember-me"> Remember me
-				</label>
-				
-				{{ Form::submit('Sign in', array('class' => 'btn btn-lg btn-primary btn-block')) }}
-				
-		{{ Form::close() }}
-		
-		<hr class="separatron">
+		<div class="span6" style="text-align:center">
+		@if(Session::has('message'))	
+			<p> {{Session::get('message');}} </p>
+		@endif
+		</div>	
+		<div id="rightPanel">
+			<div class="video-container"><iframe width="560" height="315" src="//www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe></div>
 		</div>
-		<div class="container" id="signmein">
-		
-			{{ Form::open(array('url' => 'signup',
-								'method' => 'get',
-								'class' => 'form-signin')) }}
+		<div id="leftPanel">
+			
+			{{ Form::open(array('url' => 'loginuser','class' => 'form-signin')) }}
+				
+					<h2 class="form-signin-heading" id="welcome">Welcome to CS CONNECT!</h2>
+					
+					{{ Form::text('email', '', array('class' => 'form-control','placeholder' => 'Email','autofocus' => 'true')) }}
+					{{ Form::password('password', array('class' => 'form-control','placeholder' => 'Password')) }}
+														
+					<label class="checkbox" style="text-align:left;">
+						<input type="checkbox" value="remember-me"> Remember me <i> Not Working </i>
+					</label>
+					<div style="text-align:left;"><a href="{{asset('password/reset')}}"><i>I forgot my password</i></a><br><br></div>
+					
+					<div class="button-div">
+						{{ Form::submit('Sign in', array('class' => 'btn btn-lg btn-primary btn-block')) }}
+					</div>
+					
+			{{ Form::close() }}
+				
+			<hr>
+
+			{{ Form::open(array('url' => 'signup','method' => 'get','class' => 'form-signin')) }}
 									
 				<h2 class="form-signin-heading" id="registernow">Register Today!</h2>
 			
-				{{ Form::submit('Create New Account', array('class' => 'btn btn-lg btn-primary btn-block')) }}
+				<div class="button-div">
+					{{ Form::submit('Create New Account', array('class' => 'btn btn-lg btn-primary btn-block')) }}
+				</div>
 				
 				<br>
 				
 				<div class="connectbuttons">
-					<button class="btn btn-facebook"><i class="fa fa-facebook"></i> | Connect</button>
-					<button class="btn btn-twitter"><i class="fa fa-twitter"></i> | Connect</button>
+					<button class="btn btn-facebook"><i class="fa fa-facebook"></i> | Connect <i> Not Working </i></button>
+					<button class="btn btn-twitter"><i class="fa fa-twitter"></i> | Connect <i> Not Working </i></button>
 				</div>
 				
 			{{ Form::close() }}
-			
 		</div>
-		<div class="container" id="video">
-			<iframe width="420" height="315" src="http://www.youtube.com/embed/qb_hqexKkw8?rel=0" frameborder="0" allowfullscreen></iframe>
-		</div>
-	</div>
-	<div id="footer">
-		<div class="container">
-			<p class="text-muted credit">©2013 Toilers research group, Colorado School of Mines 
-				{{ HTML::image('assets/img/mines_logo.png') }}
-				{{ HTML::image('assets/img/toilers.png') }}
-			</p>
+		<div id="footer">
+			<div class="container">
+				<p class="text-muted credit">©2013 Toilers research group, Colorado School of Mines 
+					{{ HTML::image('assets/img/mines_logo.png') }}
+					{{ HTML::image('assets/img/toilers.png') }}
+				</p>
+			</div>
 		</div>
 	</div>
 	<!-- Loading all scripts at the end for performance-->

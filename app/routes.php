@@ -24,47 +24,80 @@ Route::post('signup', 'UserController@createUser');
 
 Route::group(array('before' => 'auth'), function() {
 
-	// GET newsfeed page
-	Route::get('newsfeed', 'DashboardController@showNewsfeed');
+	// GET user
+	Route::post('changedAccount','UserController@changedAccount');
+	Route::get('badpasswordedit','UserController@badPassword');
+	Route::get('logout', 'UserController@logoutUser');
+	Route::get('editprofile', 'UserController@editUser');
+	Route::post('deleteaccount','UserController@deleteaccount');
 	
 	// GET profile
-	Route::get('profile/{id}', 'DashboardController@showProfile');
+	Route::get('profile/{id}', 'ProfileController@showProfile');
 	
-	// GET edit profile page
-	Route::get('editprofile', 'UserController@editUser');
+	// GET CS CONNECT
+	Route::get('cs_connect', 'CSConnectController@showCs_connect');
+	
+	// GET newsfeed page
+	Route::get('newsfeed', 'NewsfeedController@showNewsfeed');
 	
 	// GET cs question?
-	Route::get('CSQuestion', 'PostController@showCSQuestion');
-
-	Route::get('showPreviousQuestions', 'PostController@showPreviousQuestions');
+	Route::get('CSQuestion', 'CSQuestionController@showCSQuestion');
+	Route::get('showPreviousQuestions', 'CSQuestionController@showPreviousQuestions');
+	
+	// GET cs projects
+	Route::get('projects', 'ProjectsController@showProjects');
 	
 	// GET help center
-	Route::get('helpCenter', 'HelpCenterController@showHelp');
-	
+	Route::get('helpCenter', 'HelpCenterController@showHelpCenter');
+
 	// POST help center posts
-	Route::post('createhelprequestpost', 'PostController@createHelpRequestPost');
-	Route::post('createhelpofferpost', 'PostController@createHelpOfferPost');
+	Route::post('createhelprequestpost', 'HelpCenterController@createHelpRequestPost');
+	Route::post('createhelpofferpost', 'HelpCenterController@createHelpOfferPost');
+	
+	// GET community
+	Route::get('community', 'CommunityController@showCommunity');
 	
 	// GET search page
-	Route::get('search', 'DashboardController@showSearch');
-	
+	Route::get('search', 'SearchController@showSearch');
 	Route::get('searchfilter', 'SearchController@processSearch');
 	
-	// GET logout and redirect to root
-	Route::get('logout', 'UserController@logoutUser');
-
+	// GET post
 	Route::get('singlepost/{id}', 'PostController@showSinglePost');
-
+	
+	// POST post
 	Route::post('createComment', 'PostController@createComment');
-
-	// POST to update upvotes for a post
 	Route::post('upvote', 'PostController@upvote');
-	
-	Route::post('changedAccount','UserController@changedAccount');
-	
-	Route::get('badpasswordedit','UserController@badPassword');
 
+	// GET inbox page
+	Route::get('inbox', 'InboxController@showInbox');
+	Route::get('oldmail', "InboxController@showOldMail");
+	Route::get('sentmail', "InboxController@showSentMail");
+	Route::get('showmessage/{id}','InboxController@showMessage');
+
+	// GET 
+	Route::get('messageUser/{id}', 'InboxController@messageUser');
+
+	// POST
+	Route::post('messageTo', 'InboxController@createMessage');
 });
+
+//PASSWORD REMINDER
+	Route::get('password/reset', array(
+  		'uses' => 'PasswordController@remind',
+  		'as' => 'password.remind'
+	));
+	Route::post('password/reset', array(
+  		'uses' => 'PasswordController@request',
+  		'as' => 'password.request'
+	));
+	Route::get('password/reset/{token}', array(
+		'uses' => 'PasswordController@reset',
+		'as' => 'password.reset'
+	));
+	Route::post('password/reset/{token}', array(
+		'uses' => 'PasswordController@update',
+	 	'as' => 'password.update'
+	));
 
 /**
  *	Experimental routes.

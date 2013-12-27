@@ -13,6 +13,9 @@
 
 <body>
 
+	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
+	{{ HTML::script('assets/js/bootstrap.min.js') }}
+
 	{{-- Top Navigation Bar --}}
 	
 	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -31,12 +34,20 @@
     		<div class="navbar-collapse bs-navbar-collapse collapse">
     	
     			<ul class="nav navbar-nav">
-        			<li><a href="#">Messages</a></li>
-    				<li><a href="#">Notifications</a></li>
+        			<li><a href="{{ URL::to('inbox') }}">
+        				<span class="glyphicon glyphicon-envelope"></span> Messages
+        			</a></li>
+    				<li><a href="#"> 
+    					<span class="glyphicon glyphicon-exclamation-sign"></span> Notifications <i> Not Working </i>
+    				</a></li>
     				</ul>
       
     				<ul class="nav navbar-nav navbar-right">
-    					<li><a href="{{ URL::to('logout') }}">Logout</a></li>
+    					<li>
+    						<a href="{{ URL::to('logout') }}">
+    							Logout {{{$user->email}}}  <span class="glyphicon glyphicon-log-out"></span>
+    						</a>
+    					</li>
     				</ul>
     	
     		</div>
@@ -44,34 +55,92 @@
     	</div>
     </div>
 	
-
-	
 	<div class="container" style="padding-top: 70px; max-width: none !important; width: 970px">
 	
 		<div class="row">
 			
-			<div class="col-xs-2">
-			
+			<div class="col-xs-3">
 				{{-- Side Bar --}}
-			
-				<div class="affix">
-				
-				<p>{{ $user->first }} {{ $user->last }}</p>
-				<p>{{ $user->email }}</p>
-				<ul class="nav">
-					<li><a href="{{ URL::to('newsfeed') }}">News Feed</a></li>
-					<li><a href="{{ URL::to('profile/'.Auth::user()->id) }}">Profile</a></li>
-					<li><a href="{{ URL::to('CSQuestion') }}"> CS Question</a></li>
-					<li><a href="{{ URL::to('helpCenter') }}">Help Center</a></li>
-					<li><a href="{{ URL::to('search') }}">Search</a></li>
-					@yield('seeall')
-				</ul>
-				
+				<div class="list-group">
+					@if (substr(Request::path(),0,7) == "profile" || Request::path() == "editprofile")
+						<a href="{{ URL::to('profile/'.Auth::user()->id) }}" class="list-group-item active"><span class="glyphicon glyphicon-user"></span>   {{{ $user->first }}} {{{ $user->last }}}</a>
+					@else
+						<a href="{{ URL::to('profile/'.Auth::user()->id) }}" class="list-group-item"><span class="glyphicon glyphicon-user"></span>   {{{ $user->first }}} {{{ $user->last }}}</a>
+					@endif
+					<br>
+
+					@if (Request::path() == "inbox")
+						<a href="{{ URL::to('inbox') }}" class="list-group-item active"><span class="glyphicon glyphicon-inbox"></span>   Inbox <span class="badge">{{sizeof($messages)}}</span></a>
+						<a href="{{ URL::to('oldmail') }}" class="list-group-item"><span class="glyphicon glyphicon-book"></span>   Read </a>
+						<a href="{{ URL::to('sentmail') }}" class="list-group-item"><span class="glyphicon glyphicon-export"></span>   Sent </a>
+						<br>
+					@endif
+					@if (substr(Request::path(),0,11) == "showmessage")
+						<a href="{{ URL::to('inbox') }}" class="list-group-item"><span class="glyphicon glyphicon-inbox"></span>   Inbox <span class="badge">{{sizeof($messages)}}</span></a>
+						<a href="{{ URL::to('oldmail') }}" class="list-group-item"><span class="glyphicon glyphicon-book"></span>   Read </a>
+						<a href="{{ URL::to('sentmail') }}" class="list-group-item"><span class="glyphicon glyphicon-export"></span>   Sent </a>
+						<br>
+					@endif
+					@if (substr(Request::path(),0,11) == "oldmail")
+						<a href="{{ URL::to('inbox') }}" class="list-group-item"><span class="glyphicon glyphicon-inbox"></span>   Inbox <span class="badge">{{sizeof($messages)}}</span></a>
+						<a href="{{ URL::to('oldmail') }}" class="list-group-item active"><span class="glyphicon glyphicon-book"></span>   Read </a>
+						<a href="{{ URL::to('sentmail') }}" class="list-group-item"><span class="glyphicon glyphicon-export"></span>   Sent </a>
+						<br>
+					@endif
+					@if (substr(Request::path(),0,11) == "sentmail")
+						<a href="{{ URL::to('inbox') }}" class="list-group-item"><span class="glyphicon glyphicon-inbox"></span>   Inbox <span class="badge">{{sizeof($messages)}}</span></a>
+						<a href="{{ URL::to('oldmail') }}" class="list-group-item"><span class="glyphicon glyphicon-book"></span>   Read </a>
+						<a href="{{ URL::to('sentmail') }}" class="list-group-item active"><span class="glyphicon glyphicon-export"></span>   Sent </a>
+						<br>
+					@endif
+
+					@if (Request::path() == "cs_connect")
+						<a href="{{ URL::to('cs_connect') }}" class="list-group-item active"><span class="glyphicon glyphicon-home"></span>   CS CONNECT</a>
+					@else
+						<a href="{{ URL::to('cs_connect') }}" class="list-group-item"><span class="glyphicon glyphicon-home"></span>   CS CONNECT</a>
+					@endif
+
+					@if (Request::path() == "newsfeed")
+						<a href="{{ URL::to('newsfeed') }}" class="list-group-item active"><span class="glyphicon glyphicon-list"></span>   News Feed</a>
+					@else
+						<a href="{{ URL::to('newsfeed') }}" class="list-group-item"><span class="glyphicon glyphicon-list"></span>   News Feed</a>
+					@endif
+
+					@if (Request::path() == "CSQuestion" || Request::path() == "showPreviousQuestions")
+						<a href="{{ URL::to('CSQuestion') }}" class="list-group-item active"><span class="glyphicon glyphicon-question-sign"></span>   CS Question</a>
+					@else
+						<a href="{{ URL::to('CSQuestion') }}" class="list-group-item"><span class="glyphicon glyphicon-question-sign"></span>   CS Question</a>
+					@endif
+
+					@if (Request::path() == "projects")
+						<a href="{{ URL::to('projects') }}" class="list-group-item active"><span class="glyphicon glyphicon-hdd"></span> CS Projects</a>
+					@else
+						<a href="{{ URL::to('projects') }}" class="list-group-item"><span class="glyphicon glyphicon-hdd"></span> CS Projects</a>
+					@endif
+
+					@if (Request::path() == "helpCenter")
+						<a href="{{ URL::to('helpCenter') }}" class="list-group-item active"><span class="glyphicon glyphicon-bullhorn"></span>   Help Center</a>
+					@else
+						<a href="{{ URL::to('helpCenter') }}" class="list-group-item"><span class="glyphicon glyphicon-bullhorn"></span>   Help Center</a>
+					@endif	
+
+					@if (Request::path() == "community")
+						<a href="{{ URL::to('community') }}" class="list-group-item active"><span class="glyphicon glyphicon-globe"></span>   Community</a>
+					@else
+						<a href="{{ URL::to('community') }}" class="list-group-item"><span class="glyphicon glyphicon-globe"></span>   Community</a>
+					@endif
+
+					@if (Request::path() == "search")
+						<a href="{{ URL::to('search') }}" class="list-group-item active"><span class="glyphicon glyphicon-search"></span>   Search</a>
+					@else
+						<a href="{{ URL::to('search') }}" class="list-group-item"><span class="glyphicon glyphicon-search"></span>   Search</a>
+					@endif
+						@yield('seeall')
 				</div>
-				
+	
 			</div>
 			
-			<div class="col-xs-10">
+			<div class="col-xs-9">
 				
 				{{-- Main Content Container --}}
 			
@@ -82,9 +151,6 @@
 		</div>
 	
 	</div>
-	
-	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
-	{{ HTML::script('assets/js/bootstrap.min.js') }}
 
 </body>
 </html>
