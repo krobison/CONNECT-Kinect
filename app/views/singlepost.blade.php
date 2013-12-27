@@ -64,7 +64,11 @@
 			@if(is_null(Auth::user()->picture))
 				{{ HTML::image('assets/img/dummy.png', 'profile picture', array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
 			@else
-				{{ HTML::image('assets/img/profile_images/'.Auth::user()->picture, 'profile picture', array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
+				@if ( File::exists('assets/img/profile_images/' . Auth::user()->picture ))
+					{{ HTML::image('assets/img/profile_images/'.Auth::user()->picture, 'profile picture', array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
+				@else
+					{{ HTML::image('assets/img/dummy.png', $comment->user->id , array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
+				@endif
 			@endif 
 		</div>
 
@@ -82,7 +86,7 @@
 	@if ($post->postable_type == 'PostQuestion')
 		@section('seeall')
 			<br>
-			<a href="{{ URL::to('showPreviousQuestions') }}" class="list-group-item"><span class="glyphicon glyphicon-arrow-left"></span>   Previous Question</a>
+			<a href="{{ URL::to('showPreviousQuestions') }}" class="list-group-item"><span class="glyphicon glyphicon-arrow-left"></span>   Previous Questions</a>
 		@stop
 	@endif
 	
