@@ -238,8 +238,7 @@
 		
 		// Set up select2 menu (not currently working...)
 		$(document).ready(function() { 
-
-		$(".select2-container").select2();
+			$(".select2-container").select2();
 		});
 	</script>
 @stop
