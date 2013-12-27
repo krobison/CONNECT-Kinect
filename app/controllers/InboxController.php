@@ -18,6 +18,7 @@ class InboxController extends BaseController {
 			->get();
 		$users = User::select('id', 'first', 'last')->get();
 
+		$conv_users[] = "";
 		foreach ($messages as $message) {
 			foreach ($users as $user) {
 				if($user['id'] == $message['to'] || $user['id'] == $message['from']) {
