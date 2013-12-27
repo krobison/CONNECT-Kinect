@@ -1,27 +1,28 @@
 @extends('common.master')
 
 @section('content')
-	<div id="centered">
-		<div>
-			@foreach ($messages as $message)
-				<div class="well">
-					<div>
-						<strong>To: </strong>
-						{{ $users[$message->to] }}
-						<br/>
-						<strong>From: </strong>
-						{{ $users[$message->from] }}
-						<br/>
-						<strong>Subject:</strong>
-						{{ $message->subject }}
-						<br/>
-					</div>
-					<br/>
-					<div class="well">
-						{{ $message->content }}
-					</div>
-				</div>
-			@endforeach
-		</div>
-	<div>
+	<table class = "table table-hover">
+		<thead><tr>
+			<th>From</th>
+			<th>Subject</th>
+			<th>Body</th>
+		</tr></thead>
+		@foreach ($showMessages as $message)
+			<tbody>
+				<tr href="{{ URL::to('showmessage/'.$message->id) }}">
+					<td>{{{$users[$message->from]}}}</td>
+					<td>{{{$message->subject}}}</td>
+					<td>{{{substr($message->content,0,50)}}}...</td>
+				</tr>
+			</tbody>
+		@endforeach
+	</table>
+	<script>
+		$(document).ready(function(){
+		    $('table tr').click(function(){
+		        window.location = $(this).attr('href');
+		        return false;
+		    });
+		});
+	</script
 @stop

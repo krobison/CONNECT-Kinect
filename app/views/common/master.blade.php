@@ -35,7 +35,7 @@
     	
     			<ul class="nav navbar-nav">
         			<li><a href="{{ URL::to('inbox') }}">
-        				<span class="glyphicon glyphicon-envelope"></span> Messages <i> Not Working </i>
+        				<span class="glyphicon glyphicon-envelope"></span> Messages
         			</a></li>
     				<li><a href="#"> 
     					<span class="glyphicon glyphicon-exclamation-sign"></span> Notifications <i> Not Working </i>
@@ -68,6 +68,32 @@
 						<a href="{{ URL::to('profile/'.Auth::user()->id) }}" class="list-group-item"><span class="glyphicon glyphicon-user"></span>   {{{ $user->first }}} {{{ $user->last }}}</a>
 					@endif
 					<br>
+
+					@if (Request::path() == "inbox")
+						<a href="{{ URL::to('inbox') }}" class="list-group-item active"><span class="glyphicon glyphicon-inbox"></span>   Inbox <span class="badge">{{sizeof($messages)}}</span></a>
+						<a href="{{ URL::to('oldmail') }}" class="list-group-item"><span class="glyphicon glyphicon-book"></span>   Read </a>
+						<a href="{{ URL::to('sentmail') }}" class="list-group-item"><span class="glyphicon glyphicon-export"></span>   Sent </a>
+						<br>
+					@endif
+					@if (substr(Request::path(),0,11) == "showmessage")
+						<a href="{{ URL::to('inbox') }}" class="list-group-item"><span class="glyphicon glyphicon-inbox"></span>   Inbox <span class="badge">{{sizeof($messages)}}</span></a>
+						<a href="{{ URL::to('oldmail') }}" class="list-group-item"><span class="glyphicon glyphicon-book"></span>   Read </a>
+						<a href="{{ URL::to('sentmail') }}" class="list-group-item"><span class="glyphicon glyphicon-export"></span>   Sent </a>
+						<br>
+					@endif
+					@if (substr(Request::path(),0,11) == "oldmail")
+						<a href="{{ URL::to('inbox') }}" class="list-group-item"><span class="glyphicon glyphicon-inbox"></span>   Inbox <span class="badge">{{sizeof($messages)}}</span></a>
+						<a href="{{ URL::to('oldmail') }}" class="list-group-item active"><span class="glyphicon glyphicon-book"></span>   Read </a>
+						<a href="{{ URL::to('sentmail') }}" class="list-group-item"><span class="glyphicon glyphicon-export"></span>   Sent </a>
+						<br>
+					@endif
+					@if (substr(Request::path(),0,11) == "sentmail")
+						<a href="{{ URL::to('inbox') }}" class="list-group-item"><span class="glyphicon glyphicon-inbox"></span>   Inbox <span class="badge">{{sizeof($messages)}}</span></a>
+						<a href="{{ URL::to('oldmail') }}" class="list-group-item"><span class="glyphicon glyphicon-book"></span>   Read </a>
+						<a href="{{ URL::to('sentmail') }}" class="list-group-item active"><span class="glyphicon glyphicon-export"></span>   Sent </a>
+						<br>
+					@endif
+
 					@if (Request::path() == "cs_connect")
 						<a href="{{ URL::to('cs_connect') }}" class="list-group-item active"><span class="glyphicon glyphicon-home"></span>   CS CONNECT</a>
 					@else

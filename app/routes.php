@@ -70,6 +70,9 @@ Route::group(array('before' => 'auth'), function() {
 
 	// GET inbox page
 	Route::get('inbox', 'InboxController@showInbox');
+	Route::get('oldmail', "InboxController@showOldMail");
+	Route::get('sentmail', "InboxController@showSentMail");
+	Route::get('showmessage/{id}','InboxController@showMessage');
 
 	// GET 
 	Route::get('messageUser/{id}', 'InboxController@messageUser');
