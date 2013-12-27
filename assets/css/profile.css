@@ -31,7 +31,6 @@
 	width:258px;
 	height:258px;
 	margin:10px;
-	border:1px rgba(0,0,0,0.55) solid;
 }
 .basic,.custom,.feed{
 	background-color:rgba(255,255,255,0.25);
