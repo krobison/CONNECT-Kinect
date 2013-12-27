@@ -153,9 +153,14 @@
 				<span class="glyphicon glyphicon-ok"></span> Save Changes
 			</button>
 		</form>
-		<form action="">
+		<form action="{{ URL::to('profile/'.$user->id)}}">
 			<button type="submit" class="btn btn-danger">
 				<span class="glyphicon glyphicon-remove"></span> Cancel
+			</button>
+		</form>
+		<form action="">
+			<button type="submit" class="btn btn-warning" id="resetbutton">
+				<span class="glyphicon glyphicon-arrow-left"></span> Reset
 			</button>
 		</form>
 	</div>
