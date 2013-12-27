@@ -10,9 +10,9 @@
 		@foreach ($showMessages as $message)
 			<tbody>
 				<tr href="{{ URL::to('showmessage/'.$message->id) }}">
-					<td>{{{$users[$message->from]}}}</td>
-					<td>{{{$message->subject}}}</td>
-					<td>{{{substr($message->content,0,50)}}}...</td>
+					<td>{{{ $users[$message->from] }}}</td>
+					<td>{{{ $message->subject }}}</td>
+					<td>{{{ substr($message->content,0,50) }}}...</td>
 				</tr>
 			</tbody>
 		@endforeach

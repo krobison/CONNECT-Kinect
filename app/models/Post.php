@@ -2,7 +2,7 @@
 
 class Post extends Eloquent {
 
-	/**
+	/*
 	 *	Relationships.
 	 */
 	 
@@ -17,6 +17,10 @@ class Post extends Eloquent {
     public function images() {
         return $this->hasMany('Images');
     }
+	
+	public function hashtags() {
+		return $this->hasMany('Hashtag');
+	}
 	
 	public function postable() {
         return $this->morphTo();
