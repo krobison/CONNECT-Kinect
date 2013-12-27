@@ -67,12 +67,13 @@ class InboxController extends BaseController {
 
 		$to = User::where('id','=',$message->to)->first();
 
-		if ($to->id == Auth::user()->id){
+		if ( ($to->id == Auth::user()->id) || ($from->id == Auth::user()->id) ){
 			return View::make('messageDetail')
 				->with('user', Auth::user())
 				->with('messages', $messages)
 				->with('message',$message)
-				->with('from',$from);
+				->with('from',$from)
+				->with('to',$to);
 		}else{
 			return Redirect::to('/');
 		}
