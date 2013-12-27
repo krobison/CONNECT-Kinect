@@ -47,6 +47,7 @@
 					<span>{{{$currentuser->minor}}}</span><br>
 				@endif
 			</div>
+			@if (Auth::user()->id != $currentuser->id)
 			<div class="info">
 				<form class="form-horizontal" role="form" action="{{ URL::to('messageUser', $currentuser->id) }}" method="get">
 					<button type="submit" class="btn btn-default btn-lg">
@@ -54,6 +55,7 @@
 					</button>
 				</form>
 			</div>
+			@endif
 		</div>
 		<div class="row">
 			@if (!empty($studentClasses))
