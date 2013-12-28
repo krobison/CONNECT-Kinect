@@ -8,3 +8,15 @@ class Message extends Eloquent {
 		return $this->belongsTo('User', 'to');
 	}
 }
+
+class User_message extends Eloquent {
+
+	/**
+	 * Automatically uses users_messages table based on naming conventions
+	 */
+	protected $table = 'user_messages';
+
+	public function toUser() {
+		return $this->belongsTo('User', 'user_id');
+	}
+}
