@@ -1,6 +1,11 @@
 @extends('common.master')
 
 @section('content')
+	<a style="float: right" href="{{ URL::to('messageCompose') }}">
+		<button type="submit" class="btn btn-default btn-lg">
+			<span class="glyphicon glyphicon-pencil"></span> Compose New Message 
+		</button>
+	</a>
 	<table class = "table table-hover">
 		<thead><tr>
 			<th>From</th>

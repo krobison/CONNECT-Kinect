@@ -76,9 +76,11 @@ Route::group(array('before' => 'auth'), function() {
 
 	// GET 
 	Route::get('messageUser/{id}', 'InboxController@messageUser');
+	Route::get('messageCompose', 'InboxController@messageCompose');
 
 	// POST
-	Route::post('messageTo', 'InboxController@createMessage');
+	Route::post('messageCompose', 'InboxController@createMessage');
+
 });
 
 //PASSWORD REMINDER
