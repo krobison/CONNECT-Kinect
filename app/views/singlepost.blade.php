@@ -1,8 +1,8 @@
 @extends('common.master')
 
 @section('additionalHeaders')
-	<style type="text/css" media="screen">
 	{{ HTML::style('assets/css/select2.css') }}
+	<style type="text/css" media="screen">
 	#comment-box {
 		float:left;
 		width:84%;
@@ -68,7 +68,7 @@
 	@elseif ($post->postable_type == 'PostHelpOffer')
 		<div class="well">
 			Availability:
-			{{ $post->postable->availability }}
+			{{{ $post->postable->availability }}}
 		</div>
 	@endif
 
@@ -86,7 +86,7 @@
 				@if ( File::exists('assets/img/profile_images/' . Auth::user()->picture ))
 					{{ HTML::image('assets/img/profile_images/'.Auth::user()->picture, 'profile picture', array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
 				@else
-					{{ HTML::image('assets/img/dummy.png', $comment->user->id , array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
+					{{ HTML::image('assets/img/dummy.png', $user->id , array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
 				@endif
 			@endif 
 		</div>
@@ -106,12 +106,7 @@
 				<input id="hidden-editor" type="hidden" name="code">
 			</div>
 
-			<div id="editor" class="code-collapse">
-			
-			Select your language below
-			Then add your code here!
-			
-			</div>
+			<div id="editor" class="code-collapse"> &#10 Select your language below. &#10 Then add your code here! &#10</div>
 				
 			<div class="panel-footer code-collapse">
 				Language: 
@@ -140,7 +135,7 @@
 	@endif
 
 	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
-	{{ HTML::script('assets/js/select2.js') }}
+	{{ HTML::script('assets/js/select2.min.js') }}
 	{{ HTML::script('assets/js/ace/ace.js') }}
 	
 	<script>
@@ -165,37 +160,18 @@
 			editor.getSession().setMode("ace/mode/" + $('#language-select').val());
 		});
 		
-		// Start with new help post div's hidden
-		$('#help-request').hide();
-		$('#help-offer').hide();
+		// Hide the add code section to start
 		$('.code-collapse').hide();
-
-		// Hide and show post divs on button press
-		$('#offer-help-button').click(function() {
-			$('#help-request').hide(200);
-			$('#help-offer').show(200);
-			editor.resize();
-		});
-		$('#need-help-button').click(function() {
-			$('#help-request').show(200);
-			$('#help-offer').hide(200);
-			editor.resize();
-		});
-		$('#hide-help-button').click(function() {
-			$('#help-request').hide(200);
-			$('#help-offer').hide(200);
-		});
 		
-		// Button for showing code
+		// Toggle add code div visibility
 		$('#code-title').click(function() {
-			$('.code-collapse').toggle(200);
+			$('.code-collapse').toggle();
 			editor.resize();
 		});
 		
-		// Set up select2 menu (not currently working...)
+		// Set up select2 menu
 		$(document).ready(function() { 
-
-		$(".select2-container").select2();
+			$(".select2-container").select2();
 		});
 	</script>
 	
