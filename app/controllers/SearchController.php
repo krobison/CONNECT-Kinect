@@ -8,10 +8,14 @@ class SearchController extends BaseController {
 	}
 	
 	public function processSearch() {
-		$name = Input::get('name');
+		$name = mysql_real_escape_string(Input::get('name'));
 		$courses = Input::get('classes');
+		foreach ($courses as $course) {
+			$course = mysql_real_escape_string($course);
+		}
 		$results = "";
 		$searchCourses = "";
+		
 		if (empty($courses) && empty($name)) {
 			return View::make('search')->with('user', Auth::user());
 		
