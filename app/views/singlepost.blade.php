@@ -72,11 +72,9 @@
 		</div>
 	@endif
 
-	@if($post->comments)
-		@foreach ($post->comments as $comment)
-			{{ View::make('common.comment')->with('comment', $comment) }}
-		@endforeach
-	@endif
+	@foreach ($post->comments as $comment)
+		{{ View::make('common.comment')->with('comment', $comment) }}
+	@endforeach
 
 	<div class="well">
 		{{ Form::open(array('url' => 'createComment', 'method'=>'post')) }}
