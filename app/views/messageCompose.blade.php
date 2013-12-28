@@ -2,7 +2,6 @@
 
 @section('additionalHeaders')
 	{{ HTML::style('assets/css/select2.css') }}
-	{{ HTML::script('assets/js/select2.js') }}
 @stop
 
 @section('content')
@@ -12,7 +11,7 @@
 
 		{{ Form::label('toUsers', 'Please select users to message') }}
 		<br/>
-		<select multiple class="select2-container" name="to[]">
+		<select multiple class="select2-container" style="width:500px;" name="to[]">
 			@foreach(User::all() as $user)
 				@if($toUser != "none" && $user->id == $toUser->id)
 					<option value="{{ $user->id }}" selected>{{ $user->first }} {{ $user->last }}</option>
@@ -21,13 +20,29 @@
 				@endif
 			@endforeach
 		</select>
+		<br/><br>
+		<div class="form-group">
+		<label for="subject" class="control-label">Subject</label>
+			<input type="text" class="form-control" id="subject" style="width:500px;" name="subject"/>
+		</div><br>
+		<div class="form-group">
+			<textarea type="text" class="form-control" id="subject" style="width:500px;height:300px;" name="subject"></textarea>
+		</div>
 		<br/>
-		{{ Form::label('subject', 'Subject') }} 
-		{{ Form::text('subject') }}
-		<br/>
-		{{ Form::textarea('content') }} 
-		<br/>
-		{{ Form::submit('Send Message') }}
+		<button type="submit" class="btn btn-primary">
+			<span class="glyphicon glyphicon-ok"></span> Send Message
+		</button>
 		{{ Form::hidden('from', $user->id) }}
 	{{ Form::close() }}
+
+	<!-- Loading all scripts at the end for performance-->
+	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
+	{{ HTML::script('assets/js/select2.min.js') }}
+	<script>
+		$(document).ready(function() { 
+			$(".select2-container").select2({
+				placeholder: "Select Message Recipients"
+			});
+		});
+	</script>
 @stop
