@@ -5,12 +5,22 @@
 		<h2>{{{$message->subject}}}</h2>
 	</div>
 	<div>
-		<small> From {{{$from->first}}} {{{$from->last}}}</small><br>
-		<small> To {{{$to->first}}} {{{$to->last}}}</small><br><br>
+		<small> From: {{{$message->sender()->first}}} {{{$message->sender()->last}}} </small><br>
+		
+		<small> To: {{(string)$message->recipients()}}
+		@foreach ($message->recipients() as $recipient)
+			{{{$recipient->first}}} {{{$recipient->last}}} 
+		@endforeach
+		</small>
+		
+		<br>
+		<br>
+		
 		{{{$message->content}}}
 		
+		{{--
 		@if ($to->id == Auth::user()->id)
-		<div>Reply to {{{$from->first}}}</div>
+		<div>Reply to {{{$from->first}}}$message</div>
 		{{ Form::open(array('url' => 'messageTo', 'method' => 'POST')) }}
 			{{ Form::label('subject', 'Subject') }} 
 			{{ Form::text('subject') }}
@@ -23,4 +33,5 @@
 		{{ Form::close() }}
 		</div>
 		@endif
+		--}}
 @stop

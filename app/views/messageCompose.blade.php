@@ -5,8 +5,12 @@
 @stop
 
 @section('content')
+	@if(Session::has('message'))	
+		<p> {{Session::get('message');}} </p>
+	@endif
+
 	{{ Form::open(array('url' => 'messageCompose', 'method' => 'POST')) }}
-		{{ Form::label('from', 'From') }} {{ $user->first }} {{ $user->last }}
+		{{ Form::label('from', 'From') }} {{{ $user->first }}} {{{ $user->last }}}
 		<br/>
 
 		{{ Form::label('toUsers', 'Please select users to message') }}
@@ -14,9 +18,9 @@
 		<select multiple class="select2-container" style="width:500px;" name="to[]">
 			@foreach(User::all() as $user)
 				@if($toUser != "none" && $user->id == $toUser->id)
-					<option value="{{ $user->id }}" selected>{{ $user->first }} {{ $user->last }}</option>
+					<option value="{{{ $user->id }}}" selected>{{{ $user->first }}} {{{ $user->last }}}</option>
 				@elseif ($user->id != Auth::user()->id)
-					<option value="{{ $user->id }}">{{ $user->first }} {{ $user->last }}</option>
+					<option value="{{{ $user->id }}}">{{{ $user->first }}} {{{ $user->last }}}</option>
 				@endif
 			@endforeach
 		</select>
@@ -34,9 +38,8 @@
 		</button>
 		{{ Form::hidden('from', $user->id) }}
 	{{ Form::close() }}
-
+	
 	<!-- Loading all scripts at the end for performance-->
-	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
 	{{ HTML::script('assets/js/select2.min.js') }}
 	<script>
 		$(document).ready(function() { 

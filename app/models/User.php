@@ -60,6 +60,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->belongsToMany('Hashtag');
 	}
 	
+	public function messages() {
+		return $this->belongsToMany('Message');
+	}
+	
 	public function posts() {
 		return $this->hasMany('Post');
 	}
@@ -68,13 +72,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->hasMany('Comment');
 	}
 
-	public function received_messages() {
-		return $this->hasMany('Message', 'to');
-	}
-
-	public function sent_messages()	{
-		return $this->hasMany('Message', 'from');
-	}
+	//public function sent_messages()	{
+	//	return $this->hasMany('Message', 'from');
+	//}
 	
 	/**
 	 *	Validation rules.

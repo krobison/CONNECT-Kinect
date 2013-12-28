@@ -57,33 +57,32 @@ class InboxController extends BaseController {
 	}
 
 	public function showMessage($id){
+	
+		// Get unread messages
 		$messages = Message::
-			Where('to', '=', Auth::user()->id)
-			->where('viewed','=','0')
-			->get();
-
+		Where('to', '=', Auth::user()->id)
+		->where('viewed','=','0')
+		->get();
+	
+		// Mark the message as read
 		DB::table('messages')
             ->where('id', $id)
             ->update(array('viewed' => 1));
 
+		// Get the message database object
 		$message = Message::where('id', '=', $id)->first();
 		if (empty($message)){
 			return Redirect::to('/');
 		}
 
-		$from = User::where('id','=',$message->from)->first();
-		$to = User::where('id','=',$message->to)->first();
-
-		if ( ($to->id == Auth::user()->id) || ($from->id == Auth::user()->id) ){
+		//if ( ($to->id == Auth::user()->id) || ($from->id == Auth::user()->id) ){
 			return View::make('messageDetail')
 				->with('user', Auth::user())
 				->with('messages', $messages)
-				->with('message',$message)
-				->with('from',$from)
-				->with('to',$to);
-		}else{
-			return Redirect::to('/');
-		}
+				->with('message',$message);
+		//} else{
+		//	return Redirect::to('/');
+		//}
 	}
 
 	public function showOldMail(){
@@ -141,46 +140,27 @@ class InboxController extends BaseController {
 			->with('users', $conv_users);
 	}
 
-	// Doesn't use models the correct way. Brute forces all the database table entries.
-	// Later this should use model relationships and should allow for more readable code
+	// Send the message
 	public function createMessage()
 	{
-		// dd(Input::get('content'));
-		try {
-			//save message to the message database table
+		//try {
+			// Save the message to the message database table
 			$message = new Message;
-			$message->from = Input::get('from');
+			$message->from = Auth::user()->id;
 			$message->content = Input::get('content');
 			$message->subject = Input::get('subject');
 			$message->viewed = "0";
 			$message->save();
-
-			// save all the recipients for the message
-			// check for multiple recipients
-			// common practice should be to use messageCompose to send any message. This will then only output an array of recipient users
-			if(gettype(Input::get('to'))."" == "array") {
-				$recipients = Input::get('to');
-				foreach ($recipients as $recipient) {
-					$user_message = new User_message;
-					$user_message->user_id = $recipient;
-					$user_message->message_id = $message->id;
-					$user_message->save();
-
-					// uncomment when conversations are more thought out
-					//  ideas are welcome
-					// $user_message->converstion_id
-				}
-				dd("it completed!");
-			} else {
-				$message->to = Input::get('to');
+			
+			// Add an entry in user_message table for each recipient
+			$recipients = Input::get("to");
+			foreach($recipients as $recipient) {
+				User::find($recipient)->recieved_messages()->attach($message); 
 			}
-			return Redirect::back()->with('message', "You have messaged successfully");
 
-		} catch( Exception $e ) {
-
-			dd($e);
-
-			return Redirect::back()->with('message', "You have messaged unsuccessfully");
-		}
+			return Redirect::back()->with('message', '<div class="alert alert-success"> Your message has been sent successfully. </div>');
+		//} catch( Exception $e ) {
+		//	return Redirect::back()->with('message', '<div class="alert alert-danger"> Message failed to send </div>');
+		//}
 	}
 }
