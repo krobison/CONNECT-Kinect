@@ -83,6 +83,17 @@ Route::group(array('before' => 'auth'), function() {
 
 });
 
+
+/**
+ *	Routes for users with admin privileges
+ *	These routes all have a before filter that checks to see if user is logged in and is an admin
+ */
+ 
+Route::group(array('before' => 'auth|admin'), function () {
+	Route::post('deleteuser', 'AdminController@deleteUser');
+
+});
+
 //PASSWORD REMINDER
 	Route::get('password/reset', array(
   		'uses' => 'PasswordController@remind',
