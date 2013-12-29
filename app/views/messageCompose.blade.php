@@ -16,11 +16,11 @@
 		{{ Form::label('toUsers', 'Please select users to message') }}
 		<br/>
 		<select multiple class="select2-container" style="width:500px;" name="to[]">
-			@foreach(User::all() as $user)
-				@if($toUser != "none" && $user->id == $toUser->id)
-					<option value="{{{ $user->id }}}" selected>{{{ $user->first }}} {{{ $user->last }}}</option>
-				@elseif ($user->id != Auth::user()->id)
-					<option value="{{{ $user->id }}}">{{{ $user->first }}} {{{ $user->last }}}</option>
+			@foreach(User::all() as $messageUser)
+				@if($toUser != "none" && $messageUser->id == $messageUser->id)
+					<option value="{{{ $messageUser->id }}}" selected>{{{ $messageUser->first }}} {{{ $messageUser->last }}}</option>
+				@elseif ($messageUser->id != Auth::user()->id)
+					<option value="{{{ $messageUser->id }}}">{{{ $messageUser->first }}} {{{ $messageUser->last }}}</option>
 				@endif
 			@endforeach
 		</select>
