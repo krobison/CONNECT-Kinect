@@ -142,7 +142,7 @@ class InboxController extends BaseController {
 	// Send the message
 	public function createMessage()
 	{
-		//try {
+		try {
 			// Save the message to the message database table
 			$message = new Message;
 			$message->from = Auth::user()->id;
@@ -158,8 +158,8 @@ class InboxController extends BaseController {
 			}
 
 			return Redirect::back()->with('message', '<div class="alert alert-success"> Your message has been sent successfully. </div>');
-		//} catch( Exception $e ) {
-		//	return Redirect::back()->with('message', '<div class="alert alert-danger"> Message failed to send </div>');
-		//}
+		} catch( Exception $e ) {
+			return Redirect::back()->with('message', '<div class="alert alert-danger"> Message failed to send. </div>');
+		}
 	}
 }

@@ -6,7 +6,7 @@ class Hashtag extends Eloquent {
 	 */
 	 
 	public function posts() {
-		return $this->hasMany('Post');
+		return $this->belongsToMany('Post');
 	}
 	    
 }

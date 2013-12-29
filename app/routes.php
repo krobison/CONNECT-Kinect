@@ -40,6 +40,9 @@ Route::group(array('before' => 'auth'), function() {
 	// GET newsfeed page
 	Route::get('newsfeed', 'NewsfeedController@showNewsfeed');
 	
+	// POST newsfeed page
+	Route::post('creategeneralpost', 'NewsfeedController@createGeneralPost');
+	
 	// GET cs question?
 	Route::get('CSQuestion', 'CSQuestionController@showCSQuestion');
 	Route::get('showPreviousQuestions', 'CSQuestionController@showPreviousQuestions');
