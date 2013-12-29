@@ -96,6 +96,8 @@ Route::group(array('before' => 'auth|admin'), function () {
 	//deletes an individual post
 	Route::post('deletepost', 'AdminController@deletePost');
 	
+	//deletes an individual comment
+	Route::post('deletecomment', 'AdminController@deleteComment');
 });
 
 //PASSWORD REMINDER

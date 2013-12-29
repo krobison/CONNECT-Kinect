@@ -2,7 +2,7 @@
 
 class AdminController extends BaseController {
 	
-		public function deleteUser(){
+	public function deleteUser(){
 		$id = Input::get("id");
 		
 		if(!is_null(User::find($id)->picture)) {
@@ -21,7 +21,7 @@ class AdminController extends BaseController {
 		return Redirect::to('newsfeed')->with('message', '<div class="alert alert-success"> You have successfully deleted the account. </div>');
 	}
 	
-		public function deletePost() {
+	public function deletePost() {
 		$id = Input::get("id");
 		
 		$post = Post::find($id);
@@ -34,13 +34,16 @@ class AdminController extends BaseController {
 		} else if($post->postable_type == 'PostHelpOffer') {
 			DB::table('postsHelpOffers')->where('id','=',$post->postable_id)->delete();
 		}
-		
 		$post->delete();
 		
 		return Redirect::to('newsfeed');
+	}
+	
+	public function deleteComment() {
+		$id = Input::get("id");
+		$comment = Comment::find($id);
+		$comment->delete();
 		
-		
-		
-		}
-
+		return Redirect::back();
+	}
 }
