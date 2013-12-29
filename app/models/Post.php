@@ -19,7 +19,7 @@ class Post extends Eloquent {
     }
 	
 	public function hashtags() {
-		return $this->hasMany('Hashtag');
+		return $this->belongsToMany('Hashtag');
 	}
 	
 	public function postable() {

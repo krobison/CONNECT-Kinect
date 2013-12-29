@@ -29,7 +29,7 @@
 		</div>
 	    
 		<div id="new-post-body" class="panel-body">
-			{{ Form::open(array('url' => 'createhelprequestpost')) }}
+			{{ Form::open(array('url' => 'creategeneralpost', 'method' => 'POST')) }}
 			
 			<div class="form-group">
 				{{ Form::textarea('content', null, array('class' => 'form-control',
@@ -39,9 +39,9 @@
 					
 			<div class="panel-footer code-collapse">
 				Tags: 
-				<select style="width:80%;" multiple id="language-select" class="select2-container" name="language" placeholder="Please select some tags for your post this is soggk">
+				<select style="width:80%;" multiple id="tag-select" class="select2-container" name="hashtags[]" placeholder="Please select some tags for your post this is soggk">
 					@foreach(Hashtag::all() as $tag)
-						<option value={{{ $tag->name }}}>{{{ $tag->name }}}</option>
+						<option value={{{ $tag->id }}}>{{{ $tag->name }}}</option>
 					@endforeach
 				</select>
 			</div>
