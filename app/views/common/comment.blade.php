@@ -10,7 +10,17 @@
 		{{ HTML::image('assets/img/dummy.png', $comment->user->id , array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
 	@endif
 	</div>
-
+	
 	<p>{{{ $comment->content }}}</p>
 	<p>{{{ $comment->user->first }}} {{{ $comment->user->last }}}, {{{ $comment->created_at->diffForHumans() }}}</p>
+	
+	@if(Auth::user()->admin == '1')
+		{{ Form::open(array('url' => 'deletecomment', 'method'=>'post')) }}
+		<button type="submit" class="btn btn-danger" style="float:right;" onclick="return confirm('Are you sure you would like to delete this comment FOREVER?');">
+				<span class="glyphicon glyphicon-trash"></span> Delete Comment
+		</button>
+		{{ Form::close() }}
+	@endif
+	<br>
+	
 </div>

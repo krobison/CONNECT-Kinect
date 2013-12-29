@@ -20,5 +20,27 @@ class AdminController extends BaseController {
 
 		return Redirect::to('newsfeed')->with('message', '<div class="alert alert-success"> You have successfully deleted the account. </div>');
 	}
+	
+		public function deletePost() {
+		$id = Input::get("id");
+		
+		$post = Post::find($id);
+		$comments = $post->comments;
+		foreach($comments as $comment) {
+			$comment->delete();
+		}
+		if($post->postable_type == 'PostHelpRequest') {
+			DB::table('postsHelpRequests')->where('id','=',$post->postable_id)->delete();
+		} else if($post->postable_type == 'PostHelpOffer') {
+			DB::table('postsHelpOffers')->where('id','=',$post->postable_id)->delete();
+		}
+		
+		$post->delete();
+		
+		return Redirect::to('newsfeed');
+		
+		
+		
+		}
 
 }

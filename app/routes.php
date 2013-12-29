@@ -90,8 +90,12 @@ Route::group(array('before' => 'auth'), function() {
  */
  
 Route::group(array('before' => 'auth|admin'), function () {
+	//deletes a user's account
 	Route::post('deleteuser', 'AdminController@deleteUser');
-
+	
+	//deletes an individual post
+	Route::post('deletepost', 'AdminController@deletePost');
+	
 });
 
 //PASSWORD REMINDER

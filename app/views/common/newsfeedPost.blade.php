@@ -38,7 +38,16 @@
                         @endif
                 </button>
     {{ Form::close() }}
-
+	
+	@if(Auth::user()->admin == '1')
+		{{ Form::open(array('url' => 'deletepost', 'method'=>'post')) }}
+		{{ Form::hidden('id', $post->id) }}
+		<button type="submit" class="btn btn-danger" style="float:right;" onclick="return confirm('Are you sure you would like to delete this post FOREVER?');">
+				<span class="glyphicon glyphicon-trash"></span> Delete Post
+		</button>
+		{{ Form::close() }}
+	@endif
+	
     <br>
         
         {{-- Display the name of the user who made the post (if the user is not anonymous) --}}
