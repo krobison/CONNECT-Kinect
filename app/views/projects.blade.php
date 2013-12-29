@@ -48,6 +48,15 @@
 			{{ Form::open(array('url' => 'createprojectpost', 'files' => true)) }}
 			
 			<div class="form-group">
+				<b> Upload a .zip of your project. </b>
+				{{Form::file('file', array())}}
+			</div>
+			<div class="form-group">
+				<b> Post a link to your project. </b>
+				<br>
+				{{Form::url('link', null,array('placeholder' => 'http://exampleurl' ))}}
+			</div>
+			<div class="form-group">
 				<b> Post a screenshot of your project. </b>
 				{{Form::file('screenshot', array())}}
 			</div>
