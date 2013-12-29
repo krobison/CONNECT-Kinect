@@ -25,6 +25,14 @@
 						</button>
 					</form>
 				@endif
+				@if ($user->admin == '1' && $currentuser != $user)
+					<form class="form-horizontal" role="form" action="{{ URL::to('deleteuser') }}" method="post">
+						{{ Form::hidden('id', $currentuser->id) }}
+						<button type="submit" class="btn btn-danger btn editbutton" onclick="return confirm('Are you sure you would like to delete this account FOREVER? This includes deletion of all posts, comments, and up-votes as well as uploaded projects and pictures.');">
+							<span class="glyphicon glyphicon-trash"></span> Delete Account
+						</button>
+					</form>
+				@endif
 				</h3>
 				
 				<span class="infolabel">Name:</span>

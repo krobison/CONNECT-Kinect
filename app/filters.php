@@ -1,5 +1,12 @@
 <?php
 
+//admin filter used to authenticate admin users
+Route::filter('admin', function()
+{
+	if(Auth::user()->admin != '1') return Redirect::to('/');
+});
+	
+
 /*
 |--------------------------------------------------------------------------
 | Application & Route Filters
