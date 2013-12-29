@@ -18,7 +18,7 @@ class AdminController extends BaseController {
 		DB::table('comments')->where('user_id','=',$id)->delete();
 		DB::table('course_user')->where('user_id','=',$id)->delete();
 
-		return Redirect::to('newsfeed')->with('message', '<div class="alert alert-success"> You have successfully deleted the account. </div>');
+		return Redirect::to('newsfeed')->with('message', 'You have successfully deleted the account.');
 	}
 	
 	public function deletePost() {
@@ -36,7 +36,7 @@ class AdminController extends BaseController {
 		}
 		$post->delete();
 		
-		return Redirect::to('newsfeed');
+		return Redirect::to('newsfeed')->with('message', 'You have successfully deleted the post.');
 	}
 	
 	public function deleteComment() {
@@ -44,6 +44,6 @@ class AdminController extends BaseController {
 		$comment = Comment::find($id);
 		$comment->delete();
 		
-		return Redirect::back();
+		return Redirect::back()->with('message', 'You have successfully deleted the comment.');
 	}
 }

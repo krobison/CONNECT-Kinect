@@ -140,6 +140,12 @@
 	
 			</div>
 			
+			<div class="span6" style="text-align:center">
+				@if(Session::has('message'))
+					<p> {{Session::get('message');}} </p>
+				@endif
+			</div>
+			
 			<div class="col-xs-9">
 				
 				{{-- Main Content Container --}}
