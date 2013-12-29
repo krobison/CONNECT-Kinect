@@ -30,7 +30,7 @@
 			<input type="text" class="form-control" id="subject" style="width:500px;" name="subject"/>
 		</div><br>
 		<div class="form-group">
-			<textarea type="text" class="form-control" id="subject" style="width:500px;height:300px;" name="subject"></textarea>
+			<textarea type="text" class="form-control" id="subject" style="width:500px;height:300px;" name="content"></textarea>
 		</div>
 		<br/>
 		<button type="submit" class="btn btn-primary">

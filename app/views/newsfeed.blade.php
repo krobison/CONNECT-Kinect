@@ -62,7 +62,7 @@
 		{{ View::make('common.newsfeedPost')->with('post', $post) }}
 	@endforeach
 	
-	<!-- Loading all scripts at the end for performance-->
+	<!-- Loading all scripts at the end for performance -->
 	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
 	{{ HTML::script('assets/js/select2.js') }}
 	

@@ -60,16 +60,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->belongsToMany('Hashtag');
 	}
 	
-	public function messages() {
-		return $this->belongsToMany('Message');
-	}
-	
 	public function posts() {
 		return $this->hasMany('Post');
 	}
 	
 	public function comments() {
 		return $this->hasMany('Comment');
+	}
+	
+	public function recieved_messages() {
+		return $this->belongsToMany('Message');
 	}
 
 	//public function sent_messages()	{

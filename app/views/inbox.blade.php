@@ -29,5 +29,5 @@
 		        return false;
 		    });
 		});
-	</script
+	</script>
 @stop

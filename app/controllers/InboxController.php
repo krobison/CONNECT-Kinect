@@ -36,7 +36,6 @@ class InboxController extends BaseController {
 
 	public function messageCompose()
 	{
-
 		return View::make('messageCompose')
 			->with('user', Auth::user())
 			->with('toUser', "none");
