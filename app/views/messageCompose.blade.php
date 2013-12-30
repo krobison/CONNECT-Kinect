@@ -17,7 +17,7 @@
 		<br/>
 		<select multiple class="select2-container" style="width:500px;" name="to[]">
 			@foreach(User::all() as $messageUser)
-				@if($toUser != "none" && $messageUser->id == $messageUser->id)
+				@if($toUser != "none" && $messageUser->id == $toUser->id)
 					<option value="{{{ $messageUser->id }}}" selected>{{{ $messageUser->first }}} {{{ $messageUser->last }}}</option>
 				@elseif ($messageUser->id != Auth::user()->id)
 					<option value="{{{ $messageUser->id }}}">{{{ $messageUser->first }}} {{{ $messageUser->last }}}</option>
