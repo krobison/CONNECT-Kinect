@@ -55,7 +55,10 @@ class PostController extends BaseController {
 	public function showSinglePost($id) {
 		$post = Post::find($id);
 		$user = Auth::user();
-
+		if($post->postable_type == 'PostProject' && $post->postable->approved == '0') {
+			return Redirect::to('newsfeed')->with('user', $user);
+		}
+	
 		return View::make('singlepost')
 			->with('user', $user)
 			->with('post', $post);
