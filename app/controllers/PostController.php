@@ -8,6 +8,8 @@ class PostController extends BaseController {
 			$comment->content = Input::get('content');
 			$comment->user_id = Input::get('user_id');
 			$comment->post_id = Input::get('post_id');
+			$comment->language = Input::get('language');
+			$comment->code = Input::get('code');
 			$comment->save();
 
 			return Redirect::back()->with('message', "You have commented successfully");

@@ -105,9 +105,9 @@
 
 		{{ Form::hidden('post_id', $post->id) }}
 
-		<div id="code-panel" class="panel panel-default">
+		<div id="code-panel" class="panel panel-default" style="background-color:transparent; border-style:none;">
 			<div id="code-title" class="panel-body active">
-				Add code
+				<a>Add code<a>
 			</div>
 			
 			<div id="hidden-editor_div">
