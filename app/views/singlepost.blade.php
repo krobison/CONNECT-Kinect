@@ -70,6 +70,14 @@
 			Availability:
 			{{{ $post->postable->availability }}}
 		</div>
+	@elseif ($post->postable_type == 'PostProject')
+		<div class="well">
+			{{ HTML::image('assets/img/csproject_images/'.$post->postable->screenshot, 'CS Project Screenshot', array('width' => '256', 'height' => '256')) }}
+			{{ link_to('/assets/csproject_files/'.$post->postable->file, 'Download') }}
+			{{ link_to($post->postable->link, 'External Link') }}	
+		</div>
+			
+			
 	@endif
 
 	@foreach ($post->comments as $comment)
