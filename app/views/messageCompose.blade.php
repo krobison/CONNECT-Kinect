@@ -12,10 +12,8 @@
 	{{ Form::open(array('url' => 'messageCompose', 'method' => 'POST')) }}
 		{{ Form::label('from', 'From') }} {{{ $user->first }}} {{{ $user->last }}}
 		<br/>
-
-		{{ Form::label('toUsers', 'Please select users to message') }}
 		<br/>
-		<select multiple class="select2-container" style="width:500px;" name="to[]">
+		<select multiple class="select2-container" style="width:500px;">
 			@foreach(User::all() as $messageUser)
 				@if($toUser != "none" && $messageUser->id == $toUser->id)
 					<option value="{{{ $messageUser->id }}}" selected>{{{ $messageUser->first }}} {{{ $messageUser->last }}}</option>
@@ -24,10 +22,10 @@
 				@endif
 			@endforeach
 		</select>
-		<br/><br>
+		<br/>
 		<div class="form-group">
-		<label for="subject" class="control-label">Subject</label>
-			<input type="text" class="form-control" id="subject" style="width:500px;" name="subject"/>
+		<br/>
+			<input type="text" placeholder="Subject" class="form-control" id="subject" style="width:500px;" name="subject"/>
 		</div><br>
 		<div class="form-group">
 			<textarea type="text" class="form-control" id="subject" style="width:500px;height:300px;" name="content"></textarea>
@@ -44,7 +42,7 @@
 	<script>
 		$(document).ready(function() { 
 			$(".select2-container").select2({
-				placeholder: "Select Message Recipients"
+				placeholder: "To"
 			});
 		});
 	</script>
