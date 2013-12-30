@@ -106,4 +106,20 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return Validator::make($data, $rules);
 	}
 	
+	/**
+	 *	Other functions.
+	 */
+
+	public function getProfilePictureURL() {
+		if ($this != null && !empty($this->picture)) {
+			if ( File::exists('assets/img/profile_images/' . $this->picture )) {
+				return 'assets/img/profile_images/' . $this->picture;
+			} else {
+				return 'assets/img/dummy.png';
+			}
+		} else {
+			return 'assets/img/dummy.png';
+		}
+	}
+	
 }

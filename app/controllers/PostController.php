@@ -4,17 +4,14 @@ class PostController extends BaseController {
 
 	public function createComment() {
 		try {
-
 			$comment = new Comment;
-
 			$comment->content = Input::get('content');
 			$comment->user_id = Input::get('user_id');
 			$comment->post_id = Input::get('post_id');
-
 			$comment->save();
 
 			return Redirect::back()->with('message', "You have commented successfully");
-
+			
 		} catch( Exception $e ) {
 
 			dd($e);
@@ -38,10 +35,8 @@ class PostController extends BaseController {
 			try {
 
 				$upvote = new Upvote;
-
 				$upvote->user_id = Input::get('user_id');
 				$upvote->post_id = Input::get('post_id');
-
 				$upvote->save();
 
 				return Redirect::back()->with('message', "You have upvoted successfully");

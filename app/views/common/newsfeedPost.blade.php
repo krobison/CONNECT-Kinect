@@ -1,26 +1,23 @@
 <div class="well">
 
-        {{-- Display the post content --}}
+    {{-- Display the post content --}}
     <a href="{{URL::to('singlepost', $post->id)}}"> <p> {{ $post->content }} </p> </a>
   
-        {{-- Display the profile picture (if it exists) and user is not anonmyous--}}
+    
     <div style="float:left; padding-right: 10px">
+		{{-- Display the profile picture (if it exists) and user is not anonmyous--}}
         @if ($post->postable_type == "PostHelpRequest" && $post->postable->anonymous == 1)
-                {{ HTML::image('assets/img/anonymous.png', 'anonymous' , array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
+            {{ HTML::image('assets/img/anonymous.png', 'anonymous' , array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
         @else
-        <a href="{{URL::to('profile', $post->user->id)}}">
-                @if (!empty($post->user->picture))
-                        @if ( File::exists('assets/img/profile_images/' . $post->user->picture ))
-                                {{ HTML::image('assets/img/profile_images/'.$post->user->picture, '$comment->user->id', array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
-                        @else
-                                {{ HTML::image('assets/img/dummy.png', $post->user->id , array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
-                        @endif
-                @else
-                        {{ HTML::image('assets/img/dummy.png', $post->user->id , array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
-                @endif
-        </a>
+			<a href="{{URL::to('profile', $post->user->id)}}">
+				{{HTML::image($post->user->getProfilePictureURL(), '$post->user->id', array('width' => '70', 'height' => '70', 'class' => 'img-circle'))}}
+			</a>
         @endif
         </div>
+		{{-- Display tags --}}
+		@foreach($post->hashtags as $tag)
+			#{{{$tag->name}}} 
+		@endforeach
         
         {{-- Display the upvote button --}}
         {{ Form::open(array('url' => 'upvote', 'method'=>'post')) }}
