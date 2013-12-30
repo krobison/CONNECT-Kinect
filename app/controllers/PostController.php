@@ -92,5 +92,18 @@ class PostController extends BaseController {
 
 		return;
 	}
+
+	public function deleteUserComment() {
+		$id = Input::get("id");
+		$comment = Comment::find($id);
+		$comment->delete();
+		
+		return Redirect::back()->with('message', 'You have successfully deleted the comment.');
+	}
+
+	public function saveEditComment() {
+		$id = Input::get("id");
+		$comment = Comment::find($id);
+	}
 	
 }

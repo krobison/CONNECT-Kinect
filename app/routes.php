@@ -42,6 +42,8 @@ Route::group(array('before' => 'auth'), function() {
 	
 	// POST newsfeed page
 	Route::post('creategeneralpost', 'NewsfeedController@createGeneralPost');
+	Route::post('deleteusercomment', 'PostController@deleteUserComment');
+	Route::post('saveeditcomment', 'PostController@saveEditComment');
 	
 	// GET cs question?
 	Route::get('CSQuestion', 'CSQuestionController@showCSQuestion');
