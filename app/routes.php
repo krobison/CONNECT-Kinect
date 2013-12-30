@@ -102,6 +102,9 @@ Route::group(array('before' => 'auth|admin'), function () {
 	
 	//deletes an individual comment
 	Route::post('deletecomment', 'AdminController@deleteComment');
+	
+	//approves a cs project
+	Route::post('approveproject', 'AdminController@approveProject');
 });
 
 //PASSWORD REMINDER

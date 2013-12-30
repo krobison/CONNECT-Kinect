@@ -46,4 +46,15 @@ class AdminController extends BaseController {
 		
 		return Redirect::back()->with('message', 'You have successfully deleted the comment.');
 	}
+	
+	public function approveProject() {
+		$id = Input::get("id");
+		$post = Post::find($id);
+		$post_P = PostProject::find($post->postable_id);
+		$post_P->approved = '1';
+		$post_P->save();
+		$post->save();
+		
+		return Redirect::back()->with('message', 'You have successfully approved the project.');
+	}
 }

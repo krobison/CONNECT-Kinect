@@ -72,9 +72,20 @@
 		</div>
 	@elseif ($post->postable_type == 'PostProject')
 		<div class="well">
+			<div >
 			{{ HTML::image('assets/img/csproject_images/'.$post->postable->screenshot, 'CS Project Screenshot', array('width' => '256', 'height' => '256')) }}
 			{{ link_to('/assets/csproject_files/'.$post->postable->file, 'Download') }}
-			{{ link_to($post->postable->link, 'External Link') }}	
+			{{ link_to($post->postable->link, 'External Link') }}
+			</div>
+			@if ($post->postable->approved == '0' && Auth::user()->admin == '1')
+				{{ Form::open(array('url' => 'approveproject', 'method'=>'post')) }}
+				{{ Form::hidden('id', $post->id) }}
+				<button type="submit" class="btn btn-success" style="float:right; "  onclick="return confirm('Are you sure you would like to approve this project?');">
+					<span class="glyphicon glyphicon-ok"></span> Approve Project
+				</button>
+				{{ Form::close() }}
+				<br>
+			@endif
 		</div>
 			
 			

@@ -36,6 +36,7 @@
                 </button>
     {{ Form::close() }}
 	
+	{{-- Display the Delete Post button if user is an admin --}}
 	@if(Auth::user()->admin == '1')
 		{{ Form::open(array('url' => 'deletepost', 'method'=>'post')) }}
 		{{ Form::hidden('id', $post->id) }}
