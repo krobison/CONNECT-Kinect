@@ -12,6 +12,9 @@
 	#new-post-buttons {
 		float: right;
 	}
+	.five-margin {
+		margin: 5px;
+	}
 	</style>
 @stop
 
@@ -32,18 +35,25 @@
 			{{ Form::open(array('url' => 'creategeneralpost', 'method' => 'POST')) }}
 			
 			<div class="form-group">
-				{{ Form::textarea('content', null, array('class' => 'form-control',
+				{{ Form::textarea('content', null, array('id' => 'content-form',
+														 'class' => 'form-control',
 														 'placeholder' => 'Write post content here',
 														 'rows' => '5')) }}
 			</div>
 					
-			<div class="panel-footer code-collapse">
-				Tags: 
-				<select style="width:80%;" multiple id="tag-select" class="select2-container" name="hashtags[]" placeholder="Please select some tags for your post this is soggk">
+			<div class="panel-tagDatater code-collapse">
+				<select style="width:77%;" multiple id="tag-select" class="five-margin select2-container" name="hashtags[]" placeholder="Please select some tags for your post.">
 					@foreach(Hashtag::all() as $tag)
 						<option value={{{ $tag->id }}}>{{{ $tag->name }}}</option>
 					@endforeach
 				</select>
+				<br>
+				<select disabled style="width:77%;" multiple id="tag-select-suggestions" class="five-margin select2-container" name="hashtag_suggestions[]" placeholder="Type some content, some suggested tags will appear here.">
+					@foreach(Hashtag::all() as $tag)
+						<option value={{{ $tag->id }}}>{{{ $tag->name }}}</option>
+					@endforeach
+				</select>
+				<button type="button" style="width:20%" id="add-these-tags" class="btn btn-primary"> <small>Add These Tags</small> </button>
 			</div>
 
 			<hr>
@@ -75,9 +85,58 @@
 			$('#new-post-body').toggle(200);
 		});
 		
-		// Set up select2 menu (not currently working...)
+		
 		$(document).ready(function() { 
+			// Set up select2 menu
 			$(".select2-container").select2();
+		});
+			
+		/*
+		 * Code for post suggestions functionality
+		 */
+		 
+		// Populate tagData array
+		var tagData = {};
+		@foreach(Hashtag::all() as $tag)
+			
+			// Convert CamelCase to spaces
+			var myStr = '{{{ $tag->name }}}';
+			myStr = myStr.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase();
+			
+			// Convert hyphens and underscores to spaces
+			myStr = myStr.replace(/-|_/g, ' ').toLowerCase();
+			
+			// Convert number letter junctions to spaces
+			myStr = myStr.replace(/([0-9])([^0-9])/g, '$1 $2').toLowerCase();
+			myStr = myStr.replace(/([^0-9])([0-9])/g, '$1 $2').toLowerCase();
+			
+			// Now split the string in to an array (split on every space)
+			var splitResult = myStr.split(" ");
+			tagData['{{{$tag->id}}}'] = splitResult;
+			//console.log(tagData['{{{ $tag->id }}}']);
+
+		@endforeach
+
+		// Add suggested tags to actual tags on button press
+		$('#add-these-tags').click(function() {
+			alert("I don't work yet");
+		});
+		
+		// Check for new suggested tags every time content field changes
+		$('#content-form').keyup(function() {
+			var newSelectTwoValues = new Array;
+			@foreach(Hashtag::all() as $tag)
+				// Check the content area for each piece of the new array
+				var toSearch = tagData['{{{$tag->id}}}'];
+				for(i = 0; i < toSearch.length; i++) {
+					var patt = new RegExp(toSearch[i],'i'); // Minor security concerns about a possible user supplied regex
+					if(patt.test($("#content-form").val())) {
+						newSelectTwoValues.push({{{$tag->id}}});
+						break;
+					}
+				}
+			@endforeach
+			$("#tag-select-suggestions").select2('val',newSelectTwoValues);
 		});
 
 	</script>
