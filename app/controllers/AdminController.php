@@ -33,6 +33,15 @@ class AdminController extends BaseController {
 			DB::table('postsHelpRequests')->where('id','=',$post->postable_id)->delete();
 		} else if($post->postable_type == 'PostHelpOffer') {
 			DB::table('postsHelpOffers')->where('id','=',$post->postable_id)->delete();
+		} else if($post->postable_type == 'PostProject') {
+			$post_P = PostProject::find($post->postable_id);
+			if(!is_null($post_P->screenshot)) {
+				unlink(base_path().'/assets/img/csproject_images/'.$post_P->screenshot);
+			}
+			if(!is_null($post_P->file)) {
+				unlink(base_path().'/assets/csproject_files/'.$post_P->file);
+			}
+			$post_P->delete();
 		}
 		$post->delete();
 		
