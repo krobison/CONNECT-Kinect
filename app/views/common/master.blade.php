@@ -34,13 +34,31 @@
     		<div class="navbar-collapse bs-navbar-collapse collapse">
     	
     			<ul class="nav navbar-nav">
-        			<li><a href="{{ URL::to('inbox') }}">
-        				<span class="glyphicon glyphicon-envelope"></span> Messages
-        			</a></li>
-    				<li><a href="#"> 
-    					<span class="glyphicon glyphicon-exclamation-sign"></span> Notifications <i> Not Working </i>
-    				</a></li>
-    				</ul>
+        			
+        			{{-- Messages --}}
+        			
+        			<li>
+        				<a href="{{ URL::to('inbox') }}">
+        					<span class="glyphicon glyphicon-envelope"></span> Messages
+						</a>
+        			</li>
+        			
+        			{{-- Messages v2--}}
+        			
+        			<li>
+        				<a href="{{ URL::to('conversations') }}">
+        					<span class="glyphicon glyphicon-envelope"></span> Conversations
+        				</a>
+        			</li>        		
+					{{-- Notifications --}}
+        			
+    				<li>
+    					<a href="#"> 
+    						<span class="glyphicon glyphicon-exclamation-sign"></span> Notifications <i> Not Working </i>
+						</a>
+    				</li>
+    				
+    			</ul>
       
     				<ul class="nav navbar-nav navbar-right">
     					<li>

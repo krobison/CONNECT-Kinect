@@ -86,6 +86,17 @@ Route::group(array('before' => 'auth'), function() {
 
 	// POST
 	Route::post('messageCompose', 'InboxController@createMessage');
+	
+	// TESTING conversations
+	// Attempt to make inbox conversations nicer.
+	// GET conversations
+	Route::get('conversations', 'ConversationController@showConversations');
+	Route::get('composeConversation', 'ConversationController@composeConversation');
+	Route::get('showConversation/{id}', 'ConversationController@showConversation');
+	
+	// POSTYI$JROAFJDISA RABBLE
+	Route::post('createConversation', 'ConversationController@createConversation');
+	Route::post('addToConversation', 'ConversationController@addToConversation');
 
 });
 
