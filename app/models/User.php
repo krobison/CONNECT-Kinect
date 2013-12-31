@@ -122,4 +122,19 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		}
 	}
 	
+	public static function getSignupsOverTime() {
+		$date = new DateTime('tomorrow -1 month');
+		// lists() does not accept raw queries,
+		// so you have to specify the SELECT clause
+		$days = User::select(array(
+				DB::raw('DATE(`created_at`) as `date`'),
+				DB::raw('COUNT(*) as `count`')
+			))
+			->where('created_at', '>', $date)
+			->group_by('date')
+			->order_by('date', 'DESC')
+			->lists('count', 'date');
+
+		return $date;
+	}
 }
