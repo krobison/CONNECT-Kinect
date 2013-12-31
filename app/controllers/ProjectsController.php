@@ -9,17 +9,23 @@ class ProjectsController extends BaseController {
 	public function createProjectPost() {
 		try {
 			$post_P = new PostProject;
-			$post_P->link = Input::get('link');
-			$screenshot = Input::file('screenshot');
-				if($screenshot) {
-					$extension = $screenshot->getClientOriginalExtension();
-					$newFilename = str_random(25) . "." . $extension;
-					$destinationPath = base_path() . '/assets/img/csproject_images';
-					$uploadSuccess = Input::file('screenshot')->move($destinationPath, $newFilename);
-					if($uploadSuccess) {
-						$post_P->screenshot = $newFilename;
+			$validator = Validator::make(Input::all(), PostProject::$rules);
+			if($validator->passes()) {
+				$post_P->link = Input::get('link');
+				$screenshot = Input::file('screenshot');
+					if($screenshot) {
+						$extension = $screenshot->getClientOriginalExtension();
+						$newFilename = str_random(25) . "." . $extension;
+						$destinationPath = base_path() . '/assets/img/csproject_images';
+						$uploadSuccess = Input::file('screenshot')->move($destinationPath, $newFilename);
+						if($uploadSuccess) {
+							$post_P->screenshot = $newFilename;
+						}
 					}
-				}
+			} else {
+				Log::error("Validation Failure: ".$validator->messages());
+				return Redirect::back()->withErrors($validator)->withInput();
+			}
 			$file = Input::file('file');
 				if($file) {
 					$extension = $file->getClientOriginalExtension();
