@@ -104,6 +104,17 @@ class PostController extends BaseController {
 	public function saveEditComment() {
 		$id = Input::get("id");
 		$comment = Comment::find($id);
+		$content = Input::get("toSave".$id);
+		$code = Input::get("toSaveCode".$id);
+		if (!empty($content)) {
+			$comment->content = $content;
+		}
+		if (!empty($code)) {
+			$comment->code = $code;
+		}
+		$comment->save();
+
+		return Redirect::back()->with('message', 'You have successfully updated your comment.');
 	}
 	
 }
