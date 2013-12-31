@@ -98,7 +98,7 @@
 		</div>
 	@endif
 
-	<p>{{{ $comment->user->first }}} {{{ $comment->user->last }}}, {{{ $comment->created_at->diffForHumans() }}}</p>
+	<p><a href="{{URL::to('profile', $comment->user_id)}}">{{{ $comment->user->first }}} {{{ $comment->user->last }}}</a>, {{{ $comment->created_at->diffForHumans() }}}</p>
 
 	@if(Auth::user()->id == $comment->user_id)
 		<button type="submit" class="btn btn-primary" style="float:left;" id="edit{{$comment->id}}">
