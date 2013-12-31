@@ -5,11 +5,11 @@ class Note extends Eloquent {
 	protected $table = 'notes';
 
 	public function conversation() {
-		$this->belongsTo('Conversation');
+		return $this->belongsTo('Conversation');
 	}
 	
 	public function user() {
-		$this->belongsTo('User');
+		return $this->belongsTo('User');
 	}
 
 }

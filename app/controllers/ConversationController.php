@@ -4,7 +4,8 @@ class ConversationController extends BaseController {
 	
 	public function showConversations() {
 		return View::make('conversations')
-			->with('user', Auth::user());
+			->with('user', Auth::user())
+			->with('conversations', Auth::user()->conversations);
 	}
 	
 	public function composeConversation() {

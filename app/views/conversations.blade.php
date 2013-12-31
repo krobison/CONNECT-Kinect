@@ -8,11 +8,11 @@
 	
 	<h2> List of Conversations </h2>
 	
-	@foreach ($user->conversations as $conversation)
+	@foreach ($conversations as $conversation)
 		<a href="{{ URL::to('showConversation/'.$conversation->id) }}">
 			<div class="well">
 				{{ $conversation->notes->last()->content }}<br/>
-				-> {{ User::find($conversation->notes->last()->user_id)->first }}
+				-> {{ $conversation->notes->last()->user->first }}
 			</div>
 		</a>
 	@endforeach
