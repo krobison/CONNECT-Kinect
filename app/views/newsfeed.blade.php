@@ -42,18 +42,13 @@
 			</div>
 					
 			<div class="panel-tagDatater code-collapse">
-				<select style="width:77%;" multiple id="tag-select" class="five-margin select2-container" name="hashtags[]" placeholder="Please select some tags for your post.">
-					@foreach(Hashtag::all() as $tag)
-						<option value={{{ $tag->id }}}>{{{ $tag->name }}}</option>
-					@endforeach
-				</select>
-				<br>
-				<select disabled style="width:77%;" multiple id="tag-select-suggestions" class="five-margin select2-container" name="hashtag_suggestions[]" placeholder="Type some content, some suggested tags will appear here.">
-					@foreach(Hashtag::all() as $tag)
-						<option value={{{ $tag->id }}}>{{{ $tag->name }}}</option>
-					@endforeach
-				</select>
-				<button type="button" style="width:20%" id="add-these-tags" class="btn btn-primary"> <small>Add These Tags</small> </button>
+					<input type='hidden' style="width:77%;" id="tag-select" class="five-margin select2-container" name="hashtags[]">
+					</input>
+					<br>
+					<input type='hidden' disabled style="width:77%;" id="tag-select-suggestions" class="five-margin select2-container" name="hashtag_suggestions[]">
+					</input>
+					<noscript> This browser does not support JavaScript, or JavaScript is turned off. Tagging is disabled. </noscript>
+				<button type="button" style="width:20%" id="add-these-tags" class="btn btn-default"> <small>Add These Tags</small> </button>
 			</div>
 
 			<hr>
@@ -86,9 +81,31 @@
 			$('#new-post-body').toggle(200);
 		});
 		
+		
 		$(document).ready(function() { 
 			// Set up select2 menu
-			$(".select2-container").select2();
+			$("#tag-select").select2({
+				createSearchChoice:function(term, data) { if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {return {id:term.replace(/,/g,' '), text:term.replace(/,/g,' ') + " - (This will create a new tag)"};} },
+				multiple: true,
+				placeholder: "Please select some tags for this post",
+				data:
+				[
+				@foreach(Hashtag::orderBy('name', 'ASC')->get() as $tag)
+					{id: {{{$tag->id}}}, text: '{{{ $tag->name }}}'},
+				@endforeach
+				]
+			});
+			$("#tag-select-suggestions").select2({
+				createSearchChoice:function(term, data) { if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {return {id:term.replace(/,/g,' '), text:term.replace(/,/g,' ') + " - (This will create a new tag)"};} },
+				multiple: true,
+				placeholder: "Type some text in the post content and suggested tags will appear here",
+				data:
+				[
+				@foreach(Hashtag::orderBy('name', 'ASC')->get() as $tag)
+					{id: {{{$tag->id}}}, text: '{{{ $tag->name }}}'},
+				@endforeach
+				]
+			});
 		});
 			
 		/*
@@ -119,9 +136,8 @@
 
 		// Add suggested tags to actual tags on button press
 		$('#add-these-tags').click(function() {
-			union_arrays
-			$("#tag-select").select2('val',union_arrays($("#tag-select-suggestions").val(),$("#tag-select").val()));
-			//alert("I don't work yet");
+			var unionOfSelectMenues = union_arrays($("#tag-select-suggestions").val().split(","),$("#tag-select").val().split(","));
+			$("#tag-select").select2('val',unionOfSelectMenues);
 		});
 		
 		// Check for new suggested tags every time content field changes
@@ -131,7 +147,8 @@
 				// Check the content area for each piece of the new array
 				var toSearch = tagData['{{{$tag->id}}}'];
 				for(i = 0; i < toSearch.length; i++) {
-					var patt = new RegExp(toSearch[i],'i'); // Minor security concerns about a possible user supplied regex
+					// Escape taged text to regexp characters.
+					var patt = new RegExp(escapeRegExp(toSearch[i]),'i');
 					if(patt.test($("#content-form").val())) {
 						newSelectTwoValues.push({{{$tag->id}}});
 						break;
@@ -141,6 +158,11 @@
 			$("#tag-select-suggestions").select2('val',newSelectTwoValues);
 		});
 		
+		// Helper function to escape regex
+		function escapeRegExp(str) {
+		  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+		}
+
 		// Helper function for funding the union of two arrays
 		function union_arrays (x, y) {
 			var obj = {};
