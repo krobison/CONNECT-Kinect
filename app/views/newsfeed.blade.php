@@ -77,6 +77,7 @@
 	<!-- Loading all scripts at the end for performance -->
 	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
 	{{ HTML::script('assets/js/select2.js') }}
+	{{-- HTML::script('assets/js/tag_suggest.js --}}
 	
 	<script>
 
@@ -84,7 +85,6 @@
 		$('#hide-new-post-button').click(function() {
 			$('#new-post-body').toggle(200);
 		});
-		
 		
 		$(document).ready(function() { 
 			// Set up select2 menu
@@ -119,7 +119,9 @@
 
 		// Add suggested tags to actual tags on button press
 		$('#add-these-tags').click(function() {
-			alert("I don't work yet");
+			union_arrays
+			$("#tag-select").select2('val',union_arrays($("#tag-select-suggestions").val(),$("#tag-select").val()));
+			//alert("I don't work yet");
 		});
 		
 		// Check for new suggested tags every time content field changes
@@ -138,6 +140,21 @@
 			@endforeach
 			$("#tag-select-suggestions").select2('val',newSelectTwoValues);
 		});
+		
+		// Helper function for funding the union of two arrays
+		function union_arrays (x, y) {
+			var obj = {};
+			for (var i = x.length-1; i >= 0; -- i)
+				obj[x[i]] = x[i];
+			for (var i = y.length-1; i >= 0; -- i)
+				obj[y[i]] = y[i];
+			var res = []
+			for (var k in obj) {
+				if (obj.hasOwnProperty(k))  // <-- optional
+				res.push(obj[k]);
+			}
+			return res;
+		}
 
 	</script>
 @stop
