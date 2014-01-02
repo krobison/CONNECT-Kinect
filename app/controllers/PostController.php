@@ -106,11 +106,21 @@ class PostController extends BaseController {
 		$comment = Comment::find($id);
 		$content = Input::get("toSave".$id);
 		$code = Input::get("toSaveCode".$id);
+		$newCode = Input::get("toSaveNewCode".$id);
+		$language = Input::get("toSaveLanguage".$id);
 		if (!empty($content)) {
 			$comment->content = $content;
 		}
+		if (!empty($newCode)) {
+			$comment->code = $newCode;
+			$comment->language = $language;
+		}
 		if (!empty($code)) {
-			$comment->code = $code;
+			if ($code == "hideCode") {
+				$comment->code = "";
+			} else{
+				$comment->code = $code;
+			}
 		}
 		$comment->save();
 
