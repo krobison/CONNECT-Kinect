@@ -43,38 +43,7 @@
 			</div>
 		</h4>
 		</div>
-		
-		<div id="new-post-body" class="panel-body">
-			{{ Form::open(array('url' => 'createprojectpost', 'files' => true)) }}
-			
-			<div class="form-group">
-				<b> Upload a .zip of your project. </b>
-				{{Form::file('file', array())}}
-			</div>
-			<div class="form-group">
-				<b> Post a link to your project. </b>
-				<br>
-				{{Form::url('link', null,array('placeholder' => 'http://exampleurl' ))}}
-			</div>
-			<div class="form-group">
-				<b> Post a screenshot of your project. </b>
-				{{Form::file('screenshot', array())}}
-			</div>
-			<div class="form-group">
-				{{ Form::textarea('content', null, array('class' => 'form-control',
-														 'placeholder' => 'Write post content here',
-														 'rows' => '5')) }}
-			</div>
-
-			<hr>
-			
-			<div class="row">
-				<div class ="col-xs-5 col-md-4">
-					{{Form::submit('Post', array('class' => 'btn btn-lg btn-primary btn-block'))}}			
-				</div>
-			</div>
-			{{ Form::close() }}
-		</div> 
+		{{ View::make('common/createPost')->with('url', 'createprojectpost') }}
 	</div>
 	
 	@if($user->admin == '1')
@@ -123,7 +92,6 @@
 	
 	
 	<!-- Loading all scripts at the end for performance-->
-	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
 	
 	<script>
 	// Hide and show post divs on button press
