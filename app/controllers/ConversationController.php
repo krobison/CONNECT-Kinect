@@ -38,6 +38,8 @@ class ConversationController extends BaseController {
 		
 		// create conversation
 		$conversation = new Conversation;
+		$conversation->name = Input::get('name');
+		$conversation->owner = Input::get('from');
 		
 		$conversation->save();
 		
