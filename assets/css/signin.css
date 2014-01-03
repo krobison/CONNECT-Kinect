@@ -1,13 +1,13 @@
 html, body{
-  background-color: #EEEEEE;
+  background-color: #FFFFFF;
 }
 
 /*
 ##################Panel Style#############
 */
 #leftPanel{
-    width:40%;
-    margin-left:2%;
+    width:30%;
+    margin-left:15%;
     min-width:256px;
     min-height:600px;
     text-align:center;
@@ -16,9 +16,9 @@ html, body{
 
 #rightPanel{
     padding:32px;
-    width:54%;
-    left:2%;
-    margin-right:2%;
+    width:30%;
+    left:10%;
+    margin-right:15%;
     min-width:560px;
     float:right;
 }
@@ -44,7 +44,7 @@ html, body{
 .page-header{
 	margin:auto;
 	min-width:1050px;
-	background-color:#BBBBBB;
+	background-color:#CCCCCC;
 	text-align:center;
 }
 
@@ -112,4 +112,5 @@ html, body{
   height: 70px;
   background-color: #CCCCCC;
   text-align:center;
+  margin-top: -50px;
 }

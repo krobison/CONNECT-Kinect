@@ -149,7 +149,9 @@
 				<div style="text-align:left;"><a href="{{asset('password/reset')}}"><i>I forgot my password</i></a><br><br></div>
 				
 				<div class="button-div">
-					{{ Form::submit('Sign in', array('class' => 'btn btn-lg btn-primary btn-block')) }}
+					<button type="submit" class="btn btn-lg btn-primary btn-block">
+						<span class="glyphicon glyphicon-log-in"></span> Sign In
+					</button>
 				</div>
 					
 			{{ Form::close() }}
@@ -161,15 +163,12 @@
 				<h2 class="form-signin-heading" id="registernow">Register Today!</h2>
 			
 				<div class="button-div">
-					{{ Form::submit('Create New Account', array('class' => 'btn btn-lg btn-primary btn-block')) }}
+					<button type="submit" class="btn btn-lg btn-primary btn-block">
+						<span class="glyphicon glyphicon-user"></span> Create Account
+					</button>
 				</div>
 				
 				<br>
-				
-				<div class="connectbuttons">
-					<button class="btn btn-facebook"><i class="fa fa-facebook"></i> | Connect <i> Not Working </i></button>
-					<button class="btn btn-twitter"><i class="fa fa-twitter"></i> | Connect <i> Not Working </i></button>
-				</div>
 				
 			{{ Form::close() }}
 		</div>

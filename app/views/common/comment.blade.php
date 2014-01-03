@@ -37,6 +37,10 @@
 		</script>
 		</div>
 	@else
+		<div>
+			<div id="editor{{$comment->id}}">
+			</div>
+		</div>
 		<div id="code-panel{{$comment->id}}" class="panel panel-default" style="background-color:transparent; border-style:none;">
 			<div id="code-title" class="panel-body active">
 				<a id="addCode{{$comment->id}}">Add code<a>
