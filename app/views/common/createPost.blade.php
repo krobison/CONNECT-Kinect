@@ -6,8 +6,11 @@
 </style>
 
 <div id="new-post-body" class="panel-body">
-	{{ Form::open(array('url' => $url, 'method' => 'POST')) }}
-	
+	@if($url == 'createprojectpost')
+		{{ Form::open(array('url' => $url, 'method' => 'POST','files' => true)) }}
+	@else 
+		{{ Form::open(array('url' => $url, 'method' => 'POST')) }}
+	@endif
 	THIS IS A {{ $url }} POST <br>
 	
 	@if($url == 'createhelprequestpost') 
@@ -37,7 +40,23 @@
 			</label>
 		</div>
 			
-	@endif	
+	@endif
+
+	@if($url == 'createprojectpost')
+		<div class="form-group">
+			<b> Upload a .zip of your project. </b>
+			{{Form::file('file', array())}}
+		</div>
+		<div class="form-group">
+			<b> Post a link to your project. </b>
+			<br>
+			{{Form::url('link', null,array('placeholder' => 'http://exampleurl' ))}}
+		</div>
+		<div class="form-group">
+			<b> Post a screenshot of your project. </b>
+			{{Form::file('screenshot', array())}}
+		</div>
+	@endif
 	
 	<div class="form-group">
 		{{ Form::textarea('content', null, array('id' => 'content-form',
@@ -45,7 +64,8 @@
 												 'placeholder' => 'Write post content here',
 												 'rows' => '5')) }}
 	</div>
-
+	
+	@if($url != 'createprojectpost')
 	<div id="code-panel" class="panel panel-default">
 		<div id="code-title" class="panel-body active">
 			Add code
@@ -76,6 +96,7 @@
 		</div>
 	</div>
 	
+	@endif
 	<hr>
 	
 	<div class="panel-tagDatater">
