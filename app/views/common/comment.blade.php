@@ -1,8 +1,15 @@
-{{ HTML::script('assets/js/ace/ace.js') }}
+{{ HTML::style('assets/css/select2.css') }}
+<style type="text/css" media="screen">
+	#code-title{{$comment->id}}:hover {
+		background-color: #F5F5F5;
+	}
+	.five-marg {
+		margin: 5px;
+	}
+	</style>
 <script>
     @include('javascript.comment')
 </script>
-
 
 <div class="well">
 	<div style="float:left; padding-right: 10px">
@@ -19,6 +26,7 @@
 
 	@if (!empty($comment->code))
 		<div>
+			{{ HTML::script('assets/js/ace/ace.js') }}
 			Language: {{ $comment->language }}
 			<div id="editor{{$comment->id}}">
 			</div>
@@ -37,24 +45,20 @@
 		</script>
 		</div>
 	@else
-		<div>
-			<div id="editor{{$comment->id}}">
-			</div>
-		</div>
 		<div id="code-panel{{$comment->id}}" class="panel panel-default" style="background-color:transparent; border-style:none;">
-			<div id="code-title" class="panel-body active">
-				<a id="addCode{{$comment->id}}">Add code<a>
+			<div id="code-title{{$comment->id}}" class="panel-body active">
+				<a id="addCode{{$comment->id}}">Add code</a>
 			</div>
 			
 			<div id="hidden-editor_div">
-				<input id="hidden-editor" type="hidden" name="code{{$comment->id}}">
+				<input id="hidden-editor{{$comment->id}}" type="hidden" name="code{{$comment->id}}">
 			</div>
 
-			<div id="editor" class="code-collapse"> &#10 Select your language below. &#10 Then add your code here! &#10</div>
+			<div id="editor{{$comment->id}}" class="code-collapse{{$comment->id}}" style="width:100%; height:100px"> &#10 Select your language below. &#10 Then add your code here! &#10</div>
 				
 			<div class="panel-footer code-collapse">
 				Language: 
-				<select id="language-select" class="select2-container" name="language{{$comment->id}}">
+				<select id="language-select{{$comment->id}}" class="select2-container" name="language{{$comment->id}}">
 					@foreach(Post::getSupportedLanguages() as $language)
 						@if ($language === "plain_text")
 							<option selected value={{{ $language }}}>{{{ ucfirst($language) }}}</option>
@@ -65,6 +69,38 @@
 				</select>
 			</div>
 		</div>
+		
+		<script>
+			$( document ).ready(function() {
+    			// Setting up the ace text editor language
+				var editor = ace.edit("editor{{$comment->id}}");
+				editor.getSession().setUseWorker(false);
+				editor.setTheme("ace/theme/eclipse");
+				editor.getSession().setMode("ace/mode/plain_text");
+				editor.setOptions({
+					maxLines: 50
+				});
+				// Every time the content of the editor changes, update the value of the hidden form field to match
+				editor.getSession().on('change', function(){
+					var code = editor.getSession().getValue();
+					$('#hidden-editor{{$comment->id}}').val(code);
+				});
+		
+				// Set Ace editor language based on language select form element
+				$('#language-select{{$comment->id}}').change(function() {
+					editor.getSession().setMode("ace/mode/" + $('#language-select{{$comment->id}}').val());
+				});
+				
+				// Hide the add code section to start
+				$('.code-collapse{{$comment->id}}').hide();
+				
+				// Toggle add code div visibility
+				$('#code-title{{$comment->id}}').click(function() {
+					$('.code-collapse{{$comment->id}}').toggle();
+					editor.resize();
+				});
+			});
+		</script>
 	@endif
 
 	<p><a href="{{URL::to('profile', $comment->user_id)}}">{{{ $comment->user->first }}} {{{ $comment->user->last }}}</a>, {{{ $comment->created_at->diffForHumans() }}}</p>
