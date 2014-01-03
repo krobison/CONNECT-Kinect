@@ -60,7 +60,7 @@
     		/* create new textarea element with additional attributes */
     		var ta = $("<p/>", {
     			"id": "paragraph{{$comment->id}}",
-        		"text": "{{$comment->content}}",
+        		"text": $('[name="revertContent{{$comment->id}}"]').val().trim(),
         		"css": {
             		"width": p.css('width')
         		}

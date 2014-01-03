@@ -22,6 +22,7 @@
 
 	{{Form::open()}}
 	{{ Form::hidden('revertCode'.$comment->id, $comment->code) }}
+	{{ Form::hidden('revertContent'.$comment->id, $comment->content) }}
 	{{Form::close()}}
 
 	@if (!empty($comment->code))
