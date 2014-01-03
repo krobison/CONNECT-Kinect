@@ -82,6 +82,16 @@ class ConversationController extends BaseController {
 
 		return Redirect::to('showConversation/'.$conversationId);
 	}
+
+	public function addUsers($conversationId){
+		$conversation = Conversation::find($conversationId);
+		if (Auth::user()->id == $conversation->owner){
+			$usersToAddRaw = Input::get('users');
+			$usersToAdd = array_map('intval', $usersToAddRaw);
+			$conversation->users()->attach($usersToAdd);
+		}
+		return Redirect::to('showConversation/'.$conversationId);
+	}
 	
 	public function createConversation() {
 		

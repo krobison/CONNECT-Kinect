@@ -79,6 +79,7 @@ Route::group(array('before' => 'auth'), function() {
 	Route::get('showConversation/{id}', 'ConversationController@showConversation');
 	Route::get('leaveConversation/{id}', 'ConversationController@leaveConversation');
 	Route::get('removeUser/{userId}/{conversationId}', 'ConversationController@removeUser');
+	Route::get('addUsers/{conversationId}', 'ConversationController@addUsers');
 	// POST conversations
 	Route::post('createConversation', 'ConversationController@createConversation');
 	Route::post('addToConversation', 'ConversationController@addToConversation');
