@@ -135,24 +135,26 @@ class ConversationController extends BaseController {
 	}
 	
 	public function addToConversation() {
-		$note = new Note;
+		//PURIFY
+			$pureconfig = HTMLPurifier_Config::createDefault();
+			$purifier = new HTMLPurifier($pureconfig);
+			$content = $purifier->purify(Input::get('content'));
 
-			//PURIFY
-				$pureconfig = HTMLPurifier_Config::createDefault();
-				$purifier = new HTMLPurifier($pureconfig);
-				$content = $purifier->purify(Input::get('content'));
-		
-		$note->content = $content;
-		$note->user_id = Auth::user()->id;
-		
-		$note->save();
-		
 		$conversation = Conversation::find(Input::get('conversationID'));
-		
-		// attach note to conversation
-		$note->conversation_id = $conversation->id;
-		
-		$note->save();	
+
+		if (!empty($content)){		
+			$note = new Note;
+			
+			$note->content = $content;
+			$note->user_id = Auth::user()->id;
+			
+			$note->save();
+			
+			// attach note to conversation
+			$note->conversation_id = $conversation->id;
+			
+			$note->save();	
+		}
 		
 		return Redirect::to('showConversation/'.$conversation->id);
 
