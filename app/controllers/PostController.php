@@ -134,6 +134,8 @@ class PostController extends BaseController {
 			$post = new Post;
 			$post->user_id = Auth::user()->id;
 			$post->content = Input::get('content');
+			$post->language = Input::get('language');
+			$post->code = Input::get('code');
 			$post->save();
 			
 			// Add an entry in post_hashtag table to save post tags

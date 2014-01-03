@@ -97,10 +97,50 @@
 </div> 
 
 <!-- Loading all scripts at the end for performance -->
+
 {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
 {{ HTML::script('assets/js/ace/ace.js') }}
 {{ HTML::script('assets/js/select2.js') }}
+@if($url != 'createcsquestionpost')
+<script>
 	
+	/*
+	 * Code for Ace code editor
+	 */
+	 
+	// Setting up the ace text editor
+	var editor = ace.edit("editor");
+	editor.getSession().setUseWorker(false);
+	editor.setTheme("ace/theme/eclipse");
+	editor.getSession().setMode("ace/mode/plain_text");
+	//editor.setReadOnly(true);
+	editor.setOptions({
+		maxLines: 50
+	});
+
+	// Every time the content of the editor changes, update the value of the hidden form field to match
+	editor.getSession().on('change', function(){
+		var code = editor.getSession().getValue();
+		$('#hidden-editor').val(code);
+	});
+	
+	// Set Ace editor language based on language select form element
+	$('#language-select').change(function() {
+		editor.getSession().setMode("ace/mode/" + $('#language-select').val());
+	});
+	
+	// Start with the 'add code' box hidden
+	$('.code-collapse').hide();
+	
+	// Button for showing code
+	$('#code-title').click(function() {
+		$('.code-collapse').toggle(200);
+		editor.resize();
+	});
+
+</script>
+@endif
+
 <script>
 	
 	$(document).ready(function() { 
@@ -129,44 +169,6 @@
 		});
 	});
 	
-	/*
-	 * Code for Ace code editor
-	 */
-	 
-	// Setting up the ace text editor
-	var editor = ace.edit("editor");
-	editor.getSession().setUseWorker(false);
-	editor.setTheme("ace/theme/eclipse");
-	editor.getSession().setMode("ace/mode/plain_text");
-	//editor.setReadOnly(true);
-	editor.setOptions({
-		maxLines: 50
-	});
-
-	// Every time the content of the editor changes, update the value of the hidden form field to match
-	editor.getSession().on('change', function(){
-		var code = editor.getSession().getValue();
-		$('#hidden-editor').val(code);
-	});
-	
-	// Set Ace editor language based on language select form element
-	$('#language-select').change(function() {
-		editor.getSession().setMode("ace/mode/" + $('#language-select').val());
-	});
-	
-	// Button for showing code
-	$('#code-title').click(function() {
-		$('.code-collapse').toggle(200);
-		editor.resize();
-	});
-	
-	// Set up select2 menu (not currently working...)
-	$(document).ready(function() { 
-		$("#language-select").select2();
-	});
-	
-	// Start with the 'add code' box hidden
-	$('.code-collapse').hide();
 		
 	/*
 	 * Code for post suggestions functionality
