@@ -35,15 +35,7 @@
     	
     			<ul class="nav navbar-nav">
         			
-        			{{-- Messages --}}
-        			
-        			<li>
-        				<a href="{{ URL::to('inbox') }}">
-        					<span class="glyphicon glyphicon-envelope"></span> Messages
-						</a>
-        			</li>
-        			
-        			{{-- Messages v2--}}
+        			{{-- Messages--}}
         			
         			<li>
         				<a href="{{ URL::to('conversations') }}">

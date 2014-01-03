@@ -1,33 +1,65 @@
 @extends('common.master')
 
 @section('content')
-	<h2> People in this conversation: </h2>
-	<h3>
+	<div class="page-header" style="margin-top:-8px;">
+		<h2>{{{$conversation->name}}}</h2>
+	</div>
+
+		<h4>Users in Conversation</h4>
+	<div class="list-group" style="width:500px;">
 	@foreach ($conversation->users as $someUser)
-		{{ $someUser->first }} {{ $someUser->last }}
-	@endforeach
-	</h3>
-	<br/>
-	
-	@foreach ($conversation->notes as $note)
-		<div class="well">
-			{{ $note->content }}
-			<br/>
-			{{ User::find($note->user_id)->first }}
+		<div class="list-group-item" style="min-height:40px;">
+			<div style="float:left; padding-right: 10px">
+				@if(is_null($someUser->picture))
+					{{ HTML::image('assets/img/dummy.png', 'profile picture', array('width' => '25', 'height' => '25', 'class' => 'img-circle')) }}
+				@else
+					@if ( File::exists('assets/img/profile_images/' . $someUser->picture ))
+						{{ HTML::image('assets/img/profile_images/'.$someUser->picture, 'profile picture', array('width' => '25', 'height' => '25', 'class' => 'img-circle')) }}
+					@else
+						{{ HTML::image('assets/img/dummy.png', $someUser->id , array('width' => '25', 'height' => '25', 'class' => 'img-circle')) }}
+					@endif
+				@endif 
+			</div>
+			<span>{{{$someUser->first}}} {{{$someUser->last}}}</span>
 		</div>
 	@endforeach
+	</div>
+
+	<br/>
+	
+	<h4>Conversation</h4>
+	<div class="list-group">
+	@foreach ($conversation->notes as $note)
+		<div class="list-group-item" style="min-height:56px;">
+			<div style="float:left; padding-right: 10px">
+				@if(is_null(User::find($note->user_id)->picture))
+					{{ HTML::image('assets/img/dummy.png', 'profile picture', array('width' => '40', 'height' => '40', 'class' => 'img-circle')) }}
+				@else
+					@if ( File::exists('assets/img/profile_images/' . User::find($note->user_id)->picture ))
+						{{ HTML::image('assets/img/profile_images/'.User::find($note->user_id)->picture, 'profile picture', array('width' => '40', 'height' => '40', 'class' => 'img-circle')) }}
+					@else
+						{{ HTML::image('assets/img/dummy.png', User::find($note->user_id)->picture , array('width' => '40', 'height' => '40', 'class' => 'img-circle')) }}
+					@endif
+				@endif 
+			</div>
+			<span>{{{$note->content}}}</h5>
+		</div>
+	@endforeach
+	</div>
 	
 	{{-- Form to add to conversation--}}
 	
 	{{ Form::open(array('url' => 'addToConversation', 'method' => 'POST')) }}
 		<div class="form-group">
-			<textarea type="text" class="form-control" id="subject" style="width:500px;height:300px;" name="content"></textarea>
+			<textarea type="text" class="form-control" id="subject" style="height:300px;" name="content"></textarea>
 		</div>
 
 		<br/>
 		<button type="submit" class="btn btn-primary">
 			<span class="glyphicon glyphicon-ok"></span> Send Message
 		</button>
+		<br/>
+		<br/>
 	{{ Form::hidden('conversationID', $conversation->id) }}
 	{{ Form::close() }}
 	
