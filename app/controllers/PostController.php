@@ -113,7 +113,7 @@ class PostController extends BaseController {
 		}
 		if (!empty($newCode)) {
 			$comment->code = $newCode;
-			$comment->language = $language;
+			$comment->language = strtolower($language);
 		}
 		if (!empty($code)) {
 			if ($code == "hideCode") {
