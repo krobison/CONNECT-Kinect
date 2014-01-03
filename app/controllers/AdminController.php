@@ -43,6 +43,9 @@ class AdminController extends BaseController {
 			}
 			$post_P->delete();
 		}
+		
+		DB::table('hashtag_post')->where('post_id','=',$post->id)->delete();
+		
 		$post->delete();
 		
 		return Redirect::to('newsfeed')->with('message', 'You have successfully deleted the post.');
