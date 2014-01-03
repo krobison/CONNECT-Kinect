@@ -13,14 +13,14 @@ class HelpCenterController extends BaseController {
 			// First add a PostHelpRequest to the PostHelpRequest table
 			$post_HR = new PostHelpRequest;
 			$post_HR->anonymous = Input::get('anonymous');
-			$post_HR->language = Input::get('language');
-			$post_HR->code = Input::get('code');
 			$post_HR->save();
 
 			// Then add a Post to the Posts table, associating it with the PostHelpRequest through a polymorphic relationship
 			$post = new Post;
 			$post->user_id = Auth::user()->id;
 			$post->content = Input::get('content');
+			$post->language = Input::get('language');
+			$post->code = Input::get('code');
 			$post_HR->post()->save($post);
 			
 		} catch( Exception $e ) {

@@ -6,8 +6,11 @@
 </style>
 
 <div id="new-post-body" class="panel-body">
-	{{ Form::open(array('url' => $url, 'method' => 'POST')) }}
-	
+	@if($url == 'createprojectpost')
+		{{ Form::open(array('url' => $url, 'method' => 'POST','files' => true)) }}
+	@else 
+		{{ Form::open(array('url' => $url, 'method' => 'POST')) }}
+	@endif
 	THIS IS A {{ $url }} POST <br>
 	
 	@if($url == 'createhelprequestpost') 
@@ -37,7 +40,23 @@
 			</label>
 		</div>
 			
-	@endif	
+	@endif
+
+	@if($url == 'createprojectpost')
+		<div class="form-group">
+			<b> Upload a .zip of your project. </b>
+			{{Form::file('file', array())}}
+		</div>
+		<div class="form-group">
+			<b> Post a link to your project. </b>
+			<br>
+			{{Form::url('link', null,array('placeholder' => 'http://exampleurl' ))}}
+		</div>
+		<div class="form-group">
+			<b> Post a screenshot of your project. </b>
+			{{Form::file('screenshot', array())}}
+		</div>
+	@endif
 	
 	<div class="form-group">
 		{{ Form::textarea('content', null, array('id' => 'content-form',
@@ -45,7 +64,8 @@
 												 'placeholder' => 'Write post content here',
 												 'rows' => '5')) }}
 	</div>
-
+	
+	@if($url != 'createprojectpost')
 	<div id="code-panel" class="panel panel-default">
 		<div id="code-title" class="panel-body active">
 			Add code
@@ -76,6 +96,7 @@
 		</div>
 	</div>
 	
+	@endif
 	<hr>
 	
 	<div class="panel-tagDatater">
@@ -97,42 +118,12 @@
 </div> 
 
 <!-- Loading all scripts at the end for performance -->
+
 {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
 {{ HTML::script('assets/js/ace/ace.js') }}
 {{ HTML::script('assets/js/select2.js') }}
-	
+@if($url != 'createcsquestionpost')
 <script>
-	
-	$(document).ready(function() { 
-		// Set up select2 menus for tagging
-		$("#tag-select").select2({
-			createSearchChoice:function(term, data) { 
-				if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {
-					if(term.length > 2) {
-						return {id:term.replace(/,/g,' '), text:term.replace(/,/g,' ') + " - (This will create a new tag)"};
-					}
-				}
-			},
-			multiple: true,
-			placeholder: "Please select some tags for this post",
-			data:
-			[
-			@foreach(Hashtag::orderBy('name', 'ASC')->get() as $tag)
-				{id: {{{$tag->id}}}, text: '{{{ $tag->name }}}'},
-			@endforeach
-			]
-		});
-		$("#tag-select-suggestions").select2({
-			multiple: true,
-			placeholder: "Type some text in the post content and suggested tags will appear here",
-			data:
-			[
-			@foreach(Hashtag::orderBy('name', 'ASC')->get() as $tag)
-				{id: {{{$tag->id}}}, text: '{{{ $tag->name }}}'},
-			@endforeach
-			]
-		});
-	});
 	
 	/*
 	 * Code for Ace code editor
@@ -159,19 +150,46 @@
 		editor.getSession().setMode("ace/mode/" + $('#language-select').val());
 	});
 	
+	// Start with the 'add code' box hidden
+	$('.code-collapse').hide();
+	
 	// Button for showing code
 	$('#code-title').click(function() {
 		$('.code-collapse').toggle(200);
 		editor.resize();
 	});
+
+</script>
+@endif
+
+<script>
 	
-	// Set up select2 menu (not currently working...)
 	$(document).ready(function() { 
-		$("#language-select").select2();
+		// Set up select2 menus for tagging
+		$("#tag-select").select2({
+			createSearchChoice:function(term, data) { if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {return {id:term.replace(/,/g,' '), text:term.replace(/,/g,' ') + " - (This will create a new tag)"};} },
+			multiple: true,
+			placeholder: "Please select some tags for this post",
+			data:
+			[
+			@foreach(Hashtag::orderBy('name', 'ASC')->get() as $tag)
+				{id: {{{$tag->id}}}, text: '{{{ $tag->name }}}'},
+			@endforeach
+			]
+		});
+		$("#tag-select-suggestions").select2({
+			createSearchChoice:function(term, data) { if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {return {id:term.replace(/,/g,' '), text:term.replace(/,/g,' ') + " - (This will create a new tag)"};} },
+			multiple: true,
+			placeholder: "Type some text in the post content and suggested tags will appear here",
+			data:
+			[
+			@foreach(Hashtag::orderBy('name', 'ASC')->get() as $tag)
+				{id: {{{$tag->id}}}, text: '{{{ $tag->name }}}'},
+			@endforeach
+			]
+		});
 	});
 	
-	// Start with the 'add code' box hidden
-	$('.code-collapse').hide();
 		
 	/*
 	 * Code for post suggestions functionality

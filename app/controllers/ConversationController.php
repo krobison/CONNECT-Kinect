@@ -1,5 +1,7 @@
 <?php
 
+include(app_path().'/purify/HTMLPurifier.auto.php');
+
 class ConversationController extends BaseController {
 	
 	public function showConversations() {
@@ -10,13 +12,30 @@ class ConversationController extends BaseController {
 	
 	public function composeConversation() {
 		return View::make('composeConversation')
-			->with('user', Auth::user());
+			->with('user', Auth::user())
+			->with('toUser','none');
+	}
+
+	public function messageUser($id){
+		return View::make('composeConversation')
+			->with('user', Auth::user())
+			->with('toUser',$id);
 	}
 	
 	public function showConversation($id) {
+		//ensure that you can only view conversations that 1)Exist, and 2)You are a part of
+		$result = DB::table('conversation_user')
+			->where('user_id','=',Auth::user()->id)
+			->where('conversation_id','=',$id)
+			->get();
+
+		if (empty($result)){
+			return Redirect::to('/');
+		}else{
 		return View::make('singleConversation')
 			->with('user', Auth::user())
 			->with('conversation', Conversation::find($id));
+		}
 	}
 	
 	public function createConversation() {
@@ -24,7 +43,12 @@ class ConversationController extends BaseController {
 		// creating note first
 		$note = new Note;
 		
-		$note->content = Input::get('content');
+			//PURIFY
+			$pureconfig = HTMLPurifier_Config::createDefault();
+			$purifier = new HTMLPurifier($pureconfig);
+			$content = $purifier->purify(Input::get('content'));
+
+		$note->content = $content;
 		$note->user_id = Auth::user()->id;
 		
 		$note->save();
@@ -38,6 +62,8 @@ class ConversationController extends BaseController {
 		
 		// create conversation
 		$conversation = new Conversation;
+		$conversation->name = Input::get('name');
+		$conversation->owner = Input::get('from');
 		
 		$conversation->save();
 		
@@ -55,8 +81,13 @@ class ConversationController extends BaseController {
 	
 	public function addToConversation() {
 		$note = new Note;
+
+			//PURIFY
+				$pureconfig = HTMLPurifier_Config::createDefault();
+				$purifier = new HTMLPurifier($pureconfig);
+				$content = $purifier->purify(Input::get('content'));
 		
-		$note->content = Input::get('content');
+		$note->content = $content;
 		$note->user_id = Auth::user()->id;
 		
 		$note->save();
