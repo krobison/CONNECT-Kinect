@@ -128,7 +128,6 @@ class PostController extends BaseController {
 	}
 	
 	public function createGeneralPost() {
-		
 		try {
 			// Create A Post in the db
 			$post = new Post;
@@ -144,10 +143,13 @@ class PostController extends BaseController {
 				if(is_numeric($tag)) {
 					Hashtag::find($tag)->posts()->attach($post);
 				} else {
-					$new_tag = new Hashtag;
-					$new_tag->name = $tag;
-					$new_tag->save();
-					$new_tag->posts()->attach($post);
+					// Only save tags longer than 3 characters
+					if(strlen($tag) > 2) {
+						$new_tag = new Hashtag;
+						$new_tag->name = $tag;
+						$new_tag->save();
+						$new_tag->posts()->attach($post);
+					}
 				}
 			}
 		} catch( Exception $e ) {
