@@ -6,8 +6,11 @@
 </style>
 
 <div id="new-post-body" class="panel-body">
-	{{ Form::open(array('url' => $url, 'method' => 'POST')) }}
-	
+	@if($url == 'createprojectpost')
+		{{ Form::open(array('url' => $url, 'method' => 'POST','files' => true)) }}
+	@else 
+		{{ Form::open(array('url' => $url, 'method' => 'POST')) }}
+	@endif
 	THIS IS A {{ $url }} POST <br>
 	
 	@if($url == 'createhelprequestpost') 
@@ -37,7 +40,23 @@
 			</label>
 		</div>
 			
-	@endif	
+	@endif
+
+	@if($url == 'createprojectpost')
+		<div class="form-group">
+			<b> Upload a .zip of your project. </b>
+			{{Form::file('file', array())}}
+		</div>
+		<div class="form-group">
+			<b> Post a link to your project. </b>
+			<br>
+			{{Form::url('link', null,array('placeholder' => 'http://exampleurl' ))}}
+		</div>
+		<div class="form-group">
+			<b> Post a screenshot of your project. </b>
+			{{Form::file('screenshot', array())}}
+		</div>
+	@endif
 	
 	<div class="form-group">
 		{{ Form::textarea('content', null, array('id' => 'content-form',
@@ -45,7 +64,8 @@
 												 'placeholder' => 'Write post content here',
 												 'rows' => '5')) }}
 	</div>
-
+	
+	@if($url != 'createprojectpost')
 	<div id="code-panel" class="panel panel-default">
 		<div id="code-title" class="panel-body active">
 			Add code
@@ -76,6 +96,7 @@
 		</div>
 	</div>
 	
+	@endif
 	<hr>
 	
 	<div class="panel-tagDatater">
@@ -97,10 +118,50 @@
 </div> 
 
 <!-- Loading all scripts at the end for performance -->
+
 {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
 {{ HTML::script('assets/js/ace/ace.js') }}
 {{ HTML::script('assets/js/select2.js') }}
+@if($url != 'createcsquestionpost')
+<script>
+
+	/*
+	 * Code for Ace code editor
+	 */
+	 
+	// Setting up the ace text editor
+	var editor = ace.edit("editor");
+	editor.getSession().setUseWorker(false);
+	editor.setTheme("ace/theme/eclipse");
+	editor.getSession().setMode("ace/mode/plain_text");
+	//editor.setReadOnly(true);
+	editor.setOptions({
+		maxLines: 50
+	});
+
+	// Every time the content of the editor changes, update the value of the hidden form field to match
+	editor.getSession().on('change', function(){
+		var code = editor.getSession().getValue();
+		$('#hidden-editor').val(code);
+	});
 	
+	// Set Ace editor language based on language select form element
+	$('#language-select').change(function() {
+		editor.getSession().setMode("ace/mode/" + $('#language-select').val());
+	});
+	
+	// Start with the 'add code' box hidden
+	$('.code-collapse').hide();
+	
+	// Button for showing code
+	$('#code-title').click(function() {
+		$('.code-collapse').toggle(200);
+		editor.resize();
+	});
+
+</script>
+@endif
+
 <script>
 	
 	var inputTagData = [
@@ -128,45 +189,6 @@
 			data: inputTagData
 		});
 	});
-	
-	/*
-	 * Code for Ace code editor
-	 */
-	 
-	// Setting up the ace text editor
-	var editor = ace.edit("editor");
-	editor.getSession().setUseWorker(false);
-	editor.setTheme("ace/theme/eclipse");
-	editor.getSession().setMode("ace/mode/plain_text");
-	//editor.setReadOnly(true);
-	editor.setOptions({
-		maxLines: 50
-	});
-
-	// Every time the content of the editor changes, update the value of the hidden form field to match
-	editor.getSession().on('change', function(){
-		var code = editor.getSession().getValue();
-		$('#hidden-editor').val(code);
-	});
-	
-	// Set Ace editor language based on language select form element
-	$('#language-select').change(function() {
-		editor.getSession().setMode("ace/mode/" + $('#language-select').val());
-	});
-	
-	// Button for showing code
-	$('#code-title').click(function() {
-		$('.code-collapse').toggle(200);
-		editor.resize();
-	});
-	
-	// Set up select2 menu (not currently working...)
-	$(document).ready(function() { 
-		$("#language-select").select2();
-	});
-	
-	// Start with the 'add code' box hidden
-	$('.code-collapse').hide();
 		
 	/*
 	 * Code for post suggestions functionality

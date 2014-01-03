@@ -71,28 +71,16 @@ Route::group(array('before' => 'auth'), function() {
 	Route::post('creategeneralpost', 'PostController@createGeneralPost');
 	Route::post('deleteusercomment', 'PostController@deleteUserComment');
 	Route::post('saveeditcomment', 'PostController@saveEditComment');
-
-	// GET inbox page
-	Route::get('inbox', 'InboxController@showInbox');
-	Route::get('oldmail', "InboxController@showOldMail");
-	Route::get('sentmail', "InboxController@showSentMail");
-	Route::get('showmessage/{id}','InboxController@showMessage');
-
-	// GET 
-	Route::get('messageUser/{id}', 'InboxController@messageUser');
-	Route::get('messageCompose', 'InboxController@messageCompose');
-
-	// POST
-	Route::post('messageCompose', 'InboxController@createMessage');
 	
-	// TESTING conversations
-	// Attempt to make inbox conversations nicer.
 	// GET conversations
 	Route::get('conversations', 'ConversationController@showConversations');
 	Route::get('composeConversation', 'ConversationController@composeConversation');
+	Route::get('messageUser/{id}', 'ConversationController@messageUser');
 	Route::get('showConversation/{id}', 'ConversationController@showConversation');
-	
-	// POSTYI$JROAFJDISA RABBLE
+	Route::get('leaveConversation/{id}', 'ConversationController@leaveConversation');
+	Route::get('removeUser/{userId}/{conversationId}', 'ConversationController@removeUser');
+	Route::get('addUsers/{conversationId}', 'ConversationController@addUsers');
+	// POST conversations
 	Route::post('createConversation', 'ConversationController@createConversation');
 	Route::post('addToConversation', 'ConversationController@addToConversation');
 
