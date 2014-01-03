@@ -1,5 +1,7 @@
 <?php
 
+include(app_path().'/purify/HTMLPurifier.auto.php');
+
 class ConversationController extends BaseController {
 	
 	public function showConversations() {
@@ -41,7 +43,12 @@ class ConversationController extends BaseController {
 		// creating note first
 		$note = new Note;
 		
-		$note->content = Input::get('content');
+			//PURIFY
+			$pureconfig = HTMLPurifier_Config::createDefault();
+			$purifier = new HTMLPurifier($pureconfig);
+			$content = $purifier->purify(Input::get('content'));
+
+		$note->content = $content;
 		$note->user_id = Auth::user()->id;
 		
 		$note->save();
@@ -74,8 +81,13 @@ class ConversationController extends BaseController {
 	
 	public function addToConversation() {
 		$note = new Note;
+
+			//PURIFY
+				$pureconfig = HTMLPurifier_Config::createDefault();
+				$purifier = new HTMLPurifier($pureconfig);
+				$content = $purifier->purify(Input::get('content'));
 		
-		$note->content = Input::get('content');
+		$note->content = $content;
 		$note->user_id = Auth::user()->id;
 		
 		$note->save();

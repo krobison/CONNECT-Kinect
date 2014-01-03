@@ -42,7 +42,7 @@
 					@endif
 				@endif 
 			</div>
-			<span>{{{$note->content}}}</h5>
+			<span>{{$note->content}}</h5>
 		</div>
 	@endforeach
 	</div>
