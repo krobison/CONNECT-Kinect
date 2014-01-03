@@ -8,5 +8,13 @@ class Hashtag extends Eloquent {
 	public function posts() {
 		return $this->belongsToMany('Post');
 	}
+	
+	public function users() {
+		return $this->belongsToMany('User');
+	}
+	
+	public function addTagIfValid($tag) {
+
+	}
 	    
 }

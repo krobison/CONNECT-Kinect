@@ -53,6 +53,24 @@ class UserController extends BaseController {
 				// Write all fields in user to the database
 				$user->save();
 				
+				// Write user tags to the db
+				$hashtags = Input::get('hashtags');
+				$hashtags = preg_split('/(?<!"),(?!")/',$hashtags[0]);
+				foreach($hashtags as $tag) {
+					// If the value is not numerical, the tag doesn't exist yet. Add it the the table.
+					if(is_numeric($tag)) {
+						Hashtag::find($tag)->users()->attach($user);
+					} else {
+						// Only save tags longer than 3 characters
+						if(strlen($tag) > 2) {
+							$new_tag = new Hashtag;
+							$new_tag->name = $tag;
+							$new_tag->save();
+							$new_tag->users()->attach($user);
+						}
+					}
+				}
+				
 				// Update classes for the student
 				if(Input::get("student") == "yes") {
 					$courses = Input::get("classes");
@@ -318,14 +336,13 @@ class UserController extends BaseController {
 		}
 
 		Auth::logout();
-		DB::table('users')->where('id','=',$id)->delete();
 		DB::table('posts')->where('user_id','=',$id)->delete();
 		DB::table('questions')->where('user_id','=',$id)->delete();
 		DB::table('upvotes')->where('user_id','=',$id)->delete();
-		DB::table('user_hashtag')->where('user_id','=',$id)->delete();
-		DB::table('user_messages')->where('user_id','=',$id)->delete();
+		DB::table('hashtag_user')->where('user_id','=',$id)->delete();
 		DB::table('comments')->where('user_id','=',$id)->delete();
 		DB::table('course_user')->where('user_id','=',$id)->delete();
+		DB::table('users')->where('id','=',$id)->delete();
 
 		return Redirect::to('/')->with('message', '<div class="alert alert-success"> You have successfully deleted your account. </div>');
 	}
