@@ -1,29 +1,8 @@
 @extends('common.master')
 
 @section('additionalHeaders')
-	{{ HTML::style('assets/css/helpcenter.css') }}
+	{{ HTML::style('assets/css/posts.css') }}
 	{{ HTML::style('assets/css/select2.css') }}
-	
-	<style type="text/css" media="screen">
-    #editor { 
-		width: 100%;
-		height: 100px;
-    }
-	hr {
-		margin: 5px;
-		padding: 1px%;
-	}
-	h3 {
-		margin: 5px;
-		padding: 1px%;
-	}
-	#code-title:hover {
-		background-color: #F5F5F5;
-	}
-	.five-marg {
-		margin: 5px;
-	}
-	</style>
 @stop
 
 @section('content')
