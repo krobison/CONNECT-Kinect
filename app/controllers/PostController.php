@@ -161,5 +161,26 @@ class PostController extends BaseController {
 		return Redirect::back();
 		//return Redirect::back()->with('message', '<div class="alert alert-success"> Your post has been successfully created. </div>');
 	}
+
+	public function giveFeedback() {
+		try {
+			// First add a PostHelpRequest to the PostHelpRequest table
+			$post_F = new PostFeedback;
+			$post_F->save();
+
+			// Then add a Post to the Posts table, associating it with the PostQuestion through a polymorphic relationship
+			$post = new Post;
+			$post->user_id = Auth::user()->id;
+			$post->content = Input::get('content');
+			$post_F->post()->save($post);
+			
+		} catch( Exception $e ) {
+			return View::make('debug', array('data' => Input::all()));
+			//return Redirect::back()->with('message', 'Your post cannot be created at this time, please try again later.');
+		}
+		
+		// Make the specific post data (e.g., helpPost, project, etc...)
+		return Redirect::back()->with('message', 'Your post has been successfully created.');
+	}
 	
 }
