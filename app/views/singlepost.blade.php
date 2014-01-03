@@ -1,6 +1,7 @@
 @extends('common.master')
 
 @section('additionalHeaders')
+	{{ HTML::style('assets/css/helpcenter.css') }}
 	{{ HTML::style('assets/css/select2.css') }}
 	<style type="text/css" media="screen">
 	#comment-box {
@@ -33,6 +34,21 @@
 @section('content')
 	@if ($post->postable_type == 'PostQuestion')
 		<h1>CS Question of the Week</h1>
+		@if($user->admin == '1')
+		<!-- New post functionality -->
+		<div id="new-post" class="panel panel-default">
+			<div class="panel-heading">
+				<h4>
+				New Post
+				<div class="btn-group" id="new-post-buttons">
+					<button id="hide-new-post-button" type="button" class="btn btn-default btn-sm">Hide</button>
+				</div>
+				</h4>
+			</div>
+			{{ View::make('common/createPost')->with('url', 'createcsquestionpost') }}
+		</div>
+		@endif
+	
 	@elseif ($post->postable_type == 'PostProject')
     	<h1>CS Project</h1>
 	@elseif ($post->postable_type == 'PostHelpOffer')
@@ -45,11 +61,11 @@
 	
 	{{View::make('common.newsfeedPost')->with('post', $post)}}
 	
-	@if ($post->postable_type == 'PostHelpRequest' && $post->postable->code != "")
+	@if ($post->code != "")
 		<div class="well">
-			Language: {{ $post->postable->language }}
+			Language: {{ $post->language }}
 			<div id="editor{{$post->id}}">
-				{{{ $post->postable->code }}}
+				{{{ $post->code }}}
 			</div>
 		</div>
 		{{ HTML::script('assets/js/ace/ace.js') }}
@@ -58,14 +74,15 @@
 			var editor = ace.edit("editor{{$post->id}}");
 			editor.getSession().setUseWorker(false);
 			editor.setTheme("ace/theme/eclipse");
-			var language = "{{$post->postable->language}}";
+			var language = "{{$post->language}}";
 			editor.getSession().setMode("ace/mode/" + language);
 			editor.setReadOnly(true);
 			editor.setOptions({
 				maxLines: 50
 			});
 		</script>
-	@elseif ($post->postable_type == 'PostHelpOffer')
+	@endif
+	@if ($post->postable_type == 'PostHelpOffer')
 		<div class="well">
 			Availability:
 			{{{ $post->postable->availability }}}
@@ -152,10 +169,13 @@
 			<a href="{{ URL::to('showPreviousQuestions') }}" class="list-group-item"><span class="glyphicon glyphicon-arrow-left"></span>   Previous Questions</a>
 		@stop
 	@endif
-
-	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
-	{{ HTML::script('assets/js/select2.min.js') }}
-	{{ HTML::script('assets/js/ace/ace.js') }}
+	@if($user->admin == '1')
+		@if($post->postable_type != 'PostQuestion')
+		{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
+		{{ HTML::script('assets/js/select2.min.js') }}
+		{{ HTML::script('assets/js/ace/ace.js') }}
+		@endif
+	@endif
 	
 	<script>
 		// Setting up the ace text editor
@@ -192,6 +212,12 @@
 		$(document).ready(function() { 
 			$(".select2-container").select2();
 		});
+		
+		// Hide and show post divs on button press
+		$('#hide-new-post-button').click(function() {
+			$('#new-post-body').toggle(200);
+		});
+
 	</script>
 	
 @stop

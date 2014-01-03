@@ -116,6 +116,9 @@ Route::group(array('before' => 'auth|admin'), function () {
 	
 	//approves a cs project
 	Route::post('approveproject', 'AdminController@approveProject');
+	
+	//creates a new cs question
+	Route::post('createcsquestionpost', 'AdminController@createCSQuestion');
 });
 
 //PASSWORD REMINDER

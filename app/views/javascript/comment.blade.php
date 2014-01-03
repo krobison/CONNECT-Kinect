@@ -2,6 +2,7 @@
 		$("#save{{$comment->id}}").hide();
 		$("#cancel{{$comment->id}}").hide();
 		$("#code-panel{{$comment->id}}").hide();
+		
 		@if(Auth::user()->id == $comment->user_id)
 			$("#edit{{$comment->id}}").click(function() { /* assign anonymous function to click event */
 	    		var p = $("#paragraph{{$comment->id}}"); /* store reference to <p> element */
