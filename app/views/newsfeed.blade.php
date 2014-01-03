@@ -1,21 +1,8 @@
 @extends('common.master')
 
 @section('additionalHeaders')
-	{{ HTML::style('assets/css/helpcenter.css') }}
+	{{ HTML::style('assets/css/posts.css') }}
 	{{ HTML::style('assets/css/select2.css') }}
-	
-	<style type="text/css" media="screen">
-    #editor { 
-		width: 100%;
-		height: 100px;
-    }
-	#new-post-buttons {
-		float: right;
-	}
-	.five-margin {
-		margin: 5px;
-	}
-	</style>
 @stop
 
 @section('content')
