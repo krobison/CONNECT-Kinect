@@ -45,82 +45,9 @@
 		</div>
 	    
 		<div id="help-request" class="panel-body">
-			{{ Form::open(array('url' => 'createhelprequestpost')) }}
-			
-			<div class="form-group">
-				<b> How would you like to recieve help? </b> <br>
-				<i> Not Working </i> <br>
-				<label class="checkbox-inline">
-				{{ Form::checkbox('help_type[]', '1', array('checked' => 'true')) }}
-					In the comments
-				</label>
-				<label class="checkbox-inline">
-				{{ Form::checkbox('help_type[]', '2') }}
-					In person
-				</label>
-				<label class="checkbox-inline">
-				{{ Form::checkbox('help_type[]', '3') }}
-					Skype/Hangouts/Video Chat
-				</label>
-			</div>
-					
-			<div class="form-group">
-				<b> How would you like to be displayed? </b> <br>
-				<label class="radio-inline">
-				{{ Form::radio('anonymous', '0', array('checked' => 'true')) }}
-					Post as {{{ $user->first }}} {{{ $user->last }}}
-				</label>
-				<label class="radio-inline">
-				{{ Form::radio('anonymous', '1') }} 
-					Post Anonymously
-				</label>
-			</div>
-			
-			<div class="form-group">
-				{{ Form::textarea('content', null, array('class' => 'form-control',
-														 'placeholder' => 'What do you need help with?',
-														 'rows' => '5')) }}
-			</div>
-			
-			<div id="code-panel" class="panel panel-default">
-				<div id="code-title" class="panel-body active">
-					Add code
-				</div>
-				
-				<div id="hidden-editor_div">
-					<input id="hidden-editor" type="hidden" name="code">
-				</div>
-
-				<div id="editor" class="code-collapse">
-				
-				Select your language below
-				Then add your code here!
-				
-				</div>
-					
-				<div class="panel-footer code-collapse">
-					Language: 
-					<select id="language-select" class="select2-container" name="language">
-						@foreach(Post::getSupportedLanguages() as $language)
-							@if ($language === "plain_text")
-								<option selected value={{{ $language }}}>{{{ ucfirst($language) }}}</option>
-							@else
-								<option value={{ $language }}>{{{ ucfirst($language) }}}</option>
-							@endif
-						@endforeach
-					</select>
-				</div>
-			</div>
-			
-			<hr>
-			
-			<div class="row">
-				<div class ="col-xs-5 col-md-4">
-					{{Form::submit('Post', array('class' => 'btn btn-lg btn-primary btn-block'))}}			
-				</div>
-			</div>
-			{{ Form::close() }}
+			{{ View::make('common/createPost')->with('url', 'createhelprequestpost') }}
 		</div> 
+		
 		
 		<div id="help-offer" class="panel-body">
 			{{ Form::open(array('url' => 'createhelpofferpost')) }}
@@ -183,37 +110,16 @@
 	</div>
 	
 	<!-- Loading all scripts at the end for performance-->
-	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
-	{{ HTML::script('assets/js/select2.js') }}
-	{{ HTML::script('assets/js/ace/ace.js') }}
+	{{-- HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') --}}
 	
 	<script>
-		// Setting up the ace text editor
-		var editor = ace.edit("editor");
-		editor.getSession().setUseWorker(false);
-		editor.setTheme("ace/theme/eclipse");
-		editor.getSession().setMode("ace/mode/plain_text");
-		//editor.setReadOnly(true);
-		editor.setOptions({
-			maxLines: 50
-		});
-
-		// Every time the content of the editor changes, update the value of the hidden form field to match
-		editor.getSession().on('change', function(){
-			var code = editor.getSession().getValue();
-			$('#hidden-editor').val(code);
+		
+		$(document).ready(function(){
+			// Start with new help post div's hidden
+			$('#help-request').hide();
+			$('#help-offer').hide();
 		});
 		
-		// Set Ace editor language based on language select form element
-		$('#language-select').change(function() {
-			editor.getSession().setMode("ace/mode/" + $('#language-select').val());
-		});
-		
-		// Start with new help post div's hidden
-		$('#help-request').hide();
-		$('#help-offer').hide();
-		$('.code-collapse').hide();
-
 		// Hide and show post divs on button press
 		$('#offer-help-button').click(function() {
 			$('#help-request').hide(200);
@@ -230,15 +136,5 @@
 			$('#help-offer').hide(200);
 		});
 		
-		// Button for showing code
-		$('#code-title').click(function() {
-			$('.code-collapse').toggle(200);
-			editor.resize();
-		});
-		
-		// Set up select2 menu (not currently working...)
-		$(document).ready(function() { 
-			$(".select2-container").select2();
-		});
 	</script>
 @stop

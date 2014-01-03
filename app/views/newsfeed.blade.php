@@ -30,7 +30,7 @@
 			</div>
 			</h4>
 		</div>
-	    {{ View::make('common/createPost')->with('url', 'general') }}
+	    {{ View::make('common/createPost')->with('url', 'creategeneralpost') }}
 	</div>
 	
 	<!-- Generate all recent user posts -->
