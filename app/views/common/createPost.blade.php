@@ -106,7 +106,13 @@
 	$(document).ready(function() { 
 		// Set up select2 menus for tagging
 		$("#tag-select").select2({
-			createSearchChoice:function(term, data) { if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {return {id:term.replace(/,/g,' '), text:term.replace(/,/g,' ') + " - (This will create a new tag)"};} },
+			createSearchChoice:function(term, data) { 
+				if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {
+					if(term.length > 2) {
+						return {id:term.replace(/,/g,' '), text:term.replace(/,/g,' ') + " - (This will create a new tag)"};
+					}
+				}
+			},
 			multiple: true,
 			placeholder: "Please select some tags for this post",
 			data:
@@ -117,7 +123,6 @@
 			]
 		});
 		$("#tag-select-suggestions").select2({
-			createSearchChoice:function(term, data) { if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {return {id:term.replace(/,/g,' '), text:term.replace(/,/g,' ') + " - (This will create a new tag)"};} },
 			multiple: true,
 			placeholder: "Type some text in the post content and suggested tags will appear here",
 			data:
