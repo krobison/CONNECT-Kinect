@@ -65,6 +65,23 @@ class ConversationController extends BaseController {
 
 		return Redirect::to('conversations');
 	}
+
+	public function removeUser($userId,$conversationId) {
+
+		$conversation = DB::table('conversations')->where('id','=',$conversationId)->first();
+
+		if($conversation->owner == Auth::user()->id){
+
+			DB::table('conversation_user')
+				->where('user_id','=',$userId)
+				->where('conversation_id','=',$conversationId)
+				->delete();
+
+		}
+
+
+		return Redirect::to('showConversation/'.$conversationId);
+	}
 	
 	public function createConversation() {
 		

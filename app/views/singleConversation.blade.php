@@ -25,6 +25,13 @@
 					@endif
 				@endif 
 			</div>
+			@if (($someUser->id != Auth::user()->id)&&($conversation->owner == Auth::user()->id))
+				<form class="form-horizontal" role="form" action="{{ URL::to('removeUser/'.$someUser->id.'/'.$conversation->id) }}" method="get">
+					<button type="submit" class="btn-sm btn-danger btn" style="float:right;margin-top:-5px;" onclick="return confirm('Are you sure you want to remove this user? They will not be able to view these messages or reply any longer.');">
+						<span class="glyphicon glyphicon-remove"></span> Remove User
+					</button>
+				</form>
+			@endif
 			<a href="{{ URL::to('profile/'.$someUser->id) }}"><span>{{{$someUser->first}}} {{{$someUser->last}}}</span></a>
 		</div>
 	@endforeach
@@ -56,7 +63,7 @@
 	
 	{{ Form::open(array('url' => 'addToConversation', 'method' => 'POST')) }}
 		<div class="form-group">
-			<textarea type="text" class="form-control" id="subject" style="height:300px;" name="content"></textarea>
+			<textarea type="text" class="form-control" id="subject" style="height:200px;" name="content"></textarea>
 		</div>
 
 		<br/>

@@ -3,7 +3,7 @@
 @section('content')
 	<form class="form-horizontal" role="form" action="{{ URL::to('composeConversation')}}" method="get">
 		<button type="submit" class="btn btn-default btn-lg" style="float:right;">
-			<span class="glyphicon glyphicon-envelope"></span> Compose A Conversation
+			<span class="glyphicon glyphicon-envelope"></span> Start A Conversation
 		</button>
 	</form>
 	
