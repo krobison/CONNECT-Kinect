@@ -40,11 +40,6 @@ Route::group(array('before' => 'auth'), function() {
 	// GET newsfeed page
 	Route::get('newsfeed', 'NewsfeedController@showNewsfeed');
 	
-	// POST newsfeed page
-	Route::post('creategeneralpost', 'NewsfeedController@createGeneralPost');
-	Route::post('deleteusercomment', 'PostController@deleteUserComment');
-	Route::post('saveeditcomment', 'PostController@saveEditComment');
-	
 	// GET cs question?
 	Route::get('CSQuestion', 'CSQuestionController@showCSQuestion');
 	Route::get('showPreviousQuestions', 'CSQuestionController@showPreviousQuestions');
@@ -73,6 +68,9 @@ Route::group(array('before' => 'auth'), function() {
 	// POST post
 	Route::post('createComment', 'PostController@createComment');
 	Route::post('upvote', 'PostController@upvote');
+	Route::post('creategeneralpost', 'PostController@createGeneralPost');
+	Route::post('deleteusercomment', 'PostController@deleteUserComment');
+	Route::post('saveeditcomment', 'PostController@saveEditComment');
 
 	// GET inbox page
 	Route::get('inbox', 'InboxController@showInbox');
