@@ -83,7 +83,7 @@
 		<br>
 		<input type='hidden' disabled style="width:77%;" id="tag-select-suggestions" class="five-margin select2-container" name="hashtag_suggestions[]"> </input>
 		<noscript> This browser does not support JavaScript or JavaScript is turned off. Tagging is disabled. </noscript>
-		<button type="button" style="width:20%" id="add-these-tags" class="btn btn-default"> <small>Add These Tags</small> </button>
+		<button type="button" style="width:20%" id="add-these-tags" class="btn btn-default"> <small>Add Suggested Tags</small> </button>
 	</div>
 
 	<hr>
@@ -103,6 +103,11 @@
 	
 <script>
 	
+	var inputTagData = [
+			@foreach(Hashtag::orderBy('name', 'ASC')->get() as $tag)
+				{id: {{{$tag->id}}}, text: '{{{ $tag->name }}}'},
+			@endforeach
+			];
 	$(document).ready(function() { 
 		// Set up select2 menus for tagging
 		$("#tag-select").select2({
@@ -115,22 +120,12 @@
 			},
 			multiple: true,
 			placeholder: "Please select some tags for this post",
-			data:
-			[
-			@foreach(Hashtag::orderBy('name', 'ASC')->get() as $tag)
-				{id: {{{$tag->id}}}, text: '{{{ $tag->name }}}'},
-			@endforeach
-			]
+			data: inputTagData
 		});
 		$("#tag-select-suggestions").select2({
 			multiple: true,
 			placeholder: "Type some text in the post content and suggested tags will appear here",
-			data:
-			[
-			@foreach(Hashtag::orderBy('name', 'ASC')->get() as $tag)
-				{id: {{{$tag->id}}}, text: '{{{ $tag->name }}}'},
-			@endforeach
-			]
+			data: inputTagData
 		});
 	});
 	
@@ -184,7 +179,7 @@
 	@foreach(Hashtag::all() as $tag)
 		{{{$tag->id}}} : "{{{$tag->name}}}",
 	@endforeach
-	40:"llamasAre233soCool23"}
+	}
 	
 	for(var id in tagData) {
 		{{-- Convert CamelCase to spaces --}}
@@ -197,8 +192,8 @@
 		{{-- Convert number letter junctions to spaces --}}
 		myStr = myStr.replace(/([^0-9])([0-9])/g, '$1 $2').toLowerCase();
 		
-		{{-- Now split the string in to an array (split on every space) --}}
-		var splitResult = myStr.split(" ");
+		{{-- Now split the string in to an array (split on whitespace) --}}
+		var splitResult = myStr.split(/[ ,]+/);
 		tagData[id] = splitResult;
 	}
 
@@ -213,9 +208,9 @@
 		var newSelectTwoValues = new Array;
 		for(var id in tagData) {
 			var toSearch = tagData[id];
-			for(i = 0; i < toSearch.length; i++) {
-				{{-- For security purposes, escape tag text to regexp characters. --}}
-				var patt = new RegExp(escapeRegExp(toSearch[i]),'i');
+			for(var word in toSearch) {
+				{{-- For security purposes, escape tag text regexp characters. --}}
+				var patt = new RegExp(escapeRegExp(toSearch[word]),'i');
 				if(patt.test($("#content-form").val())) {
 					newSelectTwoValues.push(id);
 					break;

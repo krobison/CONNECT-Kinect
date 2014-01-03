@@ -141,7 +141,7 @@
 			</div>
 			
 			<div class="row">
-					{{Form::label('grad_date', 'Graduation Date', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
+				{{Form::label('grad_date', 'Graduation Date', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
 			</div>
 			<div class="row">
 				<div class ="col-xs-10 col-md-8 col-md-offset-2">
@@ -181,7 +181,7 @@
 			</div>
 			<div class="row">
 				<div class ="col-xs-10 col-md-8 col-md-offset-2">
-					<select multiple class="select2-container classSelect" name="classes[]">
+					<select multiple id="classes-taking" class="select2-container classSelect" name="classes[]">
 						<optgroup label="Computer Science">
 							@foreach(Course::all() as $course)
 								<option value={{ $course->id }}>{{ $course->prefix }}{{ $course->number }} - {{ $course->name }}</option>
@@ -210,7 +210,7 @@
 			</div>
 			<div class="row">
 				<div class ="col-xs-10 col-md-8 col-md-offset-2">
-					<select multiple class="select2-container classSelect" name="classes_instructor[]">
+					<select multiple id="classes-teaching" class="select2-container classSelect" name="classes_instructor[]">
 						<optgroup label="Computer Science">
 							@foreach(Course::all() as $course)
 								<option value={{ $course->id }}>{{ $course->prefix }}{{ $course->number }} - {{ $course->name }}</option>
@@ -222,7 +222,7 @@
 		</div>
 
 		<div class="row">
-			{{Form::label('bio', 'Say a few things about yourself:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10'))}}	
+			{{Form::label('bio', 'Say a few things about yourself:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10', 'id' => 'bio-content'))}}	
 		</div>
 		<div class="row">
 			<div class ="col-xs-10 col-md-8 col-md-offset-2">
@@ -240,6 +240,25 @@
 				</div>
 			</div>	
 		@endif
+		
+		<div class="row">
+			{{Form::label('hashtags', 'Add some tags to your profile that correspond to your interest areas, new tags welcome', array('class' => 'col-md-offset-2 col-xs-12 col-md-10'))}}	
+		</div>
+		
+		<div class="row">
+			<div class ="col-xs-10 col-md-8 col-md-offset-2">
+				<input type='hidden' style="width:100%;" id="tag-select" class="five-margin" name="hashtags[]"> </input>
+			</div>
+		</div>
+		<div class="row">
+			<div class ="col-xs-10 col-md-8 col-md-offset-2">
+				<input type='hidden' disabled style="width:80%;" id="tag-select-suggestions" class="five-margin" name="hashtag_suggestions[]"> </input>
+				<button type="button" style="width:20%" id="add-these-tags" class="btn btn-default"> <small>Add Suggested Tags</small> </button>
+				<noscript> (This browser does not support JavaScript or JavaScript is turned off. Tagging is disabled) </noscript>
+			</div>
+		</div>
+		
+		<br>	
 			
 		<div class="row">
 			{{Form::label('profilepic', 'Profile Picture: (jpeg, png, bmp, or gif && 2MB Maximum size)', array('class' => 'col-md-offset-2 col-xs-12 col-md-10'))}}	
@@ -249,7 +268,6 @@
 			{{Form::file('profilepic', array())}}		
 			</div>
 		</div>
-		
 		@if($errors->has('profilepic'))
 			<div class="row">
 				<div class="error col-xs-10 col-md-8 col-md-offset-2">
@@ -356,6 +374,129 @@
 		}
 		
 	}
+	
+	/*
+	 * Code for tag suggestions functionality
+	 */
+	 
+	var inputTagData = [
+			@foreach(Hashtag::orderBy('name', 'ASC')->get() as $tag)
+				{id: {{{$tag->id}}}, text: '{{{ $tag->name }}}'},
+			@endforeach
+			];
+	$(document).ready(function() { 
+		// Set up select2 menus for tagging
+		$("#tag-select").select2({
+			createSearchChoice:function(term, data) { 
+				if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {
+					if(term.length > 2) {
+						return {id:term.replace(/,/g,' '), text:term.replace(/,/g,' ') + " - (This will create a new tag)"};
+					}
+				}
+			},
+			multiple: true,
+			placeholder: "Please select some tags for this post. Consider adding the tags below.",
+			data: inputTagData
+		});
+		$("#tag-select-suggestions").select2({
+			multiple: true,
+			placeholder: "Suggested tags will appear here (based on 'about you' and class selections).",
+			data: inputTagData
+		});
+	});
+	
+	// Get hashtag data from db
+	var tagData = {
+	@foreach(Hashtag::all() as $tag)
+		{{{$tag->id}}} : "{{{$tag->name}}}",
+	@endforeach
+	}
+	
+	for(var id in tagData) {
+		{{-- Convert CamelCase to spaces --}}
+		var myStr = tagData[id];
+		myStr = myStr.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase();
+		
+		{{-- Convert hyphens and underscores to spaces --}}
+		myStr = myStr.replace(/-|_/g, ' ').toLowerCase();
+		
+		{{-- Convert number letter junctions to spaces --}}
+		//myStr = myStr.replace(/([^0-9])([0-9])/g, '$1 $2').toLowerCase();
+		
+		{{-- Now split the string in to an array (split on whitespace) --}}
+		var splitResult = myStr.split(/[ ,]+/);
+		tagData[id] = splitResult;
+	}
+
+	// Add suggested tags to actual tags on button press
+	$('#add-these-tags').click(function() {
+		var unionOfSelectMenues = union_arrays($("#tag-select-suggestions").val().split(","),$("#tag-select").val().split(","));
+		$("#tag-select").select2('val',unionOfSelectMenues);
+	});
+	
+	// Check for new suggested tags every time content field changes
+	$('#bio').keyup(function() {
+		updateSuggestedTags();
+	});
+	
+	// Also check when a new taking/instructor class is selected
+	$('#classes-taking,#classes-teaching').change(function() {
+		updateSuggestedTags();
+	});
+	
+	var updateSuggestedTags = function() {
+		var newSelectTwoValues = new Array;
+		for(var id in tagData) {
+			var toSearch = tagData[id];
+			for(var word in toSearch) {
+				{{-- For security purposes, escape tag text regexp characters. --}}
+				var patt = new RegExp(escapeRegExp(toSearch[word]),'i');
+				if(patt.test($("#bio").val())) {
+					newSelectTwoValues.push(id);
+					break;
+				}
+				var classData = $("#classes-taking").select2('data');
+				for (var i in classData) {
+					console.log("Comparing " + classData[i].text + " with " + patt);
+					if(patt.test(classData[i].text)) {
+						newSelectTwoValues.push(id);
+						break;
+					}
+				}
+				classData = $("#classes-teaching").select2('data');
+				for (var i in classData) {
+					console.log("Comparing " + classData[i].text + " with " + patt);
+					if(patt.test(classData[i].text)) {
+						newSelectTwoValues.push(id);
+						break;
+					}
+				}
+			}
+		}
+		$("#tag-select-suggestions").select2('val',newSelectTwoValues);
+	}
+
+	
+	// Helper function to escape regex
+	function escapeRegExp(str) {
+		return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+	}
+
+	// Helper function for finding the union of two arrays
+	function union_arrays (x, y) {
+		var obj = {};
+		for (var i = x.length-1; i >= 0; -- i)
+			obj[x[i]] = x[i];
+		for (var i = y.length-1; i >= 0; -- i)
+			obj[y[i]] = y[i];
+		var res = []
+		for (var k in obj) {
+			if (obj.hasOwnProperty(k))  // <-- optional
+			res.push(obj[k]);
+		}
+		return res;
+	}
+
 </script>
 	
 </body>
