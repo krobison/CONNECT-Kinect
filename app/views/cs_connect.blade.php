@@ -4,6 +4,10 @@
 
 @stop
 
+@section('title')
+	CS CONNECT.
+@stop
+
 @section('content')
 	<h2>CS Connect Dashboard</h2>
 	<p>

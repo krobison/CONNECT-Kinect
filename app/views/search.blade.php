@@ -5,6 +5,10 @@
 	{{ HTML::style('assets/css/search.css') }}
 @stop
 
+@section('title')
+	SEARCH.
+@stop
+
 @section('content')
 	<h1> Search Page </h1>
 	{{ Form::open(array('url' => 'searchfilter', 'method' => 'GET')) }}

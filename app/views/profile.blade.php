@@ -4,6 +4,10 @@
 	{{ HTML::style('assets/css/profile.css') }}
 @stop
 
+@section('title')
+	PROFILE.
+@stop
+
 @section('content')
 	<div class="basic">
 		<div class="row">

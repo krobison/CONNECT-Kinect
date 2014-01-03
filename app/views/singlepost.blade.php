@@ -5,6 +5,10 @@
 	{{ HTML::style('assets/css/select2.css') }}
 @stop
 
+@section('title')
+	CS QUESTION.
+@stop
+
 @section('content')
 	@if ($post->postable_type == 'PostQuestion')
 		<h1>CS Question of the Week</h1>

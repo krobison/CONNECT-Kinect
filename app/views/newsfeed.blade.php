@@ -5,6 +5,10 @@
 	{{ HTML::style('assets/css/select2.css') }}
 @stop
 
+@section('title')
+	NEWSFEED.
+@stop
+
 @section('content')
 
 	<!-- New post functionality -->
