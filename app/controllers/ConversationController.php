@@ -10,7 +10,14 @@ class ConversationController extends BaseController {
 	
 	public function composeConversation() {
 		return View::make('composeConversation')
-			->with('user', Auth::user());
+			->with('user', Auth::user())
+			->with('toUser','none');
+	}
+
+	public function messageUser($id){
+		return View::make('composeConversation')
+			->with('user', Auth::user())
+			->with('toUser',$id);
 	}
 	
 	public function showConversation($id) {

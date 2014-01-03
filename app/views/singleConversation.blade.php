@@ -20,7 +20,7 @@
 					@endif
 				@endif 
 			</div>
-			<span>{{{$someUser->first}}} {{{$someUser->last}}}</span>
+			<a href="{{ URL::to('profile/'.$someUser->id) }}"><span>{{{$someUser->first}}} {{{$someUser->last}}}</span></a>
 		</div>
 	@endforeach
 	</div>
