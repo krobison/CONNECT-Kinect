@@ -173,21 +173,29 @@
 	 */
 	 
 	// Populate tagData array
-	var tagData = {};
+	
+	// Get hashtag data from db
+	var tagData = {
 	@foreach(Hashtag::all() as $tag)
-		{{-- minified version of the code below --}}
-		{{-- var myStr="{{{ $tag->name }}}";myStr=myStr.replace(/([a-z])([A-Z])/g,"$1 $2").toLowerCase();myStr=myStr.replace(/-|_/g," ").toLowerCase();myStr=myStr.replace(/([^0-9])([0-9])/g,"$1 $2").toLowerCase();var splitResult=myStr.split(" ");tagData["{{{$tag->id}}}"]=splitResult --}}
+		{{{$tag->id}}} : "{{{$tag->name}}}",
+	@endforeach
+	40:"llamasAre233soCool23"}
+	
+	for(var id in tagData) {
 		{{-- Convert CamelCase to spaces --}}
-		var myStr = '{{{ $tag->name }}}';
+		var myStr = tagData[id];
 		myStr = myStr.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase();
+		
 		{{-- Convert hyphens and underscores to spaces --}}
 		myStr = myStr.replace(/-|_/g, ' ').toLowerCase();
+		
 		{{-- Convert number letter junctions to spaces --}}
 		myStr = myStr.replace(/([^0-9])([0-9])/g, '$1 $2').toLowerCase();
+		
 		{{-- Now split the string in to an array (split on every space) --}}
 		var splitResult = myStr.split(" ");
-		tagData['{{{$tag->id}}}'] = splitResult;
-	@endforeach
+		tagData[id] = splitResult;
+	}
 
 	// Add suggested tags to actual tags on button press
 	$('#add-these-tags').click(function() {
@@ -198,19 +206,17 @@
 	// Check for new suggested tags every time content field changes
 	$('#content-form').keyup(function() {
 		var newSelectTwoValues = new Array;
-		@foreach(Hashtag::all() as $tag)
-			{{-- This is a minifided version of the commented code below --}}
-			{{-- var toSearch=tagData["{{{$tag->id}}}"];for(i=0;i<toSearch.length;i++){var patt=new RegExp(escapeRegExp(toSearch[i]),"i");if(patt.test($("#content-form").val())){newSelectTwoValues.push(3);break}} --}}
-			var toSearch = tagData['{{{$tag->id}}}'];
+		for(var id in tagData) {
+			var toSearch = tagData[id];
 			for(i = 0; i < toSearch.length; i++) {
-				{{-- Escape tagged text to regexp characters. --}}
+				{{-- For security purposes, escape tag text to regexp characters. --}}
 				var patt = new RegExp(escapeRegExp(toSearch[i]),'i');
 				if(patt.test($("#content-form").val())) {
-					newSelectTwoValues.push({{{$tag->id}}});
+					newSelectTwoValues.push(id);
 					break;
 				}
 			}
-		@endforeach
+		}
 		$("#tag-select-suggestions").select2('val',newSelectTwoValues);
 	});
 	
