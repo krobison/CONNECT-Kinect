@@ -1,6 +1,11 @@
 @extends('common.master')
 
 @section('content')
+	<form class="form-horizontal" role="form" action="{{ URL::to('leaveConversation/'.$conversation->id) }}" method="get">
+		<button type="submit" class="btn btn-danger btn" style="float:right;margin-top:16px;" onclick="return confirm('Are you sure you want to leave this conversation? You will not be able to view these messages or reply any longer.');">
+			<span class="glyphicon glyphicon-remove"></span> Leave Conversation
+		</button>
+	</form>
 	<div class="page-header" style="margin-top:-8px;">
 		<h2>{{{$conversation->name}}}</h2>
 	</div>

@@ -77,6 +77,7 @@ Route::group(array('before' => 'auth'), function() {
 	Route::get('composeConversation', 'ConversationController@composeConversation');
 	Route::get('messageUser/{id}', 'ConversationController@messageUser');
 	Route::get('showConversation/{id}', 'ConversationController@showConversation');
+	Route::get('leaveConversation/{id}', 'ConversationController@leaveConversation');
 	
 	// POSTYI$JROAFJDISA RABBLE
 	Route::post('createConversation', 'ConversationController@createConversation');

@@ -37,6 +37,34 @@ class ConversationController extends BaseController {
 			->with('conversation', Conversation::find($id));
 		}
 	}
+
+	public function leaveConversation($id) {
+
+		$result = DB::table('conversation_user')
+			->where('user_id','!=',Auth::user()->id)
+			->where('conversation_id','=',$id)
+			->get();
+
+		if (empty($result)){
+			DB::table('conversation_user')
+				->where('user_id','=',Auth::user()->id)
+				->where('conversation_id','=',$id)
+				->delete();
+			DB::table('conversations')
+				->where('id','=',$id)
+				->delete();
+			DB::table('notes')
+				->where('conversation_id','=',$id)
+				->delete();
+		}else{
+			DB::table('conversation_user')
+				->where('user_id','=',Auth::user()->id)
+				->where('conversation_id','=',$id)
+				->delete();
+		}
+
+		return Redirect::to('conversations');
+	}
 	
 	public function createConversation() {
 		
