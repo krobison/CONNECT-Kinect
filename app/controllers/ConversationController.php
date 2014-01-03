@@ -10,13 +10,30 @@ class ConversationController extends BaseController {
 	
 	public function composeConversation() {
 		return View::make('composeConversation')
-			->with('user', Auth::user());
+			->with('user', Auth::user())
+			->with('toUser','none');
+	}
+
+	public function messageUser($id){
+		return View::make('composeConversation')
+			->with('user', Auth::user())
+			->with('toUser',$id);
 	}
 	
 	public function showConversation($id) {
+		//ensure that you can only view conversations that 1)Exist, and 2)You are a part of
+		$result = DB::table('conversation_user')
+			->where('user_id','=',Auth::user()->id)
+			->where('conversation_id','=',$id)
+			->get();
+
+		if (empty($result)){
+			return Redirect::to('/');
+		}else{
 		return View::make('singleConversation')
 			->with('user', Auth::user())
 			->with('conversation', Conversation::find($id));
+		}
 	}
 	
 	public function createConversation() {
