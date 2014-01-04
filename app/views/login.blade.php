@@ -120,7 +120,6 @@
 					  .attr("transform", "translate(0," + h + ")")
 					  .call(xAxis);
 
-
 				// create left yAxis
 				var yAxisLeft = d3.svg.axis().scale(y).ticks(4).orient("left");
 				// Add the y-axis to the left
@@ -133,6 +132,16 @@
 				// do this AFTER the axes above so that the line is above the tick-lines
 				graph.append("svg:path").attr("d", line(data));
 				//<div class="video-container"><iframe width="560" height="315" src="//www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe></div>
+				graph.append("text")
+			        .attr("y", h + (m[1] / 2))
+			        .attr("x", w / 2)
+			        .text("Value");
+
+			    graph.append("text")
+			    	.attr("transform", "rotate(-90)")
+			        .attr("y", 0 - 60)
+			        .attr("x", (-h / 2) - (m[0] / 4))
+			        .text("Value2");
 			</script>
 		-->
 
