@@ -1,5 +1,9 @@
 @extends('common.master')
 
+@section('title')
+	CONVERSATIONS.
+@stop
+
 @section('content')
 	<form class="form-horizontal" role="form" action="{{ URL::to('composeConversation')}}" method="get">
 		<button type="submit" class="btn btn-default btn-lg" style="float:right;">
