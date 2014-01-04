@@ -11,67 +11,64 @@
 	
 </head>
 
-<body>
+<body style='background-color: #f5f5f5'>
 
+	{{-- Script Includes --}}
+	
 	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
+	{{ HTML::script('assets/js/jquery.stellar.min.js') }}
 	{{ HTML::script('assets/js/bootstrap.min.js') }}
 
-	{{-- Top Navigation Bar --}}
+	{{-- Top Bar --}}
+	<div class='container' style='position: relative; width: 100%; height: 125px'>
 	
-	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-    	<div class="container" style="max-width: 970px">
-  
-    		<div class="navbar-header">
-    			<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
-    				<span class="sr-only">Toggle navigation</span>
-    				<span class="icon-bar"></span>
-    				<span class="icon-bar"></span>
-    				<span class="icon-bar"></span>
-    			</button>
-    			<a class="navbar-brand" href="#">CS CONNECT</a>
-    		</div>
-    
-    		<div class="navbar-collapse bs-navbar-collapse collapse">
-    	
-    			<ul class="nav navbar-nav">
-        			
-        			{{-- Messages--}}
-        			
-        			<li>
-        				<a href="{{ URL::to('conversations') }}">
-        					<span class="glyphicon glyphicon-envelope"></span> Conversations
-        				</a>
-        			</li>        		
-					{{-- Notifications --}}
-        			
-    				<li>
-    					<a href="#"> 
-    						<span class="glyphicon glyphicon-exclamation-sign"></span> Notifications <i> Not Working </i>
-						</a>
-    				</li>
-    				
-    			</ul>
-      
-    				<ul class="nav navbar-nav navbar-right">
-    					<li>
-    						<a href="{{ URL::to('logout') }}">
-    							Logout {{{$user->email}}}  <span class="glyphicon glyphicon-log-out"></span>
-    						</a>
-    					</li>
-    				</ul>
-    	
-    		</div>
-    
-    	</div>
-    </div>
-	
-	<div class="container" style="padding-top: 70px; max-width: none !important; width: 970px">
-	
-		<div class="row">
+		{{-- Color Bar --}}
+		<div data-stellar-ratio='0.75' style='position: absolute; background-color: #3498db; top: 0px; height: 75px; left:0px; right:0px'>
+		
+			{{-- Title --}}
+			<div class='container' style='line-height: 75px; width: 970px'>
+				<p style='font-family: Geneva, Tahoma, Verdana, sans-serif; color: white; font-size: xx-large; text-shadow: 0px 1px 1px rgba(84, 84, 84, 0.5)'>@yield('title')</p>
+			</div>
+		
+			{{-- Stripe in Color Bar --}}
+			<div style="background-color: black; position: absolute; bottom: 0px; height: 5px; left: 0px; right: 0px; opacity: 0.05"></div>
+		</div>
+		
+		{{-- Task Bar --}}
+		<div style='position: absolute; top: 75px; height: 50; left:0px; right:0px; background-color: white;'>
+		
+			{{-- Content --}}
+		<div class="container" style='max-width: none !important; width: 970px; line-height: 50px; font-family: Geneva, Tahoma, Verdana, sans-serif; color: grey'>
+			<span style='float: left'>
+				{{ HTML::image('assets/img/csconnect.png', 'CS CONNECT', array('width' => '32px')) }} CS CONNECT	
+			</span>
 			
-			<div class="col-xs-3">
+			<a href='{{ URL::to('conversations') }}'>
+				<span style='float: left; padding-left: 25px'>
+					<span class='glyphicon glyphicon-envelope'></span> CONVERSATIONS
+				</span>
+			</a>
+			
+			<a href="{{ URL::to('logout') }}"><span style="float: right">LOGOUT</span></a>
+		</div>
+		
+			{{-- Stripe in Task Bar --}}
+			<div style="background-color: black; position: absolute; bottom: 0px; height: 1px; left: 0px; right: 0px; opacity: 0.1"></div>
+			
+		</div>
+	
+	</div>
+
+	{{-- Side Bar and Main Content --}}
+	<div class="container" style="width: 100%;">
+	
+		<div class="container" style=" max-width: none !important; width: 970px; background-color: #f5f5f5">
+			<div class="row">
+				
 				{{-- Side Bar --}}
-				<div class="list-group">
+				<div class="col-xs-3" style="padding-top: 20px;">
+					
+					<div class="list-group">
 					@if (substr(Request::path(),0,7) == "profile" || Request::path() == "editprofile")
 						<a href="{{ URL::to('profile/'.Auth::user()->id) }}" class="list-group-item active"><span class="glyphicon glyphicon-user"></span>   {{{ $user->first }}} {{{ $user->last }}}</a>
 					@else
@@ -143,30 +140,64 @@
 					@if (Request::path() == "search")
 						<a href="{{ URL::to('search') }}" class="list-group-item active"><span class="glyphicon glyphicon-search"></span>   Search</a>
 					@else
-						<a href="{{ URL::to('search') }}" class="list-group-item"><span class="glyphicon glyphicon-search"></span>   Search</a>
-					@endif
-						@yield('seeall')
-				</div>
-	
-			</div>
-			
-			<div class="span6" style="text-align:center">
-				@if(Session::has('message'))
-					<p> {{Session::get('message');}} </p>
-				@endif
-			</div>
-			
-			<div class="col-xs-9">
-				
-				{{-- Main Content Container --}}
-			
-				@yield('content')
-			
-			</div>
-			
-		</div>
-	
-	</div>
+                                                <a href="{{ URL::to('search') }}" class="list-group-item"><span class="glyphicon glyphicon-search"></span>   Search</a>
+                    @endif
+                            @yield('seeall')
+            </div>
+
+            </div>
+            
+            {{-- Main Content --}}
+            <div class="col-xs-9" style="background-color: white">
+                    @yield('content')
+            </div>
+            
+            </div>
+    </div>
+
+</div>
+
+
+        
+<style>
+        a {
+                color: grey;
+                -o-transition:.5s;
+                -ms-transition:.5s;
+                -moz-transition:.5s;
+                -webkit-transition:.5s;
+                transition:.5s;
+        } 
+        a:hover {
+                color: #3498db;
+        }
+</style>
+
+<script>
+        $(function() {
+                $.stellar();
+        });
+</script>
+
+{{-- 
+<style>
+        sticky {
+                position: absolute;
+                top: 0;
+        }
+</style>
+
+<script>
+        var $window = $(window),
+                $stickyElement = $('#the-sticky-div'),
+                elementTop = $stickyElement.offset().top;
+                
+        $window.scroll(function() {
+        console.log($stickyElement);
+        $stickyElement.toggleClass('sticky', $window.scrollTop() > elementTop);
+        });
+</script>
+--}}
 
 </body>
 </html>

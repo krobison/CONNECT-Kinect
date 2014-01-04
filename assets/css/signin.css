@@ -1,26 +1,23 @@
 html, body{
-  background-color: #FFFFFF;
+  background-image: url("../img/background.png");
 }
 
 /*
 ##################Panel Style#############
 */
 #leftPanel{
-    width:30%;
-    margin-left:15%;
+    width:50%;
+    margin-left:25%;
     min-width:256px;
     min-height:600px;
     text-align:center;
     padding:32px;
+    margin-top: 0px;
 }
 
-#rightPanel{
-    padding:32px;
-    width:30%;
-    left:10%;
-    margin-right:15%;
-    min-width:560px;
-    float:right;
+#signinpanel{
+    background-color:rgba(255,255,255,0.1);
+    border: 4px rgba(255,255,255,0.1) solid;
 }
 
 
@@ -28,12 +25,18 @@ html, body{
 ###################Button Style###########
 */
 .btn-primary { 
-	height:42px;
+	height:72px;
 	padding:0px;
+  width:100%;
+  background-color:rbg(30,60,100);
+}
+
+.btn-primary:hover{
+  background-color:rbg(00,30,70);
 }
 
 .button-div{
-    width:75%;
+    width:100%;
     margin:auto;
 }
 
@@ -44,13 +47,18 @@ html, body{
 .page-header{
 	margin:auto;
 	min-width:1050px;
-	background-color:#CCCCCC;
 	text-align:center;
+  margin-bottom:-2px;
 }
 
 /*
 #################Form Style#################
 */
+
+#welcome{
+  font-family:"times new roman";
+  color:#222266;
+}
 
 .form-signin .checkbox {
   font-weight: normal;
@@ -59,6 +67,8 @@ html, body{
   position: relative;
   font-size: 16px;
   height: auto;
+  width:50%;
+  left:25%;
 
   padding: 10px;
   -webkit-box-sizing: border-box;
@@ -110,7 +120,7 @@ html, body{
 
 #footer {
   height: 70px;
-  background-color: #CCCCCC;
+  background-color: #FFFFFF;
   text-align:center;
   margin-top: -50px;
 }

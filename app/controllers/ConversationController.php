@@ -37,6 +37,61 @@ class ConversationController extends BaseController {
 			->with('conversation', Conversation::find($id));
 		}
 	}
+
+	public function leaveConversation($id) {
+
+		$result = DB::table('conversation_user')
+			->where('user_id','!=',Auth::user()->id)
+			->where('conversation_id','=',$id)
+			->get();
+
+		if (empty($result)){
+			DB::table('conversation_user')
+				->where('user_id','=',Auth::user()->id)
+				->where('conversation_id','=',$id)
+				->delete();
+			DB::table('conversations')
+				->where('id','=',$id)
+				->delete();
+			DB::table('notes')
+				->where('conversation_id','=',$id)
+				->delete();
+		}else{
+			DB::table('conversation_user')
+				->where('user_id','=',Auth::user()->id)
+				->where('conversation_id','=',$id)
+				->delete();
+		}
+
+		return Redirect::to('conversations');
+	}
+
+	public function removeUser($userId,$conversationId) {
+
+		$conversation = DB::table('conversations')->where('id','=',$conversationId)->first();
+
+		if($conversation->owner == Auth::user()->id){
+
+			DB::table('conversation_user')
+				->where('user_id','=',$userId)
+				->where('conversation_id','=',$conversationId)
+				->delete();
+
+		}
+
+
+		return Redirect::to('showConversation/'.$conversationId);
+	}
+
+	public function addUsers($conversationId){
+		$conversation = Conversation::find($conversationId);
+		if (Auth::user()->id == $conversation->owner){
+			$usersToAddRaw = Input::get('users');
+			$usersToAdd = array_map('intval', $usersToAddRaw);
+			$conversation->users()->attach($usersToAdd);
+		}
+		return Redirect::to('showConversation/'.$conversationId);
+	}
 	
 	public function createConversation() {
 		
@@ -80,24 +135,26 @@ class ConversationController extends BaseController {
 	}
 	
 	public function addToConversation() {
-		$note = new Note;
+		//PURIFY
+			$pureconfig = HTMLPurifier_Config::createDefault();
+			$purifier = new HTMLPurifier($pureconfig);
+			$content = $purifier->purify(Input::get('content'));
 
-			//PURIFY
-				$pureconfig = HTMLPurifier_Config::createDefault();
-				$purifier = new HTMLPurifier($pureconfig);
-				$content = $purifier->purify(Input::get('content'));
-		
-		$note->content = $content;
-		$note->user_id = Auth::user()->id;
-		
-		$note->save();
-		
 		$conversation = Conversation::find(Input::get('conversationID'));
-		
-		// attach note to conversation
-		$note->conversation_id = $conversation->id;
-		
-		$note->save();	
+
+		if (!empty($content)){		
+			$note = new Note;
+			
+			$note->content = $content;
+			$note->user_id = Auth::user()->id;
+			
+			$note->save();
+			
+			// attach note to conversation
+			$note->conversation_id = $conversation->id;
+			
+			$note->save();	
+		}
 		
 		return Redirect::to('showConversation/'.$conversation->id);
 

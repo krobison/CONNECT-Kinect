@@ -7,6 +7,10 @@
 	{{ HTML::script('assets/js/d3.min.js') }}
 @stop
 
+@section('title')
+	COMMUNITY.
+@stop
+
 @section('content')
 	<h2>Community Tool</h2>
 	<p>

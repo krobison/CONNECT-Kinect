@@ -5,6 +5,10 @@
 	{{ HTML::style('assets/css/select2.css') }}
 @stop
 
+@section('title')
+	CS PROJECTS.
+@stop
+
 @section('content')
 	<h2>CS Projects</h2>
 	<p>

@@ -5,6 +5,10 @@
 	{{ HTML::style('assets/css/select2.css') }}
 @stop
 
+@section('title')
+	CS QUESTION.
+@stop
+
 @section('content')
 	@if ($post->postable_type == 'PostQuestion')
 		<h1>CS Question of the Week</h1>
@@ -29,6 +33,8 @@
 		<h1>Help Offer</h1>
 	@elseif ($post->postable_type == 'PostHelpRequest')
 		<h1>Help Request</h1>
+	@elseif ($post->postable_type == 'PostFeedback')
+		<h1>Feedback</h1>
 	@else
 		<h1>Post Details</h1>
 	@endif

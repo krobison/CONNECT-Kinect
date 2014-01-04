@@ -50,6 +50,8 @@
 		
 </head>
 
+{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
+
 <body>
 	<div class="page-header">
 		{{ HTML::image('assets/img/Connect_Logo.png') }}
@@ -60,12 +62,13 @@
 			<p> {{Session::get('message');}} </p>
 		@endif
 		</div>	
+		<!--
 		<div id="rightPanel">
 		
 			<h3> CS Connect Accounts </h3>
 			Time: {{{date('Y-m-d H:i:s',time() - 60*60*24*7*2)}}} to Time: {{{date('Y-m-d H:i:s')}}}
 			<br>
-
+			
 			<div id="graph" class="aGraph" ></div>
 			<script>
 				// define dimensions of graph
@@ -117,7 +120,6 @@
 					  .attr("transform", "translate(0," + h + ")")
 					  .call(xAxis);
 
-
 				// create left yAxis
 				var yAxisLeft = d3.svg.axis().scale(y).ticks(4).orient("left");
 				// Add the y-axis to the left
@@ -130,47 +132,50 @@
 				// do this AFTER the axes above so that the line is above the tick-lines
 				graph.append("svg:path").attr("d", line(data));
 				//<div class="video-container"><iframe width="560" height="315" src="//www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe></div>
+				graph.append("text")
+			        .attr("y", h + (m[1] / 2))
+			        .attr("x", w / 2)
+			        .text("Value");
+
+			    graph.append("text")
+			    	.attr("transform", "rotate(-90)")
+			        .attr("y", 0 - 60)
+			        .attr("x", (-h / 2) - (m[0] / 4))
+			        .text("Value2");
 			</script>
-		
-			
+		-->
+
 		</div>
 		<div id="leftPanel">
-			
-			{{ Form::open(array('url' => 'loginuser','class' => 'form-signin')) }}
-				
-				<h2 class="form-signin-heading" id="welcome">Welcome to CS CONNECT!</h2>
-				
-				{{ Form::text('email', '', array('class' => 'form-control','placeholder' => 'Email','autofocus' => 'true')) }}
-				{{ Form::password('password', array('class' => 'form-control','placeholder' => 'Password')) }}
-													
-				<label class="checkbox" style="text-align:left;">
-					<input type="checkbox" value="remember-me"> Remember me <i> Not Working </i>
-				</label>
-				<div style="text-align:left;"><a href="{{asset('password/reset')}}"><i>I forgot my password</i></a><br><br></div>
-				
-				<div class="button-div">
-					<button type="submit" class="btn btn-lg btn-primary btn-block">
-						<span class="glyphicon glyphicon-log-in"></span> Sign In
-					</button>
-				</div>
+			<button type="button" class="btn btn-lg btn-primary btn-block" id="enter">
+				<span class="glyphicon glyphicon"></span> Enter
+			</button>
+			<div id="signinpanel" class="panel panel-default">
+				<script>$('#signinpanel').toggle(200);</script>
+				{{ Form::open(array('url' => 'loginuser','class' => 'form-signin')) }}
 					
-			{{ Form::close() }}
-				
-			<hr>
-
-			{{ Form::open(array('url' => 'signup','method' => 'get','class' => 'form-signin')) }}
-									
-				<h2 class="form-signin-heading" id="registernow">Register Today!</h2>
-			
-				<div class="button-div">
-					<button type="submit" class="btn btn-lg btn-primary btn-block">
-						<span class="glyphicon glyphicon-user"></span> Create Account
-					</button>
-				</div>
-				
-				<br>
-				
-			{{ Form::close() }}
+					{{ Form::text('email', '', array('class' => 'form-control','placeholder' => 'Email','autofocus' => 'true')) }}
+					{{ Form::password('password', array('class' => 'form-control','placeholder' => 'Password')) }}
+														
+					<label class="checkbox" style="text-align:left;">
+						<input type="checkbox" value="remember-me"> Remember me <i> Not Working </i>
+					</label>
+					<div style="text-align:left;"><a href="{{asset('password/reset')}}"><i>I forgot my password</i></a><br><br></div>
+						
+					<div class="button-div">
+						<button type="submit" class="btn btn-lg btn-primary btn-block">
+							<span class="glyphicon glyphicon-log-in"></span> Sign In
+						</button>
+					</div>
+				{{ Form::close() }}
+			</div><br><br>
+				{{ Form::open(array('url' => 'signup','method' => 'get','class' => 'form-signin')) }}
+					<div class="button-div">
+						<button type="submit" class="btn btn-lg btn-primary btn-block">
+							<span class="glyphicon glyphicon-user"></span> Create Account
+						</button>
+					</div>			
+				{{ Form::close() }}
 		</div>
 		<div id="footer">
 			<div class="container">
@@ -182,6 +187,17 @@
 		</div>
 	</div>
 	<!-- Loading all scripts at the end for performance-->
-	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
+	<script>
+		// Hide and show post divs on button press
+
+		$('#enter').click(function() {
+		$('#signinpanel').toggle(200);
+		});
+
+		$('#signup').click(function() {
+		$('#registerpanel').toggle(200);
+		});
+
+	</script>
 </body>
 </html>
