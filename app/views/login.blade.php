@@ -53,9 +53,6 @@
 {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
 
 <body>
-	<div class="page-header">
-		{{ HTML::image('assets/img/Connect_Logo.png') }}
-	</div>
 	<div class="content">
 		<div class="span6" style="text-align:center">
 		@if(Session::has('message'))	
@@ -146,36 +143,37 @@
 		-->
 
 		</div>
-		<div id="leftPanel">
-			<button type="button" class="btn btn-lg btn-primary btn-block" id="enter">
-				<span class="glyphicon glyphicon"></span> Enter
+		<div id="header"> 
+		{{ HTML::image('assets/img/Connect_Logo.png' , '', array('class' => 'logo')) }}
+			<button type="button" class="btn btn-lg btn-primary btn-block" id="enter" style="float:left;margin-left:100px;">
+				 Enter
 			</button>
-			<div id="signinpanel" class="panel panel-default">
-				<script>$('#signinpanel').toggle(200);</script>
+			{{ Form::open(array('url' => 'signup','method' => 'get','class' => 'form-signin')) }}
+					<div class="button-div">
+						<button type="submit" class="btn btn-lg btn-primary btn-block" style="float:right;margin-right:100px;">
+							<span class="glyphicon glyphicon-user"></span> Create Account
+						</button>
+					</div>			
+				{{ Form::close() }}
+			<div id="signinpanel" class="panel panel-default" style="margin-top:100px;"><br><br>
+				<script>$('#signinpanel').toggle(100);</script>
 				{{ Form::open(array('url' => 'loginuser','class' => 'form-signin')) }}
 					
 					{{ Form::text('email', '', array('class' => 'form-control','placeholder' => 'Email','autofocus' => 'true')) }}
 					{{ Form::password('password', array('class' => 'form-control','placeholder' => 'Password')) }}
 														
-					<label class="checkbox" style="text-align:left;">
+					<!--<label class="checkbox" style="text-align:left;">
 						<input type="checkbox" value="remember-me"> Remember me <i> Not Working </i>
-					</label>
-					<div style="text-align:left;"><a href="{{asset('password/reset')}}"><i>I forgot my password</i></a><br><br></div>
+					</label>-->
+					<a href="{{asset('password/reset')}}" style="color:red;"><i>I forgot my password</i></a><br><br>
 						
 					<div class="button-div">
 						<button type="submit" class="btn btn-lg btn-primary btn-block">
 							<span class="glyphicon glyphicon-log-in"></span> Sign In
 						</button>
-					</div>
+					</div><br><br>
 				{{ Form::close() }}
-			</div><br><br>
-				{{ Form::open(array('url' => 'signup','method' => 'get','class' => 'form-signin')) }}
-					<div class="button-div">
-						<button type="submit" class="btn btn-lg btn-primary btn-block">
-							<span class="glyphicon glyphicon-user"></span> Create Account
-						</button>
-					</div>			
-				{{ Form::close() }}
+			</div>
 		</div>
 		<div id="footer">
 			<div class="container">
