@@ -140,64 +140,64 @@
 					@if (Request::path() == "search")
 						<a href="{{ URL::to('search') }}" class="list-group-item active"><span class="glyphicon glyphicon-search"></span>   Search</a>
 					@else
-						<a href="{{ URL::to('search') }}" class="list-group-item"><span class="glyphicon glyphicon-search"></span>   Search</a>
-					@endif
-						@yield('seeall')
-				</div>
-		
-				</div>
-				
-				{{-- Main Content --}}
-				<div class="col-xs-9" style="background-color: white">
-					@yield('content')
-				</div>
-				
-			</div>
-		</div>
-	
-	</div>
-	
+                                                <a href="{{ URL::to('search') }}" class="list-group-item"><span class="glyphicon glyphicon-search"></span>   Search</a>
+                    @endif
+                            @yield('seeall')
+            </div>
 
-	
-	<style>
-		a {
-			color: grey;
-			-o-transition:.5s;
-			-ms-transition:.5s;
-			-moz-transition:.5s;
-			-webkit-transition:.5s;
-			transition:.5s;
-		} 
-		a:hover {
-			color: #3498db;
-		}
-	</style>
-	
-	<script>
-		$(function() {
-			$.stellar();
-		});
-	</script>
-	
-	{{-- 
-	<style>
-		sticky {
-			position: absolute;
-			top: 0;
-		}
-	</style>
-	
-	<script>
-		var $window = $(window),
-			$stickyElement = $('#the-sticky-div'),
-			elementTop = $stickyElement.offset().top;
-			
-		$window.scroll(function() {
-        	console.log($stickyElement);
-        	$stickyElement.toggleClass('sticky', $window.scrollTop() > elementTop);
-		});
-	</script>
-	--}}
+            </div>
+            
+            {{-- Main Content --}}
+            <div class="col-xs-9" style="background-color: white">
+                    @yield('content')
+            </div>
+            
+            </div>
+    </div>
+
+</div>
+
+
+        
+<style>
+        a {
+                color: grey;
+                -o-transition:.5s;
+                -ms-transition:.5s;
+                -moz-transition:.5s;
+                -webkit-transition:.5s;
+                transition:.5s;
+        } 
+        a:hover {
+                color: #3498db;
+        }
+</style>
+
+<script>
+        $(function() {
+                $.stellar();
+        });
+</script>
+
+{{-- 
+<style>
+        sticky {
+                position: absolute;
+                top: 0;
+        }
+</style>
+
+<script>
+        var $window = $(window),
+                $stickyElement = $('#the-sticky-div'),
+                elementTop = $stickyElement.offset().top;
+                
+        $window.scroll(function() {
+        console.log($stickyElement);
+        $stickyElement.toggleClass('sticky', $window.scrollTop() > elementTop);
+        });
+</script>
+--}}
 
 </body>
 </html>
