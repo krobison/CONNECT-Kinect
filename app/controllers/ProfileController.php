@@ -25,11 +25,22 @@ class ProfileController extends BaseController {
 				->get();
 		}
 
+		$userTags = "";
+				$tagTable = DB::table('hashtag_user')
+		 	->where('user_id','=',$id);
+			$tag_ids = $tagTable->lists('hashtag_id');
+		if (!empty($tag_ids)){
+			$userTags = DB::table('hashtags')
+				->whereIn('id',$tag_ids)
+				->get();
+		}
+		
 		return View::make('profile')
 			->with('user', Auth::user())
 			->with('currentuser', User::find($id))
 			->with('studentClasses',$studentClasses)
 			->with('teacherClasses',$teacherClasses)
+			->with('userTags',$userTags)
 			->with('posts', 
 				Post::orderBy('created_at', 'DESC')
 					->where('user_id','=',$id)
