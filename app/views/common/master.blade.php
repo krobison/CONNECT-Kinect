@@ -11,7 +11,7 @@
 	
 </head>
 
-<body>
+<body style='background-color: #f5f5f5'>
 
 	{{-- Script Includes --}}
 	
@@ -20,13 +20,13 @@
 	{{ HTML::script('assets/js/bootstrap.min.js') }}
 
 	{{-- Top Bar --}}
-	<div class='container' style='position: relative; width: 100%; height: 174px'>
+	<div class='container' style='position: relative; width: 100%; height: 125px'>
 	
 		{{-- Color Bar --}}
-		<div data-stellar-ratio='0.75' style='position: absolute; background-color: #3498db; top: 0px; height: 100px; left:0px; right:0px'>
+		<div data-stellar-ratio='0.75' style='position: absolute; background-color: #3498db; top: 0px; height: 75px; left:0px; right:0px'>
 		
 			{{-- Title --}}
-			<div class='container' style='line-height: 100px; width: 970px'>
+			<div class='container' style='line-height: 75px; width: 970px'>
 				<p style='font-family: Geneva, Tahoma, Verdana, sans-serif; color: white; font-size: xx-large; text-shadow: 0px 1px 1px rgba(84, 84, 84, 0.5)'>@yield('title')</p>
 			</div>
 		
@@ -35,26 +35,32 @@
 		</div>
 		
 		{{-- Task Bar --}}
-		<div style='position: absolute; top: 100px; height: 74; left:0px; right:0px'>
-		
-			{{-- Background With Opacity --}}
-			<div class='container' style='background-color: white; opacity: 0.5;'></div>
+		<div style='position: absolute; top: 75px; height: 50; left:0px; right:0px; background-color: white;'>
 		
 			{{-- Content --}}
-		<div class="container" style='max-width: none !important; width: 970px; line-height: 74px; font-family: Geneva, Tahoma, Verdana, sans-serif; color: grey'>
-			<span style='float: left'>{{ HTML::image('assets/img/csconnect.png', 'CS CONNECT', array('width' => '32px')) }} CSCONNECT</span>
+		<div class="container" style='max-width: none !important; width: 970px; line-height: 50px; font-family: Geneva, Tahoma, Verdana, sans-serif; color: grey'>
+			<span style='float: left'>
+				{{ HTML::image('assets/img/csconnect.png', 'CS CONNECT', array('width' => '32px')) }} CS CONNECT	
+			</span>
+			
+			<a href='{{ URL::to('conversations') }}'>
+				<span style='float: left; padding-left: 25px'>
+					<span class='glyphicon glyphicon-envelope'></span> CONVERSATIONS
+				</span>
+			</a>
 			
 			<a href="{{ URL::to('logout') }}"><span style="float: right">LOGOUT</span></a>
 		</div>
 		
 			{{-- Stripe in Task Bar --}}
 			<div style="background-color: black; position: absolute; bottom: 0px; height: 1px; left: 0px; right: 0px; opacity: 0.1"></div>
+			
 		</div>
 	
 	</div>
 
 	{{-- Side Bar and Main Content --}}
-	<div class="container" style="width: 100%; background-color: #f5f5f5">
+	<div class="container" style="width: 100%;">
 	
 		<div class="container" style=" max-width: none !important; width: 970px; background-color: #f5f5f5">
 			<div class="row">
