@@ -162,4 +162,26 @@ class PostController extends BaseController {
 		//return Redirect::back()->with('message', '<div class="alert alert-success"> Your post has been successfully created. </div>');
 	}
 	
+	public function searchPosts() {
+		$hashtags = Input::get('hashtags');
+		$content = Input::get('content');
+		$sort = Input::get('sort');
+		
+		$query = DB::table('posts');
+		
+		if(!empty($hashtags)) {
+			$query->leftJoin('hashtag_post', 'posts.id', '=', 'hashtag_post.post_id')->whereIn('hashtag_post.hashtag_id', $hashtags);
+		}
+		
+		if($content != '') {
+			$query->where('content', 'like', '%'.$content.'%');
+		}
+		
+		$posts = $query->get();
+		
+		return View::make('newsfeed')
+			->with('user', Auth::user())
+			->with('posts', $posts);
+		
+	}
 }
