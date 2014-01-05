@@ -396,7 +396,7 @@ class UserController extends BaseController {
 	}
 	
 	public function deleteNotification() {
-		$data = Input::all();
-		return;
+		$t = Input::all(); 
+		return $t;
 	}
 }

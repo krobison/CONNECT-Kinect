@@ -16,7 +16,6 @@
 	{{-- Script Includes --}}
 	
 	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
-	{{ HTML::script('assets/js/jquery.stellar.min.js') }}
 	{{ HTML::script('assets/js/bootstrap.min.js') }}
 
 	{{-- Top Bar --}}
@@ -47,11 +46,11 @@
 				<ul class="dropdown-menu" role="menu">
 					<li role="presentation" class="dropdown-header">Conversation Notifications</li>
 					@foreach(Auth::user()->notifications()->where('type','=','conversation')->get() as $notification) </li>
-						<li> {{ View::make('common.notification')->with('notification', $notification) }}
+						{{ View::make('common.notification')->with('notification', $notification) }}
 					@endforeach
 					<li role="presentation" class="dropdown-header">Tag Notifications</li>
 					@foreach(Auth::user()->notifications()->where('type','=','tag')->get() as $notification)
-						<li> {{ View::make('common.notification')->with('notification', $notification) }} </li>
+						{{ View::make('common.notification')->with('notification', $notification) }}
 					@endforeach
 				</ul>
 			</div>
@@ -176,46 +175,42 @@
 		e.stopPropagation();
 	});
 </script>
+
+<script>
+	$( ".close" ).click(function(event) {
+		event.stopPropagation();
+		console.log($(this));
+		$( event.target ).closest( ".close" ).html('{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}');
+		
+		$.ajax({
+			url: "{{{URL::to('deleteNotification')}}}",
+			context: document.body,
+			data: {"data": 'demo data'},
+			dataType: 'json',
+			type: 'POST',
+			success: function (res) {
+				$( event.target ).closest( ".close" ).html("&times;");
+				$( event.target ).closest( "li" ).hide('slow').remove();
+				console.log(res);
+			}
+		});
+	});
+</script>
         
 <style>
-        a {
-                color: grey;
-                -o-transition:.5s;
-                -ms-transition:.5s;
-                -moz-transition:.5s;
-                -webkit-transition:.5s;
-                transition:.5s;
-        } 
-        a:hover {
-                color: #3498db;
-        }
+	a {
+			color: grey;
+			-o-transition:.5s;
+			-ms-transition:.5s;
+			-moz-transition:.5s;
+			-webkit-transition:.5s;
+			transition:.5s;
+	} 
+	a:hover {
+			color: #3498db;
+	}
 </style>
 
-<script>
-        $(function() {
-                $.stellar();
-        });
-</script>
-
-{{-- 
-<style>
-        sticky {
-                position: absolute;
-                top: 0;
-        }
-</style>
-
-<script>
-        var $window = $(window),
-                $stickyElement = $('#the-sticky-div'),
-                elementTop = $stickyElement.offset().top;
-                
-        $window.scroll(function() {
-        console.log($stickyElement);
-        $stickyElement.toggleClass('sticky', $window.scrollTop() > elementTop);
-        });
-</script>
---}}
 
 </body>
 </html>
