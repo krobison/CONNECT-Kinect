@@ -65,7 +65,7 @@ class AdminController extends BaseController {
 		$post_P = PostProject::find($post->postable_id);
 		$post_P->approved = '1';
 		$post_P->save();
-		$post->save();
+		$post->touch();
 		
 		return Redirect::back()->with('message', 'You have successfully approved the project.');
 	}

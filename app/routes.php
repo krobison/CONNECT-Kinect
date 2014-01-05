@@ -64,6 +64,7 @@ Route::group(array('before' => 'auth'), function() {
 	
 	// GET post
 	Route::get('singlepost/{id}', 'PostController@showSinglePost');
+	Route::get('searchposts', 'PostController@searchPosts');
 	
 	// POST post
 	Route::post('createComment', 'PostController@createComment');
