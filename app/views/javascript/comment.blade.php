@@ -11,7 +11,7 @@
 
 	    		/* create new textarea element with additional attributes */
 	    		var ta = $("<textarea/>", {
-	        		"class": "edit",
+	        		"class": "edit form-control",
 	        		"id": "editbox{{$comment->id}}",
 	        		"text": t,
 	        		"css": {
