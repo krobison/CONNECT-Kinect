@@ -239,11 +239,27 @@ class PostController extends BaseController {
 			$query->orderBy('upvotes', 'DESC');
 		}
 		
-		$posts = $query->orderBy('created_at', 'DESC')->get();
+		$posts = $query->orderBy('id', 'DESC')->take(5)->get();
 		
 		return View::make('newsfeed')
 			->with('user', Auth::user())
 			->with('posts', $posts);
 		
+	}
+	
+	public function loadMorePosts() {
+	
+		
+	
+		$lastPostId = Input::get('lastpost');
+		
+		$posts = DB::table('posts')->where('id', '<', $lastPostId)->orderBy('id', 'DESC')->take(5)->get();
+		if(empty($posts)) {
+		return;
+		}
+		return View::make('loadmoreposts')
+		->with('user', Auth::user())
+		->with('posts', $posts);
+	
 	}
 }

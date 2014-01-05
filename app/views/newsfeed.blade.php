@@ -78,7 +78,7 @@
 	</div>
 	
 	<!-- Generate all recent user posts -->
-	
+	<div id="postswrapper">
 	@foreach ($posts as $postid)
 		<?php 
 		$post = Post::find($postid->id)
@@ -86,7 +86,12 @@
 		@if($post->postable_type != 'PostProject' || $post->postable->approved == '1')
 			{{ View::make('common.newsfeedPost')->with('post', $post) }}
 		@endif
+		<div class="postitem" id="{{$post->id}}"></div>
 	@endforeach
+	</div>
+	<button type="button" id="loadmorebutton" class="btn btn-default">Load more... <i> Not Working </i></button>
+	
+	
 	
 	<!-- Loading all scripts at the end for performance -->
 	<script>
@@ -103,8 +108,31 @@
 		$(document).ready(function() { 
 			$(".select2-container-hashtagsearch").select2({
 				placeholder: "Select Hashtags"
-			});		
+			});
 		});
+		$(document).ready(function() {
+		var ID = $(".postitem:last").attr("id");
+            $("#loadmorebutton").click(function (){
+               $('#loadmorebutton').html('Need a loading gif'); 
+                $.ajax({
+					url: '{{ URL::to('loadmoreposts') }}',
+                   data: "lastpost="+ID,
+					type: 'POST',
+					dataType: 'html',
+					success: function(data){
+                        if(data){
+                            $("#postswrapper").append(data);
+                            ID = $(".postitem:last").attr("id");
+                        }else{
+                            $('#loadmorebutton').replaceWith('<center>No more posts to show.</center>');
+                        }
+                    }
+					
+                });
+            });
+			
+		});
+	
 
 	</script>
 @stop

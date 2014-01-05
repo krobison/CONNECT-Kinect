@@ -73,6 +73,7 @@ Route::group(array('before' => 'auth'), function() {
 	Route::post('deleteusercomment', 'PostController@deleteUserComment');
 	Route::post('saveeditcomment', 'PostController@saveEditComment');
 	Route::post('giveFeedback', 'PostController@giveFeedback');
+	Route::post('loadmoreposts', 'PostController@loadMorePosts');
 	
 	// GET conversations
 	Route::get('conversations', 'ConversationController@showConversations');
