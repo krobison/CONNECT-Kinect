@@ -5,9 +5,8 @@ margin-left: auto;
 margin-right: auto;
 }
 
-html, body {
-  background-color: #EEEEEE;
-  height:100%;
+html, body{
+  background: url("../img/background.png") no-repeat center center fixed;
 }
 
 .scroll {
@@ -19,10 +18,9 @@ html, body {
 	margin-bottom: 10px; 
 }
 
-.page-header{
+.logoheader{
 	margin:auto;
 	min-width:1050px;
-	background-color:#BBBBBB;
 	text-align:center;
 }
 
@@ -41,7 +39,7 @@ html, body {
 }
 
 .requiredtext{
-	color:#FF0000;
+	color:#BB0000;
 	font-size:11px;
 }
 
@@ -51,4 +49,9 @@ html, body {
 
 #status{
 	text-align:center;
+}
+
+#submit-button{
+	width:500px;
+	margin:auto;
 }
