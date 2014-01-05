@@ -1,4 +1,4 @@
-<li class="notification"> 
+<li class="notification" data="{{{$notification->id}}}"> 
 	<div class="row" style="width:500px">
 		<a href="{{{URL::to('singlepost')}}}/{{{$notification->origin_id}}}">
 			<div class="col-md-1 picture">

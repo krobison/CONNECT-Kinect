@@ -68,7 +68,7 @@
 						<span class='glyphicon glyphicon-exclamation-sign'></span> Notifications 
 					
 						<span style='float:right'>
-							<span class="label label-danger"> {{ Auth::user()->notifications->count() }}</span>
+							<span id="not-count" class="label label-danger"> {{ Auth::user()->notifications->count() }}</span>
 							<span class="caret"></span>
 						</span>
 					</a>
@@ -162,21 +162,24 @@
 <script>
 	$( ".close" ).click(function(event) {
 		event.stopPropagation();
-		console.log($(this));
 		$( event.target ).closest( ".close" ).html('{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}');
-		
+		var not_id = $( event.target ).closest(".notification").attr('data');
+
 		$.ajax({
 			url: "{{{URL::to('deleteNotification')}}}",
 			context: document.body,
-			data: {"data": 'demo data'},
+			data: {"data": not_id},
 			dataType: 'json',
 			type: 'POST',
 			success: function (res) {
-				$( event.target ).closest( ".close" ).html("&times;");
-				$( event.target ).closest( "li" ).hide('slow').remove();
-				console.log(res);
+				if(res != "0") {
+					$( event.target ).closest( "li" ).hide('slow').remove();
+					$("#not-count").html($("#not-count").html()-1);
+					console.log(res);
+				}
 			}
 		});
+
 	});
 </script>
         
