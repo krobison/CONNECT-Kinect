@@ -46,6 +46,8 @@
 				
 				{{-- Side Bar --}}
 				<div class="col-xs-3" style="padding-top: 20px;">
+				
+				<div class='affix' style='width: 210px'>
 					
 					<div class="list-group">
 					{{-- Profile --}}
@@ -64,24 +66,38 @@
 					
 					{{-- Notifications --}}
 					<div class='dropdown'>
-					<a href='#' class='list-group-item' data-toggle='dropdown'>
+					@if (Auth::user()->notifications->count() >0)
+						<a href='#' class='list-group-item' data-toggle='dropdown'>
+					@else
+						<a href='#' class='list-group-item'>
+					@endif
 						<span class='glyphicon glyphicon-exclamation-sign'></span> Notifications 
 					
 						<span style='float:right'>
-							<span class="label label-danger"> {{ Auth::user()->notifications->count() }}</span>
-							<span class="caret"></span>
+							<span id="not-count" class="label label-danger"> {{ Auth::user()->notifications->count() }}</span>
+							@if (Auth::user()->notifications->count() >0)
+								<span class="caret"></span>
+							@endif
 						</span>
 					</a>
-					<ul class="dropdown-menu" role="menu">
-						<li role="presentation" class="dropdown-header">Conversation Notifications</li>
-						@foreach(Auth::user()->notifications()->where('type','=','conversation')->get() as $notification) </li>
-							{{ View::make('common.notification')->with('notification', $notification) }}
-							@endforeach
+					@if (Auth::user()->notifications->count() >0)
+						<ul class="dropdown-menu" role="menu">
+							<li role="presentation" class="dropdown-header">Conversation Notifications</li>
+								@foreach(Auth::user()->notifications()->where('type','=','conversationCreated')->get() as $notification) </li>
+									{{ View::make('common.notification')->with('notification', $notification) }}
+								@endforeach
+								@foreach(Auth::user()->notifications()->where('type','=','conversationAdd')->get() as $notification) </li>
+									{{ View::make('common.notification')->with('notification', $notification) }}
+								@endforeach
+								@foreach(Auth::user()->notifications()->where('type','=','conversationReply')->get() as $notification) </li>
+									{{ View::make('common.notification')->with('notification', $notification) }}
+								@endforeach
 							<li role="presentation" class="dropdown-header">Tag Notifications</li>
-							@foreach(Auth::user()->notifications()->where('type','=','tag')->get() as $notification)
-							{{ View::make('common.notification')->with('notification', $notification) }}
-						@endforeach
-					</ul>
+								@foreach(Auth::user()->notifications()->where('type','=','tag')->get() as $notification)
+									{{ View::make('common.notification')->with('notification', $notification) }}
+								@endforeach
+						</ul>
+					@endif
 					</div>
 					
 					{{-- Break --}}
@@ -139,6 +155,8 @@
                     {{-- Moar --}}
                     @yield('seeall')
 					</div>
+					
+					</div>
 
             </div>
             
@@ -162,21 +180,24 @@
 <script>
 	$( ".close" ).click(function(event) {
 		event.stopPropagation();
-		console.log($(this));
 		$( event.target ).closest( ".close" ).html('{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}');
-		
+		var not_id = $( event.target ).closest(".notification").attr('data');
+
 		$.ajax({
 			url: "{{{URL::to('deleteNotification')}}}",
 			context: document.body,
-			data: {"data": 'demo data'},
+			data: {"data": not_id},
 			dataType: 'json',
 			type: 'POST',
 			success: function (res) {
-				$( event.target ).closest( ".close" ).html("&times;");
-				$( event.target ).closest( "li" ).hide('slow').remove();
-				console.log(res);
+				if(res != "0") {
+					$( event.target ).closest( "li" ).hide('slow').remove();
+					$("#not-count").html($("#not-count").html()-1);
+					console.log(res);
+				}
 			}
 		});
+
 	});
 </script>
         
@@ -186,13 +207,4 @@
 			-ms-transition:.5s;
 			-moz-transition:.5s;
 			-webkit-transition:.5s;
-			transition:.5s;
-	} 
-	a:hover {
-			color: #2980b9;
-	}
-</style>
-
-
-</body>
-</html>
+		

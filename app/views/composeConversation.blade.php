@@ -4,9 +4,14 @@
 	{{ HTML::style('assets/css/select2.css') }}
 @stop
 
+@section('title')
+	CONVERSATION.
+@stop
+
 @section('content')
 
 	{{ Form::open(array('url' => 'createConversation', 'method' => 'POST')) }}
+	<br>
 		{{ Form::label('from', 'From') }} {{{ $user->first }}} {{{ $user->last }}}
 		<div style="display: none;">
 			<input type="text" id="from" name="from" value="{{$user->id}}"/>

@@ -90,7 +90,51 @@ class ConversationController extends BaseController {
 			$usersToAdd = array_map('intval', $usersToAddRaw);
 			$conversation->users()->attach($usersToAdd);
 		}
+
+		$this->addConversationAddNotifications($usersToAdd,$conversationId);
+
 		return Redirect::to('showConversation/'.$conversationId);
+	}
+
+	public function addConversationCreatedNotifications($users,$cId){
+		foreach ($users as $user) {
+			$user = User::find($user);
+			if ($user->id != Auth::user()->id){
+				$not = new Notification;
+				$not->user_id = $user->id;
+				$not->initiator_id = Auth::user()->id;
+				$not->type = 'conversationCreated';
+				$not->origin_id = $cId;
+				$not->save();
+			}
+		}
+	}
+
+	public function addConversationReplyNotifications($users,$cId){
+		foreach ($users as $user) {
+			if ($user->id != Auth::user()->id){
+				$not = new Notification;
+				$not->user_id = $user->id;
+				$not->initiator_id = Auth::user()->id;
+				$not->type = 'conversationReply';
+				$not->origin_id = $cId;
+				$not->save();
+			}
+		}
+	}
+
+	public function addConversationAddNotifications($users,$cId){
+		foreach ($users as $user) {
+			$user = User::find($user);
+			if ($user->id != Auth::user()->id){
+				$not = new Notification;
+				$not->user_id = $user->id;
+				$not->initiator_id = Auth::user()->id;
+				$not->type = 'conversationAdd';
+				$not->origin_id = $cId;
+				$not->save();
+			}
+		}
 	}
 	
 	public function createConversation() {
@@ -124,6 +168,8 @@ class ConversationController extends BaseController {
 		
 		// then sync the array of people
 		$conversation->users()->sync($integerIDs);
+
+		$this->addConversationCreatedNotifications($integerIDs,$conversation->id);
 		
 		// attach note to conversation
 		$note->conversation_id = $conversation->id;
@@ -143,6 +189,8 @@ class ConversationController extends BaseController {
 		$conversation = Conversation::find(Input::get('conversationID'));
 
 		if (!empty($content)){		
+			$this->addConversationReplyNotifications($conversation->users,$conversation->id);
+
 			$note = new Note;
 			
 			$note->content = $content;
@@ -153,7 +201,7 @@ class ConversationController extends BaseController {
 			// attach note to conversation
 			$note->conversation_id = $conversation->id;
 			
-			$note->save();	
+			$note->save();
 		}
 		
 		return Redirect::to('showConversation/'.$conversation->id);

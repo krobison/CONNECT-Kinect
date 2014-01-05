@@ -11,7 +11,11 @@
     @include('javascript.comment')
 </script>
 
-<div style="margin-bottom:16px;padding:8px;padding-bottom:32px;border:1px #CCCCCC solid;border-radius:4px;">  
+@if(Auth::user()->id == $comment->user_id)
+	<div style="margin-bottom:16px;padding:8px;padding-bottom:32px;border:1px #CCCCCC solid;border-radius:20px;background-color:rgba(34,98,230,0.1)">  
+@else
+	<div style="margin-bottom:16px;padding:8px;padding-bottom:0px;border:1px #CCCCCC solid;border-radius:20px;background-color:rgba(34,98,230,0.1)">  
+@endif	
 	<div style="float:left; padding-right: 10px">
 		{{HTML::image($comment->user->getProfilePictureURL(), '$comment->user->id', array('width' => '70', 'height' => '70', 'class' => 'img-circle'))}}
 	</div>
@@ -143,9 +147,13 @@
 	@if(Auth::user()->admin == '1')
 		{{ Form::open(array('url' => 'deletecomment', 'method'=>'post')) }}
 		{{ Form::hidden('id', $comment->id) }}
-		<button type="submit" class="btn btn-danger btn-sm" style="float:right;" onclick="return confirm('Are you sure you would like to delete this comment FOREVER?');">
-				<span class="glyphicon glyphicon-trash"></span> Delete Comment
-		</button>
+		@if(Auth::user()->id == $comment->user_id)
+			<button type="submit" class="btn btn-danger btn-sm" style="float:right;" onclick="return confirm('Are you sure you would like to delete this comment FOREVER?');">
+		@else
+			<button type="submit" class="btn btn-danger btn-sm" style="float:right;margin-top:-32px;" onclick="return confirm('Are you sure you would like to delete this comment FOREVER?');">
+		@endif		
+					<span class="glyphicon glyphicon-trash"></span> Delete Comment
+			</button>
 		{{ Form::close() }}
 	@endif
 	<br>
