@@ -27,7 +27,7 @@
 			{{-- Title --}}
 			<div class='container' style='line-height: 75px; width: 970px'>
 				<p style='font-family: Geneva, Tahoma, Verdana, sans-serif; color: white; font-size: xx-large; text-shadow: 0px 1px 1px rgba(84, 84, 84, 0.5); float: left'>@yield('title')</p>
-				<p style='font-family: Geneva, Tahoma, Verdana, sans-serif; float: right'><a href="{{ URL::to('logout') }}" style=''>LOGOUT</a></p>
+				<a href="{{ URL::to('logout') }}" style='float:right'><p style='font-family: Geneva, Tahoma, Verdana, sans-serif; color: white;'>LOGOUT</p></a>
 			</div>
 		
 			{{-- Stripe in Color Bar --}}
@@ -182,7 +182,6 @@
         
 <style>
 	a {
-			color: white;
 			-o-transition:.5s;
 			-ms-transition:.5s;
 			-moz-transition:.5s;
