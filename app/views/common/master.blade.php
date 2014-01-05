@@ -84,6 +84,9 @@
 								@foreach(Auth::user()->notifications()->where('type','=','conversationCreated')->get() as $notification) </li>
 									{{ View::make('common.notification')->with('notification', $notification) }}
 								@endforeach
+								@foreach(Auth::user()->notifications()->where('type','=','conversationAdd')->get() as $notification) </li>
+									{{ View::make('common.notification')->with('notification', $notification) }}
+								@endforeach
 								@foreach(Auth::user()->notifications()->where('type','=','conversationReply')->get() as $notification) </li>
 									{{ View::make('common.notification')->with('notification', $notification) }}
 								@endforeach

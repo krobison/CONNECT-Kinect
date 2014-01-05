@@ -130,7 +130,7 @@ class ConversationController extends BaseController {
 				$not = new Notification;
 				$not->user_id = $user->id;
 				$not->initiator_id = Auth::user()->id;
-				$not->type = 'conversationReply';
+				$not->type = 'conversationAdd';
 				$not->origin_id = $cId;
 				$not->save();
 			}
