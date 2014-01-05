@@ -107,8 +107,10 @@
 		<div class="postitem" id="{{$post->id}}"></div>
 	@endforeach
 	</div>
-	<button type="button" id="loadmorebutton" class="btn btn-default">Load more... <i> Not Working </i></button>
-	
+	<div id="loadmorebutton">
+	<button type="button" class="btn btn-default">Load more...</button>
+	</div>
+	</br>
 	
 	
 	<!-- Loading all scripts at the end for performance -->
@@ -140,7 +142,7 @@
 			<?php endforeach; } ?>
 		
 		   $("#loadmorebutton").click(function (){
-               $('#loadmorebutton').html('Need a loading gif'); 
+               $('#loadmorebutton').html('{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}'); 
                 $.ajax({
 					url: '{{ URL::to('loadmoreposts') }}',
 					type: 'POST',
@@ -150,7 +152,7 @@
                         if(data){
                             $("#postswrapper").append(data);
                             ID = $(".postitem:last").attr("id");
-						
+							 $('#loadmorebutton').html('<button type="button" class="btn btn-default">Load more...</button>');
                         }else{
                             $('#loadmorebutton').replaceWith('<center>No more posts to show.</center>');
                         }
