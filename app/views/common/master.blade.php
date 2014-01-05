@@ -74,7 +74,7 @@
 					</a>
 					<ul class="dropdown-menu" role="menu">
 						<li role="presentation" class="dropdown-header">Conversation Notifications</li>
-						@foreach(Auth::user()->notifications()->where('type','=','conversation')->get() as $notification) </li>
+						@foreach(Auth::user()->notifications()->where('type','=','conversationCreated')->get() as $notification) </li>
 							{{ View::make('common.notification')->with('notification', $notification) }}
 							@endforeach
 							<li role="presentation" class="dropdown-header">Tag Notifications</li>

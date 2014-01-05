@@ -92,6 +92,20 @@ class ConversationController extends BaseController {
 		}
 		return Redirect::to('showConversation/'.$conversationId);
 	}
+
+	public function addConversationCreatedNotifications($users,$cId){
+		foreach ($users as $user) {
+			$user = User::find($user);
+			if ($user->id != Auth::user()->id){
+				$not = new Notification;
+				$not->user_id = $user->id;
+				$not->initiator_id = Auth::user()->id;
+				$not->type = 'conversationCreated';
+				$not->origin_id = $cId;
+				$not->save();
+			}
+		}
+	}
 	
 	public function createConversation() {
 		
@@ -124,6 +138,8 @@ class ConversationController extends BaseController {
 		
 		// then sync the array of people
 		$conversation->users()->sync($integerIDs);
+
+		$this->addConversationCreatedNotifications($integerIDs,$conversation->id);
 		
 		// attach note to conversation
 		$note->conversation_id = $conversation->id;
