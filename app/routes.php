@@ -89,9 +89,8 @@ Route::group(array('before' => 'auth'), function() {
 	// POST
 	Route::post('messageCompose', 'InboxController@createMessage');
 
-	
 	// GET Ajax NotificationDelete
-	Route::get('deleteNotification', 'UserController@deleteNotification');
+	Route::post('deleteNotification', 'UserController@deleteNotification');
 	
 	// TESTING conversations
 	// Attempt to make inbox conversations nicer.
