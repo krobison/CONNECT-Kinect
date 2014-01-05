@@ -1,4 +1,4 @@
-<li class="notification"> 
+<li class="notification" data="{{{$notification->id}}}"> 
 	<div class="row" style="width:500px">
 		@if ($notification->type == 'tag')
 			<a href="{{{URL::to('singlepost')}}}/{{{$notification->origin_id}}}">

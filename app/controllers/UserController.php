@@ -396,7 +396,18 @@ class UserController extends BaseController {
 	}
 	
 	public function deleteNotification() {
-		$t = Input::all(); 
-		return $t;
+	
+		$notification = Notification::find(Input::get("data"));
+		
+		// Make sure users can only delete their own notifications
+		if($notification->user->id == Auth::user()->id) {
+			$notification->delete();
+			return 1;
+		} else {
+			Log::info("Malicious deletion: User ".$notification->user->id." attempted to delete unauthorized notifications");
+			return 0;
+		}
+
+		return $notification->user()->id;
 	}
 }
