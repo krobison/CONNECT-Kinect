@@ -47,11 +47,11 @@
 				<ul class="dropdown-menu" role="menu">
 					<li role="presentation" class="dropdown-header">Conversation Notifications</li>
 					@foreach(Auth::user()->notifications()->where('type','=','tag')->get() as $notification)
-						<li><a href="#"> {{{User::find($notification->initiator_id)->first}}} made a post with a tag from your profile. </a></li>
+						<li><a href="{{{URL::to('singlepost')}}}/{{{$notification->origin_id}}}"> {{{User::find($notification->initiator_id)->first}}} made a post with a tag from your profile. </a></li>
 					@endforeach
 					<li role="presentation" class="dropdown-header">Tag Notifications</li>
 					@foreach(Auth::user()->notifications()->where('type','=','conversation')->get() as $notification)
-						<li><a href="#"> {{{User::find($notification->initiator_id)->first}}} responded in one of your conversations. </a></li>
+						<li><a href="{{{URL::to('conversation')}}}/{{{$notification->origin_id}}}"> {{{User::find($notification->initiator_id)->first}}} responded in one of your conversations. </a></li>
 					@endforeach
 				</ul>
 			</div>

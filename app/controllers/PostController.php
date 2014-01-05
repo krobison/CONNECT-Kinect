@@ -21,6 +21,33 @@ class PostController extends BaseController {
 			return Redirect::back()->with('message', "You have commented unsuccessfully");
 		}
 	}
+	
+	public function addTagNotifications($tags,$sender_id,$post_id) {
+
+		// Get an array of all the tag ids
+		$hashtags = $tags->lists('id');
+	
+		// Get all users that have any of the hashtags (this took forever to figure out)
+		$uninformed_users = DB::table('users')
+		->whereExists(function($query) use ($hashtags)
+		{
+			$query->select(DB::raw(1))
+				  ->from('hashtag_user')
+				  ->whereRaw('hashtag_user.user_id = users.id')
+				  ->whereIn('hashtag_user.hashtag_id',$hashtags);
+		})
+		->get();
+		
+		foreach($uninformed_users as $user) {
+			$not = new Notification;
+			$not->user_id = $user->id;
+			$not->initiator_id = $sender_id;
+			$not->type = 'tag';
+			$not->origin_id = $post_id;
+			$not->save();
+		}
+		
+	}
 
 	public function upvote() {
 		$post = Post::find(Input::get('post_id'));
@@ -128,7 +155,9 @@ class PostController extends BaseController {
 	}
 	
 	public function createGeneralPost() {
+						
 		try {
+
 			// Create A Post in the db
 			$post = new Post;
 			$post->user_id = Auth::user()->id;
@@ -141,7 +170,7 @@ class PostController extends BaseController {
 			$hashtags = Input::get('hashtags');
 			$hashtags = preg_split('/(?<!"),(?!")/',$hashtags[0]);
 			foreach($hashtags as $tag) {
-				// If the value is not numerical, the tag doesn't exist yet. Add it the the table.
+				// If the value is not numerical, the tag doesn't exist yet. Add it to the the table.
 				if(is_numeric($tag)) {
 					Hashtag::find($tag)->posts()->attach($post);
 				} else {
@@ -154,6 +183,10 @@ class PostController extends BaseController {
 					}
 				}
 			}
+			
+			// Generate notifications for each tag selected
+			$this->addTagNotifications($post->hashtags,Auth::user()->id,$post->id);
+			
 		} catch( Exception $e ) {
 			//return View::make('debug', array('data' => Input::all()));
 			return Redirect::back()->with('message', '<div class="alert alert-danger" > Your post cannot be created at this time, please try again later. </div>');
