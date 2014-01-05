@@ -224,11 +224,15 @@ class PostController extends BaseController {
 		$hashtags = Input::get('hashtags');
 		$content = Input::get('content');
 		$sort = Input::get('sort');
+		$oldhashtags = NULL;
 		
 		$query = DB::table('posts');
 		
 		if(!empty($hashtags)) {
 			$query->leftJoin('hashtag_post', 'posts.id', '=', 'hashtag_post.post_id')->whereIn('hashtag_post.hashtag_id', $hashtags);
+			$oldhashtags = DB::table('hashtags')
+				->whereIn('id',$hashtags)
+				->get();
 		}
 		
 		if($content != '') {
@@ -241,19 +245,41 @@ class PostController extends BaseController {
 		
 		$posts = $query->orderBy('id', 'DESC')->take(5)->get();
 		
+		
+				
 		return View::make('newsfeed')
 			->with('user', Auth::user())
+			->with('oldhashtags', $oldhashtags)
+			->with('oldcontent', $content)
+			->with('oldsort', $sort)
 			->with('posts', $posts);
 		
 	}
 	
 	public function loadMorePosts() {
-	
-		
-	
 		$lastPostId = Input::get('lastpost');
+		$content = Input::get('content');
+		$sort = Input::get('sort');
+		$hashtags = Input::get('hashtags');
 		
-		$posts = DB::table('posts')->where('id', '<', $lastPostId)->orderBy('id', 'DESC')->take(5)->get();
+		
+		$query = DB::table('posts');
+		
+		if(!empty($hashtags)) {
+			$query->leftJoin('hashtag_post', 'posts.id', '=', 'hashtag_post.post_id')->whereIn('hashtag_post.hashtag_id', $hashtags);
+		}
+		
+		if($content != '') {
+			$query->where('content', 'like', '%'.$content.'%');
+		}
+		
+		if($sort == '1') {
+			$query->orderBy('upvotes', 'DESC');
+		}
+		
+		$posts = $query->where('id', '<', $lastPostId)->orderBy('id', 'DESC')->take(5)->get();
+		
+		
 		if(empty($posts)) {
 		return;
 		}

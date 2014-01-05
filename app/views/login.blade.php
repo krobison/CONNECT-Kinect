@@ -54,11 +54,6 @@
 
 <body>
 	<div class="content">
-		<div class="span6" style="text-align:center">
-		@if(Session::has('message'))	
-			<p> {{Session::get('message');}} </p>
-		@endif
-		</div>	
 		<!--
 		<div id="rightPanel">
 		
@@ -140,9 +135,9 @@
 			        .attr("x", (-h / 2) - (m[0] / 4))
 			        .text("Value2");
 			</script>
-		-->
+		
 
-		</div>
+		</div> -->
 		<div id="header"> 
 		{{ HTML::image('assets/img/Connect_Logo.png' , '', array('class' => 'logo')) }}
 			<button type="button" class="btn btn-lg btn-primary btn-block" id="enter" style="float:left;margin-left:100px;">

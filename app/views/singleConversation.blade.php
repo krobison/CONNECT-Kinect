@@ -4,6 +4,10 @@
 	{{ HTML::style('assets/css/select2.css') }}
 @stop
 
+@section('title')
+	CONVERSATIONS.
+@stop
+
 @section('content')
 	<form class="form-horizontal" role="form" action="{{ URL::to('leaveConversation/'.$conversation->id) }}" method="get">
 		<button type="submit" class="btn btn-danger btn" style="float:right;margin-top:8px;" onclick="return confirm('Are you sure you want to leave this conversation? You will not be able to view these messages or reply any longer.');">
@@ -82,17 +86,12 @@
 	@foreach ($conversation->notes as $note)
 		<div class="list-group-item" style="min-height:56px;">
 			<div style="float:left; padding-right: 10px">
-				@if(is_null(User::find($note->user_id)->picture))
-					{{ HTML::image('assets/img/dummy.png', 'profile picture', array('width' => '40', 'height' => '40', 'class' => 'img-circle')) }}
-				@else
-					@if ( File::exists('assets/img/profile_images/' . User::find($note->user_id)->picture ))
-						{{ HTML::image('assets/img/profile_images/'.User::find($note->user_id)->picture, 'profile picture', array('width' => '40', 'height' => '40', 'class' => 'img-circle')) }}
-					@else
-						{{ HTML::image('assets/img/dummy.png', User::find($note->user_id)->picture , array('width' => '40', 'height' => '40', 'class' => 'img-circle')) }}
-					@endif
-				@endif 
+				<a href="{{URL::to('profile', User::find($note->user_id)->id)}}">
+					{{HTML::image(User::find($note->user_id)->getProfilePictureURL(), '$post->user->id', array('width' => '40', 'height' => '40', 'class' => 'img-circle'))}}
+				</a>
 			</div>
-			<span>{{$note->content}}</h5>
+			<b>{{{User::find($note->user_id)->first}}}{{{User::find($note->user_id)->last}}}</b><br>
+			<span>{{$note->content}}</span>
 		</div>
 	@endforeach
 	</div>

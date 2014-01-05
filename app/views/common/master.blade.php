@@ -56,7 +56,7 @@
 					@endif
 					
 					{{-- Conversations --}}
-					@if (Request::path() == 'conversations')
+					@if ((Request::path() == 'conversations')||(substr(Request::path(),0,16) == "showConversation"))
 						<a href="{{ URL::to('conversations') }}" class="list-group-item active"><span class="glyphicon glyphicon-envelope"></span>   Conversations</a>
 					@else
 						<a href="{{ URL::to('conversations') }}" class="list-group-item"><span class="glyphicon glyphicon-envelope"></span>   Conversations</a>
