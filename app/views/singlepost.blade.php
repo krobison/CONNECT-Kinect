@@ -39,7 +39,7 @@
 		<h1>Post Details</h1>
 	@endif
 	
-	{{View::make('common.newsfeedPost')->with('post', $post)}}
+	{{View::make('common.newsfeedPost')->with('post', $post)->with('detail','true')}}
 	
 	@if ($post->code != "")
 		<div class="well">
