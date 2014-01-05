@@ -46,6 +46,8 @@
 				
 				{{-- Side Bar --}}
 				<div class="col-xs-3" style="padding-top: 20px;">
+				
+				<div class='affix' style='width: 210px'>
 					
 					<div class="list-group">
 					{{-- Profile --}}
@@ -152,6 +154,8 @@
                     
                     {{-- Moar --}}
                     @yield('seeall')
+					</div>
+					
 					</div>
 
             </div>
