@@ -74,13 +74,16 @@
 					</a>
 					<ul class="dropdown-menu" role="menu">
 						<li role="presentation" class="dropdown-header">Conversation Notifications</li>
-						@foreach(Auth::user()->notifications()->where('type','=','conversationCreated')->get() as $notification) </li>
-							{{ View::make('common.notification')->with('notification', $notification) }}
+							@foreach(Auth::user()->notifications()->where('type','=','conversationCreated')->get() as $notification) </li>
+								{{ View::make('common.notification')->with('notification', $notification) }}
 							@endforeach
-							<li role="presentation" class="dropdown-header">Tag Notifications</li>
+							@foreach(Auth::user()->notifications()->where('type','=','conversationReply')->get() as $notification) </li>
+								{{ View::make('common.notification')->with('notification', $notification) }}
+							@endforeach
+						<li role="presentation" class="dropdown-header">Tag Notifications</li>
 							@foreach(Auth::user()->notifications()->where('type','=','tag')->get() as $notification)
-							{{ View::make('common.notification')->with('notification', $notification) }}
-						@endforeach
+								{{ View::make('common.notification')->with('notification', $notification) }}
+							@endforeach
 					</ul>
 					</div>
 					
@@ -189,13 +192,4 @@
 			-ms-transition:.5s;
 			-moz-transition:.5s;
 			-webkit-transition:.5s;
-			transition:.5s;
-	} 
-	a:hover {
-			color: #2980b9;
-	}
-</style>
-
-
-</body>
-</html>
+		
