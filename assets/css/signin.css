@@ -8,11 +8,18 @@ html, body{
 #header{
     width:50%;
     margin-left:25%;
-    min-width:256px;
-    min-height:600px;
+    min-width:400px;
     text-align:center;
     padding:32px;
     margin-top:64px;
+}
+
+#header2{
+    width:50%;
+    margin-left:25%;
+    min-width:256px;
+    text-align:center;
+    padding:32px;
 }
 
 #signinpanel{
@@ -31,9 +38,17 @@ html, body{
 .btn-primary { 
 	height:64px;
 	padding:0px;
-  width:30%;
+  width:200px;
   background-color:#256590;
   display:inline;
+}
+
+.buttonRow{
+    width:50%;
+    margin-left:25%;
+    min-width:400px;
+    text-align:center;
+    margin-bottom: 300px;
 }
 
 .btn-primary:hover{
@@ -114,7 +129,7 @@ html, body{
 }
 
 #footer {
-  height: 70px;
+  height: 400px;
   background-color: #FFFFFF;
   text-align:center;
   margin-top: -50px;

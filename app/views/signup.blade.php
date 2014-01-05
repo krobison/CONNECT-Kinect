@@ -10,7 +10,7 @@
 
 <body>
 	<div id="main">
-		<div class="page-header">
+		<div class="logoheader">
 			{{ HTML::image('assets/img/Connect_Logo.png') }}
 		</div>	
 		
@@ -286,10 +286,7 @@
 		</div>
 		
 		<br/>
-		<div class="row">
-			<div class ="col-xs-5 col-md-4 col-md-offset-2">
-				{{Form::submit('Register', array('class' => 'btn btn-lg btn-primary btn-block', 'id' => 'submit-button'))}}
-			</div>
+			{{Form::submit('Register', array('class' => 'btn btn-lg btn-success btn-block', 'id' => 'submit-button'))}}
 		</div>
 		{{ Form::close() }}	
 	</div>
