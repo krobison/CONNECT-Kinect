@@ -25,6 +25,11 @@ class AdminController extends BaseController {
 		$id = Input::get("id");
 		
 		$post = Post::find($id);
+
+		if ((Auth::user()->admin !=1)&&(Auth::user()->id != $post->user_id)){
+			return Redirect::to('/');
+		}
+
 		$comments = $post->comments;
 		foreach($comments as $comment) {
 			$comment->delete();
