@@ -3,36 +3,41 @@ html, body{
 }
 
 /*
-##################Panel Style#############
+##################Header Style##############
 */
-#leftPanel{
+#header{
     width:50%;
     margin-left:25%;
     min-width:256px;
     min-height:600px;
     text-align:center;
     padding:32px;
-    margin-top: 0px;
+    margin-top:64px;
 }
 
 #signinpanel{
-    background-color:rgba(255,255,255,0.1);
-    border: 4px rgba(255,255,255,0.1) solid;
+    background-color:rgba(255,255,255,0.05);
+    border: 1px rgba(255,255,255,0.1) solid;
 }
 
+.logo{
+	width:100%;
+	margin-bottom:32px;
+}
 
 /*
 ###################Button Style###########
 */
 .btn-primary { 
-	height:72px;
+	height:64px;
 	padding:0px;
-  width:100%;
-  background-color:rbg(30,60,100);
+  width:30%;
+  background-color:#256590;
+  display:inline;
 }
 
 .btn-primary:hover{
-  background-color:rbg(00,30,70);
+  background-color:rbg#3498db;
 }
 
 .button-div{
@@ -40,16 +45,6 @@ html, body{
     margin:auto;
 }
 
-/*
-##################Header Style##############
-*/
-
-.page-header{
-	margin:auto;
-	min-width:1050px;
-	text-align:center;
-  margin-bottom:-2px;
-}
 
 /*
 #################Form Style#################

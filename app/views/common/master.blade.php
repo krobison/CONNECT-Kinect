@@ -37,14 +37,27 @@
 		{{-- Task Bar --}}
 		<div style='position: absolute; top: 75px; height: 50; left:0px; right:0px; background-color: white;'>
 		
-			{{-- Content --}}
+		{{-- Content --}}
 		<div class="container" style='max-width: none !important; width: 970px; line-height: 50px; font-family: Geneva, Tahoma, Verdana, sans-serif; color: grey'>
-			<span style='float: left'>
-				{{ HTML::image('assets/img/csconnect.png', 'CS CONNECT', array('width' => '32px')) }} CS CONNECT	
-			</span>
+			<div class="btn-group" style='float: left'>
+				<button class="btn dropdown-toggle sr-only" style='width: 200px; height: 43px; margin: 3px' type="button" id="dropdownMenu1" data-toggle="dropdown">
+					{{ HTML::image('assets/img/csconnect.png', 'CS CONNECT', array('width' => '32px')) }} CS CONNECT <span class="label label-danger"> {{{Auth::user()->notifications->count()}}}</span>
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li role="presentation" class="dropdown-header">Conversation Notifications</li>
+					@foreach(Auth::user()->notifications()->where('type','=','tag')->get() as $notification)
+						<li><a href="{{{URL::to('singlepost')}}}/{{{$notification->origin_id}}}"> {{{User::find($notification->initiator_id)->first}}} made a post with a tag from your profile. </a></li>
+					@endforeach
+					<li role="presentation" class="dropdown-header">Tag Notifications</li>
+					@foreach(Auth::user()->notifications()->where('type','=','conversation')->get() as $notification)
+						<li><a href="{{{URL::to('conversation')}}}/{{{$notification->origin_id}}}"> {{{User::find($notification->initiator_id)->first}}} responded in one of your conversations. </a></li>
+					@endforeach
+				</ul>
+			</div>
 			
 			<a href='{{ URL::to('conversations') }}'>
-				<span style='float: left; padding-left: 25px'>
+				<span style='float: left; padding-left: 25px;'>
 					<span class='glyphicon glyphicon-envelope'></span> CONVERSATIONS
 				</span>
 			</a>

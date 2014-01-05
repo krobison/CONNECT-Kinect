@@ -70,6 +70,14 @@
 			@endif
 		</div>
 		<div class="row">
+			@if (!empty($userTags))
+				<div class="courses">
+					<h3>Tags</h3>
+					@foreach ($userTags as $tags)
+						<span class="courselabel">{{{$tags->name}}}</span>
+					@endforeach
+				</div>
+			@endif
 			@if (!empty($studentClasses))
 				<div class="courses">
 					<h3>Courses Taking</h3>

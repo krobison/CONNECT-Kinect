@@ -176,11 +176,28 @@ class UserController extends BaseController {
 				array_push($teacherHTML, "<option value=".$course->id.">".$course->prefix.$course->number." - ".$course->name."</option>");
 			}
 		}
+		
+		// Generate some html for a select object in the HTML form
+		$tagHTML = array();
+		foreach(Hashtag::all() as $tag) {
+			$notSelected = true;
+			foreach(Auth::user()->hashtags as $userTags) {
+				if($tag->id == $userTags->id) {
+					array_push($tagHTML, "<option selected value=".$tag->id.">".$tag->name."</option>");
+					$notSelected = false;
+					break;
+				}
+			}
+			if($notSelected) {
+				array_push($tagHTML, "<option value=".$tag->id.">".$tag->name."</option>");
+			}
+		}
 
 		return View::make('editProfile')
 		->with('user', Auth::user())
 		->with('studentClasses',$studentClasses)
 		->with('teacherClasses',$teacherClasses)
+		->with('tagHTML',$tagHTML)
 		->with('studentSelectHTML',$studentHTML)
 		->with('teacherSelectHTML',$teacherHTML);
 	}
@@ -289,6 +306,19 @@ class UserController extends BaseController {
 					foreach($courses as $course) {
 						if (sizeof(DB::table('course_user')->where('course_id','=',$course)->where('user_id','=',$id)->get() == 0)){
 							Auth::user()->courses()->attach($course, array("instructor"=>1)); 
+						}
+					}
+				}
+				
+				// Update tags for the user
+				$tags = Input::get("hashtags");
+				if (!empty($tags)){
+					//delete all current course_user records
+					DB::table('hashtag_user')->where('user_id','=',$id)->delete();
+					foreach($tags as $tag) {
+						// Server-side duplicate checking
+						if (sizeof(DB::table('hashtag_user')->where('hashtag_id','=',$course)->where('user_id','=',$id)->get() == 0)){
+							Auth::user()->hashtags()->attach($tag); 
 						}
 					}
 				}
