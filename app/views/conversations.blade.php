@@ -6,7 +6,7 @@
 
 @section('content')
 	<form class="form-horizontal" role="form" action="{{ URL::to('composeConversation')}}" method="get">
-		<button type="submit" class="btn btn-default btn-lg" style="float:right;">
+		<button type="submit" class="btn btn-default btn-lg" style="float:right;margin-top:8px;">
 			<span class="glyphicon glyphicon-envelope"></span> Start A Conversation
 		</button>
 	</form>
@@ -30,7 +30,7 @@
 				@endif 
 			</div>
 			<h2><a href="{{ URL::to('showConversation/'.$conversation->id) }}">{{{$conversation->name}}}</a></h2>
-			<a href="{{ URL::to('leaveConversation/'.$conversation->id) }}" style="text-decoration:none;float:right;" onclick="return confirm('Are you sure you want to leave this conversation? You will not be able to view these messages or reply any longer.');"><span style="color:red;">Leave This Conversation</span></a>
+			<a href="{{ URL::to('leaveConversation/'.$conversation->id) }}" style="text-decoration:none;float:right;margin-top:-16px;" onclick="return confirm('Are you sure you want to leave this conversation? You will not be able to view these messages or reply any longer.');"><span style="color:red;">Leave This Conversation</span></a>
 		</div>
 	@endforeach
 	</div>
