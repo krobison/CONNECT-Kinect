@@ -394,4 +394,9 @@ class UserController extends BaseController {
 		}
 		return View::make('signup');
 	}
+	
+	public function deleteNotification() {
+		$data = Input::all();
+		return;
+	}
 }
