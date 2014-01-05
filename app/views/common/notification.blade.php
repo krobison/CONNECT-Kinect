@@ -6,6 +6,8 @@
 			<a href="{{{URL::to('showConversation')}}}/{{{$notification->origin_id}}}">
 		@elseif ($notification->type == 'conversationReply')
 			<a href="{{{URL::to('showConversation')}}}/{{{$notification->origin_id}}}">
+		@elseif ($notification->type == 'conversationAdd')
+			<a href="{{{URL::to('showConversation')}}}/{{{$notification->origin_id}}}">
 		@endif
 			<div class="col-md-1 picture">
 				{{HTML::image(User::find($notification->initiator_id)->getProfilePictureURL(), 'none', array('width' => '35', 'height' => '35', 'class' => 'img-circle'))}}
@@ -16,6 +18,8 @@
 				{{{User::find($notification->initiator_id)->first}}} created a conversation with you.
 			@elseif ($notification->type == 'conversationReply')
 				{{{User::find($notification->initiator_id)->first}}} replied to a conversation that you are in.
+			@elseif ($notification->type == 'conversationAdd')
+				{{{User::find($notification->initiator_id)->first}}} added you to a conversation.
 			@elseif ($notification->type == 'tag')
 				&nbsp;{{{User::find($notification->initiator_id)->first}}} tagged a post with a tag you are subscribed to.
 			@endif

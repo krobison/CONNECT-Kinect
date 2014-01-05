@@ -90,6 +90,9 @@ class ConversationController extends BaseController {
 			$usersToAdd = array_map('intval', $usersToAddRaw);
 			$conversation->users()->attach($usersToAdd);
 		}
+
+		$this->addConversationAddNotifications($usersToAdd,$conversationId);
+
 		return Redirect::to('showConversation/'.$conversationId);
 	}
 
@@ -109,6 +112,20 @@ class ConversationController extends BaseController {
 
 	public function addConversationReplyNotifications($users,$cId){
 		foreach ($users as $user) {
+			if ($user->id != Auth::user()->id){
+				$not = new Notification;
+				$not->user_id = $user->id;
+				$not->initiator_id = Auth::user()->id;
+				$not->type = 'conversationReply';
+				$not->origin_id = $cId;
+				$not->save();
+			}
+		}
+	}
+
+	public function addConversationAddNotifications($users,$cId){
+		foreach ($users as $user) {
+			$user = User::find($user);
 			if ($user->id != Auth::user()->id){
 				$not = new Notification;
 				$not->user_id = $user->id;
