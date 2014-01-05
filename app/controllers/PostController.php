@@ -57,6 +57,8 @@ class PostController extends BaseController {
 
 		if ($upvote) {
 			Upvote::where('user_id', '=', $user->id)->where('post_id', '=', $post->id)->delete();
+			$post->upvotes = $post->upvotes - '1';
+			$post->save();
 			return Redirect::back()->with('message', "You have upvoted successfully");
 		}
 
@@ -67,6 +69,8 @@ class PostController extends BaseController {
 				$upvote->user_id = Input::get('user_id');
 				$upvote->post_id = Input::get('post_id');
 				$upvote->save();
+				$post->upvotes = $post->upvotes + '1';
+				$post->save();
 
 				return Redirect::back()->with('message', "You have upvoted successfully");
 
@@ -231,7 +235,11 @@ class PostController extends BaseController {
 			$query->where('content', 'like', '%'.$content.'%');
 		}
 		
-		$posts = $query->get();
+		if($sort[0] == '1') {
+			$query->orderBy('upvotes', 'DESC');
+		}
+		
+		$posts = $query->orderBy('created_at', 'DESC')->get();
 		
 		return View::make('newsfeed')
 			->with('user', Auth::user())
