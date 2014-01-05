@@ -153,29 +153,31 @@
 						</div>			
 					{{ Form::close() }}
 			</div>
-			<div id="signinpanel" class="panel panel-default" style="margin-top:100px;"><br><br>
-				<script>$('#signinpanel').toggle(100);</script>
-				{{ Form::open(array('url' => 'loginuser','class' => 'form-signin')) }}
-					
-					{{ Form::text('email', '', array('class' => 'form-control','placeholder' => 'Email','autofocus' => 'true')) }}
-					{{ Form::password('password', array('class' => 'form-control','placeholder' => 'Password')) }}
-														
-					<!--<label class="checkbox" style="text-align:left;">
-						<input type="checkbox" value="remember-me"> Remember me <i> Not Working </i>
-					</label>-->
-					<a href="{{asset('password/reset')}}" style="color:red;"><i>I forgot my password</i></a><br><br>
+			<div id="header2"> 
+				<div id="signinpanel" class="panel panel-default" style="margin-top:-250px;"><br><br>
+					<script>$('#signinpanel').toggle(100);</script>
+					{{ Form::open(array('url' => 'loginuser','class' => 'form-signin')) }}
 						
-					<div class="button-div">
-						<button type="submit" class="btn btn-lg btn-primary btn-block">
-							<span class="glyphicon glyphicon-log-in"></span> Sign In
-						</button>
-					</div><br><br>
-				{{ Form::close() }}
+						{{ Form::text('email', '', array('class' => 'form-control','placeholder' => 'Email','autofocus' => 'true')) }}
+						{{ Form::password('password', array('class' => 'form-control','placeholder' => 'Password')) }}
+															
+						<!--<label class="checkbox" style="text-align:left;">
+							<input type="checkbox" value="remember-me"> Remember me <i> Not Working </i>
+						</label>-->
+						<a href="{{asset('password/reset')}}" style="color:red;"><i>I forgot my password</i></a><br><br>
+							
+						<div class="button-div">
+							<button type="submit" class="btn btn-lg btn-primary btn-block">
+								<span class="glyphicon glyphicon-log-in"></span> Sign In
+							</button>
+						</div><br><br>
+					{{ Form::close() }}
+				</div>
 			</div>
 		</div>
 		<div id="footer">
 			<div class="container">
-				<p class="text-muted credit"  style="margin-top:350px;">©2013 Toilers research group, Colorado School of Mines 
+				<p class="text-muted credit"  style="margin-top:350px;margin-bottom:64px;">©2013 Toilers research group, Colorado School of Mines 
 					{{ HTML::image('assets/img/mines_logo.png') }}
 					{{ HTML::image('assets/img/toilers.png') }}
 				</p>
