@@ -139,17 +139,20 @@
 
 		</div> -->
 		<div id="header"> 
-		{{ HTML::image('assets/img/Connect_Logo.png' , '', array('class' => 'logo')) }}
-			<button type="button" class="btn btn-lg btn-primary btn-block" id="enter" style="float:left;margin-left:100px;">
-				 Enter
-			</button>
-			{{ Form::open(array('url' => 'signup','method' => 'get','class' => 'form-signin')) }}
-					<div class="button-div">
-						<button type="submit" class="btn btn-lg btn-primary btn-block" style="float:right;margin-right:100px;">
-							<span class="glyphicon glyphicon-user"></span> Create Account
-						</button>
-					</div>			
-				{{ Form::close() }}
+			{{ HTML::image('assets/img/Connect_Logo.png' , '', array('class' => 'logo')) }}
+		</div>
+			<div class="buttonRow">
+				<button type="button" class="btn btn-lg btn-primary btn-block" id="enter" style="float:left;">
+					 Enter
+				</button>
+				{{ Form::open(array('url' => 'signup','method' => 'get','class' => 'form-signin')) }}
+						<div class="button-div">
+							<button type="submit" class="btn btn-lg btn-primary btn-block" style="float:right;">
+								<span class="glyphicon glyphicon-user"></span> Create Account
+							</button>
+						</div>			
+					{{ Form::close() }}
+			</div>
 			<div id="signinpanel" class="panel panel-default" style="margin-top:100px;"><br><br>
 				<script>$('#signinpanel').toggle(100);</script>
 				{{ Form::open(array('url' => 'loginuser','class' => 'form-signin')) }}
@@ -172,7 +175,7 @@
 		</div>
 		<div id="footer">
 			<div class="container">
-				<p class="text-muted credit">©2013 Toilers research group, Colorado School of Mines 
+				<p class="text-muted credit"  style="margin-top:350px;">©2013 Toilers research group, Colorado School of Mines 
 					{{ HTML::image('assets/img/mines_logo.png') }}
 					{{ HTML::image('assets/img/toilers.png') }}
 				</p>
