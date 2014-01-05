@@ -11,7 +11,6 @@
 	@else 
 		{{ Form::open(array('url' => $url, 'method' => 'POST')) }}
 	@endif
-	THIS IS A {{ $url }} POST <br>
 	
 	@if($url == 'createhelprequestpost') 
 	
