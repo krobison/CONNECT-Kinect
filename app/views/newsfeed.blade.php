@@ -39,7 +39,11 @@
 			<div class="form-group">
 				<b>Upvotes</b> <br>
 				<label class="checkbox-inline">
+				@if(!empty($oldsort) && $oldsort[0] == '1')
+				{{ Form::checkbox('sort[]', '1', 'true') }}
+				@else
 				{{ Form::checkbox('sort[]', '1') }}
+				@endif
 					Sort by number of upvotes
 				</label>
 				
@@ -51,15 +55,29 @@
 							<option value={{ $hashtag->id }}>{{ $hashtag->name }}</option>
 						@endforeach
 					</optgroup>
+					@if (!empty($oldhashtags))
+							@foreach($oldhashtags as $hashtag)
+								<option selected value={{{ $hashtag->id }}}>
+									{{{ $hashtag->name }}}
+								</option>
+							@endforeach
+					@endif
 				</select>
 				<br><br>
 				
 				<b>Content</b> </br>
 					<div class="form-group">
+					@if(!empty($oldcontent))
+					{{ Form::textarea('content', $oldcontent, array('id' => 'content-form',
+							'class' => 'form-control',
+							'placeholder' => 'Search for content within a post',
+							'rows' => '5')) }}
+					@else
 					{{ Form::textarea('content', null, array('id' => 'content-form',
 							'class' => 'form-control',
 							'placeholder' => 'Search for content within a post',
 							'rows' => '5')) }}
+					@endif
 					</div>
 			</div>
 			<hr>
@@ -110,19 +128,29 @@
 				placeholder: "Select Hashtags"
 			});
 		});
-		$(document).ready(function() {
+		
 		var ID = $(".postitem:last").attr("id");
-            $("#loadmorebutton").click(function (){
+		var content = "<?php if(!empty($oldcontent)) {echo $oldcontent;} ?>";
+		
+		var sort = "<?php if(!empty($oldsort) && $oldsort[0] == '1') { echo $oldsort[0]; } ?>";
+        var sendData = '&content='+content+'&sort='+sort;
+		
+			<?php if (!empty($oldhashtags)) { foreach ($oldhashtags as $hashtag):?>
+				sendData = sendData + '&hashtags[]=' + '<?php echo $hashtag->id;?>';
+			<?php endforeach; } ?>
+		
+		   $("#loadmorebutton").click(function (){
                $('#loadmorebutton').html('Need a loading gif'); 
                 $.ajax({
 					url: '{{ URL::to('loadmoreposts') }}',
-                   data: "lastpost="+ID,
 					type: 'POST',
+                    data: 'lastpost='+ID+sendData,
 					dataType: 'html',
 					success: function(data){
                         if(data){
                             $("#postswrapper").append(data);
                             ID = $(".postitem:last").attr("id");
+						
                         }else{
                             $('#loadmorebutton').replaceWith('<center>No more posts to show.</center>');
                         }
@@ -131,7 +159,7 @@
                 });
             });
 			
-		});
+		
 	
 
 	</script>
