@@ -11,7 +11,7 @@
     @include('javascript.comment')
 </script>
 
-<div class="well">
+<div style="margin-bottom:16px;padding:8px;padding-bottom:32px;border:1px #CCCCCC solid;border-radius:4px;">  
 	<div style="float:left; padding-right: 10px">
 		{{HTML::image($comment->user->getProfilePictureURL(), '$comment->user->id', array('width' => '70', 'height' => '70', 'class' => 'img-circle'))}}
 	</div>
@@ -107,7 +107,7 @@
 	<p><a href="{{URL::to('profile', $comment->user_id)}}">{{{ $comment->user->first }}} {{{ $comment->user->last }}}</a>, {{{ $comment->created_at->diffForHumans() }}}</p>
 
 	@if(Auth::user()->id == $comment->user_id)
-		<button type="submit" class="btn btn-primary" style="float:left;" id="edit{{$comment->id}}">
+		<button type="submit" class="btn btn-primary btn-sm" style="float:left;" id="edit{{$comment->id}}">
 				<span class="glyphicon glyphicon-pencil"></span> Edit Comment
 		</button>
 
@@ -123,25 +123,27 @@
 			</button>
 			{{ Form::close() }}
 
-			<button type="submit" id="cancel{{$comment->id}}" class="btn btn-warning" style="float:right;">
+			<button type="submit" id="cancel{{$comment->id}}" class="btn btn-warning" style="margin-left:90px;margin-top:-56px;">
 					<span class="glyphicon glyphicon-floppy-remove"></span> Cancel
 			</button>
 		</div>
 
-		<div style="float:right; width:25%">
-			{{ Form::open(array('url' => 'deleteusercomment', 'method'=>'post')) }}
-			{{ Form::hidden('id', $comment->id) }}
-			<button type="submit" class="btn btn-danger" style="float:right;" onclick="return confirm('Are you sure you would like to delete this comment FOREVER?');">
-					<span class="glyphicon glyphicon-trash"></span> Delete Comment
-			</button>
-			{{ Form::close() }}
-		</div>
+		@if(Auth::user()->admin == '0')
+			<div style="float:right; width:25%">
+				{{ Form::open(array('url' => 'deleteusercomment', 'method'=>'post')) }}
+				{{ Form::hidden('id', $comment->id) }}
+				<button type="submit" class="btn btn-danger btn-sm" style="float:right;" onclick="return confirm('Are you sure you would like to delete this comment FOREVER?');">
+						<span class="glyphicon glyphicon-trash"></span> Delete Comment
+				</button>
+				{{ Form::close() }}
+			</div>
+		@endif
 	@endif
 	
 	@if(Auth::user()->admin == '1')
 		{{ Form::open(array('url' => 'deletecomment', 'method'=>'post')) }}
 		{{ Form::hidden('id', $comment->id) }}
-		<button type="submit" class="btn btn-danger" style="float:right;" onclick="return confirm('Are you sure you would like to delete this comment FOREVER?');">
+		<button type="submit" class="btn btn-danger btn-sm" style="float:right;" onclick="return confirm('Are you sure you would like to delete this comment FOREVER?');">
 				<span class="glyphicon glyphicon-trash"></span> Delete Comment
 		</button>
 		{{ Form::close() }}

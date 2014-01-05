@@ -39,7 +39,7 @@
 		<h1>Post Details</h1>
 	@endif
 	
-	{{View::make('common.newsfeedPost')->with('post', $post)}}
+	{{View::make('common.newsfeedPost')->with('post', $post)->with('detail','true')}}
 	
 	@if ($post->code != "")
 		<div class="well">
@@ -107,7 +107,7 @@
 			@endif 
 		</div>
 
-		{{ Form::textarea('content', null, array('class' => 'span4' ,'placeholder' => 'Enter your comment here','id' => 'comment-box')) }}
+		{{ Form::textarea('content', null, array('class' => 'span4 form-control' ,'placeholder' => 'Enter your comment here','id' => 'comment-box')) }}
 
 		{{ Form::hidden('user_id', $user->id) }}
 

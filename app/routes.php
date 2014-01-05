@@ -89,9 +89,8 @@ Route::group(array('before' => 'auth'), function() {
 	// POST
 	Route::post('messageCompose', 'InboxController@createMessage');
 
-	
 	// GET Ajax NotificationDelete
-	Route::get('deleteNotification', 'UserController@deleteNotification');
+	Route::post('deleteNotification', 'UserController@deleteNotification');
 	
 	// TESTING conversations
 	// Attempt to make inbox conversations nicer.
@@ -112,12 +111,12 @@ Route::group(array('before' => 'auth'), function() {
  *	These routes all have a before filter that checks to see if user is logged in and is an admin
  */
  
+	//deletes an individual post
+	Route::post('deletepost', 'AdminController@deletePost');
+
 Route::group(array('before' => 'auth|admin'), function () {
 	//deletes a user's account
 	Route::post('deleteuser', 'AdminController@deleteUser');
-	
-	//deletes an individual post
-	Route::post('deletepost', 'AdminController@deletePost');
 	
 	//deletes an individual comment
 	Route::post('deletecomment', 'AdminController@deleteComment');
