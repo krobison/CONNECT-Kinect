@@ -54,5 +54,38 @@ class HelpCenterController extends BaseController {
 		// Make the specific post data (e.g., helpPost, project, etc...)
 		return Redirect::back()->with('message', 'Your post has been successfully created.');
 	}
+	public function loadMoreRequests() {
+		$lastPostId = Input::get('lastpost');
+		$posts = DB::table('posts')
+		->where('id', '<', $lastPostId)
+		->where('postable_type', '=', 'PostHelpRequest')
+		->orderBy('id', 'DESC')
+		->take(5)
+		->get();
+		if(empty($posts)) {
+		return;
+		}
+		return View::make('loadmorespecificposts')
+		->with('user', Auth::user())
+		->with('posts', $posts)
+		->with('type', 'HelpRequestPost');
+	}
+	
+	public function loadMoreOffers() {
+		$lastPostId = Input::get('lastpost');
+		$posts =DB::table('posts')
+		->where('id', '<', $lastPostId)
+		->where('postable_type', '=', 'PostHelpOffer')
+		->orderBy('id', 'DESC')
+		->take(5)
+		->get();
+		if(empty($posts)) {
+		return;
+		}
+		return View::make('loadmorespecificposts')
+		->with('user', Auth::user())
+		->with('posts', $posts)
+		->with('type', 'HelpOfferPost');
+	}
 	
 }
