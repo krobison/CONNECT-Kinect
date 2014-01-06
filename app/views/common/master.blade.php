@@ -47,7 +47,7 @@
 				{{-- Side Bar --}}
 				<div class="col-xs-3" style="padding-top: 20px;">
 				
-				<div class='affix' style='width: 210px'>
+				<div class='affix' style='width: 210px;z-index:1;'>
 					
 					<div class="list-group">
 					{{-- Profile --}}
@@ -149,7 +149,7 @@
 					@if (Request::path() == "search")
 						<a href="{{ URL::to('search') }}" class="list-group-item active"><span class="glyphicon glyphicon-search"></span>   Search</a>
 					@else
-                                                <a href="{{ URL::to('search') }}" class="list-group-item"><span class="glyphicon glyphicon-search"></span>   Search</a>
+                        <a href="{{ URL::to('search') }}" class="list-group-item"><span class="glyphicon glyphicon-search"></span>   Search</a>
                     @endif
                     
                     {{-- Moar --}}
@@ -203,14 +203,14 @@
         
 <style>
         a {
-                        -o-transition:.5s;
-                        -ms-transition:.5s;
-                        -moz-transition:.5s;
-                        -webkit-transition:.5s;
-                        transition:.5s;
+            -o-transition:.5s;
+            -ms-transition:.5s;
+            -moz-transition:.5s;
+            -webkit-transition:.5s;
+            transition:.5s;
         } 
         a:hover {
-                        color: #2980b9;
+            color: #2980b9;
         }
 </style>
 
