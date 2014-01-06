@@ -221,6 +221,7 @@ class PostController extends BaseController {
 	}
 	
 	public function createProjectPost() {
+
 		try {
 			$post_P = new PostProject;
 			$validator = Validator::make(Input::all(), PostProject::$rules);
@@ -238,7 +239,7 @@ class PostController extends BaseController {
 					}
 			} else {
 				Log::error("Validation Failure: ".$validator->messages());
-				return Redirect::back()->withErrors($validator)->withInput();
+				return Redirect::back()->with('message', '<div class="alert alert-danger">There was a problem making your post: '.$validator->messages().'</div>');;
 			}
 			$file = Input::file('file');
 				if($file) {
@@ -284,7 +285,6 @@ class PostController extends BaseController {
 			//return View::make('debug', array('data' => Input::all()));
 			return Redirect::back()->with('message', 'There was an error making your post');
 		}
-			
 		return Redirect::back()->with('message', 'Your post has been successfully created.');
 	}
 
@@ -370,7 +370,7 @@ class PostController extends BaseController {
 			
 			
 			if(empty($posts)) {
-			return;
+				return;
 			}
 			return View::make('loadmoreposts')
 			->with('user', Auth::user())

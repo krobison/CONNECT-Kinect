@@ -11,7 +11,12 @@
 
 @section('content')
 	@if ($post->postable_type == 'PostQuestion')
-		<h1>CS Question of the Week</h1>
+		<a style="float:right" href="{{ URL::to('showPreviousQuestions') }}"><span class="glyphicon glyphicon-arrow-left"></span>   Previous Questions</a>
+		<h3>CS Question of the Week</h3>	
+		<p>
+			Give your answers and thoughts in the comments. A new question will be posted every week. The user who posts the best answer (as judged by CS Connect Administrator) will receive a small prize at the end of the week.
+		</p>
+
 		@if($user->admin == '1')
 		<!-- New post functionality -->
 		<div id="new-post" class="panel panel-default">
@@ -146,12 +151,6 @@
 		{{ Form::close() }}
 	</div>
 	
-	@if ($post->postable_type == 'PostQuestion')
-		@section('seeall')
-			<br>
-			<a href="{{ URL::to('showPreviousQuestions') }}" class="list-group-item"><span class="glyphicon glyphicon-arrow-left"></span>   Previous Questions</a>
-		@stop
-	@endif
 	@if($user->admin == '1')
 		@if($post->postable_type != 'PostQuestion')
 		{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}

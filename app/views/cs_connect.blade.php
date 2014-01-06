@@ -114,7 +114,7 @@
                                                                     // create a simple data array that we'll plot with a line (this array represents only the Y values, X will just be the index location)
                                                                     // This does 14 separate db queries, this needs to be optimized later
                                                                     var data = [];
-                                                                    @for ($i = 60*60*24*7*2; $i > 0; $i -= 60*60*24)
+                                                                    @for ($i = 60*60*24*7*2; $i >= 0; $i -= 60*60*24)
                                                                         data.push({{{ User::where('created_at', '<=', date('Y-m-d H:i:s',time() - $i))->count() }}});
                                                                     @endfor
 

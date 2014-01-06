@@ -103,7 +103,7 @@
 		<br>
 		<input type='hidden' disabled style="width:77%;" id="tag-select-suggestions" class="five-margin select2-container" name="hashtag_suggestions[]"> </input>
 		<noscript> This browser does not support JavaScript or JavaScript is turned off. Tagging is disabled. </noscript>
-		<button type="button" style="width:23%" id="add-these-tags" class="btn btn-default"> <small>Add Suggested Tags</small> </button>
+		<button type="button" style="width:22%" id="add-these-tags" class="btn btn-default"> <small>Add Suggested Tags</small> </button>
 	</div>
 
 	<hr>
