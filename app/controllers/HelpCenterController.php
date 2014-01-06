@@ -3,6 +3,8 @@
 class HelpCenterController extends BaseController {
 	
 	public function showHelpCenter() {
+		$user_id['user_id'] = Auth::user()->id;
+		Log::info('helpCenter accessed', $user_id);
 		return View::make('help')
 			->with('user', Auth::user());
 	}
@@ -28,6 +30,8 @@ class HelpCenterController extends BaseController {
 			//return Redirect::back()->with('message', 'Your post cannot be created at this time, please try again later.');
 		}
 		
+		$user_id['user_id'] = Auth::user()->id;
+		Log::info('help request post', $user_id);
 		// Make the specific post data (e.g., helpPost, project, etc...)
 		return Redirect::back()->with('message', 'Your post has been successfully created.');
 	}
@@ -51,6 +55,8 @@ class HelpCenterController extends BaseController {
 		//	return Redirect::back()->with('message', 'Your post cannot be created at this time, please try again later.');
 		}
 		
+		$user_id['user_id'] = Auth::user()->id;
+		Log::info('help offer post', $user_id);
 		// Make the specific post data (e.g., helpPost, project, etc...)
 		return Redirect::back()->with('message', 'Your post has been successfully created.');
 	}

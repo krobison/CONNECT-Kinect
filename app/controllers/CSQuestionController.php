@@ -3,6 +3,8 @@
 class CSQuestionController extends BaseController {
 	
 	public function showCSQuestion() {
+		$user_id['user_id'] = Auth::user()->id;
+		Log::info('CSQuestion accessed', $user_id);
 		$post = Post::orderBy('created_at', 'DESC')->where('postable_type', '=', 'PostQuestion')->take(1)->get();
 		$post = $post->first();
 		return View::make('singlepost')

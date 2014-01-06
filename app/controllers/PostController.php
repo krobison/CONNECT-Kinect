@@ -29,6 +29,8 @@ class PostController extends BaseController {
 					$owner = $post->user_id;
 
 					$this->addPostCommentNotifications($owner,$comment->post_id);
+					$user_id['user_id'] = Auth::user()->id;
+					Log::info('comment made', $user_id);
 
 					return Redirect::back()->with('message', "You have commented successfully");
 				}else{
@@ -211,6 +213,8 @@ class PostController extends BaseController {
 					
 					// Generate notifications for each tag selected
 					$this->addTagNotifications($post->hashtags,Auth::user()->id,$post->id);
+					$user_id['user_id'] = Auth::user()->id;
+					Log::info('general post created', $user_id);
 					
 			} catch( Exception $e ) {
 					//return View::make('debug', array('data' => Input::all()));
@@ -285,6 +289,8 @@ class PostController extends BaseController {
 			return Redirect::back()->with('message', 'There was an error making your post');
 		}
 			
+		$user_id['user_id'] = Auth::user()->id;
+		Log::info('project posted', $user_id);
 		return Redirect::back()->with('message', 'Your post has been successfully created.');
 	}
 
@@ -314,6 +320,7 @@ class PostController extends BaseController {
 			$content = Input::get('content');
 			$sort = Input::get('sort');
 			$oldhashtags = NULL;
+			$logText = "";
 			
 			$query = DB::table('posts');
 			
@@ -333,8 +340,24 @@ class PostController extends BaseController {
 			}
 			
 			$posts = $query->orderBy('id', 'DESC')->take(5)->get();
-			
-			
+
+			if (!empty($content)) {
+				$logText = $logText . $content . ",";
+			}
+
+			if (!empty($oldhashtags)) {
+				$logText = $logText . "with hashtags: ";
+				for ($i = 0; $i < sizeof($oldhashtags); ++$i) {
+					$logText = $logText . $oldhashtags[$i]->name . ",";
+				}
+			}
+
+			if (isset($sort)) {
+				$logText = $logText . "sorted by upvotes";
+			}
+
+			$user_id['user_id'] = Auth::user()->id;
+			Log::info('search made for ' . $logText, $user_id);
 							
 			return View::make('newsfeed')
 					->with('user', Auth::user())

@@ -100,6 +100,8 @@ class AdminController extends BaseController {
 					$new_tag->posts()->attach($post);
 				}
 			}
+			$user_id['user_id'] = Auth::user()->id;
+			Log::info('cs question post created', $user_id);
 		} catch( Exception $e ) {
 			//return View::make('debug', array('data' => Input::all()));
 			return Redirect::back()->with('message', '<div class="alert alert-danger" > Your post cannot be created at this time, please try again later. </div>');
