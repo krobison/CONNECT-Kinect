@@ -12,7 +12,7 @@
 @section('content')
 	@if ($post->postable_type == 'PostQuestion')
 		<a style="float:right" href="{{ URL::to('showPreviousQuestions') }}"><span class="glyphicon glyphicon-arrow-left"></span>   Previous Questions</a>
-		<h3>CS Question of the Week</h3>	
+		<h2>CS Question of the Week</h2>	
 		<p>
 			Give your answers and thoughts in the comments. A new question will be posted every week. The user who posts the best answer (as judged by CS Connect Administrator) will receive a small prize at the end of the week.
 		</p>
@@ -68,26 +68,35 @@
 		</script>
 	@endif
 	@if ($post->postable_type == 'PostHelpOffer')
+		{{--
 		<div class="well">
 			Availability:
 			{{{ $post->postable->availability }}}
 		</div>
+		--}}
 	@elseif ($post->postable_type == 'PostProject')
 		<div class="well">
-			<div >
-			{{ HTML::image('assets/img/csproject_images/'.$post->postable->screenshot, 'CS Project Screenshot', array('width' => '256', 'height' => '256')) }}
-			{{ link_to('/assets/csproject_files/'.$post->postable->file, 'Download') }}
-			{{ link_to($post->postable->link, 'External Link') }}
+			<div class="row" style="text-align:center">
+			@if($post->postable->file)
+			<h3> {{ link_to('/assets/csproject_files/'.$post->postable->file, 'Download') }} </h3>
+			@endif
+			@if($post->postable->link)
+			<h3> {{ link_to($post->postable->link, 'Link To Project') }} </h3>
+			@endif
 			</div>
+			<div class="row" style="text-align:center">
+			{{ HTML::image('assets/img/csproject_images/'.$post->postable->screenshot, 'CS Project Screenshot', array('width' => '512', 'height' => '512')) }}
+			</div>
+			<div class="row">
 			@if ($post->postable->approved == '0' && Auth::user()->admin == '1')
 				{{ Form::open(array('url' => 'approveproject', 'method'=>'post')) }}
 				{{ Form::hidden('id', $post->id) }}
-				<button type="submit" class="btn btn-success" style="float:right; "  onclick="return confirm('Are you sure you would like to approve this project?');">
+				<button type="submit" class="btn btn-success" style="float:right"  onclick="return confirm('Are you sure you would like to approve this project?');">
 					<span class="glyphicon glyphicon-ok"></span> Approve Project
 				</button>
 				{{ Form::close() }}
-				<br>
 			@endif
+			</div>
 		</div>
 			
 			

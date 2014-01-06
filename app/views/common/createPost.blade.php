@@ -14,6 +14,7 @@
 	
 	@if($url == 'createhelprequestpost') 
 	
+		{{--
 		<div class="form-group">
 			<b> How would you like to recieve help? </b> <br>
 			<i> Not Working </i> <br>
@@ -26,6 +27,7 @@
 				In person
 			</label>
 		</div>
+		--}}
 	 			
 		<div class="form-group">
 			<b> How would you like to be displayed? </b> <br>
@@ -38,6 +40,13 @@
 				Post Anonymously
 			</label>
 		</div>
+		<p>
+			What are you trying to do? <br>
+			What does you environment look like? <br>
+			Is this a compiler or run-time error? <br>
+			If run-time, what conditions generate the error? <br>
+			Please provide code if possible/applicable. <br>
+		</p>
 			
 	@endif
 

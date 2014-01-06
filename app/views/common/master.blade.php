@@ -144,9 +144,9 @@
 
 					{{-- Search --}}
 					@if (Request::path() == "search")
-						<a href="{{ URL::to('search') }}" class="list-group-item active"><span class="glyphicon glyphicon-search"></span>   Search</a>
+						<a href="{{ URL::to('search') }}" class="list-group-item active"><span class="glyphicon glyphicon-search"></span>   User Search</a>
 					@else
-                        <a href="{{ URL::to('search') }}" class="list-group-item"><span class="glyphicon glyphicon-search"></span>   Search</a>
+                        <a href="{{ URL::to('search') }}" class="list-group-item"><span class="glyphicon glyphicon-search"></span>   User Search</a>
                     @endif
                     
                     {{-- Moar --}}

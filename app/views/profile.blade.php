@@ -96,10 +96,16 @@
 			@endif
 		</div>
 	</div>
+	
+	
 	<div class="custom">
+		<span class="infolabel"> <h3>Bio</h3></span><br>
 	   {{$currentuser->bio}} 	
 	</div>
+	
+	
 	<div class="feed">
+		<span class="infolabel"><h3>User Posts</h3></span>
 	    @foreach ($posts as $post)
 			@if ($post->postable_type != "PostHelpRequest" || $post->postable->anonymous != 1)
 				{{ View::make('common.newsfeedPost')->with('post', $post) }}

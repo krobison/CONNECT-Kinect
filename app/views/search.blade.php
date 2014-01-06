@@ -4,6 +4,12 @@
 	{{ HTML::style('assets/css/posts.css') }}
 	{{ HTML::style('assets/css/select2.css') }}
 	{{ HTML::style('assets/css/search.css') }}
+	<style>
+	#search-title:hover
+	{ 
+		background-color:orange;
+	}
+	</style>
 @stop
 
 @section('title')
@@ -11,14 +17,11 @@
 @stop
 
 @section('content')
-	<h1> Search Page </h1>
+	<h2> User Search Page </h2>
 	<div class="panel panel-default">
-	    <div class="panel-heading">
+	    <div id="search-title" class="panel-heading">
 			<h4>
 			Search
-			<div class="btn-group" id="new-post-buttons">
-				<button id="hide-new-post-button" type="button" class="btn btn-default btn-sm">Hide</button>
-			</div>
 			</h4>
 		</div>
 		<div id="new-post-body" class="panel-body">
@@ -28,12 +31,12 @@
 		<div style="width:100%;">
 		@if(!empty($name))
 		{{ Form::text('name', $name, array( 
-		'placeholder' => 'Search Users and Bios',
+		'placeholder' => 'Search User Names and Bios',
 		'class' => 'form-control'
 		)) }}
 		@else
 		{{ Form::text('name', null, array( 
-		'placeholder' => 'Search Users and Bios',
+		'placeholder' => 'Search for Users by Name and Bio',
 		'class' => 'form-control'
 		)) }}
 		@endif
@@ -71,9 +74,6 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4>Matching Names
-			<div class="btn-group" id="new-post-buttons">
-				<button id="hide-name-button" type="button" class="btn btn-default btn-sm">Hide</button>
-			</div>
 			</h4>
 		</div>
 		<div id="name-body" class="panel-body">
@@ -146,14 +146,11 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4>Matching Bios
-			<div class="btn-group" id="new-post-buttons">
-				<button id="hide-bio-button" type="button" class="btn btn-default btn-sm">Hide</button>
-			</div>
 			</h4>
 		</div>
 		<div id="bio-body" class="panel-body">
 	@endif
-		@foreach($nameresults as $result) 
+		@foreach($bioresults as $result) 
 		<div style="margin-bottom:16px;padding:8px;border:1px #CCCCCC solid;border-radius:4px;"> 
 			<div class="row">
 				<div class="picture">
@@ -221,11 +218,11 @@
 	<script>
 		$(document).ready(function() { 
 		$(".select2-container").select2({
-			placeholder: "Search by Classes"
+			placeholder: "Search for Users by Classes"
 		});
 		});
-		// Hide and show post divs on button press
-		$('#hide-new-post-button').click(function() {
+		/* Hide and show post divs on button press
+		$('#search-title').click(function() {
 			$('#new-post-body').toggle(200);
 		});
 		$('#hide-name-button').click(function() {
@@ -233,6 +230,6 @@
 		});
 		$('#hide-bio-button').click(function() {
 			$('#bio-body').toggle(200);
-		});
+		});*/
 	</script>
 @stop

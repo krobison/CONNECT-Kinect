@@ -206,7 +206,7 @@
 		
 		<div id="instructor_panel" style="display: none">
 			<div class="row">
-				{{ Form::label('classes_instructor', 'Please select the CS classes for which you are an instructor:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10')) }}	
+				{{ Form::label('classes_instructor', 'Please select the CS classes for which you are currently an instructor:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10')) }}	
 			</div>
 			<div class="row">
 				<div class ="col-xs-10 col-md-8 col-md-offset-2">

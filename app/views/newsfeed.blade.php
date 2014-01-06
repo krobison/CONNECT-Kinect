@@ -26,7 +26,7 @@
 			Create New Post
 			</h4>
 			<p>
-				Make a post about anything. It will appear to all CS Connect users below. Not enough guidance? Fine. Examples: Rant about your favourite programming language, Open invite to dinner at your house tonight, What Band did you vote to come to e-days?, SuperBowl predictions, Link to your favourite xkcd, Anything. Just make sure to tag your post.
+				Make a post about anything. It will appear to all CS Connect users below. Not enough guidance? Fine. Examples: Rant about your favourite programming language, Open invite to dinner at your house tonight, What band did you vote to come to e-days?, SuperBowl predictions, Link to your favourite xkcd, Anything. Just make sure to tag your post.
 			</p>
 		</div>
 		<div id="new-post-content" class="panel-body">
