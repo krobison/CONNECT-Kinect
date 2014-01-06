@@ -16,27 +16,26 @@ class PostController extends BaseController {
 
 	public function createComment() {
 		try {
-				if (Input::get('content') != ''){
-					$comment = new Comment;
-					$comment->content = Input::get('content');
-					$comment->user_id = Input::get('user_id');
-					$comment->post_id = Input::get('post_id');
-					$comment->language = Input::get('language');
-					$comment->code = Input::get('code');
-					$comment->save();
+			if (Input::get('content') != ''){
+				$comment = new Comment;
+				$comment->content = Input::get('content');
+				$comment->user_id = Input::get('user_id');
+				$comment->post_id = Input::get('post_id');
+				$comment->language = Input::get('language');
+				$comment->code = Input::get('code');
+				$comment->save();
 
-					$post = Post::find($comment->post_id);
-					$owner = $post->user_id;
+				$post = Post::find($comment->post_id);
+				$owner = $post->user_id;
 
-					$this->addPostCommentNotifications($owner,$comment->post_id);
-					$user_id['user_id'] = Auth::user()->id;
-					Log::info('comment made', $user_id);
+				$this->addPostCommentNotifications($owner,$comment->post_id);
+				$user_id['user_id'] = Auth::user()->id;
+				Log::info('comment made', $user_id);
 
-					return Redirect::back()->with('message', "You have commented successfully");
-				}else{
-					return Redirect::back()->with('message', "You must type something");
-				}
-				
+				return Redirect::back()->with('message', "You have commented successfully");
+			} else{
+				return Redirect::back()->with('message', "You must type something");
+			}
 		} catch( Exception $e ) {
 
 				return Redirect::back()->with('message', "You have commented unsuccessfully");
@@ -287,7 +286,7 @@ class PostController extends BaseController {
 
 		} catch( Exception $e ) {
 			//return View::make('debug', array('data' => Input::all()));
-			return Redirect::back()->with('message', 'There was an error making your post');
+			return Redirect::back()->with('message', 'There was an error making your post. Exception '.$e);
 		}
 
 		$user_id['user_id'] = Auth::user()->id;

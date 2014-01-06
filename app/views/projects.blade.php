@@ -28,9 +28,9 @@
 		<?php $message = Session::get('message');?>
 			{{$message}}
 			<h4> New Project Post </h4>	
-				<p>
-					Upload your project here. Provide a link to your project (web site, github, public dropbox, etc...), upload a zip file of your project, or both! Also, please include a screenshot and and a description of your project as well. Posts will be evaluated and approved by a Connect administrator then posted on the CS Projects page. Note: the screen shot and zip file combine must be less than 2Mb.
-				</p>
+			<p>
+				Upload your project here. Provide a link to your project (web site, github, public dropbox, etc...), upload a zip file of your project, or both! Also, please include a screenshot and a description of your project as well. Posts will be evaluated and approved by a Connect administrator then posted on the CS Projects page. Note: the screenshot and zip file combine must be less than 2Mb.
+			</p>
 		</div>
 		{{ View::make('common/createPost')->with('url', 'createprojectpost') }}
 	</div>
