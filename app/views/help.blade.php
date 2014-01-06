@@ -63,15 +63,16 @@
 			<h4>Recent Help Requests</h4>
 		</div>
 		<div id="help-request" class="panel-body">
-			{{-- $post_counter = 0; --}}
+			<div id="postrequestswrapper">
 			@foreach (Post::where('postable_type', '=', 'PostHelpRequest')->take(5)->orderBy('id', 'DESC')->get() as $post)
 				{{ View::make('common.newsfeedPost')->with('post', $post) }}
 				{{-- $post_counter = $post_counter + 1 --}}
+			<div class="{{$post->postable_type}}" id="{{$post->id}}"></div>
 			@endforeach
-			
-			{{-- @if( $post_counter >= 5 ) --}}
+			</div>
+			<div id="loadmorerequestsbutton">
 				<button type="button" class="btn btn-default">Load more... <i> Not Working </i> </button>
-			{{-- @endif --}}
+			</div>
 		</div>
 	</div>
 	
@@ -80,15 +81,15 @@
 			<h4>Recent Help Offers</h4>
 		</div>
 		<div id="help-request" class="panel-body">
-			{{-- @$post_counter = 0; --}}
+			<div id="postofferswrapper">
 			@foreach (Post::where('postable_type', '=', 'PostHelpOffer')->take(5)->orderBy('id', 'DESC')->get() as $post)
 				{{ View::make('common.newsfeedPost')->with('post', $post) }}
-				{{-- $post_counter = $post_counter + 1 --}}
+			<div class="{{$post->postable_type}}" id="{{$post->id}}"></div>
 			@endforeach
-			
-			{{--@if( $post_counter >= 5 )--}}
+			</div>
+			<div id="loadmoreoffersbutton">
 				<button type="button" class="btn btn-default">Load more... <i> Not Working </i></button>
-			{{--@endif--}}
+			</div>
 		</div>
 	</div>
 	
@@ -118,6 +119,48 @@
 			$('#help-request').hide(200);
 			$('#help-offer').hide(200);
 		});
+		
+		var requestID = $(".PostHelpRequest:last").attr("id");
+		$("#loadmorerequestsbutton").click(function (){
+               $('#loadmorerequestsbutton').html('{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}'); 
+                $.ajax({
+					url: '{{ URL::to('loadmorerequests') }}',
+					type: 'POST',
+                    data: 'lastpost='+requestID,
+					dataType: 'html',
+					success: function(data){
+                        if(data){
+                            $("#postrequestswrapper").append(data);
+                            requestID = $(".PostHelpRequest:last").attr("id");
+							 $('#loadmorerequestsbutton').html('<button type="button" class="btn btn-default">Load more...</button>');
+                        }else{
+                            $('#loadmorerequestsbutton').replaceWith('<center>No more posts to show.</center>');
+                        }
+                    }
+					
+                });
+            });
+			
+		var offerID = $(".PostHelpOffer:last").attr("id");
+		$("#loadmoreoffersbutton").click(function (){
+               $('#loadmoreoffersbutton').html('{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}'); 
+                $.ajax({
+					url: '{{ URL::to('loadmoreoffers') }}',
+					type: 'POST',
+                    data: 'lastpost='+offerID,
+					dataType: 'html',
+					success: function(data){
+                        if(data){
+                            $("#postofferswrapper").append(data);
+                            offerID = $(".PostHelpOffer:last").attr("id");
+							$('#loadmoreoffersbutton').html('<button type="button" class="btn btn-default">Load more...</button>');
+                        }else{
+                            $('#loadmoreoffersbutton').replaceWith('<center>No more posts to show.</center>');
+                        }
+                    }
+					
+                });
+            });
 		
 	</script>
 @stop

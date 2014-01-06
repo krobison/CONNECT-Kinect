@@ -17,8 +17,7 @@
 		@if($post->postable_type != 'PostProject' || $post->postable->approved == '1')
 			{{ View::make('common.newsfeedPost')->with('post', $post) }}
 		@endif
-		<div class="postitem" id="{{$post->id}}"></div>
+		<div class="{{$post->postable_type}}" id="{{$post->id}}"></div>
 	@endforeach
-	
 	
 	

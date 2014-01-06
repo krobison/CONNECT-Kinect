@@ -285,7 +285,8 @@ class PostController extends BaseController {
 		}
 		return View::make('loadmoreposts')
 		->with('user', Auth::user())
-		->with('posts', $posts);
+		->with('posts', $posts)
+		->with('type', 'GeneralPost');
 	
 	}
 }
