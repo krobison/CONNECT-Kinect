@@ -11,6 +11,7 @@ class PostController extends BaseController {
 			$comment->language = Input::get('language');
 			$comment->code = Input::get('code');
 			$comment->save();
+			Log::error('I commented on a post!');
 
 			return Redirect::back()->with('message', "You have commented successfully");
 			
