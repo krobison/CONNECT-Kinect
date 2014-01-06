@@ -96,6 +96,10 @@
 								@foreach(Auth::user()->notifications()->where('type','=','tag')->get() as $notification)
 									{{ View::make('common.notification')->with('notification', $notification) }}
 								@endforeach
+							<li role="presentation" class="dropdown-header">Post Notifications</li>
+								@foreach(Auth::user()->notifications()->where('type','=','postComment')->get() as $notification)
+									{{ View::make('common.notification')->with('notification', $notification) }}
+								@endforeach
 						</ul>
 					@endif
 					</div>
@@ -137,13 +141,6 @@
 					@else
 						<a href="{{ URL::to('helpCenter') }}" class="list-group-item"><span class="glyphicon glyphicon-bullhorn"></span>   Help Center</a>
 					@endif	
-
-					{{-- Community --}}
-					@if (Request::path() == "community")
-						<a href="{{ URL::to('community') }}" class="list-group-item active"><span class="glyphicon glyphicon-globe"></span>   Community</a>
-					@else
-						<a href="{{ URL::to('community') }}" class="list-group-item"><span class="glyphicon glyphicon-globe"></span>   Community</a>
-					@endif
 
 					{{-- Search --}}
 					@if (Request::path() == "search")

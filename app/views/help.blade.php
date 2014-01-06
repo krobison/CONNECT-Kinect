@@ -71,7 +71,7 @@
 			@endforeach
 			</div>
 			<div id="loadmorerequestsbutton">
-				<button type="button" class="btn btn-default">Load more... <i> Not Working </i> </button>
+				<button type="button" class="btn btn-default">Load more...</button>
 			</div>
 		</div>
 	</div>
@@ -88,7 +88,7 @@
 			@endforeach
 			</div>
 			<div id="loadmoreoffersbutton">
-				<button type="button" class="btn btn-default">Load more... <i> Not Working </i></button>
+				<button type="button" class="btn btn-default">Load more...</button>
 			</div>
 		</div>
 	</div>

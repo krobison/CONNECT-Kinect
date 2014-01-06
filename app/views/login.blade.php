@@ -140,6 +140,12 @@
 		</div> -->
 		<div id="header"> 
 			{{ HTML::image('assets/img/Connect_Logo.png' , '', array('class' => 'logo')) }}
+			<div>
+				<?php $message = Session::get('message');?>
+				@if ($message)
+					{{$message}}
+				@endif
+			</div>
 		</div>
 			<div class="buttonRow">
 				<button type="button" class="btn btn-lg btn-primary btn-block" id="enter" style="float:left;">
@@ -213,7 +219,7 @@
 				        </li>
 				    </ul>
 				</article>
-				<p class="text-muted credit"  style="margin-top:350px;margin-bottom:64px;text-align:center;">©2013 Toilers research group, Colorado School of Mines 
+				<p class="text-muted credit"  style="margin-top:350px;margin-bottom:64px;text-align:center; color:#000000">©2013 Toilers research group, Colorado School of Mines 
 					{{ HTML::image('assets/img/mines_logo.png') }}
 					{{ HTML::image('assets/img/toilers.png') }}
 				</p>

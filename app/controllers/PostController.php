@@ -2,39 +2,41 @@
 
 class PostController extends BaseController {
 
-	public function addPostCommentNotifications($user,$cId){
-		$user = User::find($user);
-		if ($user->id != Auth::user()->id){
-			$not = new Notification;
-			$not->user_id = $user->id;
-			$not->initiator_id = Auth::user()->id;
-			$not->type = 'postComment';
-			$not->origin_id = $cId;
-			$not->save();
-		}
+	 public function addPostCommentNotifications($user,$cId){
+			$user = User::find($user);
+			if ($user->id != Auth::user()->id){
+				$not = new Notification;
+				$not->user_id = $user->id;
+				$not->initiator_id = Auth::user()->id;
+				$not->type = 'postComment';
+				$not->origin_id = $cId;
+				$not->save();
+			}
 	}
 
 	public function createComment() {
 		try {
-			if (Input::get('content') != ''){
-				$comment = new Comment;
-				$comment->content = Input::get('content');
-				$comment->user_id = Input::get('user_id');
-				$comment->post_id = Input::get('post_id');
-				$comment->language = Input::get('language');
-				$comment->code = Input::get('code');
-				$comment->save();
+				if (Input::get('content') != ''){
+					$comment = new Comment;
+					$comment->content = Input::get('content');
+					$comment->user_id = Input::get('user_id');
+					$comment->post_id = Input::get('post_id');
+					$comment->language = Input::get('language');
+					$comment->code = Input::get('code');
+					$comment->save();
 
-				$post = Post::find($comment->post_id);
-				$owner = $post->user_id;
+					$post = Post::find($comment->post_id);
+					$owner = $post->user_id;
 
-				$this->addPostCommentNotifications($owner,$comment->post_id);
+					$this->addPostCommentNotifications($owner,$comment->post_id);
 
-				return Redirect::back()->with('message', "You have commented successfully");
-			}else{
-				return Redirect::back()->with('message', "You must type something");
-			}
+					return Redirect::back()->with('message', "You have commented successfully");
+				}else{
+					return Redirect::back()->with('message', "You must type something");
+				}
+				
 		} catch( Exception $e ) {
+
 				return Redirect::back()->with('message', "You have commented unsuccessfully");
 		}
 	}
@@ -65,6 +67,7 @@ class PostController extends BaseController {
 			}
 			
 	}
+
 
 	public function upvote() {
 			$post = Post::find(Input::get('post_id'));
@@ -192,18 +195,18 @@ class PostController extends BaseController {
 					// Turn into array
 					$hashtags = preg_split('/(?<!"),(?!")/',$hashtags[0]);
 					foreach($hashtags as $tag) {
-							// If the value is not numerical, the tag doesn't exist yet. Add it to the the table.
-							if(is_numeric($tag)) {
-									Hashtag::find($tag)->posts()->attach($post);
-							} else {
-									// Only save tags longer than 3 characters (not including whitespace)
-									if(strlen(preg_replace('/\s+/', '', $string)) > 2) {
-											$new_tag = new Hashtag;
-											$new_tag->name = $tag;
-											$new_tag->save();
-											$new_tag->posts()->attach($post);
-									}
+						// If the value is not numerical, the tag doesn't exist yet. Add it to the the table.
+						if(is_numeric($tag)) {
+								Hashtag::find($tag)->posts()->attach($post);
+						} else {
+							// Only save tags longer than 3 characters (not including whitespace)
+							if(strlen(preg_replace('/\s+/', '', $string)) > 2) {
+									$new_tag = new Hashtag;
+									$new_tag->name = $tag;
+									$new_tag->save();
+									$new_tag->posts()->attach($post);
 							}
+						}
 					}
 					
 					// Generate notifications for each tag selected
@@ -216,8 +219,7 @@ class PostController extends BaseController {
 			return Redirect::back();
 			//return Redirect::back()->with('message', '<div class="alert alert-success"> Your post has been successfully created. </div>');
 	}
-		
-
+	
 	public function createProjectPost() {
 		try {
 			$post_P = new PostProject;
@@ -261,18 +263,18 @@ class PostController extends BaseController {
 			// Turn into array
 			$hashtags = preg_split('/(?<!"),(?!")/',$hashtags[0]);
 			foreach($hashtags as $tag) {
-					// If the value is not numerical, the tag doesn't exist yet. Add it to the the table.
-					if(is_numeric($tag)) {
-							Hashtag::find($tag)->posts()->attach($post);
-					} else {
-							// Only save tags longer than 3 characters (not including whitespace)
-							if(strlen(preg_replace('/\s+/', '', $string)) > 2) {
-									$new_tag = new Hashtag;
-									$new_tag->name = $tag;
-									$new_tag->save();
-									$new_tag->posts()->attach($post);
-							}
+				// If the value is not numerical, the tag doesn't exist yet. Add it to the the table.
+				if(is_numeric($tag)) {
+						Hashtag::find($tag)->posts()->attach($post);
+				} else {
+					// Only save tags longer than 3 characters (not including whitespace)
+					if(strlen(preg_replace('/\s+/', '', $string)) > 2) {
+							$new_tag = new Hashtag;
+							$new_tag->name = $tag;
+							$new_tag->save();
+							$new_tag->posts()->attach($post);
 					}
+				}
 			}
 			
 			// Generate notifications for each tag selected

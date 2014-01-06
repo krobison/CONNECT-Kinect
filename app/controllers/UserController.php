@@ -90,7 +90,7 @@ class UserController extends BaseController {
 						}
 					}
 				}
-				return Redirect::to('/')->with('message', '<div class="alert alert-success"> A new account has been created! Please try logging in.</div> ');				
+				return Redirect::to('/')->with('message', '<div class="alert alert-info"> A new account has been created! Please try logging in.</div> ');				
 				
 			} catch( Exception $e ) {
 				Log::error('New User Error: ' . $e);
