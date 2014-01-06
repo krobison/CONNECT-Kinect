@@ -96,6 +96,10 @@
 								@foreach(Auth::user()->notifications()->where('type','=','tag')->get() as $notification)
 									{{ View::make('common.notification')->with('notification', $notification) }}
 								@endforeach
+							<li role="presentation" class="dropdown-header">Post Notifications</li>
+								@foreach(Auth::user()->notifications()->where('type','=','postComment')->get() as $notification)
+									{{ View::make('common.notification')->with('notification', $notification) }}
+								@endforeach
 						</ul>
 					@endif
 					</div>
