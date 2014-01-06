@@ -142,13 +142,6 @@
 						<a href="{{ URL::to('helpCenter') }}" class="list-group-item"><span class="glyphicon glyphicon-bullhorn"></span>   Help Center</a>
 					@endif	
 
-					{{-- Community --}}
-					@if (Request::path() == "community")
-						<a href="{{ URL::to('community') }}" class="list-group-item active"><span class="glyphicon glyphicon-globe"></span>   Community</a>
-					@else
-						<a href="{{ URL::to('community') }}" class="list-group-item"><span class="glyphicon glyphicon-globe"></span>   Community</a>
-					@endif
-
 					{{-- Search --}}
 					@if (Request::path() == "search")
 						<a href="{{ URL::to('search') }}" class="list-group-item active"><span class="glyphicon glyphicon-search"></span>   Search</a>

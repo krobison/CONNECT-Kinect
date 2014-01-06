@@ -140,6 +140,12 @@
 		</div> -->
 		<div id="header"> 
 			{{ HTML::image('assets/img/Connect_Logo.png' , '', array('class' => 'logo')) }}
+			<div>
+				<?php $message = Session::get('message');?>
+				@if ($message)
+					{{$message}}
+				@endif
+			</div>
 		</div>
 			<div class="buttonRow">
 				<button type="button" class="btn btn-lg btn-primary btn-block" id="enter" style="float:left;">
