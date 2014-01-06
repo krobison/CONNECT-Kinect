@@ -5,6 +5,8 @@ include(app_path().'/purify/HTMLPurifier.auto.php');
 class ConversationController extends BaseController {
 	
 	public function showConversations() {
+		$user_id['user_id'] = Auth::user()->id;
+		Log::info('conversations accessed', $user_id);
 		return View::make('conversations')
 			->with('user', Auth::user())
 			->with('conversations', Auth::user()->conversations);

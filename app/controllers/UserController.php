@@ -374,6 +374,9 @@ class UserController extends BaseController {
 		DB::table('course_user')->where('user_id','=',$id)->delete();
 		DB::table('users')->where('id','=',$id)->delete();
 
+		$user_id['user_id'] = Auth::user()->id;
+		Log::info('account deleted', $user_id);
+
 		return Redirect::to('/')->with('message', '<div class="alert alert-success"> You have successfully deleted your account. </div>');
 	}
 	

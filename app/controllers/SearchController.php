@@ -3,6 +3,8 @@
 class SearchController extends BaseController {
 	
 	public function showSearch() {
+		$user_id['user_id'] = Auth::user()->id;
+		Log::info('search accessed', $user_id);
 		return View::make('search')
 			->with('user', Auth::user());
 	}
@@ -13,6 +15,10 @@ class SearchController extends BaseController {
 		$nameresults = NULL;
 		$bioresults = NULL;
 		$searchCourses = "";
+		$logText = "";
+		if (!empty($name)) {
+			$logText = $logText . $name . ", ";
+		}
 		
 		if (empty($courses) && empty($name)) {
 			return View::make('search')->with('user', Auth::user());
@@ -82,7 +88,13 @@ class SearchController extends BaseController {
 			$searchCourses = DB::table('courses')
 				->whereIn('id',$courses)
 				->get();
+			for ($i = 0; $i < sizeof($searchCourses); $i++) {
+				$logText = $logText . " " . $searchCourses[$i]->prefix . " " . $searchCourses[$i]->number . " " . $searchCourses[$i]->name. " , ";
+			}
 		}
+
+		$user_id['user_id'] = Auth::user()->id;
+		Log::info('search made for ' . $logText, $user_id);
 		
 		return View::make('search')
 			->with('nameresults', $nameresults)
