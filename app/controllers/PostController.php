@@ -201,7 +201,7 @@ class PostController extends BaseController {
 								Hashtag::find($tag)->posts()->attach($post);
 						} else {
 							// Only save tags longer than 3 characters (not including whitespace)
-							if(strlen(preg_replace('/\s+/', '', $string)) > 2) {
+							if(strlen(preg_replace('/\s+/', '', $tag)) > 2) {
 									$new_tag = new Hashtag;
 									$new_tag->name = $tag;
 									$new_tag->save();
@@ -272,7 +272,7 @@ class PostController extends BaseController {
 						Hashtag::find($tag)->posts()->attach($post);
 				} else {
 					// Only save tags longer than 3 characters (not including whitespace)
-					if(strlen(preg_replace('/\s+/', '', $string)) > 2) {
+					if(strlen(preg_replace('/\s+/', '', $tag)) > 2) {
 							$new_tag = new Hashtag;
 							$new_tag->name = $tag;
 							$new_tag->save();
