@@ -1,6 +1,7 @@
 @extends('common.master')
 
 @section('additionalHeaders')
+	{{ HTML::style('assets/css/posts.css') }}
 	{{ HTML::style('assets/css/select2.css') }}
 	{{ HTML::style('assets/css/search.css') }}
 @stop
@@ -11,36 +12,74 @@
 
 @section('content')
 	<h1> Search Page </h1>
-	{{ Form::open(array('url' => 'searchfilter', 'method' => 'GET')) }}
-	@if(!empty($name))
-	{{ Form::text('name', $name, array( 'placeholder' => 'Search Users')) }}
-	@else
-	{{ Form::text('name', null, array( 'placeholder' => 'Search Users')) }}
-	@endif
-					<select multiple class="select2-container classSelect" name="classes[]">
-						<optgroup label="Computer Science">
-							@foreach(Course::all() as $course)
-								<option value={{ $course->id }}>{{ $course->prefix }}{{ $course->number }} - {{ $course->name }}</option>
-							@endforeach
-						</optgroup>
-						@if (!empty($searchCourses))
-							@foreach($searchCourses as $course)
-								<option selected value={{{ $course->id }}}>
-									{{{$course->prefix}}}{{{$course->number}}} - {{{$course->name}}}
-								</option>
-							@endforeach
-						@endif
-					</select>
-				
-	{{ Form::Submit('Search') }}
-	{{ Form::close() }}
-	
-	<br>
+	<div class="panel panel-default">
+	    <div class="panel-heading">
+			<h4>
+			Search
+			<div class="btn-group" id="new-post-buttons">
+				<button id="hide-new-post-button" type="button" class="btn btn-default btn-sm">Hide</button>
+			</div>
+			</h4>
+		</div>
+		<div id="new-post-body" class="panel-body">
+		<div class="form-group">
+		
+		{{ Form::open(array('url' => 'searchfilter', 'method' => 'GET')) }}
+		<div style="width:100%;">
+		@if(!empty($name))
+		{{ Form::text('name', $name, array( 
+		'placeholder' => 'Search Users and Bios',
+		'class' => 'form-control'
+		)) }}
+		@else
+		{{ Form::text('name', null, array( 
+		'placeholder' => 'Search Users and Bios',
+		'class' => 'form-control'
+		)) }}
+		@endif
+		</div>
+		</div>
+		<div class="form-group">
+				<select multiple style="width:100%;" class="select2-container classSelect" name="classes[]">
+					<optgroup label="Computer Science">
+						@foreach(Course::all() as $course)
+							<option value={{ $course->id }}>{{ $course->prefix }}{{ $course->number }} - {{ $course->name }}</option>
+						@endforeach
+					</optgroup>
+					@if (!empty($searchCourses))
+						@foreach($searchCourses as $course)
+							<option selected value={{{ $course->id }}}>
+								{{{$course->prefix}}}{{{$course->number}}} - {{{$course->name}}}
+							</option>
+						@endforeach
+					@endif
+				</select>
+		</div>
+		
+		<div class="row">
+			<div class ="col-xs-5 col-md-4">
+				{{Form::submit('Search', array('class' => 'btn btn-primary btn-block'))}}	
+			</div>
+		</div>
+		{{ Form::close() }}
+		
+		</div>
+	</div>
 	
 	@if(isset($nameresults))
-	@if(!empty($nameresults))<h2>Names</h2>@endif
+	@if(!empty($nameresults))
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>Matching Names
+			<div class="btn-group" id="new-post-buttons">
+				<button id="hide-name-button" type="button" class="btn btn-default btn-sm">Hide</button>
+			</div>
+			</h4>
+		</div>
+		<div id="name-body" class="panel-body">
+	@endif
 		@foreach($nameresults as $result) 
-		<div class="well">
+		<div style="margin-bottom:16px;padding:8px;border:1px #CCCCCC solid;border-radius:4px;"> 
 			<div class="row">
 				<div class="picture">
 					<a href="{{URL::to('profile', $result->id)}}">
@@ -51,13 +90,22 @@
 					@endif
 					</a>
 				</div>
+				<div class="info">
 				<span>
-					<h3><a href="{{URL::to('profile', $result->id)}}">{{{ $result->first }}} {{{ $result->last }}} </a></h3>
+				<h3><a href="{{URL::to('profile', $result->id)}}">{{{ $result->first }}} {{{ $result->last }}} </a></h3>
 				</span>
-			<span>
+				
+				<span>
+				<?php $strippedBio = strip_tags($result->bio); ?>
+				@if (strlen($strippedBio) > 55)
+                   <p> {{{ substr($strippedBio,0,55)."..." }}} </p> 
+                @else
+                   <p>{{{ $strippedBio }}} </p> 
+                @endif
+				</span>
 
-				<div>
-
+				<span class="infolabel"><b>Classes:</b></span> </br>
+				<span>
 					@foreach(User::find($result->id)->courses as $course)
 						@if (!empty($searchCourses))
 							@foreach($searchCourses as $searchCourse)
@@ -80,68 +128,92 @@
 							<span class="courselabel">{{{$course->prefix}}}{{{$course->number}}} - {{{$course->name}}}</span>
 						@endif
 					@endforeach
-					
+				</span>
 					
 				</div>
-			</span>
 			</div>
 			
 		</div>
 		@endforeach
+		@if(!empty($nameresults))
+		</div>
+		</div>
+		@endif
 	@endif
 	
 	@if(isset($bioresults))
-	@if(!empty($bioresults))<h2>Bio</h2>@endif
-	@foreach($bioresults as $result) 
-	<div class="well">
-		<div class="row">
-			<div class="picture">
-				<a href="{{URL::to('profile', $result->id)}}">
-				@if(is_null($result->picture))
-					{{ HTML::image('assets/img/dummy.png', 'profile picture', array('width' => '128', 'height' => '128')) }}
-				@else
-					{{ HTML::image('assets/img/profile_images/'.$result->picture, 'profile picture', array('width' => '128', 'height' => '128')) }}
-				@endif
-				</a>
+	@if(!empty($bioresults))
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>Matching Bios
+			<div class="btn-group" id="new-post-buttons">
+				<button id="hide-bio-button" type="button" class="btn btn-default btn-sm">Hide</button>
 			</div>
-			<span>
-				<h3><a href="{{URL::to('profile', $result->id)}}">{{{ $result->first }}} {{{ $result->last }}} </a></h3>
-			</span>
-		<span>
-
-			<div>
-
-				@foreach(User::find($result->id)->courses as $course)
-					@if (!empty($searchCourses))
-						@foreach($searchCourses as $searchCourse)
-							@if($course->id == $searchCourse->id)
-								<span class="courselabelmatch">{{{$course->prefix}}}{{{$course->number}}} - {{{$course->name}}}</span>
-							@endif
-						@endforeach 
-					@endif
-				@endforeach
-				@foreach(User::find($result->id)->courses as $course)
-					<?php $t = false ?>
-					@if (!empty($searchCourses))
-						@foreach($searchCourses as $searchCourse)
-							@if($course->id == $searchCourse->id)
-								<?php $t = true ?>
-							@endif
-						@endforeach 
-					@endif
-					@if(!$t)
-						<span class="courselabel">{{{$course->prefix}}}{{{$course->number}}} - {{{$course->name}}}</span>
-					@endif
-				@endforeach
-					
-					
-			</div>
-		</span>
-		{{{strip_tags($result->bio)}}}
+			</h4>
 		</div>
+		<div id="bio-body" class="panel-body">
+	@endif
+		@foreach($nameresults as $result) 
+		<div style="margin-bottom:16px;padding:8px;border:1px #CCCCCC solid;border-radius:4px;"> 
+			<div class="row">
+				<div class="picture">
+					<a href="{{URL::to('profile', $result->id)}}">
+					@if(is_null($result->picture))
+						{{ HTML::image('assets/img/dummy.png', 'profile picture', array('width' => '128', 'height' => '128')) }}
+					@else
+						{{ HTML::image('assets/img/profile_images/'.$result->picture, 'profile picture', array('width' => '128', 'height' => '128')) }}
+					@endif
+					</a>
+				</div>
+				<div class="info">
+				<span>
+				<h3><a href="{{URL::to('profile', $result->id)}}">{{{ $result->first }}} {{{ $result->last }}} </a></h3>
+				</span>
+				
+				<span>
+				<?php $strippedBio = strip_tags($result->bio); ?>
+				@if (strlen($strippedBio) > 55)
+                   <p> {{{ substr($strippedBio,0,55)."..." }}} </p> 
+                @else
+                   <p>{{{ $strippedBio }}} </p> 
+                @endif
+				</span>
+
+				<span class="infolabel"><b>Classes:</b></span> </br>
+				<span>
+					@foreach(User::find($result->id)->courses as $course)
+						@if (!empty($searchCourses))
+							@foreach($searchCourses as $searchCourse)
+								@if($course->id == $searchCourse->id)
+									<span class="courselabelmatch">{{{$course->prefix}}}{{{$course->number}}} - {{{$course->name}}}</span>
+								@endif
+							@endforeach 
+						@endif
+					@endforeach
+					@foreach(User::find($result->id)->courses as $course)
+						<?php $t = false ?>
+						@if (!empty($searchCourses))
+							@foreach($searchCourses as $searchCourse)
+								@if($course->id == $searchCourse->id)
+									<?php $t = true ?>
+								@endif
+							@endforeach 
+						@endif
+						@if(!$t)
+							<span class="courselabel">{{{$course->prefix}}}{{{$course->number}}} - {{{$course->name}}}</span>
+						@endif
+					@endforeach
+				</span>
+					
+				</div>
+			</div>
 			
-	</div>
-	@endforeach
+		</div>
+		@endforeach
+		@if(!empty($bioresults))
+		</div>
+		</div>
+		@endif
 	@endif
 	<!-- Loading all scripts at the end for performance-->
 	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
@@ -149,8 +221,18 @@
 	<script>
 		$(document).ready(function() { 
 		$(".select2-container").select2({
-			placeholder: "Select Your Classes"
+			placeholder: "Search by Classes"
 		});
+		});
+		// Hide and show post divs on button press
+		$('#hide-new-post-button').click(function() {
+			$('#new-post-body').toggle(200);
+		});
+		$('#hide-name-button').click(function() {
+			$('#name-body').toggle(200);
+		});
+		$('#hide-bio-button').click(function() {
+			$('#bio-body').toggle(200);
 		});
 	</script>
 @stop

@@ -40,11 +40,11 @@
 	    			});
 	    		@else
 	    			$("#code-panel{{$comment->id}}").show();
-	    			ace.edit("editor").on("change", function() {
+	    			ace.edit("editor{{$comment->id}}").on("change", function() {
 						$("#save{{$comment->id}}").attr("disabled", false);
-						$('[name="toSaveNewCode{{$comment->id}}"]').attr('value', ace.edit("editor").getValue().trim());
+						$('[name="toSaveNewCode{{$comment->id}}"]').attr('value', ace.edit("editor{{$comment->id}}").getValue().trim());
 					});
-					$('#language-select').on("change", function() {
+					$('#language-select{{$comment->id}}').on("change", function() {
 						$('[name="toSaveLanguage{{$comment->id}}"]').attr('value', $(".select2-chosen").html());
 					});
 	    		@endif

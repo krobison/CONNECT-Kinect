@@ -46,6 +46,8 @@
 				
 				{{-- Side Bar --}}
 				<div class="col-xs-3" style="padding-top: 20px;">
+				
+				<div class='affix' style='width: 210px'>
 					
 					<div class="list-group">
 					{{-- Profile --}}
@@ -64,27 +66,38 @@
 					
 					{{-- Notifications --}}
 					<div class='dropdown'>
-					<a href='#' class='list-group-item' data-toggle='dropdown'>
+					@if (Auth::user()->notifications->count() >0)
+						<a href='#' class='list-group-item' data-toggle='dropdown'>
+					@else
+						<a href='#' class='list-group-item'>
+					@endif
 						<span class='glyphicon glyphicon-exclamation-sign'></span> Notifications 
 					
 						<span style='float:right'>
 							<span id="not-count" class="label label-danger"> {{ Auth::user()->notifications->count() }}</span>
-							<span class="caret"></span>
+							@if (Auth::user()->notifications->count() >0)
+								<span class="caret"></span>
+							@endif
 						</span>
 					</a>
-					<ul class="dropdown-menu" role="menu">
-						<li role="presentation" class="dropdown-header">Conversation Notifications</li>
-							@foreach(Auth::user()->notifications()->where('type','=','conversationCreated')->get() as $notification) </li>
-								{{ View::make('common.notification')->with('notification', $notification) }}
-							@endforeach
-							@foreach(Auth::user()->notifications()->where('type','=','conversationReply')->get() as $notification) </li>
-								{{ View::make('common.notification')->with('notification', $notification) }}
-							@endforeach
-						<li role="presentation" class="dropdown-header">Tag Notifications</li>
-							@foreach(Auth::user()->notifications()->where('type','=','tag')->get() as $notification)
-								{{ View::make('common.notification')->with('notification', $notification) }}
-							@endforeach
-					</ul>
+					@if (Auth::user()->notifications->count() >0)
+						<ul class="dropdown-menu" role="menu">
+							<li role="presentation" class="dropdown-header">Conversation Notifications</li>
+								@foreach(Auth::user()->notifications()->where('type','=','conversationCreated')->get() as $notification) </li>
+									{{ View::make('common.notification')->with('notification', $notification) }}
+								@endforeach
+								@foreach(Auth::user()->notifications()->where('type','=','conversationAdd')->get() as $notification) </li>
+									{{ View::make('common.notification')->with('notification', $notification) }}
+								@endforeach
+								@foreach(Auth::user()->notifications()->where('type','=','conversationReply')->get() as $notification) </li>
+									{{ View::make('common.notification')->with('notification', $notification) }}
+								@endforeach
+							<li role="presentation" class="dropdown-header">Tag Notifications</li>
+								@foreach(Auth::user()->notifications()->where('type','=','tag')->get() as $notification)
+									{{ View::make('common.notification')->with('notification', $notification) }}
+								@endforeach
+						</ul>
+					@endif
 					</div>
 					
 					{{-- Break --}}
@@ -141,6 +154,8 @@
                     
                     {{-- Moar --}}
                     @yield('seeall')
+					</div>
+					
 					</div>
 
             </div>
