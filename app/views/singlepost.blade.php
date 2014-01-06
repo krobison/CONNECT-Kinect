@@ -25,7 +25,7 @@
 			</div>
 			{{ View::make('common/createPost')->with('url', 'createcsquestionpost') }}
 		</div>
-		@endif
+	@endif
 	
 	@elseif ($post->postable_type == 'PostProject')
     	<h1>CS Project</h1>
@@ -88,6 +88,9 @@
 			
 	@endif
 
+	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
+	{{ HTML::script('assets/js/select2.min.js') }}
+	{{ HTML::script('assets/js/ace/ace.js') }}
 	@foreach ($post->comments as $comment)
 		{{ View::make('common.comment')->with('comment', $comment) }}
 	@endforeach

@@ -1,4 +1,6 @@
-{{ HTML::style('assets/css/select2.css') }}
+<script>
+   	@include('javascript.comment')
+</script>
 <style type="text/css" media="screen">
 	#code-title{{$comment->id}}:hover {
 		background-color: #F5F5F5;
@@ -6,10 +8,7 @@
 	.five-marg {
 		margin: 5px;
 	}
-	</style>
-<script>
-    @include('javascript.comment')
-</script>
+</style>
 
 @if(Auth::user()->id == $comment->user_id)
 	<div style="margin-bottom:16px;padding:8px;padding-bottom:32px;border:1px #CCCCCC solid;border-radius:20px;background-color:rgba(34,98,230,0.1)">  
@@ -31,21 +30,22 @@
 
 	@if (!empty($comment->code))
 		<div>
-			{{ HTML::script('assets/js/ace/ace.js') }}
 			Language: {{ $comment->language }}
 			<div id="editor{{$comment->id}}">
 			</div>
 		<script>
 			// Setting up the ace text editor language
-			var editor = ace.edit("editor{{$comment->id}}");
-			editor.setValue($('[name="revertCode{{$comment->id}}"]').val().trim());
-			editor.getSession().setUseWorker(false);
-			editor.setTheme("ace/theme/eclipse");
-			var language = "{{$comment->language}}";
-			editor.getSession().setMode("ace/mode/" + language);
-			editor.setReadOnly(true);
-			editor.setOptions({
-				maxLines: 50
+			$( document ).ready(function() {
+				var editor = ace.edit("editor{{$comment->id}}");
+				editor.setValue($('[name="revertCode{{$comment->id}}"]').val().trim());
+				editor.getSession().setUseWorker(false);
+				editor.setTheme("ace/theme/eclipse");
+				var language = "{{$comment->language}}";
+				editor.getSession().setMode("ace/mode/" + language);
+				editor.setReadOnly(true);
+				editor.setOptions({
+					maxLines: 50
+				});
 			});
 		</script>
 		</div>
@@ -61,9 +61,9 @@
 
 			<div id="editor{{$comment->id}}" class="code-collapse{{$comment->id}}" style="width:100%; height:100px"> &#10 Select your language below. &#10 Then add your code here! &#10</div>
 				
-			<div class="panel-footer code-collapse">
+			<div class="panel-footer code-collapse{{$comment->id}}">
 				Language: 
-				<select id="language-select{{$comment->id}}" class="select2-container" name="language{{$comment->id}}">
+				<select id="language-select{{$comment->id}}" class="select2-container{{$comment->id}}" name="language{{$comment->id}}">
 					@foreach(Post::getSupportedLanguages() as $language)
 						@if ($language === "plain_text")
 							<option selected value={{{ $language }}}>{{{ ucfirst($language) }}}</option>
@@ -103,6 +103,11 @@
 				$('#code-title{{$comment->id}}').click(function() {
 					$('.code-collapse{{$comment->id}}').toggle();
 					editor.resize();
+				});
+
+				// Set up select2 menu
+				$(document).ready(function() { 
+					$(".select2-container{{$comment->id}}").select2();
 				});
 			});
 		</script>
