@@ -192,7 +192,7 @@
         </div>
         
         <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                         <div class="panel panel-info">
                                 <div class="panel-heading">
                                         <h3>Give Feedback</h3>
@@ -218,7 +218,9 @@
                                 </div>
                         </div>
                 </div>
-            <div class="col-md-6">
+        </div>  
+        <div class="row">
+            <div class="col-md-12">
                         <div class="panel panel-info">
                                 <div class="panel-heading">
                                         <h3>All Feedback</h3>

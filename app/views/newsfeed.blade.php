@@ -3,6 +3,14 @@
 @section('additionalHeaders')
 	{{ HTML::style('assets/css/select2.css') }}
 	{{ HTML::style('assets/css/posts.css') }}
+	<style>
+	.panel-heading:hover{ 
+		background-color:orange;
+	}
+	.first-on-page{
+		margin-top:5px;
+	}
+	</style>
 @stop
 
 @section('title')
@@ -12,29 +20,25 @@
 @section('content')
 
 	<!-- New post functionality -->
-	<div id="new-post" class="panel panel-default">
-	    <div class="panel-heading">
+	<div id="new-post" class="panel panel-default first-on-page">
+	    <div id="new-post-title" class="panel-heading">
 			<h4>
-			New Post
-			<div class="btn-group" id="new-post-buttons">
-				<button id="hide-new-post-button" type="button" class="btn btn-default btn-sm">Hide</button>
-			</div>
+			Create New Post
 			</h4>
 		</div>
-	    {{ View::make('common/createPost')->with('url', 'creategeneralpost') }}
+		<div id="new-post-content" class="panel-body">
+			{{ View::make('common/createPost')->with('url', 'creategeneralpost') }}
+		</div>
 	</div>
 	
 	<!-- Search posts functionality -->
 	<div class="panel panel-default">
-	    <div class="panel-heading">
+	    <div id="search-post-title" class="panel-heading">
 			<h4>
 			Search Posts
-			<div class="btn-group" id="new-search-buttons">
-				<button id="hide-search-post-button" type="button" class="btn btn-default btn-sm">Hide</button>
-			</div>
 			</h4>
 		</div>
-		<div id="search-posts" class="panel-body">
+		<div id="search-posts-content" class="panel-body">
 		{{ Form::open(array('url' => 'searchposts', 'method' => 'GET')) }}
 			<div class="form-group">
 				<b>Upvotes</b> <br>
@@ -117,13 +121,16 @@
 	<script>
 
 		// Hide and show post divs on button press
-		$('#hide-new-post-button').click(function() {
-			$('#new-post-body').toggle(200);
+		$('#new-post-title').click(function() {
+			$('#new-post-content').toggle(200);
 		});
 		
-		$('#hide-search-post-button').click(function() {
-			$('#search-posts').toggle(200);
+		$('#search-post-title').click(function() {
+			$('#search-posts-content').toggle(200);
 		});
+		
+		$('#new-post-content').hide();
+		$('#search-posts-content').hide();
 		
 		$(document).ready(function() { 
 			$(".select2-container-hashtagsearch").select2({
@@ -141,7 +148,7 @@
 				sendData = sendData + '&hashtags[]=' + '<?php echo $hashtag->id;?>';
 			<?php endforeach; } ?>
 		
-		   $("#loadmorebutton").click(function (){
+		$("#loadmorebutton").click(function (){
                $('#loadmorebutton').html('{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}'); 
                 $.ajax({
 					url: '{{ URL::to('loadmoreposts') }}',
@@ -160,9 +167,6 @@
 					
                 });
             });
-			
-		
-	
 
 	</script>
 @stop
