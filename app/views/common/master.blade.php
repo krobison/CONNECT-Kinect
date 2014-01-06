@@ -202,9 +202,18 @@
 </script>
         
 <style>
-	a {
-			-o-transition:.5s;
-			-ms-transition:.5s;
-			-moz-transition:.5s;
-			-webkit-transition:.5s;
-		
+        a {
+                        -o-transition:.5s;
+                        -ms-transition:.5s;
+                        -moz-transition:.5s;
+                        -webkit-transition:.5s;
+                        transition:.5s;
+        } 
+        a:hover {
+                        color: #2980b9;
+        }
+</style>
+
+
+</body>
+</html>
