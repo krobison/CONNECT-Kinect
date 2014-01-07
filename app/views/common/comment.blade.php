@@ -20,7 +20,7 @@
 	</div>
 	
 	<div>
-		<p id="paragraph{{$comment->id}}">{{{ $comment->content }}}</p>
+		<p id="paragraph{{$comment->id}}" style="white-space:pre-wrap">{{ $comment->getPurifiedContent() }}</p>
 	</div>
 
 	{{Form::open()}}

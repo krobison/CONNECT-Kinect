@@ -1,5 +1,7 @@
 <?php
 
+include(app_path().'/purify/HTMLPurifier.auto.php');
+
 class Post extends Eloquent {
 
 	/*
@@ -29,6 +31,13 @@ class Post extends Eloquent {
     public function postupvotes() {
     	return $this->hasMany('Upvote');
     }
+	
+	// Helper function
+	public function getPurifiedContent() {
+		$pureconfig = HTMLPurifier_Config::createDefault();
+		$purifier = new HTMLPurifier($pureconfig);
+		return $purifier->purify($this->content);
+	}
 
 	// This really isn't a model function, however, I need to do a bunch of logic on 
 	// data from the file system and it would be worse to put the logic in the blade template -- Thomas

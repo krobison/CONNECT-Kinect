@@ -6,7 +6,11 @@
 @stop
 
 @section('title')
-	CS QUESTION.
+	@if ($post->postable_type == 'PostQuestion')
+		CS QUESTION.
+	@else
+		POST DETAILS.
+	@endif
 @stop
 
 @section('content')

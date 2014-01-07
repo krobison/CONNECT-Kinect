@@ -1,8 +1,8 @@
 <div style="margin-bottom:16px;padding:8px;border:1px #CCCCCC solid;border-radius:4px;">    
-    {{-- Display the post content --}}
     
     <div style="float:left; padding-right: 10px">
 		{{-- Display the profile picture (if it exists) and user is not anonmyous--}}
+		
         @if ($post->postable_type == "PostHelpRequest" && $post->postable->anonymous == 1)
             {{ HTML::image('assets/img/anonymous.png', 'anonymous' , array('width' => '76', 'height' => '76', 'class' => 'img-circle')) }}
         @else
@@ -11,8 +11,10 @@
 			</a>
         @endif
         </div>
+		
+		{{-- Display the post content --}}
         @if (isset($detail) && $detail == "true")
-            <p> {{{ $post->content }}} </p>
+            <p style="white-space:pre-wrap"> {{ $post->getPurifiedContent() }} </p>
         @else
             <div class="list-group" style="margin-left:80px;">
                 @if (strlen($post->content) > 55)
@@ -24,6 +26,7 @@
         @endif
 
         {{-- Display the name of the user who made the post (if the user is not anonymous) --}}
+		
         @if ($post->postable_type == "PostHelpRequest" && $post->postable->anonymous == 1)
                 <p>Anonymous, {{ $post->created_at->diffForHumans() }}</p>
         @else
@@ -49,6 +52,7 @@
 		@endforeach
         
         {{-- Display the upvote button --}}
+		
 		<div class="row" style="padding-left:15px">
 				{{ Form::hidden('user_id', Auth::user()->id)}}
 				{{ Form::hidden('post_id', $post->id, array('id' => 'post-id')) }}
