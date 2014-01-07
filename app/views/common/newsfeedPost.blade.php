@@ -49,21 +49,21 @@
 		@endforeach
         
         {{-- Display the upvote button --}}
-        {{ Form::open(array('url' => 'upvote', 'method'=>'post')) }}
-                {{ Form::hidden('user_id', Auth::user()->id) }}
-                {{ Form::hidden('post_id', $post->id) }}
-                        <?php
-                                $result = DB::table('upvotes')->where('user_id','=',Auth::User()->id)->where('post_id','=',$post->id)->get();
-                        ?>
-                        @if (sizeof($result) == 0)
-                                <button type="submit" class="btn btn-primary btn-sm" style="margin-top:6px;">
-                                <i class="glyphicon glyphicon-hand-up"></i> Upvote: {{ $post->postupvotes->count() }}
-                        @else
-                                <button type="submit" class="btn btn-danger btn-sm">
-                                <i class="glyphicon glyphicon-hand-down"></i> Undo Upvote: {{ $post->postupvotes->count() }}
-                        @endif
-                </button>
-    {{ Form::close() }}
+		<div class="row" style="padding-left:15px">
+				{{ Form::hidden('user_id', Auth::user()->id)}}
+				{{ Form::hidden('post_id', $post->id, array('id' => 'post-id')) }}
+						<?php
+								$result = DB::table('upvotes')->where('user_id','=',Auth::User()->id)->where('post_id','=',$post->id)->get();
+						?>
+						@if (sizeof($result) == 0)
+								<button type="submit" data="{{$post->postupvotes->count()}}" class="btn btn-primary btn-sm upvote-ajax" style="margin-top:6px;">
+									<i class="image glyphicon glyphicon-hand-up"></i> Upvote: {{ $post->postupvotes->count() }}
+						@else
+								<button type="submit" data="{{$post->postupvotes->count()}}" class="btn btn-danger btn-sm upvote-ajax">
+									<i class="image glyphicon glyphicon-hand-down"></i> Undo Upvote: {{$post->postupvotes->count()}}
+						@endif
+				</button>
+		</div>
 	
 	{{-- Display the Delete Post button if user is an admin --}}
 	@if ((Auth::user()->admin == '1')||($post->user_id == Auth::user()->id))
@@ -75,3 +75,6 @@
 		{{ Form::close() }}
 	@endif
 </div>
+
+{{ HTML::script('assets/js/ajaxUpvote.js') }}
+

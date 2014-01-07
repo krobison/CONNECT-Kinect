@@ -69,8 +69,43 @@ class PostController extends BaseController {
 			
 	}
 
+	public function upvotePostAJAX() {
+			$post = Post::find(Input::get('post_id'));
+			$user = Auth::user();
+			
+			//return $post->id;
 
-	public function upvote() {
+
+			$upvote = Upvote::where('user_id', '=', $user->id)->where('post_id', '=', $post->id)->count();
+
+			if ($upvote > 0) {
+					Upvote::where('user_id', '=', $user->id)->where('post_id', '=', $post->id)->delete();
+					$post->upvotes = $post->upvotes - '1';
+					$post->save();
+					return json_encode(array("data" => $post->postupvotes->count(),"upOrDown" => "down"));
+			}
+
+			else {
+					try {
+							$upvote = new Upvote;
+							$upvote->user_id = $user->id;
+							$upvote->post_id = $post->id;
+							$upvote->save();
+							$post->upvotes = $post->upvotes + '1';
+							$post->save();
+
+							return json_encode(array("data" => $post->postupvotes->count(),"upOrDown" => "up"));
+
+					} catch( Exception $e ) {
+
+							return json_encode(array("data" => $post->postupvotes->count(),"upOrDown" => "error"));
+					}
+			}
+	
+	
+	}
+	
+	public function upvotePost() {
 			$post = Post::find(Input::get('post_id'));
 			$user = Auth::user();
 

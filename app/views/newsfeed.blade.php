@@ -152,24 +152,25 @@
 			<?php endforeach; } ?>
 		
 		$("#loadmorebutton").click(function (){
-               $('#loadmorebutton').html('{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}'); 
-                $.ajax({
-					url: '{{ URL::to('loadmoreposts') }}',
-					type: 'POST',
-                    data: 'lastpost='+ID+sendData,
-					dataType: 'html',
-					success: function(data){
-                        if(data){
-                            $("#postswrapper").append(data);
-                            ID = $(".postitem:last").attr("id");
-							 $('#loadmorebutton').html('<button type="button" class="btn btn-default">Load more...</button>');
-                        }else{
-                            $('#loadmorebutton').replaceWith('<center>No more posts to show.</center>');
-                        }
-                    }
-					
-                });
-            });
+		    $('#loadmorebutton').html('{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}'); 
+			$.ajax({
+				url: '{{ URL::to('loadmoreposts') }}',
+				type: 'POST',
+				data: 'lastpost='+ID+sendData,
+				dataType: 'html',
+				success: function(data){
+					if(data){
+						$("#postswrapper").append(data);
+						ID = $(".postitem:last").attr("id");
+						$('#loadmorebutton').html('<button type="button" class="btn btn-default">Load more...</button>');
+						bindUpvoteListener();
+					}else{
+						$('#loadmorebutton').replaceWith('<center>No more posts to show.</center>');
+					}
+				}
+				
+			});
+		});
 
 	</script>
 @stop

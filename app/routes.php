@@ -69,7 +69,8 @@ Route::group(array('before' => 'auth'), function() {
 	
 	// POST post
 	Route::post('createComment', 'PostController@createComment');
-	Route::post('upvote', 'PostController@upvote');
+	Route::post('upvote', 'PostController@upvotePost');
+	Route::post('upvotePostAJAX', 'PostController@upvotePostAJAX');
 	Route::post('creategeneralpost', 'PostController@createGeneralPost');
 	Route::post('deleteusercomment', 'PostController@deleteUserComment');
 	Route::post('saveeditcomment', 'PostController@saveEditComment');

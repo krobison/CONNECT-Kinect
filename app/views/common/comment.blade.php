@@ -30,7 +30,7 @@
 
 	@if (!empty($comment->code))
 		<div>
-			Language: {{ $comment->language }}
+			Language: {{{ $comment->language }}}
 			<div id="editor{{$comment->id}}">
 			</div>
 		<script>
