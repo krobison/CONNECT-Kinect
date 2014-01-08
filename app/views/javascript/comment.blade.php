@@ -9,8 +9,8 @@
 	   			 /* get p.text() without the formatting */
 	   			 //var t = p.text().replace("\n", "").replace(/\s{2,}/g, " ").trim();
 				 
-				 // Actually, I'd rather keep the formatting, thank you very much!
-				 var t = p.text()
+				 // Actually, I'd rather keep the formatting, thank you very much! (also html not text cuz we want tags)
+				 var t = p.html()
 
 	    		/* create new textarea element with additional attributes */
 	    		var ta = $("<textarea/>", {
@@ -65,7 +65,8 @@
     			"id": "paragraph{{$comment->id}}",
         		"text": $('[name="revertContent{{$comment->id}}"]').val().trim(),
         		"css": {
-            		"width": p.css('width')
+            		"width": p.css('width'),
+					"white-space": p.css('white-space')
         		}
     		});
 
