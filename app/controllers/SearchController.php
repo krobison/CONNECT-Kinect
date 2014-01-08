@@ -103,5 +103,11 @@ class SearchController extends BaseController {
 			->with('name', $name)
 			->with('user', Auth::user());
 	}
+	
+	public function showAllUsers() {
+		return View::make('search')
+			->with('user', Auth::user())
+			->with('nameresults', DB::table('users')->get());
+	}
 
 }
