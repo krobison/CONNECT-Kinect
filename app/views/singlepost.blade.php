@@ -127,6 +127,8 @@
 				@endif
 			@endif 
 		</div>
+		
+		<a style="float:right" target="_blank" href="http://htmlpurifier.org/"><img src="http://htmlpurifier.org/live/art/powered.png" alt="Powered by HTML Purifier" border="0" /></a>
 
 		{{ Form::textarea('content', null, array('class' => 'span4 form-control' ,'placeholder' => 'Enter your comment here','id' => 'comment-box')) }}
 
@@ -136,7 +138,7 @@
 
 		<div id="code-panel" class="panel panel-default" style="background-color:transparent; border-style:none;">
 			<div id="code-title" class="panel-body active">
-				<a>Add code<a>
+				<a>Add code</a>
 			</div>
 			
 			<div id="hidden-editor_div">
@@ -147,7 +149,7 @@
 				
 			<div class="panel-footer code-collapse">
 				Language: 
-				<select id="language-select" class="select2-container" name="language">
+				<select id="language-select" class="select2-container" name="language" style="width:200px">
 					@foreach(Post::getSupportedLanguages() as $language)
 						@if ($language === "plain_text")
 							<option selected value={{{ $language }}}>{{{ ucfirst($language) }}}</option>

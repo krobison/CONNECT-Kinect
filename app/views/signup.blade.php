@@ -222,7 +222,11 @@
 		</div>
 
 		<div class="row">
-			{{Form::label('bio', 'Say a few things about yourself:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10', 'id' => 'bio-content'))}}	
+			{{Form::label('bio', 'Say a few things about yourself:', array('class' => 'col-md-offset-2 col-xs-12 col-md-4', 'id' => 'bio-content'))}}	
+			<div class ="col-xs-6 col-md-2 col-md-offset-2">
+				<a style="float:right" target="_blank" href="http://htmlpurifier.org/"><img src="http://htmlpurifier.org/live/art/powered.png" alt="Powered by HTML Purifier" border="0" /></a>
+			</div>
+			
 		</div>
 		<div class="row">
 			<div class ="col-xs-10 col-md-8 col-md-offset-2">

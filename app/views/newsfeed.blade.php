@@ -24,6 +24,7 @@
 	    <div id="new-post-title" class="panel-heading">
 			<h4>
 			Create New Post
+			<a style="float:right" target="_blank" href="http://htmlpurifier.org/"><img src="http://htmlpurifier.org/live/art/powered.png" alt="Powered by HTML Purifier" border="0" /></a>
 			</h4>
 			<p>
 				Make a post about anything. It will appear to all CS Connect users below. Not enough guidance? Fine. Examples: Rant about your favourite programming language, Open invite to dinner at your house tonight, What band did you vote to come to e-days?, SuperBowl predictions, Link to your favourite xkcd, Anything. Just make sure to tag your post.
