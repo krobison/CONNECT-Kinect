@@ -4,7 +4,7 @@ include('helpers/lib_autolink.php');
 
 class PostController extends BaseController {
 
-	 public function addPostCommentNotifications($user,$cId){
+	public function addPostCommentNotifications($user,$cId){
 			$user = User::find($user);
 			if ($user->id != Auth::user()->id){
 				$not = new Notification;
@@ -63,12 +63,14 @@ class PostController extends BaseController {
 			->get();
 			
 			foreach($uninformed_users as $user) {
+				if(Auth::user()->id != $user->id) {
 					$not = new Notification;
 					$not->user_id = $user->id;
 					$not->initiator_id = $sender_id;
 					$not->type = 'tag';
 					$not->origin_id = $post_id;
 					$not->save();
+				}
 			}
 			
 	}
@@ -257,6 +259,7 @@ class PostController extends BaseController {
 							if(strlen(preg_replace('/\s+/', '', $tag)) > 2) {
 									$new_tag = new Hashtag;
 									$new_tag->name = $tag;
+									$new_tag->reserved = 0;
 									$new_tag->save();
 									$new_tag->posts()->attach($post);
 							}
@@ -328,6 +331,7 @@ class PostController extends BaseController {
 					if(strlen(preg_replace('/\s+/', '', $tag)) > 2) {
 							$new_tag = new Hashtag;
 							$new_tag->name = $tag;
+							$new_tag->reserved = 0;
 							$new_tag->save();
 							$new_tag->posts()->attach($post);
 					}
