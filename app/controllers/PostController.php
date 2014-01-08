@@ -183,14 +183,24 @@ class PostController extends BaseController {
 	public function deleteUserComment() {
 			$id = Input::get("id");
 			$comment = Comment::find($id);
-			$comment->delete();
-			
-			return Redirect::back()->with('message', 'You have successfully deleted the comment.');
+			if(Auth::user()->id == $comment->user_id) {
+				$comment->delete();
+				return Redirect::back()->with('message', 'You have successfully deleted the comment.');
+			}
+			Log::error("Security: User " . $id . " attempted to delete a comment (" . $comment->id . ") for which permissions weren't granted. Comment belongs to " . $comment->user_id . ".");
+			return Redirect::back()->with('message', 'The server rejected your deletion.');
 	}
 
 	public function saveEditComment() {
 			$id = Input::get("id");
 			$comment = Comment::find($id);
+			
+			// Make sure the user who is doing the editing is actually the user who the comment belongs to!
+			if($comment->user_id != Auth::user()->id) {
+				Log::error("User " . Auth::user()->id . " attempted to edit a comment for which permissions were not granted. Content: " . $content);
+				return Redirect::back()->with('message', 'The server rejected your edit. This incident has been logged.');
+			}
+			
 			$content = Input::get("toSave".$id);
 			$code = Input::get("toSaveCode".$id);
 			$newCode = Input::get("toSaveNewCode".$id);

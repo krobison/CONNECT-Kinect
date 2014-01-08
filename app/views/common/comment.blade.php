@@ -19,9 +19,7 @@
 		{{HTML::image($comment->user->getProfilePictureURL(), '$comment->user->id', array('width' => '70', 'height' => '70', 'class' => 'img-circle'))}}
 	</div>
 	
-	<div>
-		<p id="paragraph{{$comment->id}}" style="white-space:pre-wrap">{{ $comment->getPurifiedContent() }}</p>
-	</div>
+	<div id="paragraph{{$comment->id}}" style="white-space:pre-wrap">{{ $comment->getPurifiedContent() }}</div>
 
 	{{Form::open()}}
 	{{ Form::hidden('revertCode'.$comment->id, $comment->code) }}
@@ -96,7 +94,7 @@
 					editor.getSession().setMode("ace/mode/" + $('#language-select{{$comment->id}}').val());
 				});
 				
-				// Hide the add code section to start
+				// Hide the add code section on start
 				$('.code-collapse{{$comment->id}}').hide();
 				
 				// Toggle add code div visibility

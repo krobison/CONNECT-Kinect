@@ -4,10 +4,13 @@
 		$("#code-panel{{$comment->id}}").hide();
 		@if(Auth::user()->id == $comment->user_id)
 			$("#edit{{$comment->id}}").click(function() { /* assign anonymous function to click event */
-	    		var p = $("#paragraph{{$comment->id}}"); /* store reference to <p> element */
+	    		var p = $("#paragraph{{$comment->id}}"); /* store reference to <div> element */
 
 	   			 /* get p.text() without the formatting */
-	   			 var t = p.text().replace("\n", "").replace(/\s{2,}/g, " ").trim();
+	   			 //var t = p.text().replace("\n", "").replace(/\s{2,}/g, " ").trim();
+				 
+				 // Actually, I'd rather keep the formatting, thank you very much!
+				 var t = p.text()
 
 	    		/* create new textarea element with additional attributes */
 	    		var ta = $("<textarea/>", {
@@ -58,7 +61,7 @@
 			var p = $("#editbox{{$comment->id}}"); /* store reference to <p> element */
 
     		/* create new textarea element with additional attributes */
-    		var ta = $("<p/>", {
+    		var ta = $("<div/>", {
     			"id": "paragraph{{$comment->id}}",
         		"text": $('[name="revertContent{{$comment->id}}"]').val().trim(),
         		"css": {
