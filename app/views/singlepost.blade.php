@@ -109,7 +109,7 @@
 	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
 	{{ HTML::script('assets/js/select2.min.js') }}
 	{{ HTML::script('assets/js/ace/ace.js') }}
-	@foreach ($post->comments as $comment)
+	@foreach ($post->comments()->getQuery()->orderBy('created_at', 'desc')->get() as $comment)
 		{{ View::make('common.comment')->with('comment', $comment) }}
 	@endforeach
 
