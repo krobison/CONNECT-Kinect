@@ -18,13 +18,8 @@ First log onto Toiler's through SSH then make sure you are in the /home/www/ dir
 # Clone the repository from GitHub through HTTPS.
 git clone https://github.com/CONNECT-Mines/CS-CONNECT.git csconnect-yourusernamehere
 
-# Give Laravel write access to the storage folder.
-cd csconnect-yourusernamehere/app
-chmod o+w -R storage
-
-# Give HTML Purify write access as well.
-cd csconnect-yourusernamehere/app
-chmod o+w purify/HTMLPurifier/DefinitionCache/Serializer
+# Run the fix permissions script
+./fixPermissions.sh
 ```
 Once done, access at this link: http://toilers.mines.edu/csconnect-yourusernamehere/
 
