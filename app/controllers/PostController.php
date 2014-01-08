@@ -1,5 +1,7 @@
 <?php
 
+include('helpers/lib_autolink.php');
+
 class PostController extends BaseController {
 
 	 public function addPostCommentNotifications($user,$cId){
@@ -18,7 +20,9 @@ class PostController extends BaseController {
 		try {
 			if (Input::get('content') != ''){
 				$comment = new Comment;
-				$comment->content = Input::get('content');
+				
+				// Linkify the content
+				$comment->content = autolink(Input::get('content'));
 				$comment->user_id = Input::get('user_id');
 				$comment->post_id = Input::get('post_id');
 				$comment->language = Input::get('language');
@@ -200,8 +204,12 @@ class PostController extends BaseController {
 				Log::error("User " . Auth::user()->id . " attempted to edit a comment for which permissions were not granted. Content: " . $content);
 				return Redirect::back()->with('message', 'The server rejected your edit. This incident has been logged.');
 			}
-			
+						
 			$content = Input::get("toSave".$id);
+			
+			// Linkify any content (see include('helpers/lib_autolink.php');)
+			$content = autolink($content);
+
 			$code = Input::get("toSaveCode".$id);
 			$newCode = Input::get("toSaveNewCode".$id);
 			$language = Input::get("toSaveLanguage".$id);
@@ -231,7 +239,7 @@ class PostController extends BaseController {
 					// Create A Post in the db
 					$post = new Post;
 					$post->user_id = Auth::user()->id;
-					$post->content = Input::get('content');
+					$post->content = autolink(Input::get('content'));
 					$post->language = Input::get('language');
 					$post->code = Input::get('code');
 					$post->save();
@@ -304,7 +312,7 @@ class PostController extends BaseController {
 			
 			$post = new Post;
 			$post->user_id = Auth::user()->id;
-			$post->content = Input::get('content');
+			$post->content = autolink(Input::get('content')); // Linkify the content
 			$post_P->post()->save($post);
 		
 			// Add an entry in post_hashtag table to save post tags
