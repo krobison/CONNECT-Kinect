@@ -64,18 +64,19 @@
 		<div class="panel-heading">
 			<h4>Recent CS Projects</h4>
 		</div>
-		<div id="help-request" class="panel-body">
-			{{-- $post_counter = 0; --}}
-			@foreach (Post::where('postable_type', '=', 'PostProject')->orderBy('id', 'DESC')->get() as $post)
-				@if($post->postable->approved == '1')
-					{{ View::make('common.newsfeedPost')->with('post', $post) }}
-					{{-- $post_counter = $post_counter + 1 --}}
-				@endif
+		<div id="cs-project" class="panel-body">
+			<div id="postprojectswrapper">
+			@foreach ($projectposts as $postid)
+				<?php 
+				$postp = Post::find($postid->id);
+				?>
+			{{ View::make('common.newsfeedPost')->with('post', $postp) }}
+			<div class="{{$postp->postable_type}}" id="{{$postp->id}}"></div>
 			@endforeach
-			
-			{{-- @if( $post_counter >= 5 ) --}}
-				<button type="button" class="btn btn-default">Load more... <i> Not Working </i> </button>
-			{{-- @endif --}}
+			</div>
+			<div id="loadmoreprojectsbutton">
+				<button type="button" class="btn btn-default">Load more...</button>
+			</div>
 		</div>
 	</div>
 	
@@ -90,5 +91,26 @@
 		$('#hide-approve-projects-button').click(function() {
 			$('#approve-projects').toggle(200);
 		});
+		
+		var projectID = $(".PostProject:last").attr("id");
+		$("#loadmoreprojectsbutton").click(function (){
+               $('#loadmoreprojectsbutton').html('{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}'); 
+                $.ajax({
+					url: '{{ URL::to('loadmoreprojects') }}',
+					type: 'POST',
+                    data: 'lastpost='+projectID,
+					dataType: 'html',
+					success: function(data){
+                        if(data){
+                            $("#postprojectswrapper").append(data);
+                            requestID = $(".PostProject:last").attr("id");
+							 $('#loadmoreprojectsbutton').html('<button type="button" class="btn btn-default">Load more...</button>');
+                        }else{
+                            $('#loadmoreprojectsbutton').replaceWith('<center>No more posts to show.</center>');
+                        }
+                    }
+					
+                });
+            });
 	</script>
 @stop
