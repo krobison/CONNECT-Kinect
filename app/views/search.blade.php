@@ -62,9 +62,14 @@
 		<div class="row">
 			<div class ="col-xs-5 col-md-4">
 				{{Form::submit('Search', array('class' => 'btn btn-primary btn-block'))}}	
+				{{ Form::close() }}
+			</div>
+			<div class ="col-xs-4 col-md-3">
+				<a href="{{URL::to('showallusers')}}">
+				<button class="btn btn-primary btn-block">Show all users</button>
 			</div>
 		</div>
-		{{ Form::close() }}
+		
 		
 		</div>
 	</div>
