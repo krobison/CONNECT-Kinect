@@ -234,145 +234,6 @@ class PostController extends BaseController {
 			return Redirect::back()->with('message', 'You have successfully updated your comment.');
 	}
 	
-	public function createGeneralPost() {
-											
-			try {
-
-					// Create A Post in the db
-					$post = new Post;
-					$post->user_id = Auth::user()->id;
-					$post->content = autolink(Input::get('content'));
-					$post->language = Input::get('language');
-					$post->code = Input::get('code');
-					$post->save();
-					
-					// Add an entry in post_hashtag table to save post tags
-					$hashtags = Input::get('hashtags');
-					// Turn into array
-					$hashtags = preg_split('/(?<!"),(?!")/',$hashtags[0]);
-					foreach($hashtags as $tag) {
-						// If the value is not numerical, the tag doesn't exist yet. Add it to the the table.
-						if(is_numeric($tag)) {
-								Hashtag::find($tag)->posts()->attach($post);
-						} else {
-							// Only save tags longer than 3 characters (not including whitespace)
-							if(strlen(preg_replace('/\s+/', '', $tag)) > 2) {
-									$new_tag = new Hashtag;
-									$new_tag->name = $tag;
-									$new_tag->reserved = 0;
-									$new_tag->save();
-									$new_tag->posts()->attach($post);
-							}
-						}
-					}
-					
-					// Generate notifications for each tag selected
-					$this->addTagNotifications($post->hashtags,Auth::user()->id,$post->id);
-					$user_id['user_id'] = Auth::user()->id;
-					Log::info('general post created', $user_id);
-					
-			} catch( Exception $e ) {
-					//return View::make('debug', array('data' => Input::all()));
-					return Redirect::back()->with('message', '<div class="alert alert-danger" > Your post cannot be created at this time, please try again later. </div>');
-			}
-			return Redirect::back();
-			//return Redirect::back()->with('message', '<div class="alert alert-success"> Your post has been successfully created. </div>');
-	}
-	
-	public function createProjectPost() {
-
-		try {
-			$post_P = new PostProject;
-			$validator = Validator::make(Input::all(), PostProject::$rules);
-			if($validator->passes()) {
-				$post_P->link = Input::get('link');
-				$screenshot = Input::file('screenshot');
-					if($screenshot) {
-						$extension = $screenshot->getClientOriginalExtension();
-						$newFilename = str_random(25) . "." . $extension;
-						$destinationPath = base_path() . '/assets/img/csproject_images';
-						$uploadSuccess = Input::file('screenshot')->move($destinationPath, $newFilename);
-						if($uploadSuccess) {
-							$post_P->screenshot = $newFilename;
-						}
-					}
-			} else {
-				Log::error("Validation Failure: ".$validator->messages());
-				return Redirect::back()->with('message', '<div class="alert alert-danger">There was a problem making your post: '.$validator->messages().'</div>');;
-			}
-			$file = Input::file('file');
-				if($file) {
-					$extension = $file->getClientOriginalExtension();
-					$newFilename = str_random(25) . "." . $extension;
-					$destinationPath = base_path() . '/assets/csproject_files';
-					$uploadSuccess = Input::file('file')->move($destinationPath, $newFilename);
-					if($uploadSuccess) {
-						$post_P->file = $newFilename;
-					}
-				}
-		
-			$post_P->save();
-			
-			$post = new Post;
-			$post->user_id = Auth::user()->id;
-			$post->content = autolink(Input::get('content')); // Linkify the content
-			$post_P->post()->save($post);
-		
-			// Add an entry in post_hashtag table to save post tags
-			$hashtags = Input::get('hashtags');
-			// Turn into array
-			$hashtags = preg_split('/(?<!"),(?!")/',$hashtags[0]);
-			foreach($hashtags as $tag) {
-				// If the value is not numerical, the tag doesn't exist yet. Add it to the the table.
-				if(is_numeric($tag)) {
-						Hashtag::find($tag)->posts()->attach($post);
-				} else {
-					// Only save tags longer than 3 characters (not including whitespace)
-					if(strlen(preg_replace('/\s+/', '', $tag)) > 2) {
-							$new_tag = new Hashtag;
-							$new_tag->name = $tag;
-							$new_tag->reserved = 0;
-							$new_tag->save();
-							$new_tag->posts()->attach($post);
-					}
-				}
-			}
-			
-			// Generate notifications for each tag selected
-			$this->addTagNotifications($post->hashtags,Auth::user()->id,$post->id);
-
-		} catch( Exception $e ) {
-			//return View::make('debug', array('data' => Input::all()));
-			return Redirect::back()->with('message', 'There was an error making your post. Exception '.$e);
-		}
-
-		$user_id['user_id'] = Auth::user()->id;
-		Log::info('project posted', $user_id);
-
-		return Redirect::back()->with('message', 'Your post has been successfully created.');
-	}
-
-	public function giveFeedback() {
-			try {
-					// First add a PostHelpRequest to the PostHelpRequest table
-					$post_F = new PostFeedback;
-					$post_F->save();
-
-					// Then add a Post to the Posts table, associating it with the PostQuestion through a polymorphic relationship
-					$post = new Post;
-					$post->user_id = Auth::user()->id;
-					$post->content = Input::get('content');
-					$post_F->post()->save($post);
-					
-			} catch( Exception $e ) {
-					return View::make('debug', array('data' => Input::all()));
-					//return Redirect::back()->with('message', 'Your post cannot be created at this time, please try again later.');
-			}
-			
-			// Make the specific post data (e.g., helpPost, project, etc...)
-			return Redirect::back()->with('message', 'Your post has been successfully created.');
-	}
-	
 	public function searchPosts() {
 			$hashtags = Input::get('hashtags');
 			$content = Input::get('content');
@@ -458,5 +319,185 @@ class PostController extends BaseController {
 			->with('posts', $posts)
 			->with('type', 'GeneralPost');
 	
+	}
+	
+	public function createProjectPost() {
+
+		try {
+			$post_P = new PostProject;
+			$validator = Validator::make(Input::all(), PostProject::$rules);
+			if($validator->passes()) {
+				$post_P->link = Input::get('link');
+				$screenshot = Input::file('screenshot');
+					if($screenshot) {
+						$extension = $screenshot->getClientOriginalExtension();
+						$newFilename = str_random(25) . "." . $extension;
+						$destinationPath = base_path() . '/assets/img/csproject_images';
+						$uploadSuccess = Input::file('screenshot')->move($destinationPath, $newFilename);
+						if($uploadSuccess) {
+							$post_P->screenshot = $newFilename;
+						}
+					}
+			} else {
+				Log::error("Validation Failure: ".$validator->messages());
+				return Redirect::back()->with('message', '<div class="alert alert-danger">There was a problem making your post: '.$validator->messages().'</div>');;
+			}
+			$file = Input::file('file');
+				if($file) {
+					$extension = $file->getClientOriginalExtension();
+					$newFilename = str_random(25) . "." . $extension;
+					$destinationPath = base_path() . '/assets/csproject_files';
+					$uploadSuccess = Input::file('file')->move($destinationPath, $newFilename);
+					if($uploadSuccess) {
+						$post_P->file = $newFilename;
+					}
+				}
+		
+			$post_P->save();
+			
+			$post = new Post;
+			$post->user_id = Auth::user()->id;
+			$post->content = autolink(Input::get('content')); // Linkify the content
+			$post_P->post()->save($post);
+		
+			// Create db associations for tags, add new tags to hashtag table
+			PostController::addTags(Input::get('hashtags'),$post);
+			
+			// Generate notifications for each tag selected
+			$this->addTagNotifications($post->hashtags,Auth::user()->id,$post->id);
+
+		} catch( Exception $e ) {
+			//return View::make('debug', array('data' => Input::all()));
+			return Redirect::back()->with('message', 'There was an error making your post. Exception '.$e);
+		}
+
+		$user_id['user_id'] = Auth::user()->id;
+		Log::info('project posted', $user_id);
+
+		return Redirect::back()->with('message', 'Your post has been successfully created.');
+	}
+	
+	public function createHelpRequestPost() {
+	
+		try {
+			// First add a PostHelpRequest to the PostHelpRequest table
+			$post_HR = new PostHelpRequest;
+			$post_HR->anonymous = Input::get('anonymous');
+			$post_HR->save();
+
+			// Then add a Post to the Posts table, associating it with the PostHelpRequest through a polymorphic relationship
+			$post = new Post;
+			$post->user_id = Auth::user()->id;
+			$post->content = autolink(Input::get('content'));
+			$post->language = Input::get('language');
+			$post->code = Input::get('code');
+			$post_HR->post()->save($post);
+			
+			// Create db associations for tags, add new tags to hashtag table
+			PostController::addTags(Input::get('hashtags'),$post);
+			
+		} catch( Exception $e ) {
+			//return View::make('debug', array('data' => Input::all()));
+			return Redirect::back()->with('message', 'Your post cannot be created at this time, please try again later.');
+		}
+		
+		$user_id['user_id'] = Auth::user()->id;
+		Log::info('help request post', $user_id);
+		// Make the specific post data (e.g., helpPost, project, etc...)
+		return Redirect::back()->with('message', 'Your post has been successfully created.');
+	}
+	
+	public function createHelpOfferPost() {
+	
+		try {	
+			// Create A Post in the db
+			$post = new Post;
+			$post->user_id = Auth::user()->id;
+			$post->content = autolink(Input::get('content'));
+			$post->postable_type = "PostHelpOffer";
+			$post->save();
+			
+			// Create db associations for tags, add new tags to hashtag table
+			PostController::addTags(Input::get('hashtags'),$post);
+			
+		} catch( Exception $e ) {
+			//return View::make('debug', array('data' => Input::all()));
+			return Redirect::back()->with('message', 'Your post cannot be created at this time, please try again later.');
+		}
+
+		$user_id['user_id'] = Auth::user()->id;
+		Log::info('help offer post', $user_id);
+		
+		return Redirect::back()->with('message', 'Your post has been successfully created.');
+	}
+
+	public function giveFeedback() {
+		try {
+			// First add a PostHelpRequest to the PostHelpRequest table
+			$post_F = new PostFeedback;
+			$post_F->save();
+
+			// Then add a Post to the Posts table, associating it with the PostQuestion through a polymorphic relationship
+			$post = new Post;
+			$post->user_id = Auth::user()->id;
+			$post->content = autolink(Input::get('content'));
+			$post_F->post()->save($post);
+				
+		} catch( Exception $e ) {
+				//return View::make('debug', array('data' => Input::all()));
+				return Redirect::back()->with('message', 'Your post cannot be created at this time, please try again later.');
+		}
+		
+		// Make the specific post data (e.g., helpPost, project, etc...)
+		return Redirect::back();
+		//return Redirect::back()->with('message', 'Your post has been successfully created.');
+	}
+	
+	// Create Post Functions
+	public function createGeneralPost() {								
+		try {
+			// Create A Post in the db
+			$post = new Post;
+			$post->user_id = Auth::user()->id;
+			$post->content = autolink(Input::get('content'));
+			$post->language = Input::get('language');
+			$post->code = Input::get('code');
+			$post->postable_type = "PostGeneral";
+			$post->save();
+			
+			// Create db associations for tags, add new tags to hashtag table
+			PostController::addTags(Input::get('hashtags'),$post);
+			
+			// Generate notifications for each tag selected
+			$this->addTagNotifications($post->hashtags,Auth::user()->id,$post->id);
+			$user_id['user_id'] = Auth::user()->id;
+			Log::info('general post created', $user_id);
+				
+		} catch( Exception $e ) {
+			//return View::make('debug', array('data' => Input::all()));
+			return Redirect::back()->with('message', '<div class="alert alert-danger" > Your post cannot be created at this time, please try again later. </div>');
+		}
+		return Redirect::back();
+		//return Redirect::back()->with('message', '<div class="alert alert-success"> Your post has been successfully created. </div>');
+	}
+
+	// Create Post Helper Functions
+	public static function addTags($hashtags,$post) {
+		$hashtags = preg_split('/(?<!"),(?!")/',$hashtags[0]);
+		foreach($hashtags as $tag) {
+			// If the value is not numerical, the tag doesn't exist yet. Add it to the the table.
+			if(is_numeric($tag)) {
+					Hashtag::find($tag)->posts()->attach($post);
+			} else {
+				// Only save tags longer than 3 characters (not including whitespace)
+				if(strlen(preg_replace('/\s+/', '', $tag)) > 2) {
+						$new_tag = new Hashtag;
+						$new_tag->name = $tag;
+						$new_tag->reserved = 0;
+						$new_tag->save();
+						$new_tag->posts()->attach($post);
+				}
+			}
+		}
 	}
 }

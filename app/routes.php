@@ -52,8 +52,8 @@ Route::group(array('before' => 'auth'), function() {
 	Route::get('helpCenter', 'HelpCenterController@showHelpCenter');
 
 	// POST help center posts
-	Route::post('createhelprequestpost', 'HelpCenterController@createHelpRequestPost');
-	Route::post('createhelpofferpost', 'HelpCenterController@createHelpOfferPost');
+	Route::post('createhelprequestpost', 'PostController@createHelpRequestPost');
+	Route::post('createhelpofferpost', 'PostController@createHelpOfferPost');
 	Route::post('loadmorerequests', 'HelpCenterController@loadMoreRequests');
 	Route::post('loadmoreoffers', 'HelpCenterController@loadMoreOffers');
 	// GET community
@@ -62,7 +62,6 @@ Route::group(array('before' => 'auth'), function() {
 	// GET search page
 	Route::get('search', 'SearchController@showSearch');
 	Route::get('searchfilter', 'SearchController@processSearch');
-	Route::get('showallusers', 'SearchController@showAllUsers');
 	
 	// GET post
 	Route::get('singlepost/{id}', 'PostController@showSinglePost');
