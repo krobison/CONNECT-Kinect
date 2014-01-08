@@ -1,19 +1,69 @@
-<style type="text/css" media="screen">
-	#code-title:hover
-	{ 
-		background-color:orange;
-	}
-</style>
+@if($url == 'createprojectpost')
 
-<div id="new-post-body" class="panel-body">
-	@if($url == 'createprojectpost')
+	<style type="text/css" media="screen">
+		#code-title:hover
+		{ 
+			background-color:orange;
+		}
+	</style>
+
+	<div id="new-post-body" class="panel-body">
+
 		{{ Form::open(array('url' => $url, 'method' => 'POST','files' => true)) }}
-	@else 
+
+		<div class="form-group">
+			<b> Upload a .zip of your project. </b>
+			{{Form::file('file', array())}}
+		</div>
+		<div class="form-group">
+			<b> Post a link to your project. </b>
+			<br>
+			{{Form::url('link', null,array('placeholder' => 'http://exampleurl' ))}}
+		</div>
+		<div class="form-group">
+			<b> Post a screenshot of your project. </b>
+			{{Form::file('screenshot', array())}}
+		</div>
+
+		<div class="form-group">
+			{{ Form::textarea('content', null, array('id' => 'content-form',
+													 'class' => 'form-control',
+													 'placeholder' => 'Write post content here',
+													 'rows' => '5')) }}
+		</div>
+		
+		<hr>
+		
+		<div class="panel-tagDatater">
+			<input type='hidden' style="width:100%;" id="tag-select" class="five-margin select2-container" name="hashtags[]"> </input>
+			<br>
+			<input type='hidden' disabled style="width:77%;" id="tag-select-suggestions" class="five-margin select2-container" name="hashtag_suggestions[]"> </input>
+			<noscript> This browser does not support JavaScript or JavaScript is turned off. Tagging is disabled. </noscript>
+			<button type="button" style="width:22%" id="add-these-tags" class="btn btn-default"> <small>Add Suggested Tags</small> </button>
+		</div>
+
+		<hr>
+		
+		<div class="row">
+			<div class ="col-xs-5 col-md-4">
+				{{Form::submit('Post', array('class' => 'btn btn-lg btn-primary btn-block'))}}	
+			</div>
+		</div>
+		{{ Form::close() }}
+	</div> 
+
+@elseif($url == 'createhelprequestpost')
+
+	<style type="text/css" media="screen">
+		#code-title:hover
+		{ 
+			background-color:orange;
+		}
+	</style>
+
+	<div id="new-post-body" class="panel-body">
 		{{ Form::open(array('url' => $url, 'method' => 'POST')) }}
-	@endif
-	
-	@if($url == 'createhelprequestpost') 
-	
+		
 		{{--
 		<div class="form-group">
 			<b> How would you like to recieve help? </b> <br>
@@ -28,7 +78,7 @@
 			</label>
 		</div>
 		--}}
-	 			
+				
 		<div class="form-group">
 			<b> How would you like to be displayed? </b> <br>
 			<label class="radio-inline">
@@ -47,90 +97,227 @@
 			If run-time, what conditions generate the error? <br>
 			Please provide code if possible/applicable. <br>
 		</p>
-			
-	@endif
-
-	@if($url == 'createprojectpost')
+		
 		<div class="form-group">
-			<b> Upload a .zip of your project. </b>
-			{{Form::file('file', array())}}
+			{{ Form::textarea('content', null, array('id' => 'content-form',
+													 'class' => 'form-control',
+													 'placeholder' => 'Write post content here',
+													 'rows' => '5')) }}
 		</div>
-		<div class="form-group">
-			<b> Post a link to your project. </b>
+
+		<div id="code-panel" class="panel panel-default">
+			<div id="code-title" class="panel-body active">
+				Add code
+			</div>
+			
+			<div id="hidden-editor_div">
+				<input id="hidden-editor" type="hidden" name="code">
+			</div>
+
+			<div id="editor" class="code-collapse">
+			
+			Select your language below
+			Then add your code here!
+			
+			</div>
+				
+			<div class="panel-footer code-collapse">
+				Language: 
+				<select id="language-select" class="select2-container" name="language" style="width:25%">
+					@foreach(Post::getSupportedLanguages() as $language)
+						@if ($language === "plain_text")
+							<option selected value={{{ $language }}}>{{{ ucfirst($language) }}}</option>
+						@else
+							<option value={{ $language }}>{{{ ucfirst($language) }}}</option>
+						@endif
+					@endforeach
+				</select>
+			</div>
+		</div>
+		
+		<hr>
+		
+		<div class="panel-tagDatater">
+			<input type='hidden' style="width:100%;" id="tag-select" class="five-margin select2-container" name="hashtags[]"> </input>
 			<br>
-			{{Form::url('link', null,array('placeholder' => 'http://exampleurl' ))}}
+			<input type='hidden' disabled style="width:77%;" id="tag-select-suggestions" class="five-margin select2-container" name="hashtag_suggestions[]"> </input>
+			<noscript> This browser does not support JavaScript or JavaScript is turned off. Tagging is disabled. </noscript>
+			<button type="button" style="width:22%" id="add-these-tags" class="btn btn-default"> <small>Add Suggested Tags</small> </button>
 		</div>
+
+		<hr>
+		
+		<div class="row">
+			<div class ="col-xs-5 col-md-4">
+				{{Form::submit('Post', array('class' => 'btn btn-lg btn-primary btn-block'))}}	
+			</div>
+		</div>
+		{{ Form::close() }}
+	</div> 
+
+@elseif($url == 'createhelpofferpost')
+
+	<style type="text/css" media="screen">
+		#code-title:hover
+		{ 
+			background-color:orange;
+		}
+	</style>
+
+	<div id="new-post-body" class="panel-body">
+		{{ Form::open(array('url' => $url, 'method' => 'POST')) }}
+										
 		<div class="form-group">
-			<b> Post a screenshot of your project. </b>
-			{{Form::file('screenshot', array())}}
-		</div>
-	@endif
-	
-	<div class="form-group">
-		{{ Form::textarea('content', null, array('id' => 'content-form',
-												 'class' => 'form-control',
-												 'placeholder' => 'Write post content here',
-												 'rows' => '5')) }}
-	</div>
-	
-	@if($url != 'createprojectpost')
-	<div id="code-panel" class="panel panel-default">
-		<div id="code-title" class="panel-body active">
-			Add code
+			{{ Form::textarea('content', null, array('id' => 'content-form-offer',
+													 'class' => 'form-control',
+													 'placeholder' => 'What do you want to help other people with? When are you Available?',
+													 'rows' => '5')) }}
 		</div>
 		
-		<div id="hidden-editor_div">
-			<input id="hidden-editor" type="hidden" name="code">
+		{{--
+		<div class="form-group">
+			{{ Form::textarea('availability', null, array('class' => 'form-control',
+													 'placeholder' => 'When are you available to help?',
+													 'rows' => '5')) }}
+		</div>
+		--}}
+		
+		<hr>
+		
+		<div class="panel-tagDatater">
+			<input type='hidden' style="width:100%;" id="tag-select-offer" class="five-margin select2-container" name="hashtags[]"> </input>
+			<br>
+			<input type='hidden' disabled style="width:77%;" id="tag-select-suggestions-offer" class="five-margin select2-container" name="hashtag_suggestions[]"> </input>
+			<noscript> This browser does not support JavaScript or JavaScript is turned off. Tagging is disabled. </noscript>
+			<button type="button" style="width:22%" id="add-these-tags-offer" class="btn btn-default"> <small>Add Suggested Tags</small> </button>
 		</div>
 
-		<div id="editor" class="code-collapse">
+		<hr>
 		
-		Select your language below
-		Then add your code here!
-		
+		<div class="row">
+			<div class ="col-xs-5 col-md-4">
+				{{Form::submit('Post', array('class' => 'btn btn-lg btn-primary btn-block'))}}	
+			</div>
 		</div>
+		{{ Form::close() }}
+	</div> 
+
+@elseif($url == 'creategeneralpost')
+
+	<style type="text/css" media="screen">
+		#code-title:hover
+		{ 
+			background-color:orange;
+		}
+	</style>
+
+	<div id="new-post-body" class="panel-body">
+		{{ Form::open(array('url' => $url, 'method' => 'POST')) }}
+		
+		<div class="form-group">
+			{{ Form::textarea('content', null, array('id' => 'content-form',
+													 'class' => 'form-control',
+													 'placeholder' => 'Write post content here',
+													 'rows' => '5')) }}
+		</div>
+
+		<div id="code-panel" class="panel panel-default">
+			<div id="code-title" class="panel-body active">
+				Add code
+			</div>
 			
-		<div class="panel-footer code-collapse">
-			Language: 
-			<select id="language-select" class="select2-container" name="language" style="width:25%">
-				@foreach(Post::getSupportedLanguages() as $language)
-					@if ($language === "plain_text")
-						<option selected value={{{ $language }}}>{{{ ucfirst($language) }}}</option>
-					@else
-						<option value={{ $language }}>{{{ ucfirst($language) }}}</option>
-					@endif
-				@endforeach
-			</select>
-		</div>
-	</div>
-	
-	@endif
-	<hr>
-	
-	<div class="panel-tagDatater">
-		<input type='hidden' style="width:100%;" id="tag-select" class="five-margin select2-container" name="hashtags[]"> </input>
-		<br>
-		<input type='hidden' disabled style="width:77%;" id="tag-select-suggestions" class="five-margin select2-container" name="hashtag_suggestions[]"> </input>
-		<noscript> This browser does not support JavaScript or JavaScript is turned off. Tagging is disabled. </noscript>
-		<button type="button" style="width:22%" id="add-these-tags" class="btn btn-default"> <small>Add Suggested Tags</small> </button>
-	</div>
+			<div id="hidden-editor_div">
+				<input id="hidden-editor" type="hidden" name="code">
+			</div>
 
-	<hr>
-	
-	<div class="row">
-		<div class ="col-xs-5 col-md-4">
-			{{Form::submit('Post', array('class' => 'btn btn-lg btn-primary btn-block'))}}	
+			<div id="editor" class="code-collapse">
+			
+			Select your language below
+			Then add your code here!
+			
+			</div>
+				
+			<div class="panel-footer code-collapse">
+				Language: 
+				<select id="language-select" class="select2-container" name="language" style="width:25%">
+					@foreach(Post::getSupportedLanguages() as $language)
+						@if ($language === "plain_text")
+							<option selected value={{{ $language }}}>{{{ ucfirst($language) }}}</option>
+						@else
+							<option value={{ $language }}>{{{ ucfirst($language) }}}</option>
+						@endif
+					@endforeach
+				</select>
+			</div>
 		</div>
-	</div>
-	{{ Form::close() }}
-</div> 
+
+		<hr>
+		
+		<div class="panel-tagDatater">
+			<input type='hidden' style="width:100%;" id="tag-select" class="five-margin select2-container" name="hashtags[]"> </input>
+			<br>
+			<input type='hidden' disabled style="width:77%;" id="tag-select-suggestions" class="five-margin select2-container" name="hashtag_suggestions[]"> </input>
+			<noscript> This browser does not support JavaScript or JavaScript is turned off. Tagging is disabled. </noscript>
+			<button type="button" style="width:22%" id="add-these-tags" class="btn btn-default"> <small>Add Suggested Tags</small> </button>
+		</div>
+
+		<hr>
+		
+		<div class="row">
+			<div class ="col-xs-5 col-md-4">
+				{{Form::submit('Post', array('class' => 'btn btn-lg btn-primary btn-block'))}}	
+			</div>
+		</div>
+		{{ Form::close() }}
+	</div> 
+@elseif($url == 'createcsquestionpost')
+
+	<style type="text/css" media="screen">
+		#code-title:hover
+		{ 
+			background-color:orange;
+		}
+	</style>
+
+	<div id="new-post-body" class="panel-body">
+		{{ Form::open(array('url' => $url, 'method' => 'POST')) }}
+		
+		<div class="form-group">
+			{{ Form::textarea('content', null, array('id' => 'content-form',
+													 'class' => 'form-control',
+													 'placeholder' => 'Write post content here',
+													 'rows' => '5')) }}
+		</div>
+		
+		<hr>
+		
+		<div class="panel-tagDatater">
+			<input type='hidden' style="width:100%;" id="tag-select" class="five-margin select2-container" name="hashtags[]"> </input>
+			<br>
+			<input type='hidden' disabled style="width:77%;" id="tag-select-suggestions" class="five-margin select2-container" name="hashtag_suggestions[]"> </input>
+			<noscript> This browser does not support JavaScript or JavaScript is turned off. Tagging is disabled. </noscript>
+			<button type="button" style="width:22%" id="add-these-tags" class="btn btn-default"> <small>Add Suggested Tags</small> </button>
+		</div>
+
+		<hr>
+		
+		<div class="row">
+			<div class ="col-xs-5 col-md-4">
+				{{Form::submit('Post', array('class' => 'btn btn-lg btn-primary btn-block'))}}	
+			</div>
+		</div>
+		{{ Form::close() }}
+	</div> 
+@else 
+	<p> Unknown Post Type </p>
+@endif
+
 
 <!-- Loading all scripts at the end for performance -->
-
+@if($url != 'createhelpofferpost')
 {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
 {{ HTML::script('assets/js/ace/ace.js') }}
 {{ HTML::script('assets/js/select2.js') }}
-@if($url != 'createcsquestionpost')
 <script>
 
 	/*
@@ -168,7 +355,6 @@
 	});
 
 </script>
-@endif
 
 <script>
 	
@@ -271,3 +457,80 @@
 	}
 
 </script>
+@else
+<script>
+	// The reason for this script duplication is becaus there are two create post elements in the help center, requiring different jquery selectors
+	$(document).ready(function() { 
+		// Set up select2 menus for tagging
+		$("#tag-select-offer").select2({
+			createSearchChoice:function(term, data) { 
+				if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {
+					if(term.length > 2) {
+						return {id:term.replace(/,/g,' '), text:term.replace(/,/g,' ') + " - (This will create a new tag)"};
+					}
+				}
+			},
+			multiple: true,
+			placeholder: "Please select some tags for this post",
+			data: inputTagData
+		});
+		$("#tag-select-suggestions-offer").select2({
+			multiple: true,
+			placeholder: "Type some text in the post content and suggested tags will appear here",
+			data: inputTagData
+		});
+	});
+	
+	/*
+	 * Code for post suggestions functionality
+	 */
+	 
+	// Populate tagData array
+	
+	// Get hashtag data from db
+	var tagData = {
+	@foreach(Hashtag::all() as $tag)
+		{{{$tag->id}}} : "{{{$tag->name}}}",
+	@endforeach
+	}
+	
+	for(var id in tagData) {
+		{{-- Convert CamelCase to spaces --}}
+		var myStr = tagData[id];
+		myStr = myStr.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase();
+		
+		{{-- Convert hyphens and underscores to spaces --}}
+		myStr = myStr.replace(/-|_/g, ' ').toLowerCase();
+		
+		{{-- Convert number letter junctions to spaces --}}
+		myStr = myStr.replace(/([^0-9])([0-9])/g, '$1 $2').toLowerCase();
+		
+		{{-- Now split the string in to an array (split on whitespace) --}}
+		var splitResult = myStr.split(/[ ,]+/);
+		tagData[id] = splitResult;
+	}
+
+	// Add suggested tags to actual tags on button press
+	$('#add-these-tags-offer').click(function() {
+		var unionOfSelectMenues = union_arrays($("#tag-select-suggestions-offer").val().split(","),$("#tag-select-offer").val().split(","));
+		$("#tag-select-offer").select2('val',unionOfSelectMenues);
+	});
+	
+	// Check for new suggested tags every time content field changes
+	$('#content-form-offer').keyup(function() {
+		var newSelectTwoValues = new Array;
+		for(var id in tagData) {
+			var toSearch = tagData[id];
+			for(var word in toSearch) {
+				{{-- For security purposes, escape tag text regexp characters. --}}
+				var patt = new RegExp(escapeRegExp(toSearch[word]),'i');
+				if(patt.test($("#content-form-offer").val())) {
+					newSelectTwoValues.push(id);
+					break;
+				}
+			}
+		}
+		$("#tag-select-suggestions-offer").select2('val',newSelectTwoValues);
+	});
+</script>
+@endif

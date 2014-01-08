@@ -35,30 +35,7 @@
 			
 			
 			<div id="help-offer" class="panel-body">
-				{{ Form::open(array('url' => 'createhelpofferpost')) }}
-										
-				<div class="form-group">
-					{{ Form::textarea('content', null, array('class' => 'form-control',
-															 'placeholder' => 'What do you want to help other people with? When are you Available?',
-															 'rows' => '5')) }}
-				</div>
-				
-				{{--
-				<div class="form-group">
-					{{ Form::textarea('availability', null, array('class' => 'form-control',
-															 'placeholder' => 'When are you available to help?',
-															 'rows' => '5')) }}
-				</div>
-				--}}
-				
-				<hr>
-				
-				<div class="row">
-					<div class ="col-xs-5 col-md-4">
-						{{Form::submit('Post', array('class' => 'btn btn-lg btn-primary btn-block'))}}			
-					</div>
-				</div>
-				{{ Form::close() }}
+				{{ View::make('common/createPost')->with('url', 'createhelpofferpost') }}
 			</div>
 		</div>			
 	</div>
@@ -71,7 +48,6 @@
 			<div id="postrequestswrapper">
 			@foreach (Post::where('postable_type', '=', 'PostHelpRequest')->take(5)->orderBy('id', 'DESC')->get() as $post)
 				{{ View::make('common.newsfeedPost')->with('post', $post) }}
-				{{-- $post_counter = $post_counter + 1 --}}
 			<div class="{{$post->postable_type}}" id="{{$post->id}}"></div>
 			@endforeach
 			</div>

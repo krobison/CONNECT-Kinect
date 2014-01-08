@@ -36,8 +36,6 @@ class AdminController extends BaseController {
 		}
 		if($post->postable_type == 'PostHelpRequest') {
 			DB::table('postsHelpRequests')->where('id','=',$post->postable_id)->delete();
-		} else if($post->postable_type == 'PostHelpOffer') {
-			DB::table('postsHelpOffers')->where('id','=',$post->postable_id)->delete();
 		} else if($post->postable_type == 'PostProject') {
 			$post_P = PostProject::find($post->postable_id);
 			if(!is_null($post_P->screenshot)) {
