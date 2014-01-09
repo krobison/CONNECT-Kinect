@@ -211,7 +211,7 @@
                                         {{ Form::textarea('content', null, array('class' => 'span4' ,'placeholder' => 'Enter your comment here','id' => 'comment-box')) }}
 
                                         {{ Form::hidden('user_id', $user->id) }}
-
+										<br>
                                         {{ Form::submit('Submit', array('class' => 'btn btn-lg btn-primary btn-block')) }}
 
                                         {{ Form::close() }}
