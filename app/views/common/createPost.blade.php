@@ -421,20 +421,31 @@
 	
 	// Check for new suggested tags every time content field changes
 	$('#content-form').keyup(function() {
-		var newSelectTwoValues = new Array;
-		for(var id in tagData) {
-			var toSearch = tagData[id];
-			for(var word in toSearch) {
-				{{-- For security purposes, escape tag text regexp characters. --}}
-				var patt = new RegExp(escapeRegExp(toSearch[word]),'i');
-				if(patt.test($("#content-form").val())) {
-					newSelectTwoValues.push(id);
-					break;
+		delay(function(){
+			var newSelectTwoValues = new Array;
+			for(var id in tagData) {
+				var toSearch = tagData[id];
+				for(var word in toSearch) {
+					{{-- For security purposes, escape tag text regexp characters. --}}
+					var patt = new RegExp(escapeRegExp(toSearch[word]),'i');
+					if(patt.test($("#content-form").val())) {
+						newSelectTwoValues.push(id);
+						break;
+					}
 				}
 			}
-		}
-		$("#tag-select-suggestions").select2('val',newSelectTwoValues);
+			$("#tag-select-suggestions").select2('val',newSelectTwoValues);
+		}, 1000 );
 	});
+	
+	// This is a delay function used to require a pause in typing before executing a function with keyup()
+	var delay = (function(){
+	  var timer = 0;
+	  return function(callback, ms){
+		clearTimeout (timer);
+		timer = setTimeout(callback, ms);
+	  };
+	})();
 	
 	// Helper function to escape regex
 	function escapeRegExp(str) {

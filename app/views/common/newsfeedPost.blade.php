@@ -14,7 +14,8 @@
 		
 		{{-- Display the post content --}}
         @if (isset($detail) && $detail == "true")
-            <p style="white-space:pre-wrap"> {{ $post->getPurifiedContent() }} </p>
+            <div style="white-space:pre-wrap"> {{ $post->getPurifiedContent() }} </div>
+			<br>
         @else
             <div class="list-group" style="margin-left:80px;">
                 @if (strlen($post->content) > 55)

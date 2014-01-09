@@ -496,8 +496,19 @@
 	
 	// Check for new suggested tags every time content field changes
 	$('#bio').keyup(function() {
-		updateSuggestedTags();
+		delay(function(){
+		  updateSuggestedTags();
+		}, 1000 );
 	});
+	
+	// This is a delay function, it us used above so that there must be a 1000ms pause in typing before the function executes
+	var delay = (function(){
+	  var timer = 0;
+	  return function(callback, ms){
+		clearTimeout (timer);
+		timer = setTimeout(callback, ms);
+	  };
+	})();
 	
 	// Also check when a new taking/instructor class is selected
 	$('#classes-taking,#classes-teaching').change(function() {
