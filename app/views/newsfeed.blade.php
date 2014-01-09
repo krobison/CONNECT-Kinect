@@ -10,6 +10,14 @@
 	.first-on-page{
 		margin-top:5px;
 	}
+	hr {
+		margin:0px;
+		padding:0px;
+	}
+	h4 {
+		margin:0px;
+		padding:0px;
+	}
 	</style>
 @stop
 
@@ -21,26 +29,23 @@
 
 	<!-- New post functionality -->
 	<div id="new-post" class="panel panel-default first-on-page">
-	    <div id="new-post-title" class="panel-heading">
+	    <div>
+			<div id="new-post-title" class="span6 panel-heading" title="Make a post about anything. It will appear to all CS Connect users below. Not enough guidance? Fine. Examples: Post about your favourite programming language, Open invite to dinner at your house tonight, What band did you vote to come to e-days?, SuperBowl predictions, Link to your favourite xkcd, Anything. Just make sure to tag your post.">
 			<h4>
 			Create New Post
 			<a style="float:right" target="_blank" href="http://htmlpurifier.org/"><img src="http://htmlpurifier.org/live/art/powered.png" alt="Powered by HTML Purifier" border="0" /></a>
 			</h4>
-			<p>
-				Make a post about anything. It will appear to all CS Connect users below. Not enough guidance? Fine. Examples: Rant about your favourite programming language, Open invite to dinner at your house tonight, What band did you vote to come to e-days?, SuperBowl predictions, Link to your favourite xkcd, Anything. Just make sure to tag your post.
-			</p>
-		</div>
-		<div id="new-post-content" class="panel-body">
-			{{ View::make('common/createPost')->with('url', 'creategeneralpost') }}
-		</div>
-	</div>
-	
-	<!-- Search posts functionality -->
-	<div class="panel panel-default">
-	    <div id="search-post-title" class="panel-heading">
+			</div>
+			<hr>
+			<div id="search-post-title"class="span6 panel-heading">
 			<h4>
 			Search Posts
 			</h4>
+			</div>
+			<hr>
+		</div>
+		<div id="new-post-content" class="panel-body">
+			{{ View::make('common/createPost')->with('url', 'creategeneralpost') }}
 		</div>
 		<div id="search-posts-content" class="panel-body">
 		{{ Form::open(array('url' => 'searchposts', 'method' => 'GET')) }}
@@ -95,10 +100,7 @@
 				{{Form::submit('Search', array('class' => 'btn btn-lg btn-primary btn-block'))}}	
 				</div>
 			</div>
-	{{ Form::close() }}
-			
-			
-
+			{{ Form::close() }}
 		{{ Form::close() }}
 		</div>
 	</div>
@@ -127,10 +129,12 @@
 		// Hide and show post divs on button press
 		$('#new-post-title').click(function() {
 			$('#new-post-content').toggle(200);
+			$('#search-posts-content').hide();
 		});
 		
 		$('#search-post-title').click(function() {
 			$('#search-posts-content').toggle(200);
+			$('#new-post-content').hide();
 		});
 		
 		$(document).ready(function() { 
