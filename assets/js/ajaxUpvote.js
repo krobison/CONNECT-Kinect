@@ -1,5 +1,6 @@
 function bindUpvoteListener() {
-	$(".upvote-ajax").unbind().click(function (){
+	$(".upvote-ajax").unbind().click(function (event){
+
 		var post_id = $( event.target ).closest(".row").find("#post-id").val();
 		var button = $( event.target );
 		var previous_upvotes = $( event.target ).attr('data');
