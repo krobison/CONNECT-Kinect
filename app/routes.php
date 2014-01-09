@@ -33,7 +33,7 @@ Route::group(array('before' => 'auth'), function() {
 	
 	// GET profile
 	Route::get('profile/{id}', 'ProfileController@showProfile');
-	
+	Route::post('loadmoreuserposts', 'ProfileController@loadMorePosts');
 	// GET CS CONNECT
 	Route::get('cs_connect', 'CSConnectController@showCs_connect');
 	
