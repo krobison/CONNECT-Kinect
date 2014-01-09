@@ -317,7 +317,7 @@ class UserController extends BaseController {
 					DB::table('hashtag_user')->where('user_id','=',$id)->delete();
 					foreach($tags as $tag) {
 						// Server-side duplicate checking
-						if (sizeof(DB::table('hashtag_user')->where('hashtag_id','=',$course)->where('user_id','=',$id)->get() == 0)){
+						if (sizeof(DB::table('hashtag_user')->where('hashtag_id','=',$tag)->where('user_id','=',$id)->get() == 0)){
 							Auth::user()->hashtags()->attach($tag); 
 						}
 					}

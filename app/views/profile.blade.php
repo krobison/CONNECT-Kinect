@@ -106,10 +106,45 @@
 	
 	<div class="feed">
 		<span class="infolabel"><h3>User Posts</h3></span>
-	    @foreach ($posts as $post)
-			@if ($post->postable_type != "PostHelpRequest" || $post->postable->anonymous != 1)
-				{{ View::make('common.newsfeedPost')->with('post', $post) }}
-			@endif
-		@endforeach
+		<div id="postswrapper">	
+			@foreach ($posts as $postid)
+				<?php 
+				$post = Post::find($postid->id)
+				?>
+				@if ($post->postable_type != "PostHelpRequest" || $post->postable->anonymous != 1)
+					{{ View::make('common.newsfeedPost')->with('post', $post) }}
+				@endif
+			<div class="postitem" id="{{$post->id}}"></div>
+			@endforeach
+		</div>
+		<div id="loadmorebutton">
+			<button type="button" class="btn btn-default">Load more...</button>
+		</div>
 	</div>
+	
+	<!-- Loading all scripts at the end for performance-->
+	<script>
+		var ID = $(".postitem:last").attr("id");
+		var currentuserid = "<?php echo $currentuser->id ?>";
+		$("#loadmorebutton").click(function (){
+		    $('#loadmorebutton').html('{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}'); 
+			$.ajax({
+				url: '{{ URL::to('loadmoreuserposts') }}',
+				type: 'POST',
+				data: 'lastpost='+ID+'&user_id='+currentuserid,
+				dataType: 'html',
+				success: function(data){
+					if(data){
+						$("#postswrapper").append(data);
+						ID = $(".postitem:last").attr("id");
+						$('#loadmorebutton').html('<button type="button" class="btn btn-default">Load more...</button>');
+						bindUpvoteListener();
+					}else{
+						$('#loadmorebutton').replaceWith('<center>No more posts to show.</center>');
+					}
+				}
+				
+			});
+		});
+	</script>
 @stop

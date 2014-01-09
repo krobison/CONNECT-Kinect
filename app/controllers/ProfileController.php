@@ -42,10 +42,29 @@ class ProfileController extends BaseController {
 			->with('teacherClasses',$teacherClasses)
 			->with('userTags',$userTags)
 			->with('posts', 
-				Post::orderBy('created_at', 'DESC')
+				Post::orderBy('id', 'DESC')
 					->where('user_id','=',$id)
+					->take(5)
 					->get()
 				);
 	}
-	
+	public function loadMorePosts() {
+		$lastPostId = Input::get('lastpost');
+		$currentuserid = Input::get('user_id');
+		
+		$posts = DB::table('posts')
+			->where('id', '<', $lastPostId)
+			->where('user_id', '=', $currentuserid)
+			->orderBy('id', 'DESC')
+			->get();
+			
+		if(empty($posts)) {
+			return;
+		}
+		
+		return View::make('loadmoreposts')
+		->with('user', Auth::user())
+		->with('posts', $posts)
+		->with('type', 'GeneralPost');
+	}
 }
