@@ -265,11 +265,11 @@
 		<br>	
 			
 		<div class="row">
-			{{Form::label('profilepic', 'Profile Picture: (jpeg, png, bmp, or gif && 2MB Maximum size)', array('class' => 'col-md-offset-2 col-xs-12 col-md-10'))}}	
+			{{Form::label('profilepic', 'Profile Picture: (jpeg, png, bmp, or gif && 2MB Maximum size)', array('class' => 'col-md-offset-2 col-xs-5','required')).'<span class="requiredtext"> *Required</span>'}}	
 		</div>
 		<div class="row">
 			<div class ="col-xs-5 col-md-4 col-md-offset-2">
-			{{Form::file('profilepic', array())}}		
+			{{Form::file('profilepic', array('id' => 'picture'))}}		
 			</div>
 		</div>
 		@if($errors->has('profilepic'))
@@ -314,8 +314,47 @@
 		verifyFields();
 		$("#main").keyup(function() {
 			verifyFields();
+			//console.log("Value: " + emailUsed);
 		});
+		$('#picture').bind('change', function() {
+			if(this.files[0].size > 2000000) {
+				pictureTooBig = true;
+			} else {
+				pictureTooBig = false;
+			}
+			if(this.files[0].type.split('/')[0] == 'image') {
+				uploadWrongType = false;
+			} else {
+				uploadWrongType = true;
+			}
+			verifyFields();
+		});
+		$("#email").change(function() {
+			isEmailUsed($("#email").val());
+		});
+
+		isEmailUsed($("#email").val());
 	});
+	
+	var pictureTooBig = false;
+	var uploadWrongType = false;
+	var emailUsed = true;
+	
+	var isEmailUsed = function(email) {
+		var toReturn;
+		$.ajax({
+		url: "{{{URL::to('emailUsed')}}}",
+		type: 'POST',
+		data: {"email": email},
+		dataType: 'json',
+		success: function(data){
+				//console.log(data.value);
+				emailUsed = data.value;
+				verifyFields();
+			}
+		});
+	}
+	
 	var verifyFields = function() {
 		var anythingWrong = false;
 		var errors = '<div class="alert alert-danger">'
@@ -340,6 +379,10 @@
 			anythingWrong = true;
 			errors = errors + "Password Confirm field must be filled in<br>";
 		}
+		if($("#picture").val().length == 0) {
+			anythingWrong = true;
+			errors = errors + "You must upload a profile picture<br>";
+		}
 		
 		// Email is valid (Thank you stack overflow for the regular expression)
 		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -347,8 +390,14 @@
 		if(!re.test(email)) {
 			anythingWrong = true;
 			errors = errors + "<br>Email must match this regex:<br> /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ <br> Good Luck <br> <br>";
-		}	
-	
+		}
+		
+		// Email must not be duplicate
+		if(emailUsed) {
+			anythingWrong = true;
+			errors = errors + "This email address has already been used<br>";
+		}
+		
 		// Password Length
 		if($("#password").val().length < 4) {
 			anythingWrong = true;
@@ -363,6 +412,16 @@
 		if($("#password").val() != $("#password-confirm").val()) {
 			anythingWrong = true;
 			errors = errors + "Password and Confirm Password fields must match<br>";
+		}
+		
+		// Picture Required
+		if(pictureTooBig) {
+			anythingWrong = true;
+			errors = errors + "The uploaded picture exceeds to 2Mb limit<br>";
+		}
+		if(uploadWrongType) {
+			anythingWrong = true;
+			errors = errors + "The uploaded picture is not an image<br>";
 		}
 		
 		if(anythingWrong) {
@@ -458,7 +517,7 @@
 				}
 				var classData = $("#classes-taking").select2('data');
 				for (var i in classData) {
-					console.log("Comparing " + classData[i].text + " with " + patt);
+					//console.log("Comparing " + classData[i].text + " with " + patt);
 					if(patt.test(classData[i].text)) {
 						newSelectTwoValues.push(id);
 						break;
@@ -466,7 +525,7 @@
 				}
 				classData = $("#classes-teaching").select2('data');
 				for (var i in classData) {
-					console.log("Comparing " + classData[i].text + " with " + patt);
+					//console.log("Comparing " + classData[i].text + " with " + patt);
 					if(patt.test(classData[i].text)) {
 						newSelectTwoValues.push(id);
 						break;
@@ -477,7 +536,6 @@
 		$("#tag-select-suggestions").select2('val',newSelectTwoValues);
 	}
 
-	
 	// Helper function to escape regex
 	function escapeRegExp(str) {
 		return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");

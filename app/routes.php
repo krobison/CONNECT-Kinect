@@ -17,6 +17,9 @@ Route::get('signup', 'UserController@showSignUp');
 // POST signup request
 Route::post('signup', 'UserController@createUser');
 
+// POST validate email AJAX
+Route::post('emailUsed', 'UserController@emailUsed');
+
 /**
  *	Routes after being logged in.
  *	These routes all have a before filter that checks to see if user is logged in.

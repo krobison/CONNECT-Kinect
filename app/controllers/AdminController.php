@@ -3,20 +3,28 @@
 class AdminController extends BaseController {
 	
 	public function deleteUser(){
-		$id = Input::get("id");
+		$id = Auth::User()->id;
 		
-		if(!is_null(User::find($id)->picture)) {
-			unlink(base_path().'/assets/img/profile_images/'.User::find($id)->picture);
+		if(!is_null(Auth::User()->picture)) {
+			unlink(base_path().'/assets/img/profile_images/'.Auth::User()->picture);
 		}
+		
+		$user_id['user_id'] = Auth::user()->id;
+		Log::info('account deleted by admin', $user_id);
 
-		DB::table('users')->where('id','=',$id)->delete();
+		Auth::logout();
 		DB::table('posts')->where('user_id','=',$id)->delete();
 		DB::table('questions')->where('user_id','=',$id)->delete();
 		DB::table('upvotes')->where('user_id','=',$id)->delete();
 		DB::table('hashtag_user')->where('user_id','=',$id)->delete();
-		DB::table('message_user')->where('user_id','=',$id)->delete();
 		DB::table('comments')->where('user_id','=',$id)->delete();
 		DB::table('course_user')->where('user_id','=',$id)->delete();
+		DB::table('conversations')->where('owner','=',$id)->delete();
+		DB::table('conversation_user')->where('id','=',$id)->delete();
+		DB::table('notifications')->where('user_id','=',$id)->delete();
+		DB::table('notifications')->where('initiator_id','=',$id)->delete();
+		DB::table('notes')->where('user_id','=',$id)->delete();
+		DB::table('users')->where('id','=',$id)->delete();
 
 		return Redirect::to('newsfeed')->with('message', 'You have successfully deleted the account.');
 	}

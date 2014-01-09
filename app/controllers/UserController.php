@@ -364,6 +364,9 @@ class UserController extends BaseController {
 		if(!is_null(Auth::User()->picture)) {
 			unlink(base_path().'/assets/img/profile_images/'.Auth::User()->picture);
 		}
+		
+		$user_id['user_id'] = Auth::user()->id;
+		Log::info('account deleted', $user_id);
 
 		Auth::logout();
 		DB::table('posts')->where('user_id','=',$id)->delete();
@@ -372,11 +375,13 @@ class UserController extends BaseController {
 		DB::table('hashtag_user')->where('user_id','=',$id)->delete();
 		DB::table('comments')->where('user_id','=',$id)->delete();
 		DB::table('course_user')->where('user_id','=',$id)->delete();
+		DB::table('conversations')->where('owner','=',$id)->delete();
+		DB::table('conversation_user')->where('id','=',$id)->delete();
+		DB::table('notifications')->where('user_id','=',$id)->delete();
+		DB::table('notifications')->where('initiator_id','=',$id)->delete();
+		DB::table('notes')->where('user_id','=',$id)->delete();
 		DB::table('users')->where('id','=',$id)->delete();
-
-		$user_id['user_id'] = Auth::user()->id;
-		Log::info('account deleted', $user_id);
-
+		
 		return Redirect::to('/')->with('message', '<div class="alert alert-success"> You have successfully deleted your account. </div>');
 	}
 	
@@ -396,6 +401,16 @@ class UserController extends BaseController {
 			return Redirect::to('newsfeed');
 		}
 		return View::make('signup');
+	}
+	
+	public function emailUsed() {
+		$email = Input::get("email");
+		$exists = User::where('email','=',$email)->first();
+		if ($exists == null) {
+			return json_encode(array("value" => false));
+		} else { 
+			return json_encode(array("value" => true));
+		}
 	}
 	
 	public function deleteNotification() {
