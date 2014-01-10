@@ -19,49 +19,38 @@
 	</div>
 
 		<h4>Users in Conversation</h4>
-	<div class="list-group" style="width:500px;">
-
-		<div class="list-group-item" style="min-height:40px;">
-			<div style="float:left; padding-right: 10px">
-				@if(is_null(Auth::user()->picture))
-					{{ HTML::image('assets/img/dummy.png', 'profile picture', array('width' => '25', 'height' => '25', 'class' => 'img-circle')) }}
-				@else
-					@if ( File::exists('assets/img/profile_images/' . Auth::user()->picture ))
-						{{ HTML::image('assets/img/profile_images/'.Auth::user()->picture, 'profile picture', array('width' => '25', 'height' => '25', 'class' => 'img-circle')) }}
-					@else
-						{{ HTML::image('assets/img/dummy.png', Auth::user()->id , array('width' => '25', 'height' => '25', 'class' => 'img-circle')) }}
+	@if ($conversation->owner == Auth::user()->id)
+		<div style="width:600px;">
+	@else
+		<div style="width:600px; text-align: center;">
+	@endif
+		@foreach ($conversation->users as $someUser)
+			@if ($someUser->id != Auth::user()->id)
+				<div style="padding-top:5px; min-height:40px; position:relative; display: inline-block;">
+					@if ($conversation->owner == Auth::user()->id)
+						<form role="form" action="{{ URL::to('removeUser/'.$someUser->id.'/'.$conversation->id) }}" method="get">
+							<style type="text/css"> #remove:hover { color:grey; } </style>
+							<button id="remove" type="submit" style="background:none; border:none; position:absolute; right:-3px; top:5px;" onclick="return confirm('Are you sure you want to remove this user? They will not be able to view these messages or reply any longer.');">
+								<span class="glyphicon glyphicon-remove"></span>
+							</button>
+						</form>
 					@endif
-				@endif 
-			</div>
-			<a href="{{ URL::to('profile/'.Auth::user()->id) }}"><span>{{{Auth::user()->first}}} {{{Auth::user()->last}}}</span></a>
-		</div>
-	@foreach ($conversation->users as $someUser)
-		@if ($someUser->id != Auth::user()->id)
-			<div class="list-group-item" style="min-height:40px;">
-				<div style="float:left; padding-right: 10px">
 					@if(is_null($someUser->picture))
-						{{ HTML::image('assets/img/dummy.png', 'profile picture', array('width' => '25', 'height' => '25', 'class' => 'img-circle')) }}
+						{{ HTML::image('assets/img/dummy.png', 'profile picture', array('width' => '80', 'height' => '80', 'class' => 'img-box')) }}
 					@else
 						@if ( File::exists('assets/img/profile_images/' . $someUser->picture ))
-							{{ HTML::image('assets/img/profile_images/'.$someUser->picture, 'profile picture', array('width' => '25', 'height' => '25', 'class' => 'img-circle')) }}
+							{{ HTML::image('assets/img/profile_images/'.$someUser->picture, 'profile picture', array('width' => '80', 'height' => '80', 'class' => 'img-box')) }}
 						@else
-							{{ HTML::image('assets/img/dummy.png', $someUser->id , array('width' => '25', 'height' => '25', 'class' => 'img-circle')) }}
+							{{ HTML::image('assets/img/dummy.png', $someUser->id , array('width' => '80', 'height' => '80', 'class' => 'img-box')) }}
 						@endif
 					@endif 
+					<a style="color: #FCFCC5; text-decoration: none; background-color:rgba(0,0,0,0.5); position: absolute; left: 0px; top: 47%; width:100%" href="{{ URL::to('profile/'.$someUser->id) }}"><span>{{{$someUser->first}}} </br> {{{$someUser->last}}}</span></a>
 				</div>
-				@if ($conversation->owner == Auth::user()->id)
-					<form class="form-horizontal" role="form" action="{{ URL::to('removeUser/'.$someUser->id.'/'.$conversation->id) }}" method="get">
-						<button type="submit" class="btn-sm btn-danger btn" style="float:right;margin-top:-5px;" onclick="return confirm('Are you sure you want to remove this user? They will not be able to view these messages or reply any longer.');">
-							<span class="glyphicon glyphicon-remove"></span> Remove User
-						</button>
-					</form>
-				@endif
-				<a href="{{ URL::to('profile/'.$someUser->id) }}"><span>{{{$someUser->first}}} {{{$someUser->last}}}</span></a>
-			</div>
-		@endif
-	@endforeach
+			@endif
+		@endforeach
 	</div>
 	@if ($conversation->owner == Auth::user()->id)
+		<br/>
 		<form class="form-horizontal" role="form" action="{{ URL::to('addUsers/'.$conversation->id) }}" method="get">
 			<select multiple class="select2-container" style="width:400px;" name="users[]">
 				@foreach(User::all() as $messageUser)
@@ -85,6 +74,7 @@
 	<div class="list-group">
 	@foreach ($conversation->notes as $note)
 		<div class="list-group-item" style="min-height:56px;">
+			<small style="float:right"> {{{ $note->created_at->diffForHumans() }}} </small>
 			<div style="float:left; padding-right: 10px">
 				<a href="{{URL::to('profile', User::find($note->user_id)->id)}}">
 					{{HTML::image(User::find($note->user_id)->getProfilePictureURL(), '$post->user->id', array('width' => '40', 'height' => '40', 'class' => 'img-circle'))}}
