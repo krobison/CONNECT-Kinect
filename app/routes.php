@@ -149,5 +149,13 @@ Route::get('csTestBox', function() {
 	return View::make('csTestBox');
 });
 
+Route::get('apiTags', function() {
+	return Response::json(Hashtag::all());
+});
+
+Route::get('myTags', function() {
+	return Response::json(User::find(75)->hashtags->lists('id'));
+});
+
 Route::get('phptest', function() { return View::make('phptest'); });
 
