@@ -10,23 +10,23 @@
 	<div id="new-post-body" class="panel-body">
 	
 		<p>
-			Provide a link to your project (web site, github, public dropbox, etc...), upload a zip file of your project, or both! Also, please include a screenshot and a description of your project as well. <b> Once a post has been submitted, it will be evaluated and approved by a Connect administrator then posted on the CS Projects page. </b><br><br> Note: the screenshot and zip file combine must be less than 2Mb.
+			Provide a link to your project (web site, github, public dropbox, etc...), upload a zip file of your project, or both! Also, please include a screenshot and a description of your project as well. <b> Once a post has been submitted, it will be evaluated and approved by a Connect administrator then posted on the CS Projects page. </b><br><br> Note: the screenshot and zip file must both be less than 2Mb.
 		</p>
 
 		{{ Form::open(array('url' => $url, 'method' => 'POST','files' => true)) }}
 
 		<div class="form-group">
 			<b> Upload a .zip of your project. </b>
-			{{Form::file('file', array())}}
+			{{Form::file('file', array('id' => 'zip'))}}
 		</div>
 		<div class="form-group">
 			<b> Post a link to your project. </b>
 			<br>
-			{{Form::url('link', null,array('placeholder' => 'http://exampleurl' ))}}
+			{{Form::url('link', null,array('placeholder' => 'http://exampleurl', 'id' => 'link' ))}}
 		</div>
 		<div class="form-group">
-			<b> Post a screenshot of your project. </b>
-			{{Form::file('screenshot', array())}}
+			<b> Post a screenshot of your project. </b> <span class="requiredtext"> *Required</span>
+			{{Form::file('screenshot', array('id' => 'screenshot'))}}
 		</div>
 
 		<div class="form-group">
@@ -50,7 +50,10 @@
 		
 		<div class="row">
 			<div class ="col-xs-5 col-md-4">
-				{{Form::submit('Post', array('class' => 'btn btn-lg btn-primary btn-block'))}}	
+				{{Form::submit('Post', array('id' => 'submit-button','class' => 'btn btn-lg btn-primary btn-block'))}}	
+			</div>
+			<div class ="col-md-8" id="javascript_errors" style="float:right, margin:5px">
+			
 			</div>
 		</div>
 		{{ Form::close() }}

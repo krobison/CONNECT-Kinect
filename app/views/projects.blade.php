@@ -107,14 +107,77 @@
 	
 	<!-- Loading all scripts at the end for performance-->
 	<script>
+	$(document).ready(function() {
+		$("#link").keyup(function() {
+			verifyFields();
+		});
+		$('#screenshot').bind('change', function() {
+			verifyFields();
+		});
+		$("#zip").change(function() {
+			verifyFields();
+		});
+		verifyFields();
+	});
+	var verifyFields = function() {
+		var anythingWrong = false;
+		var errors = '<div class="alert alert-danger">'
+		// File Upload
+		if($("#zip")[0].files[0]) {
+			if($("#zip")[0].files[0].size > 2000000) {
+				anythingWrong = true;
+				errors = errors + "Uploaded zip file is too big<br>";
+			}
+			if($("#zip")[0].files[0].type.split('/')[0] != 'application'){
+				anythingWrong = true;
+				errors = errors + "Uploaded zip file is of the wrong file type<br>";
+			}
+		}
+		if($("#zip").val().length == 0 && $("#link").val().length == 0) {
+			anythingWrong = true;
+			errors = errors + "You must upload a zip file or provide a link<br>";
+		}
+		
+		// Screenshot
+		if($("#screenshot")[0].files[0]) {
+			if($("#screenshot")[0].files[0].size > 2000000) {
+				anythingWrong = true;
+				errors = errors + "Screenshot file is too big<br>";
+			}
+			if($("#screenshot")[0].files[0].type.split('/')[0] != 'image'){
+				anythingWrong = true;
+				errors = errors + "Screenshot file is not an image<br>";
+			}
+		}
+		if($("#screenshot").val().length == 0) {
+			anythingWrong = true;
+			errors = errors + "Screenshot file must be uploaded<br>";
+		}
+		
+		if(anythingWrong) {
+			errors = errors + "</div>";
+			$("#javascript_errors").html(errors);
+			$("#submit-button").attr('disabled', true);
+		} else {
+			$("#javascript_errors").html( '<div class="alert alert-success"> All fields complete and verified </div>');
+			$("#submit-button").attr('disabled', false);
+		}
+	}
+	
+	
+	</script>
+	<script>
 		// Hide and show post divs on button press
 		$('#hide-new-post-title').click(function() {
 			$('#new-post-body').toggle(200);
 		});
-		$('#new-post-body').hide();
 		
 		$('#hide-approve-projects-button').click(function() {
 			$('#approve-projects').toggle(200);
+		});
+		
+		$(document).ready(function() {
+			$('#new-post-body').hide();
 		});
 		
 		var projectID = $(".PostProject:last").attr("id");

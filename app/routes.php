@@ -36,7 +36,7 @@ Route::group(array('before' => 'auth'), function() {
 	
 	// GET profile
 	Route::get('profile/{id}', 'ProfileController@showProfile');
-	Route::post('loadmoreuserposts', 'ProfileController@loadMorePosts');
+	
 	// GET CS CONNECT
 	Route::get('cs_connect', 'CSConnectController@showCs_connect');
 	
@@ -51,6 +51,7 @@ Route::group(array('before' => 'auth'), function() {
 	Route::get('projects', 'ProjectsController@showProjects');
 	Route::post('createprojectpost', 'PostController@createProjectPost');
 	Route::post('loadmoreprojects', 'ProjectsController@loadMoreProjects');
+
 	// GET help center
 	Route::get('helpCenter', 'HelpCenterController@showHelpCenter');
 

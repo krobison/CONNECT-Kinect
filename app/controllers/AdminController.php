@@ -79,7 +79,39 @@ class AdminController extends BaseController {
 		$post_P->save();
 		$post->touch();
 		
+		// Generate notifications for each tag selected
+		$post->addTagNotifications($post->hashtags,Auth::user()->id,$post->id);
+		
 		return Redirect::back()->with('message', 'You have successfully approved the project.');
+	}
+	
+	public function addTagNotifications($tags,$sender_id,$post_id) {
+
+			// Get an array of all the tag ids
+			$hashtags = $tags->lists('id');
+	
+			// Get all users that have any of the hashtags (this took forever to figure out)
+			$uninformed_users = DB::table('users')
+			->whereExists(function($query) use ($hashtags)
+			{
+					$query->select(DB::raw(1))
+							  ->from('hashtag_user')
+							  ->whereRaw('hashtag_user.user_id = users.id')
+							  ->whereIn('hashtag_user.hashtag_id',$hashtags);
+			})
+			->get();
+			
+			foreach($uninformed_users as $user) {
+				if(Auth::user()->id != $user->id) {
+					$not = new Notification;
+					$not->user_id = $user->id;
+					$not->initiator_id = $sender_id;
+					$not->type = 'tag';
+					$not->origin_id = $post_id;
+					$not->save();
+				}
+			}
+			
 	}
 	
 	public function createCSQuestion() {

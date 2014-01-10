@@ -363,18 +363,18 @@ class PostController extends BaseController {
 			// Create db associations for tags, add new tags to hashtag table
 			PostController::addTags(Input::get('hashtags'),$post);
 			
-			// Generate notifications for each tag selected
-			$this->addTagNotifications($post->hashtags,Auth::user()->id,$post->id);
+			// Generate notifications for each tag selected (actually don't do this until post is approved)
+			//$this->addTagNotifications($post->hashtags,Auth::user()->id,$post->id);
 
 		} catch( Exception $e ) {
 			//return View::make('debug', array('data' => Input::all()));
-			return Redirect::back()->with('message', 'There was an error making your post. Exception '.$e);
+			return Redirect::back()->with('message', '<div class="alert alert-danger">There was an error making your post. Exception '.$e.'</div>');
 		}
 
 		$user_id['user_id'] = Auth::user()->id;
 		Log::info('project posted', $user_id);
 
-		return Redirect::back()->with('message', 'Your post has been successfully created.');
+		return Redirect::back()->with('message', '<div class="alert alert-success">Your post has been successfully submitted and is pending approval. </div>');
 	}
 	
 	public function createHelpRequestPost() {
