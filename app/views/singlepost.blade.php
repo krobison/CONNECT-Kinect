@@ -81,12 +81,12 @@
 	@elseif ($post->postable_type == 'PostProject')
 		<div class="well">
 			<div class="row" style="text-align:center">
-			@if($post->postable->file)
-			<h3> {{ link_to('/assets/csproject_files/'.$post->postable->file, 'Download') }} </h3>
-			@endif
-			@if($post->postable->link)
-			<h3> {{ link_to($post->postable->link, 'Link To Project') }} </h3>
-			@endif
+				@if($post->postable->file)
+					<h3> {{ link_to('/assets/csproject_files/'.$post->postable->file, 'Download') }} </h3>
+				@endif
+				@if($post->postable->link)
+					<h3> {{ link_to($post->postable->link, 'Link To Project') }} </h3>
+				@endif
 			</div>
 			<div class="row" style="text-align:center">
 			{{ HTML::image('assets/img/csproject_images/'.$post->postable->screenshot, 'CS Project Screenshot', array('width' => '512', 'height' => '512')) }}

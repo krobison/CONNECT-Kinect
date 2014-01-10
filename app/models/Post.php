@@ -38,6 +38,14 @@ class Post extends Eloquent {
 		$purifier = new HTMLPurifier($pureconfig);
 		return $purifier->purify($this->content);
 	}
+	
+	public function getProjectImagePath() {
+		if($this->postable_type == "PostProject") {
+			return 'assets/img/csproject_images/'.$this->postable->screenshot;
+		} else {
+			return null;
+		}
+	}
 
 	// This really isn't a model function, however, I need to do a bunch of logic on 
 	// data from the file system and it would be worse to put the logic in the blade template -- Thomas

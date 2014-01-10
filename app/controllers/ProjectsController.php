@@ -9,7 +9,7 @@ class ProjectsController extends BaseController {
 						->where('postable_type', '=', 'PostProject')
 						->leftJoin('postsProjects', 'posts.postable_id', '=', 'postsProjects.id')
 						->where('postsProjects.approved', '=', '1')
-						->take(5)
+						->take(4)
 						->orderBy('posts.id', 'DESC')
 						->select('posts.*')
 						->get();
@@ -24,13 +24,13 @@ class ProjectsController extends BaseController {
 		->leftJoin('postsProjects', 'posts.postable_id', '=', 'postsProjects.id')
 		->where('postsProjects.approved', '=', '1')
 		->orderBy('posts.id', 'DESC')
-		->take(5)
+		->take(4)
 		->select('posts.*')
 		->get();
 		if(empty($posts)) {
 		return;
 		}
-		return View::make('loadmorespecificposts')
+		return View::make('loadmoreprojectposts')
 		->with('user', Auth::user())
 		->with('posts', $posts);
 	}

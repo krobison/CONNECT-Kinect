@@ -8,8 +8,33 @@
 	#hide-new-post-title:hover{ 
 		background-color:orange;
 	}
-	.first-on-page{
-		margin-top:5px;
+	
+	.image { 
+		position: relative; 
+		float: left;
+		margin: 8px;
+		display: block;
+		line-height: 0;
+		-webkit-transition: all 0.3s ease;
+		-moz-transition: all 0.3s ease;
+		-o-transition: all 0.3s ease;
+	}
+	
+	.image:hover {
+		-webkit-box-shadow: 0px 0px 20px rgba(53,152,219,0.8);
+		-moz-box-shadow: 0px 0px 20px rgba(53,152,219,0.8);
+		box-shadow: 0px 0px 20px rgba(53,152,219,0.8);
+	}
+
+	.overlap { 
+	    position: absolute;
+		top: 104px; 
+		color: white; 
+		font: bold 12px/13px Helvetica, Sans-Serif; 
+		letter-spacing: 0px;  
+		background: rgb(0, 0, 0); /* fallback color */
+		background: rgba(0, 0, 0, 0.7);
+		padding: 10px;
 	}
 	</style>
 @stop
@@ -28,9 +53,6 @@
 		<?php $message = Session::get('message');?>
 			{{$message}}
 			<h4> New Project Post </h4>	
-			<p>
-				Upload your project here. Provide a link to your project (web site, github, public dropbox, etc...), upload a zip file of your project, or both! Also, please include a screenshot and a description of your project as well. Posts will be evaluated and approved by a Connect administrator then posted on the CS Projects page. Note: the screenshot and zip file combine must be less than 2Mb.
-			</p>
 		</div>
 		{{ View::make('common/createPost')->with('url', 'createprojectpost') }}
 	</div>
@@ -45,17 +67,13 @@
 			</h4>
 		</div>
 		<div id="approve-projects" class="panel-body">
-			{{-- $post_counter = 0; --}}
 			@foreach (Post::where('postable_type', '=', 'PostProject')->orderBy('id', 'DESC')->get() as $post)
 				@if($post->postable->approved == '0')
 					{{ View::make('common.newsfeedPost')->with('post', $post) }}
-					{{-- $post_counter = $post_counter + 1 --}}
 				@endif
 			@endforeach
 			
-			{{-- @if( $post_counter >= 5 ) --}}
-				<button type="button" class="btn btn-default">Load more... <i> Not Working </i> </button>
-			{{-- @endif --}}
+			<button type="button" class="btn btn-default">Load more... <i> Not Working </i> </button>
 		</div>
 	</div>
 	@endif
@@ -65,19 +83,26 @@
 			<h4>Recent CS Projects</h4>
 		</div>
 		<div id="cs-project" class="panel-body">
-			<div id="postprojectswrapper">
+			<div id="postprojectswrapper" style="padding: 15px;" class="row">
 			@foreach ($projectposts as $postid)
 				<?php 
 				$postp = Post::find($postid->id);
 				?>
-			{{ View::make('common.newsfeedPost')->with('post', $postp) }}
-			<div class="{{$postp->postable_type}}" id="{{$postp->id}}"></div>
+				{{-- View::make('common.newsfeedPost')->with('post', $postp) --}}
+				{{--<div class="{{$postp->postable_type}}" id="{{$postp->id}}"></div>--}}
+				<a href="{{URL::to('singlepost', $postp->id)}}">
+					<div class="image {{$postp->postable_type}}" id="{{$postp->id}}">
+						<span class="overlap">{{{ substr($postp->content, 0, 15) . '...'}}}<br>Upvotes: {{ $postp->upvotes }}</span> <br>
+						{{ HTML::image($postp->getProjectImagePath(), 'CS Project Screenshot', array('style' => 'display: block', 'width' => '150', 'height' => '150')) }}
+					</div>
+				</a>
 			@endforeach
 			</div>
-			<div id="loadmoreprojectsbutton">
+			<div id="loadmoreprojectsbutton" style="text-align:center">
 				<button type="button" class="btn btn-default">Load more...</button>
 			</div>
 		</div>
+
 	</div>
 	
 	<!-- Loading all scripts at the end for performance-->
@@ -103,8 +128,8 @@
 					success: function(data){
                         if(data){
                             $("#postprojectswrapper").append(data);
-                            requestID = $(".PostProject:last").attr("id");
-							 $('#loadmoreprojectsbutton').html('<button type="button" class="btn btn-default">Load more...</button>');
+                            projectID = $(".PostProject:last").attr("id");
+							$('#loadmoreprojectsbutton').html('<button type="button" class="btn btn-default">Load more...</button>');
                         }else{
                             $('#loadmoreprojectsbutton').replaceWith('<center>No more posts to show.</center>');
                         }

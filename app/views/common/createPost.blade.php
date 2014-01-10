@@ -8,6 +8,10 @@
 	</style>
 
 	<div id="new-post-body" class="panel-body">
+	
+		<p>
+			Provide a link to your project (web site, github, public dropbox, etc...), upload a zip file of your project, or both! Also, please include a screenshot and a description of your project as well. <b> Once a post has been submitted, it will be evaluated and approved by a Connect administrator then posted on the CS Projects page. </b><br><br> Note: the screenshot and zip file combine must be less than 2Mb.
+		</p>
 
 		{{ Form::open(array('url' => $url, 'method' => 'POST','files' => true)) }}
 
