@@ -20,9 +20,9 @@
 
 		<h4>Users in Conversation</h4>
 	@if ($conversation->owner == Auth::user()->id)
-		<div style="width:600px;">
+		<div style="width:700px; text-align: center;">
 	@else
-		<div style="width:600px; text-align: center;">
+		<div style="width:700px; text-align: center;">
 	@endif
 		@foreach ($conversation->users as $someUser)
 			@if ($someUser->id != Auth::user()->id)
@@ -51,7 +51,7 @@
 	</div>
 	@if ($conversation->owner == Auth::user()->id)
 		<br/>
-		<form class="form-horizontal" role="form" action="{{ URL::to('addUsers/'.$conversation->id) }}" method="get">
+		<form style="text-align: center;" class="form-horizontal" role="form" action="{{ URL::to('addUsers/'.$conversation->id) }}" method="get">
 			<select multiple class="select2-container" style="width:400px;" name="users[]">
 				@foreach(User::all() as $messageUser)
 				<?php
