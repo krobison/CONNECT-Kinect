@@ -11,7 +11,11 @@
 	
 </head>
 
-<body style='background-color: #f5f5f5'>
+@if (isset($onLoad))
+	<body style='background-color: #f5f5f5' onload="{{ $onLoad }}">
+@else
+	<body style='background-color: #f5f5f5' class='test'>
+@endif
 
 	{{-- Script Includes --}}
 	
