@@ -166,6 +166,7 @@
 				success: function(data){
 					if(data){
 						$("#postswrapper").append(data);
+						console.log(data);
 						ID = $(".postitem:last").attr("id");
 						$('#loadmorebutton').html('<button type="button" class="btn btn-default">Load more...</button>');
 						bindUpvoteListener();
@@ -173,7 +174,6 @@
 						$('#loadmorebutton').replaceWith('<center>No more posts to show.</center>');
 					}
 				}
-				
 			});
 		});
 

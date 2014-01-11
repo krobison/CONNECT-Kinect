@@ -87,13 +87,7 @@
 					@if (Auth::user()->notifications->count() >0)
 						<ul class="dropdown-menu" role="menu">
 							<li role="presentation" class="dropdown-header">Conversation Notifications</li>
-								@foreach(Auth::user()->notifications()->where('type','=','conversationCreated')->get() as $notification) </li>
-									{{ View::make('common.notification')->with('notification', $notification) }}
-								@endforeach
-								@foreach(Auth::user()->notifications()->where('type','=','conversationAdd')->get() as $notification) </li>
-									{{ View::make('common.notification')->with('notification', $notification) }}
-								@endforeach
-								@foreach(Auth::user()->notifications()->where('type','=','conversationReply')->get() as $notification) </li>
+								@foreach(Auth::user()->notifications()->whereRaw('(Type="conversationCreated" OR Type="conversationReply" OR Type="conversationAdd")')->orderBy('id', 'desc')->get() as $notification) </li>
 									{{ View::make('common.notification')->with('notification', $notification) }}
 								@endforeach
 							<li role="presentation" class="dropdown-header">Tag Notifications</li>

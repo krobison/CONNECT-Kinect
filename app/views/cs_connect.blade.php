@@ -34,14 +34,6 @@
                   fill: none;
                   stroke: #000;
                 }
-                
-                .x.label {
-                        text: "asljdkas";
-                }
-                
-                .y.label {
-                        text: "asljdkas";
-                }
         </style>
 @stop
 
