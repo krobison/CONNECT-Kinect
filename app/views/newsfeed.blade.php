@@ -27,6 +27,10 @@
 
 @section('content')
 
+	<div id="messages">
+		{{Session::get('message');}}
+	</div>
+	
 	<!-- New post functionality -->
 	<div id="new-post" class="panel panel-default first-on-page">
 	    <div>

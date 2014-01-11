@@ -1,6 +1,7 @@
 <?php
 
 include(app_path().'/purify/HTMLPurifier.auto.php');
+include('helpers/lib_autolink.php');
 
 class ConversationController extends BaseController {
 	
@@ -32,9 +33,9 @@ class ConversationController extends BaseController {
 			->get();
 
 		if (empty($result)){
-			return Redirect::to('/');
-		}else{
-		return View::make('singleConversation')
+			return Redirect::to('/')->with('message', 'The conversation you requested has been deleted or you are not a member of this conversation.');
+		} else {
+			return View::make('singleConversation')
 			->with('user', Auth::user())
 			->with('conversation', Conversation::find($id));
 		}
@@ -141,19 +142,6 @@ class ConversationController extends BaseController {
 	
 	public function createConversation() {
 		
-		// creating note first
-		$note = new Note;
-		
-			//PURIFY
-			$pureconfig = HTMLPurifier_Config::createDefault();
-			$purifier = new HTMLPurifier($pureconfig);
-			$content = $purifier->purify(Input::get('content'));
-
-		$note->content = $content;
-		$note->user_id = Auth::user()->id;
-		
-		$note->save();
-		
 		// convert the stupid array, gosh darn it!
 		$stringIDs = Input::get('users');
 		// make sure I'm part of the convo too!
@@ -173,6 +161,19 @@ class ConversationController extends BaseController {
 
 		$this->addConversationCreatedNotifications($integerIDs,$conversation->id);
 		
+		// creating note
+		$note = new Note;
+		
+		//PURIFY
+		$pureconfig = HTMLPurifier_Config::createDefault();
+		$purifier = new HTMLPurifier($pureconfig);
+		$content = $purifier->purify(Input::get('content'));
+
+		$note->content = autolink($content); // Linkify 
+		$note->user_id = Auth::user()->id;
+		
+		//$note->save();
+		
 		// attach note to conversation
 		$note->conversation_id = $conversation->id;
 		
@@ -184,9 +185,9 @@ class ConversationController extends BaseController {
 	
 	public function addToConversation() {
 		//PURIFY
-			$pureconfig = HTMLPurifier_Config::createDefault();
-			$purifier = new HTMLPurifier($pureconfig);
-			$content = $purifier->purify(Input::get('content'));
+		$pureconfig = HTMLPurifier_Config::createDefault();
+		$purifier = new HTMLPurifier($pureconfig);
+		$content = $purifier->purify(Input::get('content'));
 
 		$conversation = Conversation::find(Input::get('conversationID'));
 
@@ -195,10 +196,8 @@ class ConversationController extends BaseController {
 
 			$note = new Note;
 			
-			$note->content = $content;
+			$note->content = autolink($content);
 			$note->user_id = Auth::user()->id;
-			
-			$note->save();
 			
 			// attach note to conversation
 			$note->conversation_id = $conversation->id;

@@ -80,7 +80,7 @@
 					{{HTML::image(User::find($note->user_id)->getProfilePictureURL(), '$post->user->id', array('width' => '40', 'height' => '40', 'class' => 'img-circle'))}}
 				</a>
 			</div>
-			<b>{{{User::find($note->user_id)->first}}}{{{User::find($note->user_id)->last}}}</b><br>
+			<b>{{{User::find($note->user_id)->first}}} {{{User::find($note->user_id)->last}}}</b><br>
 			<span>{{$note->content}}</span>
 		</div>
 	@endforeach
