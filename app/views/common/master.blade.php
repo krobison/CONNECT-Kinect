@@ -4,6 +4,13 @@
 <head>
 
 	{{ HTML::style('assets/css/bootstrap.min.css') }}
+	<style>
+	#affix-y {
+		top: 0px;
+		left: 15px;
+		position: absolute;
+	}
+	</style>
 	
 	@yield('additionalHeaders')
 	
@@ -51,7 +58,7 @@
 				{{-- Side Bar --}}
 				<div class="col-xs-3" style="padding-top: 20px;">
 				
-				<div class='affix' style='width: 210px;z-index:1;'>
+				<div id='affix-y' style='width: 210px;z-index:1;'>
 					
 					<div class="list-group">
 					{{-- Profile --}}
@@ -91,11 +98,11 @@
 									{{ View::make('common.notification')->with('notification', $notification) }}
 								@endforeach
 							<li role="presentation" class="dropdown-header">Tag Notifications</li>
-								@foreach(Auth::user()->notifications()->where('type','=','tag')->get() as $notification)
+								@foreach(Auth::user()->notifications()->where('type','=','tag')->orderBy('id', 'desc')->get() as $notification)
 									{{ View::make('common.notification')->with('notification', $notification) }}
 								@endforeach
 							<li role="presentation" class="dropdown-header">Post Notifications</li>
-								@foreach(Auth::user()->notifications()->where('type','=','postComment')->get() as $notification)
+								@foreach(Auth::user()->notifications()->where('type','=','postComment')->orderBy('id', 'desc')->get() as $notification)
 									{{ View::make('common.notification')->with('notification', $notification) }}
 								@endforeach
 						</ul>
@@ -177,6 +184,24 @@
 	$('.dropdown-menu').click(function(e) {
 		e.stopPropagation();
 	});
+</script>
+
+<script>
+var navigationBar = $("#affix-y");
+var topOffset = parseInt(navigationBar.css('top')); //Grab the top position top first
+var offset = 80;
+$(window).scroll(function(){
+	if( $(this).scrollTop() > offset || parseInt(navigationBar.css('top')) > 0) {
+		navigationBar.css({
+			'top': $(this).scrollTop() + topOffset - offset //Use it later
+		});
+	}
+	if( parseInt(navigationBar.css('top')) < 0) {
+		navigationBar.css({
+			'top': 0 
+		});
+	}
+});
 </script>
 
 <script>
