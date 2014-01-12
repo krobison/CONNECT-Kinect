@@ -6,11 +6,11 @@ class PasswordController extends BaseController {
     	return View::make('password.remind');
   	}
 
-
 	public function request(){
 		$credentials = array('email' => Input::get('email'));
 		return Password::remind($credentials);
 	}
+	
 	public function reset($token){
 		return View::make('password.reset')->with('token', $token);
 	}
@@ -25,7 +25,6 @@ class PasswordController extends BaseController {
 			return Redirect::to('/')->with('message', '<div class="alert alert-success"> Your password has been reset </div>');
 	  	});
 	}
-
 
 }
 
