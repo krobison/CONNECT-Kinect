@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'frodoBaggins@MiddleEarth.com', 'name' => 'Frodo Baggins'),
+	'from' => array('address' => 'connect@mines.edu', 'name' => 'Connect Administrator'),
 
 	/*
 	|--------------------------------------------------------------------------

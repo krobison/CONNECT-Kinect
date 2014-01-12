@@ -7,7 +7,20 @@
 		<h2>Password Reset</h2>
 
 		<div>
-			To reset your password, complete this form: {{ URL::to('password/reset', array($token)) }}.
+		
+		You are receiving this email because we received a password reset request through the CS CONNECT System.
+
+		<br>
+		<br>
+		
+		To reset your password, complete this form: {{ URL::to('password/reset', array($token)) }}.
+
+		<br>
+		<br>
+		
+		-- The CONNECT Team
+		
 		</div>
+		
 	</body>
 </html>
