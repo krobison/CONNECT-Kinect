@@ -56,6 +56,7 @@ class ProfileController extends BaseController {
 			->where('id', '<', $lastPostId)
 			->where('user_id', '=', $currentuserid)
 			->orderBy('id', 'DESC')
+			->take(5)
 			->get();
 			
 		if(empty($posts)) {
