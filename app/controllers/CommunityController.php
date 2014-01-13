@@ -3,19 +3,38 @@
 class CommunityController extends BaseController {
 	
 	public function showCommunity() {
-
-
-	 	
-	 	/**
-	 	 *	Now figure out which page to present.
-	 	 */
 	
+		/**
+		 *	Community tool by Andrew Suter-Morris.
+		 *	Imported to Laravel by Peter Choi.
+		 *
+		 *	Couple things to note:
+		 *		1. Old school PHP did not use objects.
+		 *		   So you will see a lot of array iteration for converting.
+		 *		2. Input to the JIT is through a variable called 'interests'.
+		 *	       It is initialized through a script on body onload.
+		 *		3. There are two directedgraph.js files, one for user.
+		 *		   There is really not much of a difference between the two,
+		 *		   just needed a way to encode a different URL for nodes.
+		 *		4. The import was messy, so this code sorta sucks-my bad.
+		 */
+
+		/**
+		 *	Outer if statement that determines which page to load,
+		 *	either the hashtag view or the user view.
+		 *
+		 *	Initially, the hashtag view is shown (the else portion).
+		 */
 	 	if (Input::has('hashtag')) {
+	 	
+	 		/**
+	 		 *	Get users with specific hashtag.
+	 		 */
 	 		
 	 		// get all users
 	 		$users = User::with('hashtags')->get();
 	 		
-	 		// filter users with certain hastag
+	 		// filter users with certain hashtag
 	 		$users = $users->filter(function ($user) {
 	 		
 	 			if ($user->hashtags->contains(Input::get('hashtag'))) {
@@ -25,90 +44,85 @@ class CommunityController extends BaseController {
 	 		});
 	 		
 	 		// convert
-	 		$testing = array();
+	 		$interests = array();
 	 		
 	 		foreach($users as $user) {
 		 		
-		 		$testing2 = array();
+		 		$temp = array();
 		 		
-		 		$testing2['id'] = $user->id;
+		 		$temp['id'] = $user->id;
 		 		
-		 		$testing2['name'] = $user->first . ' ' . $user->last;
-		 		$testing2['short_name'] = $user->first . ' ' . $user->last;
+		 		$temp['name'] = $user->first . ' ' . $user->last;
+		 		$temp['short_name'] = $user->first . ' ' . $user->last;
 		 		
+		 		// add is_mine flag if we are that user
 				if ($user->id == Auth::user()->id) {
-					$testing2['is_mine'] = true;
+					$temp['is_mine'] = true;
 				} else {
-					$testing2['is_mine'] = false;
+					$temp['is_mine'] = false;
 				}
 		 		
-		 		array_push($testing, $testing2);
+		 		array_push($interests, $temp);
 		 		
 	 		}
-	 		
-	 		$interests = $testing;
 	 		
 	 		/**
 	 		 *	Now load page.
 	 		 */ 
 	 		 
+	 		// init code for jit
+	 		$encoded_interests = htmlspecialchars(json_encode($interests), ENT_QUOTES);
+	 		$onLoad = "init(".$encoded_interests.");";
+	 		
 	 		// get hashtag name
 	 		$hashtagName = Hashtag::find(Input::get('hashtag'))->name;
-	 	
-	 		$encoded_interests = htmlspecialchars(json_encode($interests), ENT_QUOTES);
 	
-	 		$onLoad = "init(".$encoded_interests.");";
-	
+	 		// make page
 	 		return View::make('community')
-	 		->with('onLoad', $onLoad)
-	 		->with('interests', $interests)
-	 		->with('user_view', true)
-	 		->with('header', $hashtagName)
-	 		->with('user', Auth::user());
+	 			->with('onLoad', $onLoad)
+	 			->with('interests', $interests)
+	 			->with('user_view', true)
+	 			->with('header', $hashtagName)
+	 			->with('user', Auth::user());
 	
 	 	} else {
+	 	
+	 		/**
+	 		 *	Get the tags.
+	 		 */
 	
-			/**
-			 *	New call to API.
-			 */
-			
 			// get the list of tags
-			$tags = json_decode(file_get_contents('http://toilers.mines.edu/csconnect-pchoi/apiTags'));
+			$tags = Hashtag::all();
 			
 			// convert
-			$testing = array();
-			
+			// going from stdObject to array
+			// not casting because we also need short_name
+			$interests = array();
 			foreach ($tags as $tag) {
 			
-				$testing2 = array();
+				$temp = array();
+			 	
+				$temp['id'] = $tag->id;
+				$temp['name'] = $tag->name;
+				$temp['short_name'] = $tag->name;
 			
-			 	// going from stdObject to array
-			 	// not casting because we also need short_name
-				$testing2['id'] = $tag->id;
-				$testing2['name'] = $tag->name;
-				$testing2['short_name'] = $tag->name;
-			
-				array_push($testing, $testing2);
+				array_push($interests, $temp);
 			
 			}
-			
-	 		/**
-			 *	Swap result between the APIs.
-	    	 */
-			$interests = $testing;
 	 		
 	 		/**
 	 		 *	New way of adding is_mine flag.
 	  		 */
 	 		
-	 		$myTags = json_decode(file_get_contents('http://toilers.mines.edu/csconnect-pchoi/myTags'));
+	 		$myTags = Auth::user()->hashtags;
 	 		
+	 		// convert
 	 		$myTags2 = array();
-	 		
 	 		foreach ($myTags as $oneOfMyTags) {
-	 			array_push($myTags2, $oneOfMyTags);
+	 			array_push($myTags2, $oneOfMyTags->id);
 	 		}
 	 		
+	 		// if it is in there, add is_mine flag
 	 		for ($i = 0; $i < count($interests); $i++) {
 	 			$interests[$i]['is_mine'] = in_array($interests[$i]['id'], $myTags2);
 	 		}
@@ -117,16 +131,17 @@ class CommunityController extends BaseController {
 	 		 *	Now load page.
 	 		 */ 
 	 	
+	 		// init code for jit
 	 		$encoded_interests = htmlspecialchars(json_encode($interests), ENT_QUOTES);
-	
 	 		$onLoad = "init(".$encoded_interests.");";
 	
+	 		// make page
 	 		return View::make('community')
-	 		->with('onLoad', $onLoad)
-	 		->with('interests', $interests)
-	 		->with('user_view', false)
-	 		->with('header', 'Hashtags')
-	 		->with('user', Auth::user());
+	 			->with('onLoad', $onLoad)
+	 			->with('interests', $interests)
+	 			->with('user_view', false)
+	 			->with('header', 'Hashtags')
+	 			->with('user', Auth::user());
 	
 	 	}
 	
