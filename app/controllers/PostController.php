@@ -4,18 +4,6 @@ include('helpers/lib_autolink.php');
 
 class PostController extends BaseController {
 
-	public function addPostCommentNotifications($user,$cId){
-			$user = User::find($user);
-			if ($user->id != Auth::user()->id){
-				$not = new Notification;
-				$not->user_id = $user->id;
-				$not->initiator_id = Auth::user()->id;
-				$not->type = 'postComment';
-				$not->origin_id = $cId;
-				$not->save();
-			}
-	}
-
 	public function createComment() {
 		try {
 			if (Input::get('content') != ''){
@@ -32,7 +20,7 @@ class PostController extends BaseController {
 				$post = Post::find($comment->post_id);
 				$owner = $post->user_id;
 
-				$this->addPostCommentNotifications($owner,$comment->post_id);
+				PostController::addPostCommentNotifications($owner,$comment->post_id);
 				$user_id['user_id'] = Auth::user()->id;
 				Log::info('comment made', $user_id);
 
@@ -44,35 +32,6 @@ class PostController extends BaseController {
 
 				return Redirect::back()->with('message', "You have commented unsuccessfully");
 		}
-	}
-	
-	public function addTagNotifications($tags,$sender_id,$post_id) {
-
-			// Get an array of all the tag ids
-			$hashtags = $tags->lists('id');
-	
-			// Get all users that have any of the hashtags (this took forever to figure out)
-			$uninformed_users = DB::table('users')
-			->whereExists(function($query) use ($hashtags)
-			{
-					$query->select(DB::raw(1))
-							  ->from('hashtag_user')
-							  ->whereRaw('hashtag_user.user_id = users.id')
-							  ->whereIn('hashtag_user.hashtag_id',$hashtags);
-			})
-			->get();
-			
-			foreach($uninformed_users as $user) {
-				if(Auth::user()->id != $user->id) {
-					$not = new Notification;
-					$not->user_id = $user->id;
-					$not->initiator_id = $sender_id;
-					$not->type = 'tag';
-					$not->origin_id = $post_id;
-					$not->save();
-				}
-			}
-			
 	}
 
 	public function upvotePostAJAX() {
@@ -111,6 +70,7 @@ class PostController extends BaseController {
 	
 	}
 	
+	// Not used, converted upvotes to ajax 
 	public function upvotePost() {
 			$post = Post::find(Input::get('post_id'));
 			$user = Auth::user();
@@ -125,29 +85,30 @@ class PostController extends BaseController {
 			}
 
 			else {
-					try {
+				try {
 
-							$upvote = new Upvote;
-							$upvote->user_id = Input::get('user_id');
-							$upvote->post_id = Input::get('post_id');
-							$upvote->save();
-							$post->upvotes = $post->upvotes + '1';
-							$post->save();
+					$upvote = new Upvote;
+					$upvote->user_id = Input::get('user_id');
+					$upvote->post_id = Input::get('post_id');
+					$upvote->save();
+					$post->upvotes = $post->upvotes + '1';
+					$post->save();
 
-							return Redirect::back()->with('message', "You have upvoted successfully");
+					return Redirect::back()->with('message', "You have upvoted successfully");
 
-					} catch( Exception $e ) {
-
-							dd($e);
-
-							return Redirect::back()->with('message', "You have upvoted unsuccessfully");
-					}
+				} catch( Exception $e ) {
+					return Redirect::back()->with('message', "You have upvoted unsuccessfully");
+				}
 			}
 	}
 
 	public function showSinglePost($id) {
 			$post = Post::find($id);
 			$user = Auth::user();
+			
+			if(!$post) {
+				return Redirect::to('newsfeed')->with('message', '<div class="alert alert-danger"> This post has been deleted </div>');
+			}
 			
 			if($post->postable_type == 'PostProject' && $post->postable->approved == '0' && $user->admin == '0') {
 					return Redirect::to('newsfeed')->with('user', $user);
@@ -191,7 +152,7 @@ class PostController extends BaseController {
 			$comment = Comment::find($id);
 			if(Auth::user()->id == $comment->user_id) {
 				$comment->delete();
-				return Redirect::back()->with('message', 'You have successfully deleted the comment.');
+				return Redirect::back()->with('message', '<div class="alert alert-success"> You have successfully deleted the comment. </div>');
 			}
 			Log::error("Security: User " . $id . " attempted to delete a comment (" . $comment->id . ") for which permissions weren't granted. Comment belongs to " . $comment->user_id . ".");
 			return Redirect::back()->with('message', 'The server rejected your deletion.');
@@ -204,7 +165,7 @@ class PostController extends BaseController {
 			// Make sure the user who is doing the editing is actually the user who the comment belongs to!
 			if($comment->user_id != Auth::user()->id) {
 				Log::error("User " . Auth::user()->id . " attempted to edit a comment for which permissions were not granted. Content: " . $content);
-				return Redirect::back()->with('message', 'The server rejected your edit. This incident has been logged.');
+				return Redirect::back()->with('message', '<div class="alert alert-warning"> The server rejected your edit. This incident has been logged. </div>');
 			}
 						
 			$content = Input::get("toSave".$id);
@@ -230,8 +191,9 @@ class PostController extends BaseController {
 					}
 			}
 			$comment->save();
-
-			return Redirect::back()->with('message', 'You have successfully updated your comment.');
+			
+			return Redirect::back();
+			//return Redirect::back()->with('message', 'You have successfully updated your comment.');
 	}
 	
 	public function searchPosts() {
@@ -363,8 +325,7 @@ class PostController extends BaseController {
 			// Create db associations for tags, add new tags to hashtag table
 			PostController::addTags(Input::get('hashtags'),$post);
 			
-			// Generate notifications for each tag selected (actually don't do this until post is approved)
-			//$this->addTagNotifications($post->hashtags,Auth::user()->id,$post->id);
+			// Don't generate notifications until post is approved
 
 		} catch( Exception $e ) {
 			//return View::make('debug', array('data' => Input::all()));
@@ -396,6 +357,9 @@ class PostController extends BaseController {
 			// Create db associations for tags, add new tags to hashtag table
 			PostController::addTags(Input::get('hashtags'),$post);
 			
+			// Generate notifications (also send requested emails)
+			PostController::addTagNotifications($post->hashtags,Auth::user()->id,$post->id);
+			
 		} catch( Exception $e ) {
 			//return View::make('debug', array('data' => Input::all()));
 			return Redirect::back()->with('message', 'Your post cannot be created at this time, please try again later.');
@@ -419,6 +383,9 @@ class PostController extends BaseController {
 			
 			// Create db associations for tags, add new tags to hashtag table
 			PostController::addTags(Input::get('hashtags'),$post);
+			
+			// Generate notifications (also send requested emails)
+			PostController::addTagNotifications($post->hashtags,Auth::user()->id,$post->id);
 			
 		} catch( Exception $e ) {
 			//return View::make('debug', array('data' => Input::all()));
@@ -469,7 +436,9 @@ class PostController extends BaseController {
 			PostController::addTags(Input::get('hashtags'),$post);
 			
 			// Generate notifications for each tag selected
-			$this->addTagNotifications($post->hashtags,Auth::user()->id,$post->id);
+			PostController::addTagNotifications($post->hashtags,Auth::user()->id,$post->id);
+			
+			// Do some logging
 			$user_id['user_id'] = Auth::user()->id;
 			Log::info('general post created', $user_id);
 				
@@ -497,6 +466,60 @@ class PostController extends BaseController {
 						$new_tag->save();
 						$new_tag->posts()->attach($post);
 				}
+			}
+		}
+	}
+
+	public static function addTagNotifications($tags,$sender_id,$post_id) {
+
+		// Get an array of all the tag ids
+		$hashtags = $tags->lists('id');
+
+		// Get all users that have any of the hashtags (this took forever to figure out)
+		$uninformed_users = DB::table('users')
+		->whereExists(function($query) use ($hashtags)
+		{
+				$query->select(DB::raw(1))
+						  ->from('hashtag_user')
+						  ->whereRaw('hashtag_user.user_id = users.id')
+						  ->whereIn('hashtag_user.hashtag_id',$hashtags);
+		})
+		->get();
+		
+		foreach($uninformed_users as $user) {
+			if(Auth::user()->id != $user->id) {
+				$not = new Notification;
+				$not->user_id = $user->id;
+				$not->initiator_id = $sender_id;
+				$not->type = 'tag';
+				$not->origin_id = $post_id;
+				$not->save();
+				
+				// If the user has opted to receive emails for tag notifications 
+				if($user->email_tag == true) {
+					Mail::send('emails.tag_notification', array("reciever" => $user, "post" => $post_id) , function($message) use ($user){
+						$message->to($user->email, $user->first . " " . $user->last)->subject('CS CONNECT -- Tag Notification');
+					});
+				}
+			}
+		}
+	}
+	
+	public static function addPostCommentNotifications($user,$cId){
+		$user = User::find($user);
+		if ($user->id != Auth::user()->id){
+			$not = new Notification;
+			$not->user_id = $user->id;
+			$not->initiator_id = Auth::user()->id;
+			$not->type = 'postComment';
+			$not->origin_id = $cId;
+			$not->save();
+			
+			// If the user has opted to receive emails for post notifications 
+			if($user->email_comment == true) {
+				Mail::send('emails.comment_notification', array("reciever" => $user, "post" => $cId) , function($message) use ($user){
+					$message->to($user->email, $user->first . " " . $user->last)->subject('CS CONNECT -- Comment Notification');
+				});
 			}
 		}
 	}
