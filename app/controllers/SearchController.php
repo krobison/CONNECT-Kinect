@@ -3,8 +3,11 @@
 class SearchController extends BaseController {
 	
 	public function showSearch() {
-		$user_id['user_id'] = Auth::user()->id;
-		Log::info('search accessed', $user_id);
+		$log = new CustomLog;	
+		$log->user_id = Auth::user()->id;
+		$log->event_type = "search accessed";
+		$log->save();
+
 		return View::make('search')
 			->with('user', Auth::user());
 	}
@@ -93,8 +96,11 @@ class SearchController extends BaseController {
 			}
 		}
 
-		$user_id['user_id'] = Auth::user()->id;
-		Log::info('search made for ' . $logText, $user_id);
+		$log = new CustomLog;	
+		$log->user_id = Auth::user()->id;
+		$log->event_type = "search made";
+		$log->additional_info = $logText;
+		$log->save();
 		
 		return View::make('search')
 			->with('nameresults', $nameresults)
@@ -105,6 +111,11 @@ class SearchController extends BaseController {
 	}
 	
 	public function showAllUsers() {
+		$log = new CustomLog;	
+		$log->user_id = Auth::user()->id;
+		$log->event_type = "search made";
+		$log->additional_info = "Show all users";
+		$log->save();
 		return View::make('search')
 			->with('user', Auth::user())
 			->with('nameresults', DB::table('users')->get());

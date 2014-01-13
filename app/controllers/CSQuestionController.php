@@ -3,8 +3,11 @@
 class CSQuestionController extends BaseController {
 	
 	public function showCSQuestion() {
-		$user_id['user_id'] = Auth::user()->id;
-		Log::info('CSQuestion accessed', $user_id);
+		$log = new CustomLog;	
+		$log->user_id = Auth::user()->id;
+		$log->event_type = "CSQuestion accessed";
+		$log->save();
+
 		$post = Post::orderBy('created_at', 'DESC')->where('postable_type', '=', 'PostQuestion')->take(1)->get();
 		$post = $post->first();
 		return View::make('singlepost')
@@ -13,6 +16,11 @@ class CSQuestionController extends BaseController {
 	}
 	
 	public function showPreviousQuestions() {
+		$log = new CustomLog;	
+		$log->user_id = Auth::user()->id;
+		$log->event_type = "orevious CSQuestion accessed";
+		$log->save();
+
 		$posts = Post::orderBy('created_at', 'DESC')->where('postable_type', '=', 'PostQuestion')->get();
 		return View::make('newsfeed')
 			->with('user', Auth::user())

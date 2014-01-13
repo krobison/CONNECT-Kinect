@@ -3,8 +3,11 @@
 class HelpCenterController extends BaseController {
 	
 	public function showHelpCenter() {
-		$user_id['user_id'] = Auth::user()->id;
-		Log::info('helpCenter accessed', $user_id);
+		$log = new CustomLog;	
+		$log->user_id = Auth::user()->id;
+		$log->event_type = "helpCenter accessed";
+		$log->save();
+
 		return View::make('help')
 			->with('user', Auth::user());
 	}
