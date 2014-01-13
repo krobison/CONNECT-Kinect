@@ -10,6 +10,14 @@
 		left: 15px;
 		position: absolute;
 	}
+	#notification-box {
+		overflow-y: auto;
+		max-height:600px;
+		width:504px;
+	}
+	.notification:hover {
+		background-color: #F5F5F5 ;
+	}
 	</style>
 	
 	@yield('additionalHeaders')
@@ -92,7 +100,7 @@
 						</span>
 					</a>
 					@if (Auth::user()->notifications->count() >0)
-						<ul class="dropdown-menu" role="menu">
+						<ul id="notification-box" class="dropdown-menu" role="menu">
 							<li role="presentation" class="dropdown-header">Conversation Notifications</li>
 								@foreach(Auth::user()->notifications()->whereRaw('(Type="conversationCreated" OR Type="conversationReply" OR Type="conversationAdd")')->orderBy('id', 'desc')->get() as $notification) </li>
 									{{ View::make('common.notification')->with('notification', $notification) }}
@@ -183,6 +191,17 @@
 <script>
 	$('.dropdown-menu').click(function(e) {
 		e.stopPropagation();
+	});
+	// Notification bar scrolling depends on window size
+	$(document).ready(function(){
+		$('#notification-box').css({
+			'max-height': window.innerHeight-300
+		});
+	});
+	$( window ).resize(function() {
+		$('#notification-box').css({
+			'max-height': window.innerHeight-300
+		});
 	});
 </script>
 

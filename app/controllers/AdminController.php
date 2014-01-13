@@ -110,6 +110,9 @@ class AdminController extends BaseController {
 					$new_tag->posts()->attach($post);
 				}
 			}
+			
+			PostController::addTagNotifications($post->hashtags,Auth::user()->id,$post->id);
+
 			$user_id['user_id'] = Auth::user()->id;
 			Log::info('cs question post created', $user_id);
 		} catch( Exception $e ) {

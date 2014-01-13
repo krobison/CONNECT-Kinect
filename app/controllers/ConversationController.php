@@ -36,7 +36,7 @@ class ConversationController extends BaseController {
 			->get();
 
 		if (empty($result)){
-			return Redirect::to('/')->with('message', 'The conversation you requested has been deleted or you are not a member of this conversation.');
+			return Redirect::to('newsfeed')->with('message', '<div class="alert alert-danger"> The conversation you requested has been deleted or you are not a member of this conversation. </div>');
 		} else {
 			return View::make('singleConversation')
 			->with('user', Auth::user())
@@ -112,6 +112,13 @@ class ConversationController extends BaseController {
 				$not->type = 'conversationCreated';
 				$not->origin_id = $cId;
 				$not->save();
+				
+				// If the user has opted to receive emails for conversation notifications 
+				if($user->email_conversation == true) {
+					Mail::send('emails.conversationCreated_notification', array("reciever" => $user, "conversation" => $cId) , function($message) use ($user){
+						$message->to($user->email, $user->first . " " . $user->last)->subject('CS CONNECT -- Conversation Notification');
+					});
+				}
 			}
 		}
 	}
@@ -125,6 +132,13 @@ class ConversationController extends BaseController {
 				$not->type = 'conversationReply';
 				$not->origin_id = $cId;
 				$not->save();
+				
+				// If the user has opted to receive emails for conversation notifications 
+				if($user->email_conversation == true) {
+					Mail::send('emails.conversationReply_notification', array("reciever" => $user, "conversation" => $cId) , function($message) use ($user){
+						$message->to($user->email, $user->first . " " . $user->last)->subject('CS CONNECT -- Conversation Notification');
+					});
+				}
 			}
 		}
 	}
@@ -139,6 +153,13 @@ class ConversationController extends BaseController {
 				$not->type = 'conversationAdd';
 				$not->origin_id = $cId;
 				$not->save();
+			
+				// If the user has opted to receive emails for conversation notifications 
+				if($user->email_conversation == true) {
+					Mail::send('emails.conversationAdd_notification', array("reciever" => $user, "conversation" => $cId) , function($message) use ($user){
+						$message->to($user->email, $user->first . " " . $user->last)->subject('CS CONNECT -- Conversation Notification');
+					});
+				}
 			}
 		}
 	}
