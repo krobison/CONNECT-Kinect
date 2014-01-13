@@ -5,6 +5,7 @@
 @stop
 
 @section('additionalHeaders')
+
 	<style type="text/css" media="screen">
 
 	</style>
