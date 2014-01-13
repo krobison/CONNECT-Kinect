@@ -196,7 +196,11 @@
                         }else{
                             $('#loadmoreprojectsbutton').replaceWith('<center>No more posts to show.</center>');
                         }
-                    }
+                    },
+					timeout: 3000,
+					error: function(x, t, m){ 
+					 $('#loadmoreprojectsbutton').replaceWith('<center>The request to load more posts is taking too long, please try again later.</center>');
+				}
 					
                 });
             });
