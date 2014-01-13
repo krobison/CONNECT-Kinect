@@ -3,8 +3,11 @@
 class ProjectsController extends BaseController {
 	
 	public function showProjects() {
-		$user_id['user_id'] = Auth::user()->id;
-		Log::info('projects accessed', $user_id);
+		$log = new CustomLog;	
+		$log->user_id = Auth::user()->id;
+		$log->event_type = "projects accessed";
+		$log->save();
+
 		$projectposts = DB::table('posts')
 						->where('postable_type', '=', 'PostProject')
 						->leftJoin('postsProjects', 'posts.postable_id', '=', 'postsProjects.id')

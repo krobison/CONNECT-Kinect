@@ -21,8 +21,10 @@ class PostController extends BaseController {
 				$owner = $post->user_id;
 
 				PostController::addPostCommentNotifications($owner,$comment->post_id);
-				$user_id['user_id'] = Auth::user()->id;
-				Log::info('comment made', $user_id);
+				$log = new CustomLog;	
+				$log->user_id = Auth::user()->id;
+				$log->event_type = "comment made";
+				$log->save();
 
 				return Redirect::back()->with('message', "You have commented successfully");
 			} else{
@@ -237,8 +239,11 @@ class PostController extends BaseController {
 				$logText = $logText . "sorted by upvotes";
 			}
 
-			$user_id['user_id'] = Auth::user()->id;
-			Log::info('search made for ' . $logText, $user_id);
+			$log = new CustomLog;	
+			$log->user_id = Auth::user()->id;
+			$log->event_type = "search made";
+			$log->additional_info = $logText;
+			$log->save();
 							
 			return View::make('newsfeed')
 					->with('user', Auth::user())
@@ -332,8 +337,10 @@ class PostController extends BaseController {
 			return Redirect::back()->with('message', '<div class="alert alert-danger">There was an error making your post. Exception '.$e.'</div>');
 		}
 
-		$user_id['user_id'] = Auth::user()->id;
-		Log::info('project posted', $user_id);
+		$log = new CustomLog;	
+		$log->user_id = Auth::user()->id;
+		$log->event_type = "project posted";
+		$log->save();
 
 		return Redirect::back()->with('message', '<div class="alert alert-success">Your post has been successfully submitted and is pending approval. </div>');
 	}
@@ -341,6 +348,13 @@ class PostController extends BaseController {
 	public function createHelpRequestPost() {
 	
 		try {
+
+			$log = new CustomLog;	
+			$log->user_id = Auth::user()->id;
+			$log->event_type = "post made";
+			$log->additional_info = "help request";
+			$log->save();
+
 			// First add a PostHelpRequest to the PostHelpRequest table
 			$post_HR = new PostHelpRequest;
 			$post_HR->anonymous = Input::get('anonymous');
@@ -364,9 +378,6 @@ class PostController extends BaseController {
 			//return View::make('debug', array('data' => Input::all()));
 			return Redirect::back()->with('message', 'Your post cannot be created at this time, please try again later.');
 		}
-		
-		$user_id['user_id'] = Auth::user()->id;
-		Log::info('help request post', $user_id);
 		// Make the specific post data (e.g., helpPost, project, etc...)
 		return Redirect::back()->with('message', 'Your post has been successfully created.');
 	}
@@ -374,6 +385,13 @@ class PostController extends BaseController {
 	public function createHelpOfferPost() {
 	
 		try {	
+
+			$log = new CustomLog;	
+			$log->user_id = Auth::user()->id;
+			$log->event_type = "post made";
+			$log->additional_info = "help offer";
+			$log->save();
+
 			// Create A Post in the db
 			$post = new Post;
 			$post->user_id = Auth::user()->id;
@@ -391,15 +409,17 @@ class PostController extends BaseController {
 			//return View::make('debug', array('data' => Input::all()));
 			return Redirect::back()->with('message', 'Your post cannot be created at this time, please try again later.');
 		}
-
-		$user_id['user_id'] = Auth::user()->id;
-		Log::info('help offer post', $user_id);
 		
 		return Redirect::back()->with('message', 'Your post has been successfully created.');
 	}
 
 	public function giveFeedback() {
 		try {
+			$log = new CustomLog;	
+			$log->user_id = Auth::user()->id;
+			$log->event_type = "post made";
+			$log->additional_info = "feedback";
+			$log->save();
 			// First add a PostHelpRequest to the PostHelpRequest table
 			$post_F = new PostFeedback;
 			$post_F->save();
@@ -423,6 +443,12 @@ class PostController extends BaseController {
 	// Create Post Functions
 	public function createGeneralPost() {								
 		try {
+			$log = new CustomLog;	
+			$log->user_id = Auth::user()->id;
+			$log->event_type = "post made";
+			$log->additional_info = "general";
+			$log->save();
+
 			// Create A Post in the db
 			$post = new Post;
 			$post->user_id = Auth::user()->id;
@@ -437,10 +463,6 @@ class PostController extends BaseController {
 			
 			// Generate notifications for each tag selected
 			PostController::addTagNotifications($post->hashtags,Auth::user()->id,$post->id);
-			
-			// Do some logging
-			$user_id['user_id'] = Auth::user()->id;
-			Log::info('general post created', $user_id);
 				
 		} catch( Exception $e ) {
 			//return View::make('debug', array('data' => Input::all()));

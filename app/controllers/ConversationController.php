@@ -6,8 +6,11 @@ include('helpers/lib_autolink.php');
 class ConversationController extends BaseController {
 	
 	public function showConversations() {
-		$user_id['user_id'] = Auth::user()->id;
-		Log::info('conversations accessed', $user_id);
+		$log = new CustomLog;	
+		$log->user_id = Auth::user()->id;
+		$log->event_type = "conversations accessed";
+		$log->save();
+
 		return View::make('conversations')
 			->with('user', Auth::user())
 			->with('conversations', Auth::user()->conversations);

@@ -365,8 +365,10 @@ class UserController extends BaseController {
 			unlink(base_path().'/assets/img/profile_images/'.Auth::User()->picture);
 		}
 		
-		$user_id['user_id'] = Auth::user()->id;
-		Log::info('account deleted', $user_id);
+		$log = new CustomLog;	
+		$log->user_id = Auth::user()->id;
+		$log->event_type = "account deleted";
+		$log->save();
 
 		Auth::logout();
 		DB::table('posts')->where('user_id','=',$id)->delete();
