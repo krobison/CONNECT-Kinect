@@ -50,7 +50,7 @@
 #legend {
   position: absolute;
   top: 10px;
-  left: 110px;
+  left: 25px;
   padding: 5px;
 
   border: 0px solid;
@@ -112,7 +112,7 @@
 
 #back_to_interests a {
   bottom: 10px;
-  left: 110px;
+  left: 25px;
   width: auto;
 }
 

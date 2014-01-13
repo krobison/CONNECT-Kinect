@@ -132,7 +132,7 @@ function init(interests){
         if(!node) return;
         
         // Load proper page if node clicked
-        var url = document.URL.split('?')[0];
+        var url = document.URL.split('community')[0];
         
         // get id of interest
         var interestID;
@@ -144,7 +144,7 @@ function init(interests){
         }
         
 		// set url
-        window.location.href = url + "?hashtag=" + interestID;
+        window.location.href = url + "profile/" + interestID;
       }
     },
     //Number of iterations for the FD algorithm
