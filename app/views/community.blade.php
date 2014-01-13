@@ -19,8 +19,6 @@
 	{{ HTML::style('assets/css/LayoutGraph.css') }}
 	{{ HTML::script('assets/js/community/jit.js') }}
 	
-
-	
 @stop
 
 @section('content')
