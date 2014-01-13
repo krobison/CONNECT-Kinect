@@ -444,7 +444,7 @@ class PostController extends BaseController {
 				
 		} catch( Exception $e ) {
 			//return View::make('debug', array('data' => Input::all()));
-			return Redirect::back()->with('message', '<div class="alert alert-danger" > Your post cannot be created at this time, please try again later. </div>');
+			return Redirect::back()->with('message', '<div class="alert alert-danger" > Your post cannot be created at this time, please try again later: '.$e.' </div>');
 		}
 		return Redirect::back();
 		//return Redirect::back()->with('message', '<div class="alert alert-success"> Your post has been successfully created. </div>');
@@ -474,6 +474,11 @@ class PostController extends BaseController {
 
 		// Get an array of all the tag ids
 		$hashtags = $tags->lists('id');
+		
+		// Return if the post has no hashtags
+		if(empty($hashtags)) {
+			return;
+		}
 
 		// Get all users that have any of the hashtags (this took forever to figure out)
 		$uninformed_users = DB::table('users')
