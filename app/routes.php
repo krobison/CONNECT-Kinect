@@ -61,6 +61,7 @@ Route::group(array('before' => 'auth'), function() {
 	Route::post('createhelpofferpost', 'PostController@createHelpOfferPost');
 	Route::post('loadmorerequests', 'HelpCenterController@loadMoreRequests');
 	Route::post('loadmoreoffers', 'HelpCenterController@loadMoreOffers');
+	
 	// GET community
 	Route::get('community', 'CommunityController@showCommunity');
 	

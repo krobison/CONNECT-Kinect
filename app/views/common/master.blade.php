@@ -26,7 +26,11 @@
 	
 </head>
 
-<body style='background-color: #f5f5f5'>
+@if (isset($onLoad))
+	<body style='background-color: #f5f5f5' onload="{{ $onLoad }}">
+@else
+	<body style='background-color: #f5f5f5' class='test'>
+@endif
 
 	{{-- Script Includes --}}
 	
@@ -150,6 +154,13 @@
 					@else
 						<a href="{{ URL::to('helpCenter') }}" class="list-group-item"><span class="glyphicon glyphicon-bullhorn"></span>   Help Center</a>
 					@endif	
+					
+					{{-- Community --}}
+					@if (Request::path() == "community")
+						<a href="{{ URL::to('community') }}" class="list-group-item active"><span class="glyphicon glyphicon-globe"></span>   Community</a>
+					@else
+						<a href="{{ URL::to('community') }}" class="list-group-item"><span class="glyphicon glyphicon-globe"></span>   Community</a>
+					@endif
 
 					{{-- Search --}}
 					@if (Request::path() == "search")
