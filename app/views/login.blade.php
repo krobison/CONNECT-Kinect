@@ -97,14 +97,16 @@
 				        </li>
 				    </ul>
 				</article>
-				<p class="text-muted credit"  style="margin-top:350px;margin-bottom:64px;text-align:center; color:#000000">©2013 Toilers research group, Colorado School of Mines 
+			
+			</div>
+					<p class="text-muted credit copyright" style = "text-align:center;"  >©2013 Toilers research group, Colorado School of Mines 
 					{{ HTML::image('assets/img/mines_logo.png') }}
 					{{ HTML::image('assets/img/toilers.png') }}
 				</p>
-			</div>
+			
 		</div>
-	</div>
-	<!-- Loading all scripts at the end for performance-->
+
+		<!-- Loading all scripts at the end for performance-->
 	<script>
 		// Hide and show post divs on button press
 
