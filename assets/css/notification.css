@@ -1,4 +1,3 @@
-
 .picture {
 	margin-left:13px;
 	margin-top:3px;
@@ -16,7 +15,7 @@
 }
 
 .delete {
-	float:right;
+	float:right; 
 	margin-top:10px;
 	margin-right:10px;
 	height:100%;

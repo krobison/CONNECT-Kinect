@@ -18,7 +18,7 @@
 				{{HTML::image(User::find($notification->initiator_id)->getProfilePictureURL(), 'none', array('width' => '35', 'height' => '35', 'class' => 'img-circle'))}}
 			</div>
 			
-			<div class="col-md-9 text" style="margin-top:0px;margin-left:6px;">
+			<div class="col-md-9 text" style="margin-top:0px; margin-left:6px;">
 				<small>
 					@if ($notification->type == 'conversationCreated')
 						&nbsp;{{{User::find($notification->initiator_id)->first}}} created a conversation with you.
@@ -33,7 +33,6 @@
 					@endif
 				</small>
 			</div>
-			<br>
 			<div class="col-md-9 time">
 				<small> {{{ $notification->created_at->diffForHumans() }}} </small>
 			</div>
