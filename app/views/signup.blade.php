@@ -256,7 +256,7 @@
 							'International Studies' => 'International Studies',
 							'Liberal Arts' => 'Liberal Arts',
 							'Liberal Arts & International Studies Individualized Undergraduate Minor' => 'Liberal Arts & International Studies Individualized Undergraduate Minor',
-							'Literature, Society, & the Environment' => 'Literature, Society, & the Environment',
+							'Literature Society & the Environment' => 'Literature, Society, & the Environment',
 							'Mathematical & Computer Sciences' => 'Mathematical & Computer Sciences',
 							'Mathematical Sciences' => 'Mathematical Sciences',
 							'McBride Honors in Public Affairs' => 'McBride Honors in Public Affairs',
@@ -268,8 +268,8 @@
 							'Organic Chemistry' => 'Organic Chemistry',
 							'Petroleum Engineering' => 'Petroleum Engineering',
 							'Public Affairs' => 'Public Affairs',
-							'Science, Technology, & Society' => 'Science, Technology, & Society',
-							'Science, Technology, Engineering & Policy' => 'Science, Technology, Engineering & Policy',
+							'Science Technology & Society' => 'Science, Technology, & Society',
+							'Science Technology Engineering & Policy' => 'Science, Technology, Engineering & Policy',
 							'Statistics' => 'Statistics',
 							'Underground Construction & Tunneling' => 'Underground Construction & Tunneling'
 						),null,array(
