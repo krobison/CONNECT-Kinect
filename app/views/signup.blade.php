@@ -6,6 +6,15 @@
 	{{ HTML::style('assets/css/bootstrap.min.css') }}
 	{{ HTML::style('assets/css/csNewUser.css') }}
 	{{ HTML::style('assets/css/select2.css') }}
+	<style>
+		.checkbox-label {
+			padding-left: 15px;
+		}
+		.select2-container {
+			width: 100%;
+			padding: 5px;
+		}
+	</style>
 </head>
 
 <body>
@@ -25,6 +34,8 @@
 		<div class="rowlabel">
 			{{Form::label('name', 'Name', array('class' => 'col-md-offset-2')).'<span class="requiredtext"> *Required</span>'}}  
 		</div>
+		
+		{{-- Name --}}
 		<div class="row">
 			<div class="col-xs-5 col-md-4 col-md-offset-2">
 				{{Form::text('first', null, array(
@@ -32,7 +43,6 @@
 					'class' => 'form-control',
 					'placeholder' => 'First',
 					'autofocus',
-					'required'
 				))}}
 			</div>
 			<div class="col-xs-5 col-md-4">
@@ -40,7 +50,6 @@
 					'id' => 'last-name',
 					'class' => 'form-control',
 					'placeholder' => 'Last',
-					'required'
 				))}}		
 			</div>
 		</div>
@@ -53,6 +62,7 @@
 			</div>
 		@endif
 
+		{{-- Email --}}
 		<div class="rowlabel">
 			{{Form::label('email', 'E-mail', array('class' => 'col-md-offset-2')).'<span class="requiredtext"> *Required</span>'}}
 		</div>
@@ -62,7 +72,6 @@
 					'id' => 'email',
 					'class' => 'form-control',
 					'placeholder' => 'E-mail',
-					'required'
 				))}}
 			</div>
 		</div>
@@ -74,6 +83,7 @@
 			</div>	
 		@endif
 
+		{{-- Password --}}
 		<div class="rowlabel">
 			{{Form::label('password', 'Password', array('class' => 'col-md-offset-2')).'<span class="requiredtext"> *Required</span>'}}
 		</div>
@@ -83,7 +93,6 @@
 					'id' => 'password',
 					'class' => 'form-control',
 					'placeholder' => 'Password',
-					'required'
 				))}}		
 			</div>
 		</div>
@@ -103,7 +112,6 @@
 					'id' => 'password-confirm',
 					'class' => 'form-control',
 					'placeholder' => 'Password Confirm',
-					'required'
 				))}}		
 			</div>
 		</div>
@@ -115,6 +123,21 @@
 			</div>	
 		@endif
 		
+		{{-- Gender --}}
+		<div class="rowlabel"> 
+			{{Form::label('gender', 'Gender', array('class' => 'col-md-offset-2')).'<span class="requiredtext"> *Required</span>'}}
+		</div>
+		<div class="row">
+			<div class ="col-xs-10 col-md-8 col-md-offset-2">
+			<ul class="list-inline">
+			  <li> {{ Form::radio('gender', '0', false, array('id' => 'male')) }} Male  </li>
+			  <li> {{ Form::radio('gender', '1', false, array('id' => 'female')) }} Female </li>
+			  <li> {{ Form::radio('gender', '2', false, array('id' => 'pnr')) }} Prefer Not To Respond </li>
+			</ul>
+			</div>
+		</div>
+		
+		{{-- Are you a student? --}}
 		<div class="row">
 			{{Form::label('student', 'Are you a student?', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
 		</div>
@@ -128,54 +151,137 @@
 		</div>
 
 		<div id="student_panel" style="display: none">
+			
+			{{-- Degree Type --}}
 			<div class="row">
 				{{Form::label('degree_type', 'Degree Type', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
 			</div>
 			<div class="row">
 				<div class ="col-xs-10 col-md-8 col-md-offset-2">
-					{{Form::text('degree_type', null, array(
-						'class' => 'form-control',
-						'placeholder' => 'Bachelors'
+					{{ Form::select('degree_type', array(
+						null => null,
+						'Bachelors' => 'Bachelors',
+						'Combined Bachelors/Masters' => 'Combined Bachelors/Masters',
+						'Masters' => 'Masters',
+						'PhD' => 'PhD',
+						'N/A' => 'N/A'
 					))}}		
 				</div>
 			</div>
 			
+			{{-- Graduation Date --}}
 			<div class="row">
-				{{Form::label('grad_date', 'Graduation Date', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
+				{{Form::label('grad_date', 'Expected Graduation Date', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
 			</div>
 			<div class="row">
 				<div class ="col-xs-10 col-md-8 col-md-offset-2">
-					{{Form::text('grad_date', null, array(
-						'class' => 'form-control',
-						'placeholder' => 'May 2015'
-					))}}
+					{{ Form::select('grad_date', array(
+						null => null,
+						'May 2014' => 'May 2014',
+						'Dec 2014' => 'Dec 2014',
+						'May 2015' => 'May 2015',
+						'Dec 2015' => 'Dec 2015',
+						'May 2016' => 'May 2016',
+						'Dec 2016' => 'Dec 2016',
+						'May 2017' => 'May 2017',
+						'Dec 2017' => 'Dec 2017',
+						'May 2018' => 'May 2018',
+						'Dec 2018' => 'Dec 2018',
+						'May 2019' => 'May 2019',
+						'Dec 2019' => 'Dec 2019'
+					))}}	
 				</div>
 			</div>
 
+			{{-- Major --}}
 			<div class="row">
-				{{Form::label('major', 'Major(s)', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
+				{{Form::label('major[]', 'Major(s)', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
 			</div>
 			<div class="row">
 				<div class ="col-xs-10 col-md-8 col-md-offset-2">
-					{{Form::text('major', null, array(
-						'class' => 'form-control',
-						'placeholder' => 'Computer Science'
-					))}}		
+					{{ Form::select('major[]', 
+						array(
+							'Applied Mathematics and Statistics' => 'Applied Mathematics and Statistics',
+							'Chemical Engineering' => 'Chemical Engineering',
+							'Chemical & Biochemical Engineering' => 'Chemical & Biochemical Engineering',
+							'Chemistry' => 'Chemistry',
+							'Civil Engineering' => 'Civil Engineering',
+							'Computer Science' => 'Computer Science',
+							'Economics' => 'Economics',
+							'Electrical Engineering' => 'Electrical Engineering',
+							'Engineering' => 'Engineering',
+							'Engineering Physics' => 'Engineering Physics',
+							'Environmental Engineering' => 'Environmental Engineering',
+							'Geological Engineering' => 'Geological Engineering',
+							'Geophysical Engineering' => 'Geophysical Engineering',
+							'Mechanical Engineering' => 'Mechanical Engineering',
+							'Metallurgical & Materials Engineering' => 'Metallurgical & Materials Engineering',
+							'Mining Engineering' => 'Mining Engineering',
+							'Petroleum Engineering' => 'Petroleum Engineering'
+						),null,array(
+							'multiple',
+							'id' => 'major'
+						))
+					}}		
 				</div>
 			</div>
 			
+			{{-- Minors--}}
 			<div class="row">
 				{{Form::label('minor', 'Minor(s)', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
 			</div>
 			<div class="row">
 				<div class ="col-xs-10 col-md-8 col-md-offset-2">
-					{{Form::text('minor', null, array(
-						'class' => 'form-control',
-						'placeholder' => 'BELS, Physics'
-					))}}		
+					{{ Form::select('minor[]', 
+						array(
+							'Chemistry' => 'Chemistry',
+							'Computational & Applied Mathematics' => 'Computational & Applied Mathematics',
+							'Computer Sciences' => 'Computer Sciences',
+							'Economics' => 'Economics',
+							'Energy' => 'Energy',
+							'Engineering (General)' => 'Engineering (General)',
+							'Engineering – Civil' => 'Engineering – Civil',
+							'Engineering – Electrical' => 'Engineering – Electrical',
+							'Engineering – Environmental' => 'Engineering – Environmental',
+							'Engineering – Mechanical' => 'Engineering – Mechanical',
+							'Engineering Physics' => 'Engineering Physics',
+							'Explosive Processing of Materials' => 'Explosive Processing of Materials',
+							'Explosives Engineering' => 'Explosives Engineering',
+							'Geological Engineering' => 'Geological Engineering',
+							'Geophysical Engineering' => 'Geophysical Engineering',
+							'Humanitarian Engineering' => 'Humanitarian Engineering',
+							'Humanitarian Studies & Technology' => 'Humanitarian Studies & Technology',
+							'Humanities' => 'Humanities',
+							'International Political Economy' => 'International Political Economy',
+							'International Studies' => 'International Studies',
+							'Liberal Arts' => 'Liberal Arts',
+							'Liberal Arts & International Studies Individualized Undergraduate Minor' => 'Liberal Arts & International Studies Individualized Undergraduate Minor',
+							'Literature, Society, & the Environment' => 'Literature, Society, & the Environment',
+							'Mathematical & Computer Sciences' => 'Mathematical & Computer Sciences',
+							'Mathematical Sciences' => 'Mathematical Sciences',
+							'McBride Honors in Public Affairs' => 'McBride Honors in Public Affairs',
+							'Metallurgical & Materials Engineering' => 'Metallurgical & Materials Engineering',
+							'Military Science' => 'Military Science',
+							'Mining Engineering' => 'Mining Engineering',
+							'Music Technology' => 'Music Technology',
+							'Operations Research' => 'Operations Research',
+							'Organic Chemistry' => 'Organic Chemistry',
+							'Petroleum Engineering' => 'Petroleum Engineering',
+							'Public Affairs' => 'Public Affairs',
+							'Science, Technology, & Society' => 'Science, Technology, & Society',
+							'Science, Technology, Engineering & Policy' => 'Science, Technology, Engineering & Policy',
+							'Statistics' => 'Statistics',
+							'Underground Construction & Tunneling' => 'Underground Construction & Tunneling'
+						),null,array(
+							'multiple',
+							'id' => 'minor'
+						))
+					}}		
 				</div>
 			</div>
 			
+			{{-- Classes --}}
+			{{--
 			<div class="row">
 				{{ Form::label('classes', 'Please select the CS classes that you are currently enrolled in:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10')) }}	
 			</div>
@@ -190,8 +296,10 @@
 					</select>
 				</div>
 			</div><br>
+			--}}
 		</div>
 		
+		{{-- Are you an instructor? --}}
 		<div class="row">
 			{{Form::label('instructor', 'Are you a CS instructor?', array('class' => 'col-md-offset-2 col-xs-5 col-md-4'))}}	
 		</div>
@@ -204,6 +312,7 @@
 			</div>
 		</div>
 		
+		{{--
 		<div id="instructor_panel" style="display: none">
 			<div class="row">
 				{{ Form::label('classes_instructor', 'Please select the CS classes for which you are currently an instructor:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10')) }}	
@@ -220,19 +329,20 @@
 				</div>
 			</div><br>
 		</div>
+		--}}
 
+		{{-- Bio --}}
 		<div class="row">
 			{{Form::label('bio', 'Say a few things about yourself:', array('class' => 'col-md-offset-2 col-xs-12 col-md-4', 'id' => 'bio-content'))}}	
 			<div class ="col-xs-6 col-md-2 col-md-offset-2">
 				<a style="float:right" target="_blank" href="http://htmlpurifier.org/"><img src="http://htmlpurifier.org/live/art/powered.png" alt="Powered by HTML Purifier" border="0" /></a>
 			</div>
-			
 		</div>
 		<div class="row">
 			<div class ="col-xs-10 col-md-8 col-md-offset-2">
 				{{Form::textarea('bio', null, array(
 				'class' => 'form-control',
-				'placeholder' => 'About you...',
+				'placeholder' => 'About you. (Goals, likes, dislikes, accomplishments, future plans, etc...) ',
 				'rows' => '5'
 				))}}
 			</div>
@@ -245,8 +355,9 @@
 			</div>	
 		@endif
 		
+		{{-- Tags --}}
 		<div class="row">
-			{{Form::label('hashtags', 'Add some tags to your profile that correspond to your interest areas, new tags welcome', array('class' => 'col-md-offset-2 col-xs-12 col-md-10'))}}	
+			{{Form::label('hashtags', 'Subscribe to some tags. You will receive an in-app notification when someone makes a post with one of your tags', array('class' => 'col-md-offset-2 col-xs-12 col-md-10'))}}	
 		</div>
 		
 		<div class="row">
@@ -263,9 +374,33 @@
 		</div>
 		
 		<br>	
-			
+		
+		{{-- Email Preferences --}}
 		<div class="row">
-			{{Form::label('profilepic', 'Profile Picture: (jpeg, png, bmp, or gif && 2MB Maximum size)', array('class' => 'col-md-offset-2 col-xs-5','required')).'<span class="requiredtext"> *Required</span>'}}	
+			{{Form::label('email_pref', 'Email Preferences', array('class' => 'col-md-offset-2 col-xs-12 col-md-10'))}}	
+		</div>
+		<div class="row">
+			<div class ="col-xs-5 col-md-8 col-md-offset-2">
+				<div class="row checkbox-label">
+				{{ Form::checkbox('email_conversation', true, true, array('id' => 'conversation_email')) }}
+				Receive an email when somebody starts a conversation with you, adds you to a conversation, or replies to a conversation you are in
+				</div>
+				<div class="row checkbox-label">
+				{{ Form::checkbox('email_tag', true, false, array('id' => 'post_email')) }}
+				Receive an email when a user posts with a tag you are subscribed to
+				</div>
+				<div class="row checkbox-label">
+				{{ Form::checkbox('email_comment', true, false, array('id' => 'comment_email')) }}
+				Receive an email when somebody comments on a post you made	
+				</div>
+			</div>
+		</div>
+		
+		<br>
+		
+		{{-- Profile Picture --}}
+		<div class="rowlabel">
+			{{Form::label('profilepic', 'Profile Picture: (jpeg, png, bmp, or gif && 2MB Maximum size)', array('class' => 'col-md-offset-2')).'<span class="requiredtext"> *Required</span>'}}	
 		</div>
 		<div class="row">
 			<div class ="col-xs-5 col-md-4 col-md-offset-2">
@@ -282,10 +417,11 @@
 		
 		<br>
 		
+		{{-- Javascript form status--}}
 		{{Form::label('status', 'Form Status:', array('class' => 'col-md-offset-2 col-xs-12 col-md-10'))}}
 		<div class="row">
 			<div id="status" class ="col-md-offset-2 col-xs-10 col-md-8">
-			
+				<!-- Start empty, filled by js -->
 			</div>
 		</div>
 		
@@ -300,9 +436,19 @@
 {{ HTML::script('assets/js/select2.js') }}
 <script>
 	$(document).ready(function() { 
-		$(".select2-container").select2({
-			placeholder: "Select Your Classes"
+		$("#grad_date").select2({
+			placeholder: "Select Your Expected Graduation Date"
 		});
+		$("#degree_type").select2({
+			placeholder: "Select Your Degree Type"
+		});
+		$("#major").select2({
+			placeholder: "Select Your Major(s)"
+		});
+		$("#minor").select2({
+			placeholder: "Select Your Minors(s)"
+		});
+		
 		$(".instructor_switch").change(function() {
 			$("#instructor_panel").slideToggle();
 		});
@@ -315,6 +461,9 @@
 		$("#main").keyup(function() {
 			verifyFields();
 			//console.log("Value: " + emailUsed);
+		});
+		$("#male, #female, #pnr").change(function() {
+			verifyFields();
 		});
 		$('#picture').bind('change', function() {
 			if(this.files[0].size > 2000000) {
@@ -382,6 +531,10 @@
 		if($("#picture").val().length == 0) {
 			anythingWrong = true;
 			errors = errors + "You must upload a profile picture<br>";
+		}
+		if(!$('#male').is(':checked') && !$('#female').is(':checked') && !$('#pnr').is(':checked')) {
+			anythingWrong = true;
+			errors = errors + "Gender field must be filled in<br>";	
 		}
 		
 		// Email is valid (Thank you stack overflow for the regular expression)
@@ -460,7 +613,7 @@
 		});
 		$("#tag-select-suggestions").select2({
 			multiple: true,
-			placeholder: "Suggested tags will appear here (based on 'about you' and class selections).",
+			placeholder: "Suggested tags will appear here (based on the 'about you' selection).",
 			data: inputTagData
 		});
 	});
@@ -526,6 +679,7 @@
 					newSelectTwoValues.push(id);
 					break;
 				}
+				{{-- No longer asking for classes
 				var classData = $("#classes-taking").select2('data');
 				for (var i in classData) {
 					//console.log("Comparing " + classData[i].text + " with " + patt);
@@ -542,6 +696,7 @@
 						break;
 					}
 				}
+				--}}
 			}
 		}
 		$("#tag-select-suggestions").select2('val',newSelectTwoValues);

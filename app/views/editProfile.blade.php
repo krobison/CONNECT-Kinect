@@ -69,7 +69,18 @@
 			<div class="form-group">
 				<label for="degree" class="col-sm-3 control-label">Degree</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="degree" name="degree" value="{{{$user->degree_type}}}"/>
+					{{ Form::select('degree_type', 
+					array(
+						null => null,
+						'Bachelors' => 'Bachelors',
+						'Combined Bachelors/Masters' => 'Combined Bachelors/Masters',
+						'Masters' => 'Masters',
+						'PhD' => 'PhD',
+						'N/A' => 'N/A'
+					),$user->degree_type,array(
+						'id' => 'degree_type',
+						'style' => 'width:100%'
+					))}}	
 				</div>
 			</div>
 			
@@ -77,7 +88,25 @@
 			<div class="form-group">
 				<label for="grad" class="col-sm-3 control-label">Graduation</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="grad" name="grad" value="{{{$user->grad_date}}}"/>
+					{{ Form::select('grad_date', 
+					array(
+						null => null,
+						'May 2014' => 'May 2014',
+						'Dec 2014' => 'Dec 2014',
+						'May 2015' => 'May 2015',
+						'Dec 2015' => 'Dec 2015',
+						'May 2016' => 'May 2016',
+						'Dec 2016' => 'Dec 2016',
+						'May 2017' => 'May 2017',
+						'Dec 2017' => 'Dec 2017',
+						'May 2018' => 'May 2018',
+						'Dec 2018' => 'Dec 2018',
+						'May 2019' => 'May 2019',
+						'Dec 2019' => 'Dec 2019'
+					),$user->grad_date,array(
+							'id' => 'grad_date',
+							'style' => 'width:100%'
+					))}}
 				</div>
 			</div>
 			
@@ -85,7 +114,31 @@
 			<div class="form-group">
 				<label for="major" class="col-sm-3 control-label">Major</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="major" name="major" value="{{{$user->major}}}"/>
+					{{ Form::select('major[]', 
+						array(
+							'Applied Mathematics and Statistics' => 'Applied Mathematics and Statistics',
+							'Chemical Engineering' => 'Chemical Engineering',
+							'Chemical & Biochemical Engineering' => 'Chemical & Biochemical Engineering',
+							'Chemistry' => 'Chemistry',
+							'Civil Engineering' => 'Civil Engineering',
+							'Computer Science' => 'Computer Science',
+							'Economics' => 'Economics',
+							'Electrical Engineering' => 'Electrical Engineering',
+							'Engineering' => 'Engineering',
+							'Engineering Physics' => 'Engineering Physics',
+							'Environmental Engineering' => 'Environmental Engineering',
+							'Geological Engineering' => 'Geological Engineering',
+							'Geophysical Engineering' => 'Geophysical Engineering',
+							'Mechanical Engineering' => 'Mechanical Engineering',
+							'Metallurgical & Materials Engineering' => 'Metallurgical & Materials Engineering',
+							'Mining Engineering' => 'Mining Engineering',
+							'Petroleum Engineering' => 'Petroleum Engineering'
+						),explode(', ',$user->major),array(
+							'multiple',
+							'id' => 'major',
+							'style' => 'width:100%'
+						))
+					}}
 				</div>
 			</div>
 			
@@ -93,7 +146,52 @@
 			<div class="form-group">
 				<label for="minor" class="col-sm-3 control-label">Minor</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="minor" name="minor" value="{{{$user->minor}}}"/>
+					{{ Form::select('minor[]', 
+						array(
+							'Chemistry' => 'Chemistry',
+							'Computational & Applied Mathematics' => 'Computational & Applied Mathematics',
+							'Computer Sciences' => 'Computer Sciences',
+							'Economics' => 'Economics',
+							'Energy' => 'Energy',
+							'Engineering (General)' => 'Engineering (General)',
+							'Engineering – Civil' => 'Engineering – Civil',
+							'Engineering – Electrical' => 'Engineering – Electrical',
+							'Engineering – Environmental' => 'Engineering – Environmental',
+							'Engineering – Mechanical' => 'Engineering – Mechanical',
+							'Engineering Physics' => 'Engineering Physics',
+							'Explosive Processing of Materials' => 'Explosive Processing of Materials',
+							'Explosives Engineering' => 'Explosives Engineering',
+							'Geological Engineering' => 'Geological Engineering',
+							'Geophysical Engineering' => 'Geophysical Engineering',
+							'Humanitarian Engineering' => 'Humanitarian Engineering',
+							'Humanitarian Studies & Technology' => 'Humanitarian Studies & Technology',
+							'Humanities' => 'Humanities',
+							'International Political Economy' => 'International Political Economy',
+							'International Studies' => 'International Studies',
+							'Liberal Arts' => 'Liberal Arts',
+							'Liberal Arts & International Studies Individualized Undergraduate Minor' => 'Liberal Arts & International Studies Individualized Undergraduate Minor',
+							'Literature, Society, & the Environment' => 'Literature, Society, & the Environment',
+							'Mathematical & Computer Sciences' => 'Mathematical & Computer Sciences',
+							'Mathematical Sciences' => 'Mathematical Sciences',
+							'McBride Honors in Public Affairs' => 'McBride Honors in Public Affairs',
+							'Metallurgical & Materials Engineering' => 'Metallurgical & Materials Engineering',
+							'Military Science' => 'Military Science',
+							'Mining Engineering' => 'Mining Engineering',
+							'Music Technology' => 'Music Technology',
+							'Operations Research' => 'Operations Research',
+							'Organic Chemistry' => 'Organic Chemistry',
+							'Petroleum Engineering' => 'Petroleum Engineering',
+							'Public Affairs' => 'Public Affairs',
+							'Science, Technology, & Society' => 'Science, Technology, & Society',
+							'Science, Technology, Engineering & Policy' => 'Science, Technology, Engineering & Policy',
+							'Statistics' => 'Statistics',
+							'Underground Construction & Tunneling' => 'Underground Construction & Tunneling'
+						),explode(', ',$user->minor),array(
+							'multiple',
+							'id' => 'minor',
+							'style' => 'width:100%'
+						))
+					}}	
 				</div>
 			</div>
 			
@@ -153,7 +251,7 @@
 			
 			{{-- Tags --}}
 			<div class="form-group">
-				<label for="hashtags[]" class="col-sm-3 control-label">Tags</label>
+				<label for="hashtags[]" class="col-sm-3 control-label">Subscribed Tags</label>
 				<div class="col-sm-4">
 					<select multiple class="select2-container-tags classSelect" name="hashtags[]" id="tagSelect">
 						@foreach($tagHTML as $html)
@@ -166,6 +264,7 @@
 			<hr>
 			
 			{{-- Classes Teaching --}}
+			{{--
 			<div class="form-group">
 				<label for="classesStudent[]" class="col-sm-3 control-label">Courses Taking</label>
 				<div class="col-sm-4">
@@ -176,8 +275,10 @@
 					</select>
 				</div>
 			</div>
+			--}}
 			
 			{{-- Classes Taking --}}
+			{{--
 			<div class="form-group">
 				<label for="classesTeacher[]" class="col-sm-3 control-label">Courses Teaching</label>
 				<div class="col-sm-4">
@@ -188,6 +289,29 @@
 							@endforeach
 						</optgroup>
 					</select>
+				</div>
+			</div>
+			--}}
+			
+			{{-- Email Preferences --}}
+			<div class="form-group">
+				{{Form::label('email_pref', 'Email Preferences',array('class' => 'col-sm-3 control-label'))}}	
+				<div class ="col-sm-8">
+					<div class="row checkbox-label">
+					{{ Form::checkbox('email_conversation', true, (Auth::user()->email_conversation == '1') ? true : false , array('id' => 'conversation_email')) }}
+					Receive an email when somebody starts a conversation with you, adds you to a conversation, or replies to a conversation you are in
+					{{(Auth::user()->email_conversation == '1') ? true : false}}
+					</div>
+					<br>
+					<div class="row checkbox-label">
+					{{ Form::checkbox('email_tag', true, (Auth::user()->email_tag == '1') ? true : false , array('id' => 'post_email')) }}
+					Receive an email when a user posts with a tag you are subscribed to {{(Auth::user()->email_tag == '1') ? 'true' : 'false'}}
+					</div>
+					<br>
+					<div class="row checkbox-label">
+					{{ Form::checkbox('email_comment', true, (Auth::user()->email_comment == '1') ? true : false , array('id' => 'comment_email')) }}
+					Receive an email when somebody comments on a post you made {{(Auth::user()->email_comment == '1') ? 'true' : 'false'}}
+					</div>
 				</div>
 			</div>
 			
@@ -212,15 +336,30 @@
 	{{ HTML::script('assets/js/select2.min.js') }}
 	<script>
 		$(document).ready(function() { 
+			{{--
 			$(".select2-container-student").select2({
 				placeholder: "Select Your Classes"
 			});
 			$(".select2-container-teacher").select2({
 				placeholder: "Select Your Classes"
-			});
+			}); --}}
 			$(".select2-container-tags").select2({
 				placeholder: "Select Your Classes"
-			});	
+			});
+			
+			$("#major").select2({
+				placeholder: "Select Your Major(s)"
+			});
+			$("#minor").select2({
+				placeholder: "Select Your Minors(s)"
+			});
+			$("#grad_date").select2({
+				placeholder: "Expected Graduation Date"
+			});
+			$("#degree_type").select2({
+				placeholder: "Degree Type"
+			});
+			
 		});
 	</script>
 @stop

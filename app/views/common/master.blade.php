@@ -106,7 +106,7 @@
 									{{ View::make('common.notification')->with('notification', $notification) }}
 								@endforeach
 							@endif
-							@if(Auth::user()->notifications()->where('type','=','tag')->count() >0))
+							@if(Auth::user()->notifications()->where('type','=','tag')->count() >0)
 							<li role="presentation" class="dropdown-header">Tag Notifications</li>
 								@foreach(Auth::user()->notifications()->where('type','=','tag')->orderBy('id', 'desc')->get() as $notification)
 									{{ View::make('common.notification')->with('notification', $notification) }}

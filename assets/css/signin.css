@@ -109,6 +109,7 @@ html, body{
     padding-top: 30px;
     height: 0;
     overflow: hidden;
+	text-align: center;
 }   
 .video-container iframe, 
 .video-container object, 
