@@ -115,7 +115,7 @@
 
 	@if(Auth::user()->id == $comment->user_id)
 		<button type="submit" class="btn btn-primary btn-sm" style="float:left;" id="edit{{$comment->id}}">
-				<span class="glyphicon glyphicon-pencil"></span> Edit Comment
+				<span class="glyphicon glyphicon-pencil"></span> Edit
 		</button>
 
 		<div style="float:left; width:25%">
@@ -125,7 +125,7 @@
 			{{ Form::hidden('toSaveCode'.$comment->id) }}
 			{{ Form::hidden('toSaveNewCode'.$comment->id) }}
 			{{ Form::hidden('toSaveLanguage'.$comment->id) }}
-			<button type="submit" id="save{{$comment->id}}" class="btn btn-primary" style="float:left;">
+			<button type="submit" id="save{{$comment->id}}" class="btn btn-success" style="float:left;">
 					<span class="glyphicon glyphicon-floppy-saved"></span> Save
 			</button>
 			{{ Form::close() }}
@@ -140,7 +140,7 @@
 				{{ Form::open(array('url' => 'deleteusercomment', 'method'=>'post')) }}
 				{{ Form::hidden('id', $comment->id) }}
 				<button type="submit" class="btn btn-danger btn-sm" style="float:right;" onclick="return confirm('Are you sure you would like to delete this comment FOREVER?');">
-						<span class="glyphicon glyphicon-trash"></span> Delete Comment
+						<span class="glyphicon glyphicon-trash"></span>
 				</button>
 				{{ Form::close() }}
 			</div>
@@ -155,7 +155,7 @@
 		@else
 			<button type="submit" class="btn btn-danger btn-sm" style="float:right;margin-top:-32px;" onclick="return confirm('Are you sure you would like to delete this comment FOREVER?');">
 		@endif		
-					<span class="glyphicon glyphicon-trash"></span> Delete Comment
+					<span class="glyphicon glyphicon-trash"></span>
 			</button>
 		{{ Form::close() }}
 	@endif
