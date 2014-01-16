@@ -52,9 +52,8 @@
 			{{-- Stripe in Color Bar --}}
 			<div style="background-color: black; position: absolute; bottom: 0px; height: 5px; left: 0px; right: 0px; opacity: 0.05"></div>
 		</div>
-		
 
-	
+
 	</div>
 
 	{{-- Side Bar and Main Content --}}
@@ -66,7 +65,7 @@
 				{{-- Side Bar --}}
 				<div class="col-xs-3" style="padding-top: 20px;">
 				
-				<div id='affix-y' style='width: 210px;z-index:1;'>
+				<div id='affix-y' style='width: 210px; z-index:1;'>
 					
 					<div class="list-group">
 					{{-- Profile --}}
@@ -101,18 +100,24 @@
 					</a>
 					@if (Auth::user()->notifications->count() >0)
 						<ul id="notification-box" class="dropdown-menu" role="menu">
+							@if(Auth::user()->notifications()->whereRaw('(Type="conversationCreated" OR Type="conversationReply" OR Type="conversationAdd")')->count() >0)
 							<li role="presentation" class="dropdown-header">Conversation Notifications</li>
 								@foreach(Auth::user()->notifications()->whereRaw('(Type="conversationCreated" OR Type="conversationReply" OR Type="conversationAdd")')->orderBy('id', 'desc')->get() as $notification) </li>
 									{{ View::make('common.notification')->with('notification', $notification) }}
 								@endforeach
+							@endif
+							@if(Auth::user()->notifications()->where('type','=','tag')->count() >0)
 							<li role="presentation" class="dropdown-header">Tag Notifications</li>
 								@foreach(Auth::user()->notifications()->where('type','=','tag')->orderBy('id', 'desc')->get() as $notification)
 									{{ View::make('common.notification')->with('notification', $notification) }}
 								@endforeach
+							@endif
+							@if(Auth::user()->notifications()->where('type','=','postComment')->count() >0)
 							<li role="presentation" class="dropdown-header">Post Notifications</li>
 								@foreach(Auth::user()->notifications()->where('type','=','postComment')->orderBy('id', 'desc')->get() as $notification)
 									{{ View::make('common.notification')->with('notification', $notification) }}
 								@endforeach
+							@endif
 						</ul>
 					@endif
 					</div>

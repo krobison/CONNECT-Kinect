@@ -2,6 +2,12 @@
 
 @section('additionalHeaders')
 	{{ HTML::style('assets/css/profile.css') }}
+	<style>
+		.padded-left {
+			padding-left:15px;
+			overflow: hidden;
+		}
+	</style>
 @stop
 
 @section('title')
@@ -51,12 +57,16 @@
 					<span>{{{$currentuser->grad_date}}}</span><br>
 				@endif
 				@if (!empty($currentuser->major))
-					<span class="infolabel">Major:</span>
-					<span>{{{$currentuser->major}}}</span><br>
+					<div class="row padded-left">
+						<div class="infolabel" style="float:left;">Major:</div>
+						<div style="float:left; width:250px; padding:4px">{{{$currentuser->major}}}</div><br>
+					</div>
 				@endif
 				@if (!empty($currentuser->minor))
-					<span class="infolabel">Minor:</span>
-					<span>{{{$currentuser->minor}}}</span><br>
+					<div class="row padded-left">
+						<div class="infolabel" style="float:left;">Minor:</div>
+						<div style="float:left; width:250px; padding:4px">{{{$currentuser->minor}}}</div><br>
+					</div>
 				@endif
 			</div>
 			@if (Auth::user()->id != $currentuser->id)

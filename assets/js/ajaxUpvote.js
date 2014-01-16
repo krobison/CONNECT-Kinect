@@ -4,7 +4,7 @@ function bindUpvoteListener() {
 		var post_id = $( event.target ).closest(".row").find("#post-id").val();
 		var button = $( event.target );
 		var previous_upvotes = $( event.target ).attr('data');
-		button.html('loading...');//{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}'); 
+		//button.html('loading...');//{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}'); 
 		
 		// Get url
 		var pathArray = window.location.href.split( '/' );
@@ -22,11 +22,13 @@ function bindUpvoteListener() {
 				var upOrDown = data.upOrDown;
 				
 				if(upOrDown == "up"){
-					button.html('<i class="image glyphicon glyphicon-hand-down"></i> Undo Upvote: ' + number); 
-					button.attr('class',"btn btn-danger btn-sm upvote-ajax");
+					button.html('<i class="image glyphicon glyphicon-hand-down"></i> ' + number); 
+					button.attr('class',"btn btn-success btn-sm upvote-ajax");
+					button.attr('style',"float:right;margin-right:16px;");
 				} else if (upOrDown == "down") {
-					button.html('<i class="image glyphicon glyphicon-hand-up"></i> Upvote: ' + number);
-					button.attr('class',"btn btn-primary btn-sm upvote-ajax");
+					button.html('<i class="image glyphicon glyphicon-hand-up"></i> ' + number);
+					button.attr('class',"btn btn-default btn-sm upvote-ajax");
+					button.attr('style',"float:right;margin-right:16px;");
 				} else {
 					console.log("prev    : " + previous_upvotes);
 					button.html('An error occured');

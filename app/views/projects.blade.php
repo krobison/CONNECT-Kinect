@@ -5,10 +5,13 @@
 	{{ HTML::style('assets/css/select2.css') }}
 	
 	<style>
+	h4 {
+		margin:0px;
+		padding:0px;
+	}
 	#hide-new-post-title:hover{ 
 		background-color:orange;
 	}
-	
 	.image { 
 		position: relative; 
 		float: left;
@@ -19,13 +22,11 @@
 		-moz-transition: all 0.3s ease;
 		-o-transition: all 0.3s ease;
 	}
-	
 	.image:hover {
 		-webkit-box-shadow: 0px 0px 20px rgba(53,152,219,0.8);
 		-moz-box-shadow: 0px 0px 20px rgba(53,152,219,0.8);
 		box-shadow: 0px 0px 20px rgba(53,152,219,0.8);
 	}
-
 	.overlap { 
 	    position: absolute;
 		top: 104px; 
@@ -80,23 +81,15 @@
 	
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h4>Recent CS Projects</h4>
+			<h4>CS Projects</h4> 
 		</div>
 		<div id="cs-project" class="panel-body">
+			Order Projects By: <button type="button" class="btn btn-default" id="order-upvotes">Upvotes</button> <button disabled type="button" class="btn btn-default" id="order-time">Time</button>
+			<hr>
 			<div id="postprojectswrapper" style="padding: 15px;" class="row">
-			@foreach ($projectposts as $postid)
-				<?php 
-				$postp = Post::find($postid->id);
-				?>
-				{{-- View::make('common.newsfeedPost')->with('post', $postp) --}}
-				{{--<div class="{{$postp->postable_type}}" id="{{$postp->id}}"></div>--}}
-				<a href="{{URL::to('singlepost', $postp->id)}}">
-					<div class="image {{$postp->postable_type}}" id="{{$postp->id}}">
-						<span class="overlap">{{{ substr($postp->content, 0, 15) . '...'}}}<br>Upvotes: {{ $postp->upvotes }}</span> <br>
-						{{ HTML::image($postp->getProjectImagePath(), 'CS Project Screenshot', array('style' => 'display: block', 'width' => '150', 'height' => '150')) }}
-					</div>
-				</a>
-			@endforeach
+			{{ View::make('loadmoreprojectposts')
+					->with('user', Auth::user())
+					->with('posts', $projectposts) }}
 			</div>
 			<div id="loadmoreprojectsbutton" style="text-align:center">
 				<button type="button" class="btn btn-default">Load more...</button>
@@ -164,6 +157,22 @@
 		}
 	}
 	
+	{{-- For Sorting Posts --}}
+	$('#order-time').click(function() {
+		$('#order-time').attr('disabled',true);
+		$('#order-upvotes').attr('disabled',false);
+		//var postsLoaded = $(".PostProject").length;
+		$("#postprojectswrapper").empty();
+		morePosts(8,0,"id");
+	});
+	$('#order-upvotes').click(function() {
+		$('#order-upvotes').attr('disabled',true);
+		$('#order-time').attr('disabled',false);
+		//var postsLoaded = $(".PostProject").length;
+		$("#postprojectswrapper").empty();
+		morePosts(8,0,"upvotes");
+	});
+	order-time
 	
 	</script>
 	<script>
@@ -180,29 +189,32 @@
 			$('#new-post-body').hide();
 		});
 		
-		var projectID = $(".PostProject:last").attr("id");
+		var postsLoaded = $(".PostProject").length;
 		$("#loadmoreprojectsbutton").click(function (){
-               $('#loadmoreprojectsbutton').html('{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}'); 
-                $.ajax({
-					url: '{{ URL::to('loadmoreprojects') }}',
-					type: 'POST',
-                    data: 'lastpost='+projectID,
-					dataType: 'html',
-					success: function(data){
-                        if(data){
-                            $("#postprojectswrapper").append(data);
-                            projectID = $(".PostProject:last").attr("id");
-							$('#loadmoreprojectsbutton').html('<button type="button" class="btn btn-default">Load more...</button>');
-                        }else{
-                            $('#loadmoreprojectsbutton').replaceWith('<center>No more posts to show.</center>');
-                        }
-                    },
-					timeout: 3000,
-					error: function(x, t, m){ 
-					 $('#loadmoreprojectsbutton').replaceWith('<center>The request to load more posts is taking too long, please try again later.</center>');
+            $('#loadmoreprojectsbutton').html('{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}'); 
+			morePosts(4,postsLoaded,"upvotes");
+        });
+			
+		var morePosts = function(count,offset,sort) {
+			$.ajax({
+				url: '{{ URL::to("loadmoreprojects") }}',
+				type: 'POST',
+				data: {'lastpost':offset,'orderBy':sort,'toLoad':count},
+				dataType: 'html',
+				success: function(data){
+					if(data){
+						$("#postprojectswrapper").append(data);
+						postsLoaded = $(".PostProject").length;
+						$('#loadmoreprojectsbutton').html('<button type="button" class="btn btn-default">Load more...</button>');
+					}else{
+						$('#loadmoreprojectsbutton').replaceWith('<center>No more posts to show.</center>');
+					}
+				},
+				timeout: 5000,
+				error: function(x, t, m){ 
+					$('#loadmoreprojectsbutton').replaceWith('<center>The request to load more posts is taking too long, please try again later.</center>');
 				}
-					
-                });
-            });
+			});
+		}
 	</script>
 @stop

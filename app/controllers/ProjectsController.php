@@ -12,26 +12,29 @@ class ProjectsController extends BaseController {
 						->where('postable_type', '=', 'PostProject')
 						->leftJoin('postsProjects', 'posts.postable_id', '=', 'postsProjects.id')
 						->where('postsProjects.approved', '=', '1')
-						->take(4)
-						->orderBy('posts.id', 'DESC')
+						->orderBy('posts.upvotes', 'DESC')
+						->skip(0)
+						->take(8)
 						->select('posts.*')
 						->get();
 		return View::make('projects')->with('user', Auth::user())->with('projectposts', $projectposts);
 	}
 	
 	public function loadMoreProjects() {
-		$lastPostId = Input::get('lastpost');
+		$toLoad = Input::get('toLoad');
+		$orderBy = Input::get('orderBy');
+		$toSkip = Input::get('lastpost');
 		$posts =DB::table('posts')
-		->where('posts.id', '<', $lastPostId)
 		->where('postable_type', '=', 'PostProject')
 		->leftJoin('postsProjects', 'posts.postable_id', '=', 'postsProjects.id')
 		->where('postsProjects.approved', '=', '1')
-		->orderBy('posts.id', 'DESC')
-		->take(4)
+		->orderBy('posts.'.$orderBy, 'DESC')
+		->skip($toSkip)
+		->take($toLoad)
 		->select('posts.*')
 		->get();
 		if(empty($posts)) {
-		return;
+			return;
 		}
 		return View::make('loadmoreprojectposts')
 		->with('user', Auth::user())

@@ -6,10 +6,7 @@
 	{{ HTML::style('assets/css/bootstrap.min.css') }}
 	{{ HTML::style('assets/css/signin.css') }}
 	{{ HTML::style('assets/css/social-buttons.css') }}
-	{{ HTML::style('assets/css/font-awesome.min.css') }}
-	
-	{{ HTML::script('assets/js/d3.min.js') }}
-		
+	{{ HTML::style('assets/css/font-awesome.min.css') }}		
 </head>
 
 {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}

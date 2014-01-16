@@ -3,26 +3,49 @@
     <div style="float:left; padding-right: 10px">
 		{{-- Display the profile picture (if it exists) and user is not anonmyous--}}
 		
-        @if ($post->postable_type == "PostHelpRequest" && $post->postable->anonymous == 1)
-            {{ HTML::image('assets/img/anonymous.png', 'anonymous' , array('width' => '76', 'height' => '76', 'class' => 'img-circle')) }}
-        @else
-			<a href="{{URL::to('profile', $post->user->id)}}">
-				{{HTML::image($post->user->getProfilePictureURL(), '$post->user->id', array('width' => '76', 'height' => '76', 'class' => 'img-circle'))}}
-			</a>
-        @endif
+		@if (isset($detail) && $detail == "true")
+			@if ($post->postable_type == "PostHelpRequest" && $post->postable->anonymous == 1)
+				{{ HTML::image('assets/img/anonymous.png', 'anonymous' , array('width' => '76', 'height' => '76', 'class' => 'img-circle')) }}
+			@else
+				<a href="{{URL::to('profile', $post->user->id)}}">
+					{{HTML::image($post->user->getProfilePictureURL(), '$post->user->id', array('width' => '76', 'height' => '76', 'class' => 'img-circle'))}}
+				</a>
+			@endif
+		@else
+			@if ($post->postable_type == "PostHelpRequest" && $post->postable->anonymous == 1)
+				{{ HTML::image('assets/img/anonymous.png', 'anonymous' , array('width' => '46', 'height' => '46', 'class' => 'img-circle')) }}
+			@else
+				<a href="{{URL::to('profile', $post->user->id)}}">
+					{{HTML::image($post->user->getProfilePictureURL(), '$post->user->id', array('width' => '46', 'height' => '46', 'class' => 'img-circle'))}}
+				</a>
+			@endif
+		@endif
         </div>
+		
+		 {{-- Display the upvote button --}}
+		
+		<div class="row" style="padding-left:15px">
+				{{ Form::hidden('user_id', Auth::user()->id)}}
+				{{ Form::hidden('post_id', $post->id, array('id' => 'post-id')) }}
+						<?php
+								$result = DB::table('upvotes')->where('user_id','=',Auth::User()->id)->where('post_id','=',$post->id)->get();
+						?>
+						@if (sizeof($result) == 0)
+								<button type="submit" data="{{$post->postupvotes->count()}}" class="btn btn-default btn-sm upvote-ajax" style="float:right;margin-right:16px;">
+									<i class="image glyphicon glyphicon-hand-up"></i> {{ $post->postupvotes->count() }}</button>
+						@else
+								<button type="submit" data="{{$post->postupvotes->count()}}" class="btn btn-success btn-sm upvote-ajax" style="float:right;margin-right:16px;">
+									<i class="image glyphicon glyphicon-hand-down"></i> {{$post->postupvotes->count()}}</button>
+						@endif
+		</div>
 		
 		{{-- Display the post content --}}
         @if (isset($detail) && $detail == "true")
-            <div style="white-space:pre-wrap"> {{ $post->getPurifiedContent() }} </div>
+            <div style="white-space:pre-wrap;margin-top:-70px;margin-bottom:32px;"> {{ $post->getPurifiedContent() }} </div>
 			<br>
         @else
-            <div class="list-group" style="margin-left:80px;">
-                @if (strlen($post->content) > 55)
-                    <h4><a href="{{URL::to('singlepost', $post->id)}}" class="list-group-item" style="padding-top:16px;"> <p> {{{ substr($post->content,0,55)."..." }}} </p> </a></h4>
-                @else
-                    <h4><a href="{{URL::to('singlepost', $post->id)}}" class="list-group-item" style="padding-top:16px;"> <p> {{{ $post->content }}} </p> </a></h4>
-                @endif
+            <div class="list-group" style="margin-left:60px;margin-right:56px;margin-top:-48px;">
+                    <h4><a href="{{URL::to('singlepost', $post->id)}}" class="list-group-item" style="height:38px;overflow:hidden;"> <p> {{{ $post->content }}} </p> </a></h4>
             </div>
         @endif
 
@@ -52,30 +75,13 @@
 			<span class="hashtag">#{{{$tag->name}}}</span>
 		@endforeach
         
-        {{-- Display the upvote button --}}
-		
-		<div class="row" style="padding-left:15px">
-				{{ Form::hidden('user_id', Auth::user()->id)}}
-				{{ Form::hidden('post_id', $post->id, array('id' => 'post-id')) }}
-						<?php
-								$result = DB::table('upvotes')->where('user_id','=',Auth::User()->id)->where('post_id','=',$post->id)->get();
-						?>
-						@if (sizeof($result) == 0)
-								<button type="submit" data="{{$post->postupvotes->count()}}" class="btn btn-primary btn-sm upvote-ajax" style="margin-top:6px;">
-									<i class="image glyphicon glyphicon-hand-up"></i> Upvote: {{ $post->postupvotes->count() }}
-						@else
-								<button type="submit" data="{{$post->postupvotes->count()}}" class="btn btn-danger btn-sm upvote-ajax">
-									<i class="image glyphicon glyphicon-hand-down"></i> Undo Upvote: {{$post->postupvotes->count()}}
-						@endif
-				</button>
-		</div>
 	
 	{{-- Display the Delete Post button if user is an admin --}}
 	@if ((Auth::user()->admin == '1')||($post->user_id == Auth::user()->id))
 		{{ Form::open(array('url' => 'deletepost', 'method'=>'post')) }}
 		{{ Form::hidden('id', $post->id) }}
-		<button type="submit" class="btn btn-danger btn-sm" style="float:right;margin-top:-30px;" onclick="return confirm('Are you sure you would like to delete this post FOREVER?');">
-				<span class="glyphicon glyphicon-trash"></span> Delete Post
+		<button type="submit" class="btn btn-danger btn-sm" style="float:right;margin-top:-40px;" onclick="return confirm('Are you sure you would like to delete this post FOREVER?');">
+				<span class="glyphicon glyphicon-trash"></span>
 		</button>
 		{{ Form::close() }}
 	@endif
