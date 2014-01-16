@@ -15,7 +15,8 @@
 {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
 
 <body>
-	<div class="content">
+
+	<div class="content loginHeader">
 		<div id="header"> 
 			{{ HTML::image('assets/img/Connect_Logo.png' , '', array('class' => 'logo')) }}
 			<div>
@@ -99,7 +100,7 @@
 				</article>
 			
 			</div>
-					<p class="text-muted credit copyright" style = "text-align:center;"  >©2013 Toilers research group, Colorado School of Mines 
+					<p class="text-muted credit copyright" style = "text-align:center;">©2013 Toilers research group, Colorado School of Mines 
 					{{ HTML::image('assets/img/mines_logo.png') }}
 					{{ HTML::image('assets/img/toilers.png') }}
 				</p>

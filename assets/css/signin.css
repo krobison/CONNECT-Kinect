@@ -1,5 +1,7 @@
 html, body{
   background: url("../img/background.png") no-repeat center center fixed;
+/*    height : 100%;*/
+   /*    width: 100%;*/
 }
 
 /*
@@ -10,9 +12,12 @@ html, body{
     margin-left:25%;
     min-width:400px;
     text-align:center;
-    padding:32px;
-    margin-top:64px;
+    padding-top:6cm;
+    margin-top:-130px;
 }
+/*.loginHeader{
+  padding-top: 30px;
+}*/
 
 #header2{
     width:50%;
@@ -43,6 +48,7 @@ html, body{
   background-color:#256590;
   display:inline;
 }
+
 
 .buttonRow{
     width:50%;
@@ -145,7 +151,7 @@ html, body{
  */
 .boxed
 {
-    width: 100%;
+  width: 100%;
   margin: auto;
   padding: 0;
   margin-bottom: 128px;
@@ -154,15 +160,10 @@ html, body{
 .copyright
 {
 
-
-
 background-color: white;
 padding-top: 1cm;
-
+margin-bottom: 2cm;
   
-
-
-
 }
 .one_full
 {
@@ -244,8 +245,6 @@ h2
 {
   font-size: 130%;
 }
-
-
 
 a
 {
