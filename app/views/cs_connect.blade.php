@@ -2,6 +2,7 @@
 
 @section('additionalHeaders')
         {{ HTML::style('assets/css/posts.css') }}
+           {{ HTML::style('assets/css/master.css') }}
 <!-- Loading all scripts at the end for performance-->
         {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
         {{ HTML::script('assets/js/d3.min.js') }}
@@ -44,7 +45,7 @@
 @section('content')
     <div class="row">
                 <div class="col-md-6">
-                        <div class="">
+                        <div class="" style= " font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;">
                                 <h2>Welcome to CS CONNECT!</h2>
                                 <p>This website was created to provide a platform for personal networking across computer science at Mines. 
                                 If you have any questions, comments, concerns, etc. about the site please let me know by posting below or by emailing me

@@ -9,11 +9,13 @@
 	{{ HTML::style('assets/css/font-awesome.min.css') }}		
 </head>
 
+
 {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
 
 <body>
+<meta name="viewport" content="height=device-height,minimum-scale=.5,user-scalable=yes" />
 
-	<div class="content loginHeader">
+	<div class="content" id = "blue-header">
 		<div id="header"> 
 			{{ HTML::image('assets/img/Connect_Logo.png' , '', array('class' => 'logo')) }}
 			<div>
@@ -102,6 +104,9 @@
 					{{ HTML::image('assets/img/toilers.png') }}
 				</p>
 			
+		</div>
+		<div id ="blue-footer">
+
 		</div>
 
 		<!-- Loading all scripts at the end for performance-->
