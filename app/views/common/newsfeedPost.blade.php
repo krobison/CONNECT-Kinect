@@ -45,7 +45,7 @@
 			<br>
         @else
             <div class="list-group" style="margin-left:60px;margin-right:56px;margin-top:-48px;">
-                    <h4><a href="{{URL::to('singlepost', $post->id)}}" class="list-group-item" style="height:30px;overflow:hidden;"> <p style="margin-top:-4px;">{{{ $post->content }}} </p></a></h4>
+                    <h4><a href="{{URL::to('singlepost', $post->id)}}" class="list-group-item" style="padding-top:4px;line-height:200%;height:46px;overflow:hidden;"> {{{ strip_tags($post->content) }}} </p></a></h4>
             </div>
         @endif
 
@@ -72,7 +72,7 @@
         </style>
 
 		@foreach($post->hashtags as $tag)
-			<small class="hashtag" style="color:#CC0000;">#{{{$tag->name}}}</small>
+			<small class="hashtag" style="color:#000000;">#{{{$tag->name}}}</small>
 		@endforeach
         
 	
