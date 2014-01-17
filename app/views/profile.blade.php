@@ -53,10 +53,6 @@
 					<span class="infolabel">Degree:</span>
 					<span>{{{$currentuser->degree_type}}}</span><br>
 				@endif
-				@if (!empty($currentuser->grad_date))
-					<span class="infolabel">Graduation Date:</span>
-					<span>{{{$currentuser->grad_date}}}</span><br>
-				@endif
 				@if (!empty($currentuser->major))
 					<div class="row padded-left">
 						<div class="infolabel" style="float:left;">Major:</div>
@@ -68,6 +64,10 @@
 						<div class="infolabel" style="float:left;">Minor:</div>
 						<div style="float:left; width:250px; padding:4px">{{{$currentuser->minor}}}</div><br>
 					</div>
+				@endif
+				@if (!empty($currentuser->grad_date))
+					<span class="infolabel">Exp Graduation Date:</span>
+					<span>{{{$currentuser->grad_date}}}</span><br>
 				@endif
 			</div>
 			@if (Auth::user()->id != $currentuser->id)

@@ -45,7 +45,7 @@
 			<br>
         @else
             <div class="list-group" style="margin-left:60px;margin-right:56px;margin-top:-48px;">
-                    <h4><a href="{{URL::to('singlepost', $post->id)}}" class="list-group-item" style="height:38px;overflow:hidden;"> <p> {{{ $post->content }}} </p> </a></h4>
+                    <h4><a href="{{URL::to('singlepost', $post->id)}}" class="list-group-item" style="height:30px;overflow:hidden;"> <p style="margin-top:-4px;">{{{ $post->content }}} </p></a></h4>
             </div>
         @endif
 
@@ -72,7 +72,7 @@
         </style>
 
 		@foreach($post->hashtags as $tag)
-			<span class="hashtag">#{{{$tag->name}}}</span>
+			<small class="hashtag" style="color:#CC0000;">#{{{$tag->name}}}</small>
 		@endforeach
         
 	
@@ -80,7 +80,7 @@
 	@if ((Auth::user()->admin == '1')||($post->user_id == Auth::user()->id))
 		{{ Form::open(array('url' => 'deletepost', 'method'=>'post')) }}
 		{{ Form::hidden('id', $post->id) }}
-		<button type="submit" class="btn btn-danger btn-sm" style="float:right;margin-top:-40px;" onclick="return confirm('Are you sure you would like to delete this post FOREVER?');">
+		<button type="submit" class="btn btn-danger btn-sm" style="float:right;margin-top:-40px;" title="Delete this post" onclick="return confirm('Are you sure you would like to delete this post FOREVER?');">
 				<span class="glyphicon glyphicon-trash"></span>
 		</button>
 		{{ Form::close() }}
