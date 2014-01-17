@@ -116,7 +116,12 @@ class UserController extends BaseController {
 					}
 				}
 				*/
-				return Redirect::to('/')->with('message', '<div class="alert alert-info"> A new account has been created! Please try logging in.</div> ');				
+				// send email
+				Mail::send('emails.email_validation', array("receiver" => $user, "key" => Crypt::encrypt($user->email)) , function($message) use ($user) {
+						$message->to($user->email, $user->first . " " . $user->last)->subject('CS CONNECT -- Email Validation');
+				});
+				// redirect home with message
+				return Redirect::to('/')->with('message', '<div class="alert alert-info"> A new account has been created and an email has been sent, please check your inbox.</div> ');				
 				
 			} catch( Exception $e ) {
 				Log::error('New User Error: ' . $e . ' ' . $e->getMessage());
@@ -133,9 +138,25 @@ class UserController extends BaseController {
 		$userdata = array(
 			'email' => Input::get('email'),
 			'password' => Input::get('password'));
+		
+		// attempt to login with data
 		if (Auth::attempt($userdata)) {
-			return Redirect::to('newsfeed')->with('newsPage','true');
-		} else {
+			// if the email has not been validated
+			if (Auth::user()->email_validated == '0') {
+				// get email to encrypt
+				$email = Auth::user()->email;
+				// logout
+				Auth::logout();
+				// redirect to homepage with a link to send another validation email
+				return Redirect::to('/')->with('message', '<div class="alert alert-warning">Email has not been validated. <a href="'. URL::to('sendValidation', array('key' => Crypt::encrypt($email))) .'">Send another validation email?</a></div>');
+			} 
+			// if the email has been validated, just go to newspage.
+			else {
+				return Redirect::to('newsfeed');
+			}
+		} 
+		// if login failed
+		else {
 			return Redirect::to('/')->with('message', '<div class="alert alert-danger">Login Failed: Invalid credentials</div>');
 		}
 	}
@@ -498,4 +519,65 @@ class UserController extends BaseController {
 
 		return $notification->user()->id;
 	}
+	
+	public function sendValidation($key) {
+		// get email out of key
+		try {
+			$email = Crypt::decrypt($key);
+		} catch (Illuminate\Encryption\DecryptException $e) {
+			// in the case they tried a bogus key,
+			// redirect to home without any issue.
+			return Redirect::to('/');
+		}
+		
+		// get user associated with that email
+		$user = User::where('email', $email)->get()->first();
+		
+		// if the user has already authenticated, let them know
+		if ($user->email_validated == '1') {
+			return Redirect::to('/')->with('message', '<div class="alert alert-warning">Email has already have been validated, please login.</div>');
+		}
+		// else shoot off email
+		else {
+			// send email
+			Mail::send('emails.email_validation', array("receiver" => $user, "key" => $key) , function($message) use ($user) {
+						$message->to($user->email, $user->first . " " . $user->last)->subject('CS CONNECT -- Email Validation');
+					});
+			// redirect back home
+			return Redirect::to('/')->with('message', '<div class="alert alert-warning">Validation email has been sent, please check your inbox.</div>');
+		}
+	}
+	
+	public function validateEmail($key) {
+		// get email out of key
+		try {
+			$email = Crypt::decrypt($key);
+		} catch (Illuminate\Encryption\DecryptException $e) {
+			// in the case they tried a bogus key,
+			// redirect to home without any issue.
+			return Redirect::to('/');
+		}
+		
+		// get user associated with that email
+		$user = User::where('email', $email)->get()->first();
+		
+		// if the user has already authenticated, let them know
+		if ($user->email_validated == '1') {
+			return Redirect::to('/')->with('message', '<div class="alert alert-warning">Email has already have been validated, please login.</div>');
+		}
+		// else validate and log them in!
+		else {
+			// change validate variable
+			$user->email_validated = '1';
+			$user->save();
+			
+			// log them in
+			Auth::login($user);
+			
+			// redirect to newsfeed with message
+			return Redirect::to('newsfeed')->with('message', '<div class="alert alert-success">Your email has been validated, welcome to CS CONNECT!</div>');
+		}
+	}
+	
+
 }

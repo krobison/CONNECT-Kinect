@@ -17,6 +17,12 @@ Route::get('signup', 'UserController@showSignUp');
 // POST signup request
 Route::post('signup', 'UserController@createUser');
 
+// GET send validation
+Route::get('sendValidation/{key}', 'UserController@sendValidation');
+
+// GET validate email
+Route::get('validate/{key}', 'UserController@validateEmail');
+
 // POST validate email AJAX
 Route::post('emailUsed', 'UserController@emailUsed');
 
