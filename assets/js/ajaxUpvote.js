@@ -34,8 +34,13 @@ function bindUpvoteListener() {
 				} else {
 					button.html('An error occured');
 				}
-				console.log(button.html());
-				console.log(button);
+				button.attr('disabled',false);
+			},
+			timeout: 6000,
+			error: function(x, t, m){ 
+				button.empty().append('Error');
+				button.attr('class',"btn btn-warning btn-sm upvote-ajax");
+				button.attr('title',"An error occured. Check your connection and try again.");
 				button.attr('disabled',false);
 			}
 			
