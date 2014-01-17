@@ -7,6 +7,10 @@
 	.panel-heading:hover{ 
 		background-color:orange;
 	}
+	h4 {
+		margin:0px;
+		padding:0px;
+	}
 	</style>
 @stop
 
@@ -41,10 +45,10 @@
 	</div>
 
 	<div id="recent-help-requests" class="panel panel-default">
-		<div class="panel-heading">
+		<div id="help-request-header" class="panel-heading">
 			<h4>Recent Help Requests</h4>
 		</div>
-		<div id="help-request" class="panel-body">
+		<div id="help-request-content" class="panel-body">
 			<div id="postrequestswrapper">
 			@foreach (Post::where('postable_type', '=', 'PostHelpRequest')->take(5)->orderBy('id', 'DESC')->get() as $post)
 				{{ View::make('common.newsfeedPost')->with('post', $post) }}
@@ -58,10 +62,10 @@
 	</div>
 	
 	<div id="recent-help-offers" class="panel panel-default">
-		<div class="panel-heading">
+		<div id="help-offer-header" class="panel-heading">
 			<h4>Recent Help Offers</h4>
 		</div>
-		<div id="help-request" class="panel-body">
+		<div id="help-offer-content" class="panel-body">
 			<div id="postofferswrapper">
 			@foreach (Post::where('postable_type', '=', 'PostHelpOffer')->take(5)->orderBy('id', 'DESC')->get() as $post)
 				{{ View::make('common.newsfeedPost')->with('post', $post) }}
@@ -100,6 +104,14 @@
 		$('#new-help-title').click(function() {
 			$('#new-help-content').toggle(200);
 		});
+		$('#help-offer-header').click(function() {
+			$('#help-offer-content').toggle(200);
+		});
+		$('#help-request-header').click(function() {
+			$('#help-request-content').toggle(200);
+		});
+		
+		
 		
 		var requestID = $(".PostHelpRequest:last").attr("id");
 		$("#loadmorerequestsbutton").click(function (){

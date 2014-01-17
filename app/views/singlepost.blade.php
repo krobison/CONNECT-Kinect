@@ -18,7 +18,7 @@
 		<a style="float:right" href="{{ URL::to('showPreviousQuestions') }}"><span class="glyphicon glyphicon-arrow-left"></span>   Previous Questions</a>
 		<h2>CS Question of the Week</h2>	
 		<p>
-			Give your answers and thoughts in the comments. A new question will be posted every week. The user who posts the best answer (as judged by CS Connect Administrator) will receive a small prize at the end of the week.
+			Give your answers and thoughts in the comments. A winning answer will be chosen based on upvotes and Connect Administrator Approval. The author of this comment will receive a small prize when a new question is posted. A new question will be posted every few weeks. 
 		</p>
 
 		@if($user->admin == '1')

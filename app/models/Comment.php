@@ -12,6 +12,10 @@ class Comment extends Eloquent {
 		return $this->belongsTo('Post');
 	}
 	
+    public function commentupvotes() {
+    	return $this->hasMany('Upvotecomment');
+    }
+	
 	// Helper function
 	public function getPurifiedContent() {
 		$pureconfig = HTMLPurifier_Config::createDefault();

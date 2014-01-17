@@ -8,19 +8,72 @@
 	.five-marg {
 		margin: 5px;
 	}
+	.two-marg {
+		margin: 2px;
+	}
 </style>
 
-@if(Auth::user()->id == $comment->user_id)
-	<div style="margin-bottom:16px;padding:8px;padding-bottom:32px;border:1px #CCCCCC solid;border-radius:20px;background-color:rgba(34,98,230,0.1)">  
-@else
-	<div style="margin-bottom:16px;padding:8px;padding-bottom:0px;border:1px #CCCCCC solid;border-radius:20px;background-color:rgba(34,98,230,0.1)">  
-@endif	
+
+<div style="margin-bottom:16px;padding:8px;padding-bottom:0px;border:1px #CCCCCC solid;border-radius:20px;background-color:rgba(34,98,230,0.1)">  
+
 	<div style="float:left; padding-right: 10px">
 		{{HTML::image($comment->user->getProfilePictureURL(), '$comment->user->id', array('width' => '70', 'height' => '70', 'class' => 'img-circle'))}}
 	</div>
 	
-	<div id="paragraph{{$comment->id}}" style="white-space:pre-wrap">{{ $comment->getPurifiedContent() }}</div>
+	<div class="options-panel" style="float:right">
+		{{-- Display the upvote button --}}
+		{{ Form::hidden('user_id', Auth::user()->id)}}
+		{{ Form::hidden('post_id', $comment->id, array('id' => 'comment-id')) }}
+				<?php
+						$result = DB::table('upvotecomments')->where('user_id','=',Auth::User()->id)->where('comment_id','=',$comment->id)->get();
+				?>
+				@if (sizeof($result) == 0)
+						<button title="Upvote this post" type="submit" data="{{$comment->commentupvotes->count()}}" class="btn btn-default btn-sm upvoteComment-ajax two-marg" style="float:right;margin-right:16px;">
+							<i class="image glyphicon glyphicon-hand-up"></i> {{ $comment->commentupvotes->count() }}</button>
+				@else
+						<button title="Undo your upvote of this post" type="submit" data="{{$comment->commentupvotes->count()}}" class="btn btn-success btn-sm upvoteComment-ajax two-marg" style="float:right;margin-right:16px;">
+							<i class="image glyphicon glyphicon-hand-down"></i> {{ $comment->commentupvotes->count()}}</button>
+				@endif
+		
+		{{-- Display the edit/delete buttons --}}
+		@if(Auth::user()->id == $comment->user_id)
+			<button type="submit" class="btn btn-primary btn-sm two-marg" title="Edit this comment" style="float:right;" id="edit{{$comment->id}}">
+					<span class="glyphicon glyphicon-pencil"></span>
+			</button>
 
+			<div style="float:left; width:25%">
+				{{ Form::open(array('url' => 'saveeditcomment', 'method'=>'post')) }}
+				{{ Form::hidden('id', $comment->id) }}
+				{{ Form::hidden('toSave'.$comment->id) }}
+				{{ Form::hidden('toSaveCode'.$comment->id) }}
+				{{ Form::hidden('toSaveNewCode'.$comment->id) }}
+				{{ Form::hidden('toSaveLanguage'.$comment->id) }}
+				<button type="submit" id="save{{$comment->id}}" class="btn btn-success two-marg" style="float:left;">
+						<span class="glyphicon glyphicon-floppy-saved"></span> Save
+				</button>
+				{{ Form::close() }}
+
+				<button type="submit" id="cancel{{$comment->id}}" class="btn btn-warning two-marg" style="margin-right:100px; margin-left:90px;margin-top:-56px;">
+						<span class="glyphicon glyphicon-floppy-remove"></span> Cancel
+				</button>
+			</div>
+
+			@if(Auth::user()->admin == '0')
+				<div style="float:right; width:25%">
+					{{ Form::open(array('url' => 'deleteusercomment', 'method'=>'post')) }}
+					{{ Form::hidden('id', $comment->id) }}
+					<button type="submit" title="Delete this comment" class="btn btn-danger btn-sm two-marg" style="float:right;" onclick="return confirm('Are you sure you would like to delete this comment FOREVER?');">
+							<span class="glyphicon glyphicon-trash"></span>
+					</button>
+					{{ Form::close() }}
+				</div>
+			@endif
+		@endif
+	</div>
+	
+	{{-- Display the comment content --}}
+	<div id="paragraph{{$comment->id}}" style="white-space:pre-wrap">{{ $comment->getPurifiedContent() }}</div>
+	<br>
 	{{Form::open()}}
 	{{ Form::hidden('revertCode'.$comment->id, $comment->code) }}
 	{{ Form::hidden('revertContent'.$comment->id, $comment->content) }}
@@ -113,40 +166,6 @@
 
 	<p><a href="{{URL::to('profile', $comment->user_id)}}">{{{ $comment->user->first }}} {{{ $comment->user->last }}}</a>, {{{ $comment->created_at->diffForHumans() }}}</p>
 
-	@if(Auth::user()->id == $comment->user_id)
-		<button type="submit" class="btn btn-primary btn-sm" style="float:left;" id="edit{{$comment->id}}">
-				<span class="glyphicon glyphicon-pencil"></span> Edit
-		</button>
-
-		<div style="float:left; width:25%">
-			{{ Form::open(array('url' => 'saveeditcomment', 'method'=>'post')) }}
-			{{ Form::hidden('id', $comment->id) }}
-			{{ Form::hidden('toSave'.$comment->id) }}
-			{{ Form::hidden('toSaveCode'.$comment->id) }}
-			{{ Form::hidden('toSaveNewCode'.$comment->id) }}
-			{{ Form::hidden('toSaveLanguage'.$comment->id) }}
-			<button type="submit" id="save{{$comment->id}}" class="btn btn-success" style="float:left;">
-					<span class="glyphicon glyphicon-floppy-saved"></span> Save
-			</button>
-			{{ Form::close() }}
-
-			<button type="submit" id="cancel{{$comment->id}}" class="btn btn-warning" style="margin-left:90px;margin-top:-56px;">
-					<span class="glyphicon glyphicon-floppy-remove"></span> Cancel
-			</button>
-		</div>
-
-		@if(Auth::user()->admin == '0')
-			<div style="float:right; width:25%">
-				{{ Form::open(array('url' => 'deleteusercomment', 'method'=>'post')) }}
-				{{ Form::hidden('id', $comment->id) }}
-				<button type="submit" class="btn btn-danger btn-sm" style="float:right;" onclick="return confirm('Are you sure you would like to delete this comment FOREVER?');">
-						<span class="glyphicon glyphicon-trash"></span>
-				</button>
-				{{ Form::close() }}
-			</div>
-		@endif
-	@endif
-	
 	@if(Auth::user()->admin == '1')
 		{{ Form::open(array('url' => 'deletecomment', 'method'=>'post')) }}
 		{{ Form::hidden('id', $comment->id) }}
@@ -162,3 +181,5 @@
 	<br>
 	
 </div>
+
+{{ HTML::script('assets/js/ajaxCommentUpvote.js') }}

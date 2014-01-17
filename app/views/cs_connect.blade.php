@@ -68,7 +68,48 @@
                         </div>
             </div>
         </div>
-        
+       <div class="row">
+                <div class="col-md-12">
+                        <div class="panel panel-info">
+                                <div class="panel-heading">
+                                        <h3>Give Feedback</h3>
+                                </div>
+                                <div class="panel-body">
+                                        {{ Form::open(array('url' => 'giveFeedback', 'method'=>'post')) }}
+                        
+                                        
+                                        <div style="float:left; padding-right: 10px">
+                                                Leave us some feedback on CS Connect (Bug, Like, Dislike, Comment, Feature Request etc...)
+                                                <br>
+                                                <br>
+                                                You are posting publicly as {{{Auth::user()->first}}} {{{Auth::user()->last}}}
+                                        </div>
+
+                                        {{ Form::textarea('content', null, array('class' => 'span4' ,'placeholder' => 'Enter your comment here','id' => 'comment-box')) }}
+
+                                        {{ Form::hidden('user_id', $user->id) }}
+										<br>
+                                        {{ Form::submit('Submit', array('class' => 'btn btn-lg btn-primary btn-block')) }}
+
+                                        {{ Form::close() }}
+                                </div>
+                        </div>
+                </div>
+        </div>  
+        <div class="row">
+            <div class="col-md-12">
+                        <div class="panel panel-info">
+                                <div class="panel-heading">
+                                        <h3>All Feedback</h3>
+                                </div>
+                                <div class="panel-body">
+                                        @foreach ($posts as $post)
+                                                {{ View::make('common.newsfeedPost')->with('post', $post) }}
+                                        @endforeach
+                                </div>
+                        </div>
+            </div>
+        </div>
         <div class="row">
                 <div class="col-md-12">
                         <div class="panel panel-info">
@@ -182,49 +223,6 @@
                                 </div>
                         </div>
                 </div>
-        </div>
-        
-        <div class="row">
-                <div class="col-md-12">
-                        <div class="panel panel-info">
-                                <div class="panel-heading">
-                                        <h3>Give Feedback</h3>
-                                </div>
-                                <div class="panel-body">
-                                        {{ Form::open(array('url' => 'giveFeedback', 'method'=>'post')) }}
-                        
-                                        
-                                        <div style="float:left; padding-right: 10px">
-                                                Leave us some feedback on CS Connect (Bug, Like, Dislike, Comment, Feature Request etc...)
-                                                <br>
-                                                <br>
-                                                You are posting publicly as {{{Auth::user()->first}}} {{{Auth::user()->last}}}
-                                        </div>
-
-                                        {{ Form::textarea('content', null, array('class' => 'span4' ,'placeholder' => 'Enter your comment here','id' => 'comment-box')) }}
-
-                                        {{ Form::hidden('user_id', $user->id) }}
-										<br>
-                                        {{ Form::submit('Submit', array('class' => 'btn btn-lg btn-primary btn-block')) }}
-
-                                        {{ Form::close() }}
-                                </div>
-                        </div>
-                </div>
-        </div>  
-        <div class="row">
-            <div class="col-md-12">
-                        <div class="panel panel-info">
-                                <div class="panel-heading">
-                                        <h3>All Feedback</h3>
-                                </div>
-                                <div class="panel-body">
-                                        @foreach ($posts as $post)
-                                                {{ View::make('common.newsfeedPost')->with('post', $post) }}
-                                        @endforeach
-                                </div>
-                        </div>
-            </div>
         </div>
         
 @stop

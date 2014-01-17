@@ -16,13 +16,13 @@ class CSQuestionController extends BaseController {
 	}
 	
 	public function showPreviousQuestions() {
-		$log = new CustomLog;	
+		$log = new CustomLog;
 		$log->user_id = Auth::user()->id;
-		$log->event_type = "orevious CSQuestion accessed";
+		$log->event_type = "Previous CSQuestion accessed";
 		$log->save();
 
 		$posts = Post::orderBy('created_at', 'DESC')->where('postable_type', '=', 'PostQuestion')->get();
-		return View::make('newsfeed')
+		return View::make('allQuestions')
 			->with('user', Auth::user())
 			->with('posts', $posts);
 	}
