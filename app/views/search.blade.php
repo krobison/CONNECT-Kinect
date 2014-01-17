@@ -42,7 +42,7 @@
 		@endif
 		</div>
 		</div>
-		<div class="form-group">
+		<!-- <div class="form-group">
 				<select multiple style="width:100%;" class="select2-container classSelect" name="classes[]">
 					<optgroup label="Computer Science">
 						@foreach(Course::all() as $course)
@@ -57,7 +57,7 @@
 						@endforeach
 					@endif
 				</select>
-		</div>
+		</div> -->
 		
 		<div class="row">
 			<div class ="col-xs-5 col-md-4">
@@ -83,137 +83,41 @@
 		</div>
 		<div id="name-body" class="panel-body">
 	@endif
-		@foreach($nameresults as $result) 
-		<div style="margin-bottom:16px;padding:8px;border:1px #CCCCCC solid;border-radius:4px;"> 
-			<div class="row">
-				<div class="picture">
-					<a href="{{URL::to('profile', $result->id)}}">
-					@if(is_null($result->picture))
-						{{ HTML::image('assets/img/dummy.png', 'profile picture', array('width' => '128', 'height' => '128')) }}
-					@else
-						{{ HTML::image('assets/img/profile_images/'.$result->picture, 'profile picture', array('width' => '128', 'height' => '128')) }}
-					@endif
-					</a>
-				</div>
-				<div class="info">
-				<span>
-				<h3><a href="{{URL::to('profile', $result->id)}}">{{{ $result->first }}} {{{ $result->last }}} </a></h3>
-				</span>
-				
-				<span>
-				<?php $strippedBio = strip_tags($result->bio); ?>
-				@if (strlen($strippedBio) > 55)
-                   <p> {{{ substr($strippedBio,0,55)."..." }}} </p> 
-                @else
-                   <p>{{{ $strippedBio }}} </p> 
-                @endif
-				</span>
-
-				<span class="infolabel"><b>Classes:</b></span> </br>
-				<span>
-					@foreach(User::find($result->id)->courses as $course)
-						@if (!empty($searchCourses))
-							@foreach($searchCourses as $searchCourse)
-								@if($course->id == $searchCourse->id)
-									<span class="courselabelmatch">{{{$course->prefix}}}{{{$course->number}}} - {{{$course->name}}}</span>
-								@endif
-							@endforeach 
-						@endif
-					@endforeach
-					@foreach(User::find($result->id)->courses as $course)
-						<?php $t = false ?>
-						@if (!empty($searchCourses))
-							@foreach($searchCourses as $searchCourse)
-								@if($course->id == $searchCourse->id)
-									<?php $t = true ?>
-								@endif
-							@endforeach 
-						@endif
-						@if(!$t)
-							<span class="courselabel">{{{$course->prefix}}}{{{$course->number}}} - {{{$course->name}}}</span>
-						@endif
-					@endforeach
-				</span>
-					
-				</div>
-			</div>
-			
+ 		<div id="nameresultswrapper">
+			{{ View::make('loadmoreusers')
+					->with('user', Auth::user())
+					->with('results', $nameresults)
+					->with('type', 'name') }}
 		</div>
-		@endforeach
 		@if(!empty($nameresults))
-		</div>
+			<div id="loadmorenameresultsbutton" style="text-align:center">
+				<button type="button" class="btn btn-default">Load more...</button>
+			</div>
+			</div>
 		</div>
 		@endif
 	@endif
 	
 	@if(isset($bioresults))
-	@if(!empty($bioresults))
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h4>Matching Bios
-			</h4>
-		</div>
-		<div id="bio-body" class="panel-body">
-	@endif
-		@foreach($bioresults as $result) 
-		<div style="margin-bottom:16px;padding:8px;border:1px #CCCCCC solid;border-radius:4px;"> 
-			<div class="row">
-				<div class="picture">
-					<a href="{{URL::to('profile', $result->id)}}">
-					@if(is_null($result->picture))
-						{{ HTML::image('assets/img/dummy.png', 'profile picture', array('width' => '128', 'height' => '128')) }}
-					@else
-						{{ HTML::image('assets/img/profile_images/'.$result->picture, 'profile picture', array('width' => '128', 'height' => '128')) }}
-					@endif
-					</a>
-				</div>
-				<div class="info">
-				<span>
-				<h3><a href="{{URL::to('profile', $result->id)}}">{{{ $result->first }}} {{{ $result->last }}} </a></h3>
-				</span>
-				
-				<span>
-				<?php $strippedBio = strip_tags($result->bio); ?>
-				@if (strlen($strippedBio) > 55)
-                   <p> {{{ substr($strippedBio,0,55)."..." }}} </p> 
-                @else
-                   <p>{{{ $strippedBio }}} </p> 
-                @endif
-				</span>
-
-				<span class="infolabel"><b>Classes:</b></span> </br>
-				<span>
-					@foreach(User::find($result->id)->courses as $course)
-						@if (!empty($searchCourses))
-							@foreach($searchCourses as $searchCourse)
-								@if($course->id == $searchCourse->id)
-									<span class="courselabelmatch">{{{$course->prefix}}}{{{$course->number}}} - {{{$course->name}}}</span>
-								@endif
-							@endforeach 
-						@endif
-					@endforeach
-					@foreach(User::find($result->id)->courses as $course)
-						<?php $t = false ?>
-						@if (!empty($searchCourses))
-							@foreach($searchCourses as $searchCourse)
-								@if($course->id == $searchCourse->id)
-									<?php $t = true ?>
-								@endif
-							@endforeach 
-						@endif
-						@if(!$t)
-							<span class="courselabel">{{{$course->prefix}}}{{{$course->number}}} - {{{$course->name}}}</span>
-						@endif
-					@endforeach
-				</span>
-					
-				</div>
-			</div>
-			
-		</div>
-		@endforeach
 		@if(!empty($bioresults))
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4>Matching Bios
+				</h4>
+			</div>
+			<div id="bio-body" class="panel-body">
+		@endif
+		<div id="bioresultswrapper">
+			{{ View::make('loadmoreusers')
+					->with('user', Auth::user())
+					->with('results', $bioresults)
+					->with('type', 'bio')}}
 		</div>
+		@if(!empty($bioresults))	
+			<div id="loadmorebioresultsbutton" style="text-align:center">
+				<button type="button" class="btn btn-default">Load more...</button>
+			</div>
+			</div>
 		</div>
 		@endif
 	@endif
@@ -226,6 +130,56 @@
 			placeholder: "Search for Users by Classes"
 		});
 		});
+		
+		var namesLoaded = $(".numNames").length;
+		var biosLoaded = $(".numBios").length;
+		var numberOfUsersToLoad = 5;
+		var nameUrl = '{{ URL::to("loadmorenameresults") }}';
+		var bioUrl = '{{ URL::to("loadmorebioresults") }}';
+		var name = "<?php if(!empty($name)) {echo $name;} ?>"
+
+		$("#loadmorenameresultsbutton").click(function (){
+            $('#loadmorenameresultsbutton').html('{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}'); 
+			morePosts(numberOfUsersToLoad,namesLoaded,nameUrl,1);
+        });
+
+        $("#loadmorebioresultsbutton").click(function (){
+            $('#loadmorebioresultsbutton').html('{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}'); 
+			morePosts(numberOfUsersToLoad,biosLoaded,bioUrl,0);
+        });
+			
+		var morePosts = function(count,offset,route,isName) {
+			$.ajax({
+				url: route,
+				type: 'POST',
+				data: {'lastpost':offset,'toLoad':count, 'name': name},
+				dataType: 'html',
+				success: function(data){
+					if(data){
+							if(isName == 1) {
+								$("#nameresultswrapper").append(data);
+								namesLoaded = $(".numNames").length;
+								$('#loadmorenameresultsbutton').html('<button type="button" class="btn btn-default">Load more...</button>');
+							} else {
+								$("#bioresultswrapper").append(data);
+								biosLoaded = $(".numBios").length;
+								$('#loadmorebioresultsbutton').html('<button type="button" class="btn btn-default">Load more...</button>');
+							}
+					}else{
+						if(isName == 1) {
+							$('#loadmorenameresultsbutton').replaceWith('<center>No more posts to show.</center>');
+						} else {
+							$('#loadmorebioresultsbutton').replaceWith('<center>No more posts to show.</center>');
+						}
+					}
+				},
+				timeout: 6000,
+				error: function(x, t, m){ 
+					$('#loadmoreprojectsbutton').replaceWith('<center>The request to load more posts is taking too long, please try again later.</center> <br> <button type="button" class="btn btn-default">Load more...</button>');
+				}
+			});
+		}
+
 		/* Hide and show post divs on button press
 		$('#search-title').click(function() {
 			$('#new-post-body').toggle(200);
