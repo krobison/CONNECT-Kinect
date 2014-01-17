@@ -84,7 +84,7 @@
 			<h4>CS Projects</h4> 
 		</div>
 		<div id="cs-project" class="panel-body">
-			Order Projects By: <button type="button" class="btn btn-default" id="order-upvotes">Upvotes</button> <button disabled type="button" class="btn btn-default" id="order-time">Time</button>
+			Order Projects By: <button disabled type="button" class="btn btn-default" id="order-upvotes">Upvotes</button> <button type="button" class="btn btn-default" id="order-time">Time</button>
 			<hr>
 			<div id="postprojectswrapper" style="padding: 15px;" class="row">
 			{{ View::make('loadmoreprojectposts')
@@ -158,12 +158,14 @@
 	}
 	
 	{{-- For Sorting Posts --}}
+	var sort_type = 'upvotes';
 	$('#order-time').click(function() {
 		$('#order-time').attr('disabled',true);
 		$('#order-upvotes').attr('disabled',false);
 		//var postsLoaded = $(".PostProject").length;
 		$("#postprojectswrapper").empty();
 		morePosts(8,0,"id");
+		sort_type = 'id';
 	});
 	$('#order-upvotes').click(function() {
 		$('#order-upvotes').attr('disabled',true);
@@ -171,6 +173,7 @@
 		//var postsLoaded = $(".PostProject").length;
 		$("#postprojectswrapper").empty();
 		morePosts(8,0,"upvotes");
+		sort_type = 'upvotes';
 	});
 	order-time
 	
@@ -192,7 +195,7 @@
 		var postsLoaded = $(".PostProject").length;
 		$("#loadmoreprojectsbutton").click(function (){
             $('#loadmoreprojectsbutton').html('{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}'); 
-			morePosts(4,postsLoaded,"upvotes");
+			morePosts(4,postsLoaded,sort_type);
         });
 			
 		var morePosts = function(count,offset,sort) {
@@ -207,12 +210,12 @@
 						postsLoaded = $(".PostProject").length;
 						$('#loadmoreprojectsbutton').html('<button type="button" class="btn btn-default">Load more...</button>');
 					}else{
-						$('#loadmoreprojectsbutton').replaceWith('<center>No more posts to show.</center>');
+						$('#loadmoreprojectsbutton').html('<center>No more posts to show.</center>');
 					}
 				},
-				timeout: 5000,
+				timeout: 6000,
 				error: function(x, t, m){ 
-					$('#loadmoreprojectsbutton').replaceWith('<center>The request to load more posts is taking too long, please try again later.</center>');
+					$('#loadmoreprojectsbutton').html('<center>The request to load more posts is taking too long, please try again later.</center> <br> <button type="button" class="btn btn-default">Load more...</button>');
 				}
 			});
 		}

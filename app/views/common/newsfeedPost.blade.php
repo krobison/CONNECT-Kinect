@@ -31,10 +31,10 @@
 								$result = DB::table('upvotes')->where('user_id','=',Auth::User()->id)->where('post_id','=',$post->id)->get();
 						?>
 						@if (sizeof($result) == 0)
-								<button type="submit" data="{{$post->postupvotes->count()}}" class="btn btn-default btn-sm upvote-ajax" style="float:right;margin-right:16px;">
+								<button title="Upvote this post" type="submit" data="{{$post->postupvotes->count()}}" class="btn btn-default btn-sm upvote-ajax" style="float:right;margin-right:16px;">
 									<i class="image glyphicon glyphicon-hand-up"></i> {{ $post->postupvotes->count() }}</button>
 						@else
-								<button type="submit" data="{{$post->postupvotes->count()}}" class="btn btn-success btn-sm upvote-ajax" style="float:right;margin-right:16px;">
+								<button title="Undo your upvote of this post" type="submit" data="{{$post->postupvotes->count()}}" class="btn btn-success btn-sm upvote-ajax" style="float:right;margin-right:16px;">
 									<i class="image glyphicon glyphicon-hand-down"></i> {{$post->postupvotes->count()}}</button>
 						@endif
 		</div>

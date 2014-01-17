@@ -1,24 +1,20 @@
 <li class="notification" data="{{{$notification->id}}}"> 
-	<div class="row" style="width:500px">
+	<div class="row" style="width:103%">
 		<div class="col-md-1 delete">
 			<button type="button" class="close">&times;</button>
         </div>
 		@if ($notification->type == 'tag')
 			<a href="{{{URL::to('singlepost')}}}/{{{$notification->origin_id}}}">
-		@elseif ($notification->type == 'conversationCreated')
-			<a href="{{{URL::to('showConversation')}}}/{{{$notification->origin_id}}}">
-		@elseif ($notification->type == 'conversationReply')
-			<a href="{{{URL::to('showConversation')}}}/{{{$notification->origin_id}}}">
-		@elseif ($notification->type == 'conversationAdd')
+		@elseif ($notification->type == 'conversationCreated' || $notification->type == 'conversationReply' || $notification->type == 'conversationAdd')
 			<a href="{{{URL::to('showConversation')}}}/{{{$notification->origin_id}}}">
 		@elseif ($notification->type == 'postComment')
 			<a href="{{{URL::to('singlepost')}}}/{{{$notification->origin_id}}}">
 		@endif
-			<div class="col-md-1 picture">
-				{{HTML::image(User::find($notification->initiator_id)->getProfilePictureURL(), 'none', array('width' => '35', 'height' => '35', 'class' => 'img-circle'))}}
+			<div class="col-xs-1 picture">
+					{{HTML::image(User::find($notification->initiator_id)->getProfilePictureURL(), 'none', array('width' => '35', 'height' => '35', 'class' => 'img-circle'))}}
 			</div>
 			
-			<div class="col-md-9 text" style="margin-top:0px; margin-left:6px;">
+			<div class="col-xs-9 text" style="margin-top:0px; margin-left:6px;">
 				<small>
 					@if ($notification->type == 'conversationCreated')
 						&nbsp;{{{User::find($notification->initiator_id)->first}}} created a conversation with you.
@@ -33,8 +29,8 @@
 					@endif
 				</small>
 			</div>
-			<div class="col-md-9 time">
-				<small> {{{ $notification->created_at->diffForHumans() }}} </small>
+			<div class="col-xs-9 time">
+				<small>{{{ $notification->created_at->diffForHumans() }}}</small>
 			</div>
 		</a>
     </div>
