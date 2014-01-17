@@ -27,7 +27,7 @@
 		</div>
 			<div class="buttonRow">
 				<button type="button" class="btn btn-lg btn-primary btn-block" id="enter" style="float:left;">
-					 Enter
+					 Login
 				</button>
 				{{ Form::open(array('url' => 'signup','method' => 'get','class' => 'form-signin')) }}
 						<div class="button-div">
@@ -38,7 +38,7 @@
 					{{ Form::close() }}
 			</div>
 			<div id="header2"> 
-				<div id="signinpanel" class="panel panel-default" style="margin-top:-250px;"><br><br>
+				<div id="signinpanel" class="panel panel-default"><br><br>
 					<script>$('#signinpanel').toggle(100);</script>
 					{{ Form::open(array('url' => 'loginuser','class' => 'form-signin')) }}
 						
@@ -77,7 +77,7 @@
 				        </li>
 				        <li class="one_quarter">
 				            <h2><span class="glyphicon glyphicon-hdd" style="color:#1478Bb;"> <a title="CS_Projects">CS_Projects</a></h2>
-				            <p>Upload your own projects for the CS CONNECT community to see, or browse the projects that others have submitted</p><br>
+				            <p>Upload your own projects for the CS CONNECT community to see, or browse the projects that others have submitted.</p><br>
 				        </li>
 				        <li class="one_quarter">
 				            <h2><span class="glyphicon glyphicon-bullhorn" style="color:#1478Bb;"> <a title="Help_Center">Help_Center</a></h2>
@@ -89,7 +89,7 @@
 				        </li>
 				        <li class="one_quarter">
 				            <h2><span class="glyphicon glyphicon-search" style="color:#1478Bb;"> <a title="Search">Search</a></h2>
-				            <p>Search for other users in your classes, search for your friends, search for posts with specific content, search for anything!</p>
+				            <p>Search for other users, search for your friends, search for posts with specific content, search for anything!</p>
 				        </li>
 				        <li class="one_quarter">
 				            <h2><span class="glyphicon glyphicon-tag style="color:#1478Bb;"" style="color:#1478Bb;"> <a title="Hastags">Hashtags</a></h2>
@@ -112,7 +112,7 @@
 		<!-- Loading all scripts at the end for performance-->
 	<script>
 		// Hide and show post divs on button press
-
+		
 		$('#enter').click(function() {
 		$('#signinpanel').toggle(200);
 		});

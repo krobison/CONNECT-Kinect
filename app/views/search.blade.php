@@ -13,7 +13,7 @@
 @stop
 
 @section('title')
-	SEARCH.
+	USER SEARCH.
 @stop
 
 @section('content')

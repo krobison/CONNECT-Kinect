@@ -80,7 +80,7 @@
 	@if ((Auth::user()->admin == '1')||($post->user_id == Auth::user()->id))
 		{{ Form::open(array('url' => 'deletepost', 'method'=>'post')) }}
 		{{ Form::hidden('id', $post->id) }}
-		<button type="submit" class="btn btn-danger btn-sm" style="float:right;margin-top:-40px;" onclick="return confirm('Are you sure you would like to delete this post FOREVER?');">
+		<button type="submit" class="btn btn-danger btn-sm" style="float:right;margin-top:-40px;" title="Delete this post" onclick="return confirm('Are you sure you would like to delete this post FOREVER?');">
 				<span class="glyphicon glyphicon-trash"></span>
 		</button>
 		{{ Form::close() }}

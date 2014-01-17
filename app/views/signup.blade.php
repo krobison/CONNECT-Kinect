@@ -64,7 +64,7 @@
 
 		{{-- Email --}}
 		<div class="rowlabel">
-			{{Form::label('email', 'E-mail', array('class' => 'col-md-offset-2')).'<span class="requiredtext"> *Required</span>'}}
+			{{Form::label('email', 'E-mail (Must be @mines.edu or @mymail.mines.edu)', array('class' => 'col-md-offset-2')).'<span class="requiredtext"> *Required</span>'}}
 		</div>
 		<div class="row">
 			<div class ="col-xs-10 col-md-8 col-md-offset-2">
@@ -368,7 +368,7 @@
 		<div class="row">
 			<div class ="col-xs-10 col-md-8 col-md-offset-2">
 				<input type='hidden' disabled style="width:80%;" id="tag-select-suggestions" class="five-margin" name="hashtag_suggestions[]"> </input>
-				<button type="button" style="width:20%" id="add-these-tags" class="btn btn-default"> <small>Add Suggested Tags</small> </button>
+				<button type="button" style="width:19%" id="add-these-tags" class="btn btn-default"> <small>Add Suggested Tags</small> </button>
 				<noscript> (This browser does not support JavaScript or JavaScript is turned off. Tagging is disabled) </noscript>
 			</div>
 		</div>
@@ -537,12 +537,13 @@
 			errors = errors + "Gender field must be filled in<br>";	
 		}
 		
-		// Email is valid (Thank you stack overflow for the regular expression)
-		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		// Email is valid
+		// Generic Email regexp: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+		var re = /@mymail.mines.edu$|@mines.edu$/;
 		var email = $("#email").val();
 		if(!re.test(email)) {
 			anythingWrong = true;
-			errors = errors + "<br>Email must match this regex:<br> /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ <br> Good Luck <br> <br>";
+			errors = errors + "Email must be @mines.edu or @mymail.mines.edu <br>";
 		}
 		
 		// Email must not be duplicate
