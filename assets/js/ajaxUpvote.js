@@ -24,11 +24,13 @@ function bindUpvoteListener() {
 				if(upOrDown == "up"){
 					button.empty().append('<i class="image glyphicon glyphicon-hand-down"></i> ' + number); 
 					button.attr('class',"btn btn-success btn-sm upvote-ajax");
-					button.attr('style',"float:right;margin-right:16px;");
+					button.attr('title',"Undo your upvote of this post");
+					//button.attr('style',"float:right;margin-right:16px;");
 				} else if (upOrDown == "down") {
 					button.empty().append('<i class="image glyphicon glyphicon-hand-up"></i> ' + number);
 					button.attr('class',"btn btn-default btn-sm upvote-ajax");
-					button.attr('style',"float:right;margin-right:16px;");
+					button.attr('title',"Upvote this post");
+					//button.attr('style',"float:right;margin-right:16px;");
 				} else {
 					button.html('An error occured');
 				}
