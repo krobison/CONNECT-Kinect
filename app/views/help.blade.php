@@ -118,7 +118,7 @@
                             $('#loadmorerequestsbutton').replaceWith('<center>No more posts to show.</center>');
                         }
                     },
-					timeout: 3000,
+					timeout: 5000,
 					error: function(x, t, m){ 
 					 $('#loadmorerequestsbutton').replaceWith('<center>The request to load more posts is taking too long, please try again later.</center>');
 				}
@@ -143,7 +143,7 @@
                             $('#loadmoreoffersbutton').replaceWith('<center>No more posts to show.</center>');
                         }
                     },
-					timeout: 3000,
+					timeout: 5000,
 					error: function(x, t, m){ 
 					 $('#loadmoreoffersbutton').replaceWith('<center>The request to load more posts is taking too long, please try again later.</center>');
 				}
