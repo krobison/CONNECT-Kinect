@@ -150,17 +150,18 @@
 			$('#search-posts-content').hide();
 		});
 		
-		var ID = $(".postitem:last").attr("id");
+		var ID = $(".postitem").length;
+		var toLoad = 5;
 		var content = "<?php if(!empty($oldcontent)) {echo $oldcontent;} ?>";
-		
 		var sort = "<?php if(!empty($oldsort) && $oldsort[0] == '1') { echo $oldsort[0]; } ?>";
-        var sendData = '&content='+content+'&sort='+sort;
+        var sendData = '&content='+content+'&sort='+sort+'&toLoad='+toLoad;
 		
 			<?php if (!empty($oldhashtags)) { foreach ($oldhashtags as $hashtag):?>
 				sendData = sendData + '&hashtags[]=' + '<?php echo $hashtag->id;?>';
 			<?php endforeach; } ?>
 		
 		$("#loadmorebutton").click(function (){
+			ID = $(".postitem").length;
 		    $('#loadmorebutton').html('{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}'); 
 			$.ajax({
 				url: '{{ URL::to('loadmoreposts') }}',
@@ -171,7 +172,7 @@
 					if(data){
 						$("#postswrapper").append(data);
 						console.log(data);
-						ID = $(".postitem:last").attr("id");
+						ID = $(".postitem").length;
 						$('#loadmorebutton').html('<button type="button" class="btn btn-default">Load more...</button>');
 						bindUpvoteListener();
 					}else{

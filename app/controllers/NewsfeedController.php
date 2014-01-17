@@ -10,7 +10,7 @@ class NewsfeedController extends BaseController {
 
 		return View::make('newsfeed')
 			->with('user', Auth::user())
-			->with('posts', Post::orderBy('id', 'DESC')->take(5)->get());
+			->with('posts', Post::orderBy('id', 'DESC')->skip(0)->take(10)->get());
 	}
 
 }

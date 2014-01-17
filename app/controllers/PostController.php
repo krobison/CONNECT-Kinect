@@ -222,7 +222,7 @@ class PostController extends BaseController {
 					$query->orderBy('upvotes', 'DESC');
 			}
 			
-			$posts = $query->orderBy('id', 'DESC')->take(5)->get();
+			$posts = $query->orderBy('id', 'DESC')->skip(0)->take(10)->get();
 
 			if (!empty($content)) {
 				$logText = $logText . $content . ",";
@@ -255,10 +255,11 @@ class PostController extends BaseController {
 	}
 	
 	public function loadMorePosts() {
-			$lastPostId = Input::get('lastpost');
 			$content = Input::get('content');
 			$sort = Input::get('sort');
 			$hashtags = Input::get('hashtags');
+			$toLoad = Input::get('toLoad');
+			$toSkip = Input::get('lastpost');
 			
 			
 			$query = DB::table('posts');
@@ -275,7 +276,11 @@ class PostController extends BaseController {
 					$query->orderBy('upvotes', 'DESC');
 			}
 			
-			$posts = $query->where('id', '<', $lastPostId)->orderBy('id', 'DESC')->take(5)->get();
+			$posts = $query
+					->orderBy('id', 'DESC')
+					->skip($toSkip)
+					->take($toLoad)
+					->get();
 			
 			
 			if(empty($posts)) {
