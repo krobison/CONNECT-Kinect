@@ -75,6 +75,8 @@ Route::group(array('before' => 'auth'), function() {
 	Route::get('search', 'SearchController@showSearch');
 	Route::get('searchfilter', 'SearchController@processSearch');
 	Route::get('showallusers', 'SearchController@showAllUsers');
+	Route::post('loadmorenameresults', 'SearchController@loadMoreNames');
+	Route::post('loadmorebioresults', 'SearchController@loadMoreBios');
 	
 	// GET post
 	Route::get('singlepost/{id}', 'PostController@showSinglePost');
