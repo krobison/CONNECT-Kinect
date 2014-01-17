@@ -17,13 +17,14 @@
 @section('content')
 	<div class="basic">
 		<div class="row">
-			<div class="picture">
-				@if(is_null($currentuser->picture))
-					{{ HTML::image('assets/img/dummy.png', 'profile picture', array('width' => '256', 'height' => '256')) }}
+			
+			<div class="pictureDiv" style="background: url(@if(is_null($currentuser->picture))
+					{{ URL::asset('assets/img/dummy.png') }}
 				@else
-					{{ HTML::image('assets/img/profile_images/'.$currentuser->picture, 'profile picture', array('width' => '256', 'height' => '256')) }}
-				@endif 
+					{{ URL::asset('assets/img/profile_images/'.$currentuser->picture) }}
+				@endif ) no-repeat center center; background-size: cover">
 			</div>
+			
 			<div class="info">
 				
 				<h3>

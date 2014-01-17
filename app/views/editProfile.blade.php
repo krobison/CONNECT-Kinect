@@ -24,11 +24,14 @@
 		{{ Form::open(array('url' => 'changedAccount', 'files' => true, 'class' => 'form-horizontal')) }}
 		
 			{{-- Profile Picture --}}
-			@if(is_null(Auth::User()->picture))
-				{{ HTML::image('assets/img/dummy.png', 'profile picture', array('width' => '256', 'height' => '256', 'class' => 'editimage')) }}
-			@else
-				{{ HTML::image('assets/img/profile_images/'.Auth::User()->picture, 'profile picture', array('width' => '256', 'height' => '256', 'class' => 'editimage')) }}
-			@endif 
+			<div style="margin-left: 80px; margin-bottom: 10px">
+			<div class="pictureDivEdit" style="background: url(@if(is_null($user->picture))
+					{{ URL::asset('assets/img/dummy.png') }}
+				@else
+					{{ URL::asset('assets/img/profile_images/'.$user->picture) }}
+				@endif ) no-repeat center center; background-size: cover">
+			</div>
+			</div>
 			<div class="form-group">
 				<label for="first" class="col-sm-3 control-label">Profile Picture</label>
 				<div class="col-sm-4">
