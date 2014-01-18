@@ -21,6 +21,7 @@
 	@yield('additionalHeaders')
 	
 	<title>CS CONNECT</title>
+	<link rel="shortcut icon" href="../assets/img/favicon.ico">
 	
 </head>
 

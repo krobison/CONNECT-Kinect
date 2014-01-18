@@ -306,18 +306,17 @@
 				<div class ="col-sm-8">
 					<div class="row checkbox-label">
 					{{ Form::checkbox('email_conversation', true, (Auth::user()->email_conversation == '1') ? true : false , array('id' => 'conversation_email')) }}
-					Receive an email when somebody starts a conversation with you, adds you to a conversation, or replies to a conversation you are in
-					{{(Auth::user()->email_conversation == '1') ? true : false}}
+					Receive an email when somebody starts a conversation with you, adds you to a conversation, or replies to a conversation you are in.
 					</div>
 					<br>
 					<div class="row checkbox-label">
 					{{ Form::checkbox('email_tag', true, (Auth::user()->email_tag == '1') ? true : false , array('id' => 'post_email')) }}
-					Receive an email when a user posts with a tag you are subscribed to {{(Auth::user()->email_tag == '1') ? 'true' : 'false'}}
+					Receive an email when a user posts with a tag you are subscribed to.
 					</div>
 					<br>
 					<div class="row checkbox-label">
 					{{ Form::checkbox('email_comment', true, (Auth::user()->email_comment == '1') ? true : false , array('id' => 'comment_email')) }}
-					Receive an email when somebody comments on a post you made {{(Auth::user()->email_comment == '1') ? 'true' : 'false'}}
+					Receive an email when somebody comments on a post you made.
 					</div>
 				</div>
 			</div>

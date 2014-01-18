@@ -89,6 +89,7 @@
 					@endforeach
 				</div>
 			@endif
+			{{--
 			@if (!empty($studentClasses))
 				<div class="courses">
 					<h3>Courses Taking</h3>
@@ -105,6 +106,7 @@
 					@endforeach
 				</div>
 			@endif
+			--}}
 		</div>
 	</div>
 	
