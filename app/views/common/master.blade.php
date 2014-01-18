@@ -6,9 +6,7 @@
 	{{ HTML::style('assets/css/bootstrap.min.css') }}
 	<style>
 	#affix-y {
-		top: 0px;
-		left: 15px;
-		position: absolute;
+		position : static;
 	}
 	#notification-box {
 		overflow-y: auto;
@@ -63,7 +61,7 @@
 			<div class="row">
 				
 				{{-- Side Bar --}}
-				<div class="col-xs-3" style="padding-top: 20px;">
+				<div class="col-xs-3">
 				
 				<div id='affix-y' style='width: 210px; z-index:1;'>
 					
@@ -214,17 +212,34 @@
 var navigationBar = $("#affix-y");
 var topOffset = parseInt(navigationBar.css('top')); //Grab the top position top first
 var offset = 80;
+var adjustScrollBar = function() {
+	if( $(window).scrollTop() > offset ) {
+		var viewportAdjustement = 0;
+		
+		if($(window).width() >= 999) {
+			viewportAdjustement = (1585 - $(window).width())/2;
+		} else {
+			viewportAdjustement = (1585 - 999)/2;
+		}
+		
+		navigationBar.css({
+			'top': '20px',
+			'left': 323 - $(window).scrollLeft() - viewportAdjustement,//'323px' ,
+			'position' : 'fixed'
+		});
+	} else {
+		navigationBar.css({
+			'top': 'null',
+			'left': 'null',
+			'position' : 'static'
+		});
+	}
+}
 $(window).scroll(function(){
-	if( $(this).scrollTop() > offset || parseInt(navigationBar.css('top')) > 0) {
-		navigationBar.css({
-			'top': $(this).scrollTop() + topOffset - offset //Use it later
-		});
-	}
-	if( parseInt(navigationBar.css('top')) < 0) {
-		navigationBar.css({
-			'top': 0 
-		});
-	}
+	adjustScrollBar();
+});
+$(window).resize(function(){
+	adjustScrollBar();
 });
 </script>
 

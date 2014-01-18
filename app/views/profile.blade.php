@@ -110,8 +110,8 @@
 	
 	
 	<div class="custom">
-		<span class="infolabel"> <h3>Bio</h3></span><br>
-	   {{$currentuser->bio}} 	
+		<span class="infolabel"><h3>Bio</h3></span><br>
+		<div style="white-space:pre-wrap">{{$currentuser->bio}} </div>
 	</div>
 	
 	
