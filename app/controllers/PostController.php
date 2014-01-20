@@ -40,13 +40,13 @@ class PostController extends BaseController {
 		$comment = Comment::find(Input::get('comment_id'));
 		$user = Auth::user();
 
-		$upvote = Upvotecomment::where('user_id', '=', $user->id)->where('comment_id', '=', $comment ->id)->count();
+		$upvote = Upvotecomment::where('user_id', '=', $user->id)->where('comment_id', '=', $comment->id)->count();
 
 		if ($upvote > 0) {
-			Upvotecomment::where('user_id', '=', $user->id)->where('comment_id', '=', $comment ->id)->delete();
-			$comment ->upvotes = $comment ->upvotes - '1';
-			$comment ->save();
-			return json_encode(array("data" => $comment ->commentupvotes->count(),"upOrDown" => "down"));
+			Upvotecomment::where('user_id', '=', $user->id)->where('comment_id', '=', $comment->id)->delete();
+			$comment->upvotes = $comment->upvotes - '1';
+			$comment->save();
+			return json_encode(array("data" => $comment->commentupvotes->count(),"upOrDown" => "down"));
 		}
 
 		else {

@@ -23,15 +23,15 @@
 	<div class="options-panel" style="float:right">
 		{{-- Display the upvote button --}}
 		{{ Form::hidden('user_id', Auth::user()->id)}}
-		{{ Form::hidden('post_id', $comment->id, array('id' => 'comment-id')) }}
+		{{ Form::hidden('comment_id', $comment->id, array('id' => 'comment-id')) }}
 				<?php
 						$result = DB::table('upvotecomments')->where('user_id','=',Auth::User()->id)->where('comment_id','=',$comment->id)->get();
 				?>
 				@if (sizeof($result) == 0)
-						<button title="Upvote this post" type="submit" data="{{$comment->commentupvotes->count()}}" class="btn btn-default btn-sm upvoteComment-ajax two-marg" style="float:right;margin-right:16px;">
+						<button title="Upvote this comment" type="submit" data="{{$comment->commentupvotes->count()}}" class="btn btn-default btn-sm upvoteComment-ajax two-marg" style="float:right">
 							<i class="image glyphicon glyphicon-hand-up"></i> {{ $comment->commentupvotes->count() }}</button>
 				@else
-						<button title="Undo your upvote of this post" type="submit" data="{{$comment->commentupvotes->count()}}" class="btn btn-success btn-sm upvoteComment-ajax two-marg" style="float:right;margin-right:16px;">
+						<button title="Undo your upvote of this comment" type="submit" data="{{$comment->commentupvotes->count()}}" class="btn btn-success btn-sm upvoteComment-ajax two-marg" style="float:right">
 							<i class="image glyphicon glyphicon-hand-down"></i> {{ $comment->commentupvotes->count()}}</button>
 				@endif
 		
