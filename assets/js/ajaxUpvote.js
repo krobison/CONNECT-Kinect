@@ -7,7 +7,7 @@ function bindUpvoteListener() {
 		var host = pathArray[2];
 		var local_url = protocol + "//" + pathArray[2] + "/" + pathArray[3];
 		
-		var post_id = $( event.target ).closest(".row").find("#post-id").val();
+		var post_id = $( event.target ).closest(".ajax-container").find("#post-id").val();
 		var button = $( event.target ).closest(":button");
 		var previous_upvotes = $( event.target ).attr('data');
 		button.html('<img src="' + local_url + '/assets/img/spinner.gif" alt="loading...">');//{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}'); 

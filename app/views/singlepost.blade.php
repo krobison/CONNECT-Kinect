@@ -23,7 +23,7 @@
 
 		@if($user->admin == '1')
 		<!-- New post functionality -->
-		<div id="new-post" class="panel panel-default">
+		<div id="new-post" class="panel panel-default" style="float:left;">
 			<div class="panel-heading">
 				<h4>
 				New Post
@@ -113,31 +113,31 @@
 		{{ View::make('common.comment')->with('comment', $comment) }}
 	@endforeach
 
-	<div class="well">
+	<div style="float:left; width:100%" class="well">
 		{{ Form::open(array('url' => 'createComment', 'method'=>'post')) }}
 		
 		<div style="float:left; padding-right: 10px">
 			@if(is_null(Auth::user()->picture))
-				{{ HTML::image('assets/img/dummy.png', 'profile picture', array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
+				{{ HTML::image('assets/img/dummy.png', 'profile picture', array('width' => '75', 'height' => '75', 'class' => 'img-circle')) }}
 			@else
 				@if ( File::exists('assets/img/profile_images/' . Auth::user()->picture ))
 					{{ HTML::image('assets/img/profile_images/'.Auth::user()->picture, 'profile picture', array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
 				@else
-					{{ HTML::image('assets/img/dummy.png', $user->id , array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
+					{{ HTML::image('assets/img/dummy.png', $user->id , array('width' => '75', 'height' => '75', 'class' => 'img-circle')) }}
 				@endif
 			@endif 
 		</div>
 		
-		<a style="float:right" target="_blank" href="http://htmlpurifier.org/"><img src="http://htmlpurifier.org/live/art/powered.png" alt="Powered by HTML Purifier" border="0" /></a>
+		<a style="padding-right:10px; margin-top:-4px; padding-bottom:5px; float:right" target="_blank" href="http://htmlpurifier.org/"><img src="http://htmlpurifier.org/live/art/powered.png" alt="Powered by HTML Purifier" border="0" /></a>
 
-		{{ Form::textarea('content', null, array('class' => 'span4 form-control' ,'placeholder' => 'Enter your comment here','id' => 'comment-box')) }}
+		{{ Form::textarea('content', null, array('class' => 'span4 form-control', 'style="margin:0 0 10px"' ,'placeholder' => 'Enter your comment here','id' => 'comment-box')) }}
 
 		{{ Form::hidden('user_id', $user->id) }}
 
 		{{ Form::hidden('post_id', $post->id) }}
 
-		<div id="code-panel" class="panel panel-default" style="background-color:transparent; border-style:none;">
-			<div id="code-title" class="panel-body active">
+		<div id="code-panel" class="panel panel-default" style="float:left; width:100%; border-style:none; text-align:center">
+			<div id="code-title" class="panel-body active" style="padding:0px">
 				<a>Add code</a>
 			</div>
 			
@@ -145,10 +145,10 @@
 				<input id="hidden-editor" type="hidden" name="code">
 			</div>
 
-			<div id="editor" class="code-collapse"> &#10 Select your language below. &#10 Then add your code here! &#10</div>
+			<div id="editor" class="code-collapse" style="text-align:left"> &#10 &#10 &#10 &#10 </div>
 				
 			<div class="panel-footer code-collapse">
-				Language: 
+				Language (for syntax highlighting purposes): 
 				<select id="language-select" class="select2-container" name="language" style="width:200px">
 					@foreach(Post::getSupportedLanguages() as $language)
 						@if ($language === "plain_text")
@@ -161,7 +161,7 @@
 			</div>
 		</div>
 
-		{{ Form::submit('Comment', array('class' => 'btn btn-lg btn-primary btn-block')) }}
+		{{ Form::submit('Comment', array('class' => 'btn btn-lg btn-primary btn-block', 'style'=>'float:left')) }}
 
 		{{ Form::close() }}
 	</div>

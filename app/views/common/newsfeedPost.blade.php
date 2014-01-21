@@ -1,4 +1,4 @@
-<div style="margin-bottom:16px;padding:5px;border:1px #CCCCCC solid;border-radius:4px;">    
+<div class="ajax-container" style="margin-bottom:16px;padding:5px;border:1px #CCCCCC solid;border-radius:4px; float:left;width:100%">    
     
     <div style="float:left; padding-right: 10px">
 		{{-- Display the profile picture (if it exists) and user is not anonmyous--}}
@@ -20,31 +20,31 @@
 				</a>
 			@endif
 		@endif
-        </div>
+    </div>
 		
-		 {{-- Display the upvote button --}}
-		
-		<div class="row" style="padding-left:15px">
-				{{ Form::hidden('user_id', Auth::user()->id)}}
-				{{ Form::hidden('post_id', $post->id, array('id' => 'post-id')) }}
-						<?php
-								$result = DB::table('upvotes')->where('user_id','=',Auth::User()->id)->where('post_id','=',$post->id)->get();
-						?>
-						@if (sizeof($result) == 0)
-								<button title="Upvote this post" type="submit" data="{{$post->postupvotes->count()}}" class="btn btn-default btn-sm upvote-ajax" style="float:right;margin-right:16px;">
-									<i class="image glyphicon glyphicon-hand-up"></i> {{ $post->postupvotes->count() }}</button>
-						@else
-								<button title="Undo your upvote of this post" type="submit" data="{{$post->postupvotes->count()}}" class="btn btn-success btn-sm upvote-ajax" style="float:right;margin-right:16px;">
-									<i class="image glyphicon glyphicon-hand-down"></i> {{$post->postupvotes->count()}}</button>
-						@endif
-		</div>
+	 {{-- Display the upvote button --}}
+	
+	<div style="padding-left:15px">
+			{{ Form::hidden('user_id', Auth::user()->id)}}
+			{{ Form::hidden('post_id', $post->id, array('id' => 'post-id')) }}
+					<?php
+							$result = DB::table('upvotes')->where('user_id','=',Auth::User()->id)->where('post_id','=',$post->id)->get();
+					?>
+					@if (sizeof($result) == 0)
+							<button title="Upvote this post" type="submit" data="{{$post->postupvotes->count()}}" class="btn btn-default btn-sm upvote-ajax" style="float:right;">
+								<i class="image glyphicon glyphicon-hand-up"></i> {{ $post->postupvotes->count() }}</button>
+					@else
+							<button title="Undo your upvote of this post" type="submit" data="{{$post->postupvotes->count()}}" class="btn btn-success btn-sm upvote-ajax" style="float:right;">
+								<i class="image glyphicon glyphicon-hand-down"></i> {{$post->postupvotes->count()}}</button>
+					@endif
+	</div>
 		
 		{{-- Display the post content --}}
         @if (isset($detail) && $detail == "true")
-            <div style="white-space:pre-wrap;margin-top:-70px;margin-bottom:32px;"> {{ $post->getPurifiedContent() }} </div>
+            <div style="white-space:pre-wrap;"> {{ $post->getPurifiedContent() }} </div>
 			<br>
         @else
-            <div class="list-group" style="margin-left:60px;margin-right:56px;margin-top:-46px;margin-bottom:0px">
+            <div class="list-group" style="margin-left:60px;margin-right:56px;margin-bottom:0px">
                     <h4 style="margin-bottom:5px"><a href="{{URL::to('singlepost', $post->id)}}" class="list-group-item" style="padding-top:4px;line-height:200%;height:46px;overflow:hidden;"> {{{ strip_tags($post->content) }}} </p></a></h4>
             </div>
         @endif
@@ -52,9 +52,9 @@
         {{-- Display the name of the user who made the post (if the user is not anonymous) --}}
 		
         @if ($post->postable_type == "PostHelpRequest" && $post->postable->anonymous == 1)
-                <p style="margin-bottom:5px">Anonymous, {{ $post->created_at->diffForHumans() }}</p>
+            <p style="margin-bottom:5px">Anonymous, {{ $post->created_at->diffForHumans() }}</p>
         @else
-                <p style="margin-bottom:5px"><a href="{{URL::to('profile', $post->user->id)}}">{{{ $post->user->first }}} {{{ $post->user->last }}}</a>, {{ $post->created_at->diffForHumans() }}</p>
+            <p style="margin-bottom:5px"><a href="{{URL::to('profile', $post->user->id)}}">{{{ $post->user->first }}} {{{ $post->user->last }}}</a>, {{ $post->created_at->diffForHumans() }}</p>
         @endif
 
         {{-- Display tags --}}

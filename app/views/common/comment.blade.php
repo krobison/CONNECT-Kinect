@@ -14,7 +14,7 @@
 </style>
 
 
-<div style="margin-bottom:16px;padding:8px;padding-bottom:0px;border:1px #CCCCCC solid;border-radius:20px;background-color:rgba(34,98,230,0.1)">  
+<div style="overflow: hidden; margin-bottom:16px;padding:8px;border:1px #CCCCCC solid;border-radius:20px;background-color:rgba(34,98,230,0.1);float:left;width:100%">  
 
 	<div style="float:left; padding-right: 10px">
 		{{HTML::image($comment->user->getProfilePictureURL(), '$comment->user->id', array('width' => '70', 'height' => '70', 'class' => 'img-circle'))}}
@@ -100,9 +100,10 @@
 			});
 		</script>
 		</div>
+		<br>
 	@else
-		<div id="code-panel{{$comment->id}}" class="panel panel-default" style="background-color:transparent; border-style:none;">
-			<div id="code-title{{$comment->id}}" class="panel-body active">
+		<div id="code-panel{{$comment->id}}" class="panel panel-default" style="float:left; width:100%; border-style:none; text-align:center">
+			<div id="code-title{{$comment->id}}" class="panel-body active" style="padding:0px">
 				<a id="addCode{{$comment->id}}">Add code</a>
 			</div>
 			
@@ -110,10 +111,10 @@
 				<input id="hidden-editor{{$comment->id}}" type="hidden" name="code{{$comment->id}}">
 			</div>
 
-			<div id="editor{{$comment->id}}" class="code-collapse{{$comment->id}}" style="width:100%; height:100px"> &#10 Select your language below. &#10 Then add your code here! &#10</div>
+			<div id="editor{{$comment->id}}" class="code-collapse{{$comment->id}}" style="width:100%; height:100px"> &#10 &#10 &#10 &#10 </div>
 				
 			<div class="panel-footer code-collapse{{$comment->id}}">
-				Language: 
+				Language (for syntax highlighting purposes): 
 				<select id="language-select{{$comment->id}}" class="select2-container{{$comment->id}}" name="language{{$comment->id}}">
 					@foreach(Post::getSupportedLanguages() as $language)
 						@if ($language === "plain_text")
@@ -164,7 +165,7 @@
 		</script>
 	@endif
 
-	<p><a href="{{URL::to('profile', $comment->user_id)}}">{{{ $comment->user->first }}} {{{ $comment->user->last }}}</a>, {{{ $comment->created_at->diffForHumans() }}}</p>
+	<p style="margin:0px"><a href="{{URL::to('profile', $comment->user_id)}}">{{{ $comment->user->first }}} {{{ $comment->user->last }}}</a>, {{{ $comment->created_at->diffForHumans() }}}</p>
 
 	@if(Auth::user()->admin == '1')
 		{{ Form::open(array('url' => 'deletecomment', 'method'=>'post')) }}
@@ -178,7 +179,6 @@
 			</button>
 		{{ Form::close() }}
 	@endif
-	<br>
 	
 </div>
 
