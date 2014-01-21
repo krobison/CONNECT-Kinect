@@ -6,7 +6,9 @@
 	{{ HTML::style('assets/css/bootstrap.min.css') }}
 	{{ HTML::style('assets/css/signin.css') }}
 	{{ HTML::style('assets/css/social-buttons.css') }}
-	{{ HTML::style('assets/css/font-awesome.min.css') }}		
+	{{ HTML::style('assets/css/font-awesome.min.css') }}
+
+	<link rel="shortcut icon" href="{{URL::to('assets/img/favicon.ico')}}">	
 </head>
 
 

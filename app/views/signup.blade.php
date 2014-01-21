@@ -15,6 +15,7 @@
 			padding: 5px;
 		}
 	</style>
+	<link rel="shortcut icon" href="{{URL::to('assets/img/favicon.ico')}}">
 </head>
 
 <body>

@@ -1,6 +1,6 @@
-<li class="notification" data="{{{$notification->id}}}"> 
+<li class="notification" data="{{{$notification->id}}}" read="{{{$notification->read}}}"> 
 	<div class="row" style="width:103%">
-		<div class="col-md-1 delete">
+		<div title="Delete Notification" class="col-md-1 delete">
 			<button type="button" class="close">&times;</button>
         </div>
 		@if ($notification->type == 'tag')
@@ -14,6 +14,10 @@
 					{{HTML::image(User::find($notification->initiator_id)->getProfilePictureURL(), 'none', array('width' => '35', 'height' => '35', 'class' => 'img-circle'))}}
 			</div>
 			
+			@if($notification->read == 0)
+			<b>
+			@endif
+				
 			<div class="col-xs-9 text" style="margin-top:0px; margin-left:6px;">
 				<small>
 					@if ($notification->type == 'conversationCreated')
@@ -32,6 +36,10 @@
 			<div class="col-xs-9 time">
 				<small>{{{ $notification->created_at->diffForHumans() }}}</small>
 			</div>
+			
+			@if($notification->read == 0)
+			</b>
+			@endif
 		</a>
     </div>
 </li>

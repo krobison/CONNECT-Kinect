@@ -144,6 +144,12 @@ class PostController extends BaseController {
 			if($post->postable_type == 'PostProject' && $post->postable->approved == '0' && $user->admin == '0') {
 				return Redirect::to('newsfeed')->with('user', $user);
 			}
+			
+			// Mark notifications associated with this post as read
+			foreach (Auth::user()->notifications()->whereRaw('(Type="tag" OR Type="postComment")')->where('read','=','0')->where('origin_id','=',$id)->get() as $notification) {
+				$notification->read = true;
+				$notification->save();
+			}
 	
 			return View::make('singlepost')
 					->with('user', $user)

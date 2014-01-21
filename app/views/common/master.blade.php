@@ -21,7 +21,8 @@
 	@yield('additionalHeaders')
 	
 	<title>CS CONNECT</title>
-	<link rel="shortcut icon" href="../assets/img/favicon.ico">
+	
+	<link rel="shortcut icon" href="{{URL::to('assets/img/favicon.ico')}}">
 	
 </head>
 
@@ -83,20 +84,30 @@
 					
 					{{-- Notifications --}}
 					<div class='dropdown'>
-					@if (Auth::user()->notifications->count() >0)
+					@if (Auth::user()->notifications()->count() > 0)
 						<a href='#' class='list-group-item' data-toggle='dropdown'>
-					@else
-						<a href='#' class='list-group-item'>
-					@endif
 						<span class='glyphicon glyphicon-exclamation-sign'></span> Notifications 
-					
 						<span style='float:right'>
-							<span id="not-count" class="label label-danger"> {{ Auth::user()->notifications->count() }}</span>
-							@if (Auth::user()->notifications->count() >0)
-								<span class="caret"></span>
+							@if( Auth::user()->notifications()->where('read','=','0')->count() > 0)
+								<span id="not-count" class="label label-danger">{{ Auth::user()->notifications()->where('read','=','0')->count() }}</span>
+								<span id="caret-icon" class="caret"></span>
+							@else
+								<span id="not-count" class="label label-deafult" style="background-color:rgb(150,150,150)">0</span>
+								<span id="caret-icon" class="caret"></span>
 							@endif
 						</span>
-					</a>
+						</a>
+					@else
+						{{ Auth::user()->notifications()->where('read','=','0')->count() }}
+						<a href='#' class='list-group-item'>
+						<span class='glyphicon glyphicon-exclamation-sign'></span> Notifications 
+						<span style='float:right'>
+							<span id="not-count" class="label label-deafult" style="background-color:rgb(150,150,150)">0</span>
+							<span id="caret-icon" class="caret" style="visibility:hidden"></span>
+						</span>
+						</a>
+					@endif
+					
 					@if (Auth::user()->notifications->count() >0)
 						<ul id="notification-box" class="dropdown-menu" role="menu">
 							@if(Auth::user()->notifications()->whereRaw('(Type="conversationCreated" OR Type="conversationReply" OR Type="conversationAdd")')->count() >0)
@@ -258,9 +269,14 @@ $(window).resize(function(){
 			type: 'POST',
 			success: function (res) {
 				if(res != "0") {
+					if( $( event.target ).closest( "li" ).attr('read') == 0 ) {
+						$("#not-count").html($("#not-count").html()-1);
+						if($("#not-count").html() == 0) {
+							$('#caret-icon').attr("style","visibility:hidden");
+							$("#not-count").attr("style","background-color:rgb(150,150,150)");
+						}
+					}
 					$( event.target ).closest( "li" ).hide('slow').remove();
-					$("#not-count").html($("#not-count").html()-1);
-					console.log(res);
 				}
 			}
 		});

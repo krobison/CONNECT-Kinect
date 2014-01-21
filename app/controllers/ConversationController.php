@@ -34,6 +34,12 @@ class ConversationController extends BaseController {
 			->where('user_id','=',Auth::user()->id)
 			->where('conversation_id','=',$id)
 			->get();
+			
+		// Mark notifications associated with this conversation as read
+		foreach (Auth::user()->notifications()->whereRaw('(Type="conversationCreated" OR Type="conversationReply" OR Type="conversationAdd")')->where('read','=','0')->where('origin_id','=',$id)->get() as $notification) {
+			$notification->read = true;
+			$notification->save();
+		}
 
 		if (empty($result)){
 			return Redirect::to('newsfeed')->with('message', '<div class="alert alert-danger"> The conversation you requested has been deleted or you are not a member of this conversation. </div>');
