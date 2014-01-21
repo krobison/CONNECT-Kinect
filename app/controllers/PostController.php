@@ -142,7 +142,7 @@ class PostController extends BaseController {
 			}
 			
 			if($post->postable_type == 'PostProject' && $post->postable->approved == '0' && $user->admin == '0') {
-					return Redirect::to('newsfeed')->with('user', $user);
+				return Redirect::to('newsfeed')->with('user', $user);
 			}
 	
 			return View::make('singlepost')

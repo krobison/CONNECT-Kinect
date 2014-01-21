@@ -42,13 +42,13 @@
 		    @if ($user_view)
 		    	<label>You are marked as a star</label>
 		    @else 
-		    	<label>Your hashtags are stars</label>
+		    	<label>Tags that you are subscribed to are marked as a star</label>
 		    @endif
 		</div>
 
 		@if ($user_view)
 		    <div id="back_to_interests">
-		    	<a href="community">&lt; Back to all hashtags</a>
+		    	<a href="community">&lt; Back to all tags</a>
 		    </div>
 		@endif
 		

@@ -111,7 +111,7 @@
 				<input id="hidden-editor{{$comment->id}}" type="hidden" name="code{{$comment->id}}">
 			</div>
 
-			<div id="editor{{$comment->id}}" class="code-collapse{{$comment->id}}" style="width:100%; height:100px"> &#10 &#10 &#10 &#10 </div>
+			<div id="editor{{$comment->id}}" class="code-collapse{{$comment->id}}" style="width:100%; height:100px; text-align:left"> &#10 &#10 &#10 &#10 </div>
 				
 			<div class="panel-footer code-collapse{{$comment->id}}">
 				Language (for syntax highlighting purposes): 

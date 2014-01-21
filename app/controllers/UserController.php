@@ -150,9 +150,9 @@ class UserController extends BaseController {
 				// redirect to homepage with a link to send another validation email
 				return Redirect::to('/')->with('message', '<div class="alert alert-warning">Email has not been validated. <a href="'. URL::to('sendValidation', array('key' => Crypt::encrypt($email))) .'">Send another validation email?</a></div>');
 			} 
-			// if the email has been validated, just go to newspage.
+			// If the email has been validated, just go to newspage or If a user was trying to get to another page and was redirected to login, go to intended page.
 			else {
-				return Redirect::to('newsfeed');
+				return Redirect::Intended('newsfeed');
 			}
 		} 
 		// if login failed
