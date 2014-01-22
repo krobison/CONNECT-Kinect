@@ -1,5 +1,9 @@
 <li class="notification" data="{{{$notification->id}}}" read="{{{$notification->read}}}"> 
+	@if($notification->read == 0)
+	<div class="row" style="width:103%; background-color:#EBEBFF"> <b>
+	@else
 	<div class="row" style="width:103%">
+	@endif
 		<div title="Delete Notification" class="col-md-1 delete">
 			<button type="button" class="close">&times;</button>
         </div>
@@ -13,12 +17,8 @@
 			<div class="col-xs-1 picture">
 					{{HTML::image(User::find($notification->initiator_id)->getProfilePictureURL(), 'none', array('width' => '35', 'height' => '35', 'class' => 'img-circle'))}}
 			</div>
-			
-			@if($notification->read == 0)
-			<b>
-			@endif
 				
-			<div class="col-xs-9 text" style="margin-top:0px; margin-left:6px;">
+			<div class="col-xs-9 text" style="background-color: inherit; margin-top:0px; margin-left:6px;">
 				<small>
 					@if ($notification->type == 'conversationCreated')
 						&nbsp;{{{User::find($notification->initiator_id)->first}}} created a conversation with you.
@@ -33,13 +33,12 @@
 					@endif
 				</small>
 			</div>
-			<div class="col-xs-9 time">
+			<div class="col-xs-9 time" style="background-color: inherit">
 				<small>{{{ $notification->created_at->diffForHumans() }}}</small>
 			</div>
-			
-			@if($notification->read == 0)
-			</b>
-			@endif
 		</a>
+	@if($notification->read == 0)
+		</b>
+	@endif
     </div>
 </li>
