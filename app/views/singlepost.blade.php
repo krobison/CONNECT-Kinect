@@ -23,7 +23,7 @@
 
 		@if($user->admin == '1')
 		<!-- New post functionality -->
-		<div id="new-post" class="panel panel-default" style="float:left;">
+		<div id="new-post" class="panel panel-default" style="float:left">
 			<div class="panel-heading">
 				<h4>
 				New Post
@@ -50,27 +50,6 @@
 	
 	{{View::make('common.newsfeedPost')->with('post', $post)->with('detail','true')}}
 	
-	@if ($post->code != "")
-		<div class="well">
-			Language: {{ $post->language }}
-			<div id="editor{{$post->id}}">
-				{{{ $post->code }}}
-			</div>
-		</div>
-		{{ HTML::script('assets/js/ace/ace.js') }}
-		<script>
-			// Setting up the ace text editor language
-			var editor = ace.edit("editor{{$post->id}}");
-			editor.getSession().setUseWorker(false);
-			editor.setTheme("ace/theme/eclipse");
-			var language = "{{$post->language}}";
-			editor.getSession().setMode("ace/mode/" + language);
-			editor.setReadOnly(true);
-			editor.setOptions({
-				maxLines: 50
-			});
-		</script>
-	@endif
 	@if ($post->postable_type == 'PostHelpOffer')
 		{{--
 		<div class="well">
@@ -80,7 +59,7 @@
 		--}}
 	@elseif ($post->postable_type == 'PostProject')
 		<div class="well">
-			<div class="row" style="text-align:center">
+			<div class="row" style="text-align:center; float:left">
 				@if($post->postable->file)
 					<h3> {{ link_to('/assets/csproject_files/'.$post->postable->file, 'Download') }} </h3>
 				@endif
@@ -88,7 +67,7 @@
 					<h3> {{ link_to($post->postable->link, 'Link To Project') }} </h3>
 				@endif
 			</div>
-			<div class="row" style="text-align:center">
+			<div class="row" style="text-align:center; float:left">
 			{{ HTML::image('assets/img/csproject_images/'.$post->postable->screenshot, 'CS Project Screenshot', array('width' => '512', 'height' => '512')) }}
 			</div>
 			<div class="row">

@@ -3,7 +3,7 @@
 	<style type="text/css" media="screen">
 		#code-title:hover
 		{ 
-			background-color:orange;
+			background-color:white;
 		}
 	</style>
 
@@ -64,7 +64,7 @@
 	<style type="text/css" media="screen">
 		#code-title:hover
 		{ 
-			background-color:orange;
+			background-color:white;
 		}
 	</style>
 
@@ -111,26 +111,21 @@
 													 'placeholder' => 'Write post content here',
 													 'rows' => '5')) }}
 		</div>
-
-		<div id="code-panel" class="panel panel-default">
-			<div id="code-title" class="panel-body active">
-				Add code
+		
+		<div id="code-panel" class="panel panel-default" style="float:left; width:100%; text-align:center; background-color:#f4f4f4; margin-bottom:15px">
+			<div id="code-title" class="panel-body active" style="padding:0px">
+				<a>Add code</a>
 			</div>
 			
 			<div id="hidden-editor_div">
 				<input id="hidden-editor" type="hidden" name="code">
 			</div>
 
-			<div id="editor" class="code-collapse">
-			
-			Select your language below
-			Then add your code here!
-			
-			</div>
+			<div id="editor" class="code-collapse" style="z-index:0; text-align:left"> &#10 &#10 &#10 &#10 </div>
 				
 			<div class="panel-footer code-collapse">
-				Language: 
-				<select id="language-select" class="select2-container" name="language" style="width:25%">
+				Language (for syntax highlighting purposes): 
+				<select id="language-select" class="select2-container" name="language" style="width:200px">
 					@foreach(Post::getSupportedLanguages() as $language)
 						@if ($language === "plain_text")
 							<option selected value={{{ $language }}}>{{{ ucfirst($language) }}}</option>
@@ -144,16 +139,6 @@
 		
 		<hr>
 		
-		<div class="panel-tagDatater">
-			<input type='hidden' style="width:100%;" id="tag-select" class="five-margin select2-container" name="hashtags[]"> </input>
-			<br>
-			<input type='hidden' disabled style="width:77%;" id="tag-select-suggestions" class="five-margin select2-container" name="hashtag_suggestions[]"> </input>
-			<noscript> This browser does not support JavaScript or JavaScript is turned off. Tagging is disabled. </noscript>
-			<button type="button" style="width:22%" id="add-these-tags" class="btn btn-default"> <small>Add Suggested Tags</small> </button>
-		</div>
-
-		<hr>
-		
 		<div class="row">
 			<div class ="col-xs-5 col-md-4">
 				{{Form::submit('Post', array('class' => 'btn btn-lg btn-primary btn-block'))}}	
@@ -163,13 +148,6 @@
 	</div> 
 
 @elseif($url == 'createhelpofferpost')
-
-	<style type="text/css" media="screen">
-		#code-title:hover
-		{ 
-			background-color:orange;
-		}
-	</style>
 
 	<div id="new-post-body" class="panel-body">
 		{{ Form::open(array('url' => $url, 'method' => 'POST')) }}
@@ -214,7 +192,7 @@
 	<style type="text/css" media="screen">
 		#code-title:hover
 		{ 
-			background-color:orange;
+			background-color:white;
 		}
 	</style>
 
@@ -228,25 +206,20 @@
 													 'rows' => '5')) }}
 		</div>
 
-		<div id="code-panel" class="panel panel-default">
-			<div id="code-title" class="panel-body active">
-				Add code
+		<div id="code-panel" class="panel panel-default" style="float:left; width:100%; text-align:center; background-color:#f4f4f4; margin-bottom:15px">
+			<div id="code-title" class="panel-body active" style="padding:0px">
+				<a>Add code</a>
 			</div>
 			
 			<div id="hidden-editor_div">
 				<input id="hidden-editor" type="hidden" name="code">
 			</div>
 
-			<div id="editor" class="code-collapse">
-			
-			Select your language below
-			Then add your code here!
-			
-			</div>
+			<div id="editor" class="code-collapse" style="z-index:0; text-align:left"> &#10 &#10 &#10 &#10 </div>
 				
 			<div class="panel-footer code-collapse">
-				Language: 
-				<select id="language-select" class="select2-container" name="language" style="width:25%">
+				Language (for syntax highlighting purposes): 
+				<select id="language-select" class="select2-container" name="language" style="width:200px">
 					@foreach(Post::getSupportedLanguages() as $language)
 						@if ($language === "plain_text")
 							<option selected value={{{ $language }}}>{{{ ucfirst($language) }}}</option>
@@ -257,7 +230,7 @@
 				</select>
 			</div>
 		</div>
-
+		
 		<hr>
 		
 		<div class="panel-tagDatater">
@@ -268,7 +241,7 @@
 			<button type="button" style="width:22%" id="add-these-tags" class="btn btn-default"> <small>Add Suggested Tags</small> </button>
 		</div>
 
-		<hr>
+		<hr style="padding:7px">
 		
 		<div class="row">
 			<div class ="col-xs-5 col-md-4">

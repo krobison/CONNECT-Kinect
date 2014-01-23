@@ -82,7 +82,7 @@
 	@if (!empty($comment->code))
 		<div>
 			Language: {{{ $comment->language }}}
-			<div id="editor{{$comment->id}}">
+			<div id="editor{{$comment->id}}" style="z-index:0">
 			</div>
 		<script>
 			// Setting up the ace text editor language
