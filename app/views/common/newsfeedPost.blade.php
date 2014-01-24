@@ -34,7 +34,7 @@
 								<button title="Upvote this post" type="submit" data="{{$post->postupvotes->count()}}" class="btn btn-default btn-sm upvote-ajax" style="float:right; margin: 2px">
 									<i class="image glyphicon glyphicon-hand-up"></i> {{ $post->postupvotes->count() }}</button>
 						@else
-								<button title="Undo your upvote of this post" type="submit" data="{{$post->postupvotes->count()}}" class="btn btn-success btn-sm upvote-ajax; margin: 2px" style="float:right; margin: 2px">
+								<button title="Undo your upvote of this post" type="submit" data="{{$post->postupvotes->count()}}" class="btn btn-success btn-sm upvote-ajax" style="float:right; margin: 2px">
 									<i class="image glyphicon glyphicon-hand-down"></i> {{$post->postupvotes->count()}}</button>
 						@endif
 		</div>

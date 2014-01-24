@@ -44,6 +44,7 @@ class ProfileController extends BaseController {
 			->with('posts', 
 				Post::orderBy('id', 'DESC')
 					->where('user_id','=',$id)
+					->where('postable_type', '!=', 'PostHelpRequest') // We don't want to show anonymous posts
 					->take(5)
 					->get()
 				);
@@ -56,6 +57,7 @@ class ProfileController extends BaseController {
 			->where('id', '<', $lastPostId)
 			->where('user_id', '=', $currentuserid)
 			->orderBy('id', 'DESC')
+			->where('postable_type', '!=', 'PostHelpRequest') // We don't want to show anonymous posts
 			->take(5)
 			->get();
 			
