@@ -116,9 +116,9 @@ class SearchController extends BaseController {
 			$query2->where('users.bio', 'LIKE', "%$name%");
 		} 
 
-		$nameresults = $query1->orderBy('users.first', 'asc')->skip(0)->take(5)->select('users.*')->get();
+		$nameresults = $query1->orderBy('users.last', 'asc')->skip(0)->take(5)->select('users.*')->get();
 		if(!empty($name)) {
-			$bioresults = $query2->orderBy('users.first', 'asc')->skip(0)->take(5)->select('users.*')->get();
+			$bioresults = $query2->orderBy('users.last', 'asc')->skip(0)->take(5)->select('users.*')->get();
 		}
 
 		$log = new CustomLog;	
@@ -143,7 +143,7 @@ class SearchController extends BaseController {
 		$log->save();
 		return View::make('search')
 			->with('user', Auth::user())
-			->with('nameresults', DB::table('users')->orderBy('first', 'asc')->skip(0)->take(5)->get());
+			->with('nameresults', DB::table('users')->orderBy('last', 'asc')->skip(0)->take(5)->get());
 	}
 
 	public function loadMoreNames() {
@@ -161,7 +161,7 @@ class SearchController extends BaseController {
 			$query->where(DB::raw("CONCAT(first, ' ', last) LIKE '%$name%' OR last LIKE '%$name%'"));
 		}
 
-		$nameresults = $query->orderBy('first', 'asc')->skip($toSkip)->take($toLoad)->select('users.*')->get();
+		$nameresults = $query->orderBy('last', 'asc')->skip($toSkip)->take($toLoad)->select('users.*')->get();
 
 		return View::make('loadmoreusers')
 		->with('user', Auth::user())
@@ -185,7 +185,7 @@ class SearchController extends BaseController {
 			$query->leftJoin('hashtag_user', 'users.id', '=', 'hashtag_user.user_id')->whereIn('hashtag_user.hashtag_id', $hashtags);
 		}
 
-		$bioresults = $query->orderBy('first', 'asc')->skip($toSkip)->take($toLoad)->select('users.*')->get();
+		$bioresults = $query->orderBy('last', 'asc')->skip($toSkip)->take($toLoad)->select('users.*')->get();
 
 		return View::make('loadmoreusers')
 		->with('user', Auth::user())

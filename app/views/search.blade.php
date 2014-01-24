@@ -31,12 +31,12 @@
 		<div style="width:100%;">
 		@if(!empty($name))
 		{{ Form::text('name', $name, array( 
-		'placeholder' => 'Search User Names and Bios',
+		'placeholder' => 'Search for users by name and bio',
 		'class' => 'form-control'
 		)) }}
 		@else
 		{{ Form::text('name', null, array( 
-		'placeholder' => 'Search for Users by Name and Bio',
+		'placeholder' => 'Search for users by name and bio',
 		'class' => 'form-control'
 		)) }}
 		@endif
@@ -67,6 +67,7 @@
 			<div class ="col-xs-4 col-md-3">
 				<a href="{{URL::to('showallusers')}}">
 				<button class="btn btn-primary btn-block">Show all users</button>
+				</a>
 			</div>
 		</div>
 		
@@ -75,24 +76,21 @@
 	</div>
 	
 	@if(isset($nameresults))
-	@if(!empty($nameresults))
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h4>Matching Names
-			</h4>
-		</div>
-		<div id="name-body" class="panel-body">
-	@endif
- 		<div id="nameresultswrapper">
-			{{ View::make('loadmoreusers')
-					->with('user', Auth::user())
-					->with('results', $nameresults)
-					->with('type', 'name') }}
-		</div>
 		@if(!empty($nameresults))
-			<div id="loadmorenameresultsbutton" style="text-align:center">
-				<button type="button" class="btn btn-default">Load more...</button>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4>Matching Names </h4>
 			</div>
+			<div id="name-body" class="panel-body">
+				<div id="nameresultswrapper">
+					{{ View::make('loadmoreusers')
+							->with('user', Auth::user())
+							->with('results', $nameresults)
+							->with('type', 'name') }}
+				</div>
+				<div id="loadmorenameresultsbutton" style="text-align:center">
+					<button type="button" class="btn btn-default">Load more...</button>
+				</div>
 			</div>
 		</div>
 		@endif
@@ -102,21 +100,20 @@
 		@if(!empty($bioresults))
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h4>Matching Bios
-				</h4>
+				<h4>Matching Bios</h4>
 			</div>
 			<div id="bio-body" class="panel-body">
-		@endif
-		<div id="bioresultswrapper">
-			{{ View::make('loadmoreusers')
-					->with('user', Auth::user())
-					->with('results', $bioresults)
-					->with('type', 'bio')}}
-		</div>
-		@if(!empty($bioresults))	
-			<div id="loadmorebioresultsbutton" style="text-align:center">
-				<button type="button" class="btn btn-default">Load more...</button>
-			</div>
+
+				<div id="bioresultswrapper">
+					{{ View::make('loadmoreusers')
+							->with('user', Auth::user())
+							->with('results', $bioresults)
+							->with('type', 'bio')}}
+				</div>
+	
+				<div id="loadmorebioresultsbutton" style="text-align:center">
+					<button type="button" class="btn btn-default">Load more...</button>
+				</div>
 			</div>
 		</div>
 		@endif
@@ -127,7 +124,7 @@
 	<script>
 		$(document).ready(function() { 
 		$(".select2-container").select2({
-			placeholder: "Search for Users by Hashtags they are Subscribed to"
+			placeholder: " Search for users by the hashtags they are subscribed to"
 		});
 		});
 		
