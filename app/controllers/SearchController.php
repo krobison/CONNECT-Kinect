@@ -14,10 +14,10 @@ class SearchController extends BaseController {
 	
 	public function processSearch() {
 		$name = mysql_real_escape_string(Input::get('name'));
-		$courses = Input::get('classes');
+		$hashtags = Input::get('hashtags');
 		$nameresults = NULL;
 		$bioresults = NULL;
-		$searchCourses = "";
+		$searchHashtags = "";
 		$logText = "";
 		if (!empty($name)) {
 			$logText = $logText . $name . ", ";
@@ -96,22 +96,30 @@ class SearchController extends BaseController {
 		// }
 
 		$query1 = DB::table('users');
-
 		$query2 = DB::table('users');
 
- 		if (empty($name)) {
+ 		if (empty($hashtags) && empty($name)) {
 		 	return View::make('search')->with('user', Auth::user());
 		
-		} else {
-			$query1->where(DB::raw("CONCAT(first, ' ', last) LIKE '%$name%' OR last LIKE '%$name%'"));
+		} 
 
-			$query2->where('bio', 'LIKE', "%$name%");
+		if(!empty($hashtags)) {
+			$query1->leftJoin('hashtag_user', 'users.id', '=', 'hashtag_user.user_id')->whereIn('hashtag_user.hashtag_id', $hashtags);
+			$query2->leftJoin('hashtag_user', 'users.id', '=', 'hashtag_user.user_id')->whereIn('hashtag_user.hashtag_id', $hashtags);
+			$searchHashtags = DB::table('hashtags')
+							->whereIn('id',$hashtags)
+							->get();
 		}
 
-		$nameresults = $query1->skip(0)->take(5)->get();
-		$bioresults = $query2->skip(0)->take(5)->get();
+		if(!empty($name)) {
+			$query1->where(DB::raw("CONCAT(users.first, ' ', users.last) LIKE '%$name%' OR users.last LIKE '%$name%'"));
+			$query2->where('users.bio', 'LIKE', "%$name%");
+		} 
 
-		
+		$nameresults = $query1->orderBy('users.first', 'asc')->skip(0)->take(5)->select('users.*')->get();
+		if(!empty($name)) {
+			$bioresults = $query2->orderBy('users.first', 'asc')->skip(0)->take(5)->select('users.*')->get();
+		}
 
 		$log = new CustomLog;	
 		$log->user_id = Auth::user()->id;
@@ -122,7 +130,7 @@ class SearchController extends BaseController {
 		return View::make('search')
 			->with('nameresults', $nameresults)
 			->with('bioresults', $bioresults)
-			->with('searchCourses', $searchCourses)
+			->with('searchHashtags', $searchHashtags)
 			->with('name', $name)
 			->with('user', Auth::user());
 	}
@@ -135,22 +143,25 @@ class SearchController extends BaseController {
 		$log->save();
 		return View::make('search')
 			->with('user', Auth::user())
-			->with('nameresults', DB::table('users')->skip(0)->take(5)->get());
+			->with('nameresults', DB::table('users')->orderBy('first', 'asc')->skip(0)->take(5)->get());
 	}
 
 	public function loadMoreNames() {
 		$toLoad = Input::get('toLoad');
 		$toSkip = Input::get('lastpost');
+		$hashtags = Input::get('hashtags');
 		$name = mysql_real_escape_string(Input::get('name'));
-
 
 		$query = DB::table('users');
 
+		if(!empty($hashtags)) {
+			$query->leftJoin('hashtag_user', 'users.id', '=', 'hashtag_user.user_id')->whereIn('hashtag_user.hashtag_id', $hashtags);
+		}
 		if(!empty($name)) {
 			$query->where(DB::raw("CONCAT(first, ' ', last) LIKE '%$name%' OR last LIKE '%$name%'"));
 		}
 
-		$nameresults = $query->skip($toSkip)->take($toLoad)->get();
+		$nameresults = $query->orderBy('first', 'asc')->skip($toSkip)->take($toLoad)->select('users.*')->get();
 
 		return View::make('loadmoreusers')
 		->with('user', Auth::user())
@@ -161,6 +172,7 @@ class SearchController extends BaseController {
 	public function loadMoreBios() {
 		$toLoad = Input::get('toLoad');
 		$toSkip = Input::get('lastpost');
+		$hashtags = Input::get('hashtags');
 		$name =  mysql_real_escape_string(Input::get('name'));
 
 
@@ -169,8 +181,11 @@ class SearchController extends BaseController {
 		if(!empty($name)) {
 			$query->where('bio', 'LIKE', "%$name%");
 		}
+		if(!empty($hashtags)) {
+			$query->leftJoin('hashtag_user', 'users.id', '=', 'hashtag_user.user_id')->whereIn('hashtag_user.hashtag_id', $hashtags);
+		}
 
-		$bioresults = $query->skip($toSkip)->take($toLoad)->get();
+		$bioresults = $query->orderBy('first', 'asc')->skip($toSkip)->take($toLoad)->select('users.*')->get();
 
 		return View::make('loadmoreusers')
 		->with('user', Auth::user())

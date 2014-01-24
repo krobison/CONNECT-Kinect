@@ -24,12 +24,23 @@
 					
 					<span>
 					<?php $strippedBio = strip_tags($result->bio); ?>
-					@if (strlen($strippedBio) > 55)
-	                   <p> {{{ substr($strippedBio,0,55)."..." }}} </p> 
+					@if (strlen($strippedBio) > 72)
+	                   <p> {{{ substr($strippedBio,0,72)."..." }}} </p> 
 	                @else
 	                   <p>{{{ $strippedBio }}} </p> 
 	                @endif
 					</span>
+
+					<?php $hashtags = User::find($result->id)->hashtags ?>
+					@if(sizeof($hashtags) > 0)
+					<span class="infolabel"><b>Hashtags:</b></span> </br>
+					<span>
+						@foreach($hashtags as $hashtag)
+							<span class="courselabel">{{{ $hashtag->name }}}</span>
+						@endforeach
+					</span>
+					@endif
+
 
 					<!-- <span class="infolabel"><b>Classes:</b></span> </br>
 					<span>
