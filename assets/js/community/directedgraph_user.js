@@ -44,7 +44,7 @@ function generate_color_from_string(string) {
   return colors[sum % colors.length];
 }
 
-
+var thingy;
 function init(interests){
 
   if (interests) {
@@ -170,6 +170,11 @@ function init(interests){
         transition: $jit.Trans.Elastic.easeOut,
         duration: 1500
       });
+	  
+	  // Bump this down so we can see text
+		fd.canvas.translate(0,50)
     }
+
   });
+  thingy = fd;
 }

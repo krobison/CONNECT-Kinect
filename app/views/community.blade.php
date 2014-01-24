@@ -42,7 +42,7 @@
 		    @if ($user_view)
 		    	<label>You are marked as a star</label>
 		    @else 
-		    	<label>Tags that you are subscribed to are marked as a star</label>
+		    	<label>The tags you are subscribed to are marked with a star. <a href="http://toilers.mines.edu/csconnect-thbrown/editprofile?">Edit tags</a> </label>
 		    @endif
 		</div>
 
@@ -64,7 +64,7 @@
 							
 							<li class="my_interest">
 								<a href="{{ URL::to('profile', array('id' => $interest['id'])) }}">
-									{{ $interest['short_name'] }}
+									{{{ $interest['name'] }}}
 								</a>
 							</li>
 							
@@ -72,7 +72,7 @@
 							
 							<li>
 								<a href="{{ URL::to('profile', array('id' => $interest['id'])) }}">
-									{{ $interest['short_name'] }}
+									{{{ $interest['name'] }}}
 								</a>
 							</li>
 							
@@ -93,7 +93,7 @@
 							
 							<li class="my_interest">
 								<a href="community?hashtag={{ $interest['id'] }}">
-									{{ $interest['short_name'] }}
+									{{{ $interest['name'] }}}
 								</a>
 							</li>
 							
@@ -101,7 +101,7 @@
 							
 							<li>
 								<a href="community?hashtag={{ $interest['id'] }}">
-									{{ $interest['short_name'] }}
+									{{{ $interest['name'] }}}
 								</a>
 							</li>
 							

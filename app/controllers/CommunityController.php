@@ -92,7 +92,8 @@ class CommunityController extends BaseController {
 	 		 */
 	
 			// get the list of tags
-			$tags = Hashtag::all();
+			//$tags = Hashtag::all()->orderBy('name', 'desc')->get();
+			$tags = DB::table('hashtags')->orderBy('name', 'asc')->get();
 			
 			// convert
 			// going from stdObject to array
@@ -104,7 +105,10 @@ class CommunityController extends BaseController {
 			 	
 				$temp['id'] = $tag->id;
 				$temp['name'] = $tag->name;
-				$temp['short_name'] = $tag->name;
+				if (strlen($tag->name) >= 11)
+					$temp['short_name'] = substr($tag->name, 0, 10) . "...";
+				else
+					$temp['short_name'] = $tag->name;
 			
 				array_push($interests, $temp);
 			
