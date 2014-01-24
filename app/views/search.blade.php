@@ -42,22 +42,22 @@
 		@endif
 		</div>
 		</div>
-		<!-- <div class="form-group">
-				<select multiple style="width:100%;" class="select2-container classSelect" name="classes[]">
-					<optgroup label="Computer Science">
-						@foreach(Course::all() as $course)
-							<option value={{ $course->id }}>{{ $course->prefix }}{{ $course->number }} - {{ $course->name }}</option>
+		<div class="form-group">
+				<select multiple style="width:100%;" class="select2-container classSelect" name="hashtags[]">
+					<optgroup label="Hashtags">
+						@foreach(Hashtag::all() as $hashtag)
+							<option value={{ $hashtag->id }}>{{ $hashtag->name }}</option>
 						@endforeach
 					</optgroup>
-					@if (!empty($searchCourses))
-						@foreach($searchCourses as $course)
-							<option selected value={{{ $course->id }}}>
-								{{{$course->prefix}}}{{{$course->number}}} - {{{$course->name}}}
-							</option>
-						@endforeach
+					@if (!empty($searchHashtags))
+							@foreach($searchHashtags as $hashtag)
+								<option selected value={{{ $hashtag->id }}}>
+									{{{ $hashtag->name }}}
+								</option>
+							@endforeach
 					@endif
 				</select>
-		</div> -->
+		</div>
 		
 		<div class="row">
 			<div class ="col-xs-5 col-md-4">
@@ -127,7 +127,7 @@
 	<script>
 		$(document).ready(function() { 
 		$(".select2-container").select2({
-			placeholder: "Search for Users by Classes"
+			placeholder: "Search for Users by Hashtags they are Subscribed to"
 		});
 		});
 		
@@ -137,6 +137,10 @@
 		var nameUrl = '{{ URL::to("loadmorenameresults") }}';
 		var bioUrl = '{{ URL::to("loadmorebioresults") }}';
 		var name = "<?php if(!empty($name)) {echo $name;} ?>"
+		var hashtags = "";
+		<?php if (!empty($searchHashtags)) { foreach ($searchHashtags as $hashtag):?>
+			hashtags = hashtags + '&hashtags[]=' + '<?php echo $hashtag->id;?>';
+		<?php endforeach; } ?>
 
 		$("#loadmorenameresultsbutton").click(function (){
             $('#loadmorenameresultsbutton').html('{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}'); 
@@ -152,8 +156,7 @@
 			$.ajax({
 				url: route,
 				type: 'POST',
-				data: {'lastpost':offset,'toLoad':count, 'name': name},
-				dataType: 'html',
+				data: 'lastpost='+offset+'&toLoad='+count+'&name='+name+hashtags,
 				success: function(data){
 					if(data){
 							if(isName == 1) {
@@ -167,15 +170,15 @@
 							}
 					}else{
 						if(isName == 1) {
-							$('#loadmorenameresultsbutton').replaceWith('<center>No more posts to show.</center>');
+							$('#loadmorenameresultsbutton').replaceWith('<center>No more users to show.</center>');
 						} else {
-							$('#loadmorebioresultsbutton').replaceWith('<center>No more posts to show.</center>');
+							$('#loadmorebioresultsbutton').replaceWith('<center>No more users to show.</center>');
 						}
 					}
 				},
 				timeout: 6000,
 				error: function(x, t, m){ 
-					$('#loadmoreprojectsbutton').replaceWith('<center>The request to load more posts is taking too long, please try again later.</center> <br> <button type="button" class="btn btn-default">Load more...</button>');
+					$('#loadmoreprojectsbutton').replaceWith('<center>The request to load more users is taking too long, please try again later.</center> <br> <button type="button" class="btn btn-default">Load more...</button>');
 				}
 			});
 		}
