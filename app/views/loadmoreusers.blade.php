@@ -31,12 +31,15 @@
 	                @endif
 					</span>
 
+					<?php $hashtags = User::find($result->id)->hashtags ?>
+					@if(sizeof($hashtags) > 0)
 					<span class="infolabel"><b>Hashtags:</b></span> </br>
 					<span>
-						@foreach(User::find($result->id)->hashtags as $hashtag)
+						@foreach($hashtags as $hashtag)
 							<span class="courselabel">{{{ $hashtag->name }}}</span>
 						@endforeach
 					</span>
+					@endif
 
 
 					<!-- <span class="infolabel"><b>Classes:</b></span> </br>
