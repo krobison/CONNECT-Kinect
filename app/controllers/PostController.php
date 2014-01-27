@@ -195,17 +195,64 @@ class PostController extends BaseController {
 			return Redirect::back()->with('message', 'The server rejected your deletion.');
 	}
 
+	public function saveEditPost() {
+			//dd(Input::all());
+			$id = Input::get("id");
+			$post = Post::find($id);
+			
+			$content = Input::get("toSave");
+			
+			// Make sure the user who is doing the editing is actually the user who the comment belongs to!
+			if($post->user_id != Auth::user()->id) {
+				Log::error("User " . Auth::user()->id . " attempted to edit a post for which permissions were not granted. Content: " . $content);
+				return Redirect::back()->with('message', '<div class="alert alert-warning"> The server rejected your edit. This incident has been logged. </div>');
+			}
+			
+			// Linkify any content (see include('helpers/lib_autolink.php');)
+			$content = autolink($content);
+
+			$code = Input::get("toSaveCode");
+			$newCode = Input::get("toSaveNewCode");
+			$language = Input::get("toSaveLanguage");
+			$tags = Input::get("toSaveTags");
+			if (!empty($content)) {
+					$post->content = $content;
+			}
+			if (!empty($newCode)) {
+					$post->code = $newCode;
+					$post->language = strtolower($language);
+			}
+			if (!empty($language)) {
+					$post->language = strtolower($language);
+			}
+			if (!empty($code)) {
+					if ($code == "hideCode") {
+							$post->code = "";
+					} else{
+							$post->code = $code;
+					}
+			}
+
+			DB::table('hashtag_post')->where('post_id','=',$id)->delete();
+			PostController::addTags(array($tags),Post::find($id));
+
+			
+			$post->save();
+			
+			return Redirect::back();
+			//return Redirect::back()->with('message', 'You have successfully updated your post.');
+	}
 	public function saveEditComment() {
 			$id = Input::get("id");
 			$comment = Comment::find($id);
+			
+			$content = Input::get("toSave".$id);
 			
 			// Make sure the user who is doing the editing is actually the user who the comment belongs to!
 			if($comment->user_id != Auth::user()->id) {
 				Log::error("User " . Auth::user()->id . " attempted to edit a comment for which permissions were not granted. Content: " . $content);
 				return Redirect::back()->with('message', '<div class="alert alert-warning"> The server rejected your edit. This incident has been logged. </div>');
 			}
-						
-			$content = Input::get("toSave".$id);
 			
 			// Linkify any content (see include('helpers/lib_autolink.php');)
 			$content = autolink($content);

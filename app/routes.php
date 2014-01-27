@@ -90,6 +90,7 @@ Route::group(array('before' => 'auth'), function() {
 	Route::post('creategeneralpost', 'PostController@createGeneralPost');
 	Route::post('deleteusercomment', 'PostController@deleteUserComment');
 	Route::post('saveeditcomment', 'PostController@saveEditComment');
+	Route::post('saveeditpost', 'PostController@saveEditPost');
 	Route::post('giveFeedback', 'PostController@giveFeedback');
 	Route::post('loadmoreposts', 'PostController@loadMorePosts');
 

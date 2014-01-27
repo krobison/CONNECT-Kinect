@@ -2,7 +2,7 @@
     
 	{{-- Display the profile picture (if it exists) and user is not anonmyous--}}
 	
-		<div style="float:left; padding-right: 10px">
+		<div style="float:left; padding-right: 10px; padding-bottom: 5px">
 			@if (isset($detail) && $detail == "true")
 				@if ($post->postable_type == "PostHelpRequest" && $post->postable->anonymous == 1)
 					{{ HTML::image('assets/img/anonymous.png', 'anonymous' , array('width' => '76', 'height' => '76', 'class' => 'img-circle')) }}
@@ -21,6 +21,32 @@
 				@endif
 			@endif
 		</div>
+		
+	<div id="post-options-panel" style="float:right; width:150px">
+	{{-- Display hidden save and edit post buttons --}}
+		
+		@if(Auth::user()->id == $post->user_id && isset($detail) && $detail == "true")
+			
+			<div style="float:left">
+				{{ Form::open(array('url' => 'saveeditpost', 'method'=>'post')) }}
+				{{ Form::hidden('id', $post->id) }}
+				{{ Form::hidden('toSave') }}
+				{{ Form::hidden('toSaveCode') }}
+				{{ Form::hidden('toSaveNewCode') }}
+				{{ Form::hidden('toSaveLanguage') }}
+				{{ Form::hidden('toSaveTags') }}
+				<button type="submit" id="saveEditedPost" class="btn btn-success two-marg" style="float:left;">
+						<span class="glyphicon glyphicon-floppy-saved"></span> Save
+				</button>
+				{{ Form::close() }}
+
+				<button type="submit" id="cancelEditingPost" class="btn btn-warning two-marg" style="margin-right:100px; margin-left:90px;margin-top:-56px;">
+						<span class="glyphicon glyphicon-floppy-remove"></span> Cancel
+				</button>
+				<br>
+			</div>
+			
+		@endif
 	
 	{{-- Display the upvote button --}}
 	
@@ -38,9 +64,16 @@
 									<i class="image glyphicon glyphicon-hand-down"></i> {{$post->postupvotes->count()}}</button>
 						@endif
 		</div>
-
-	{{-- Display the Delete Post button if user is an admin or the post belongs to the user--}}
 		
+	{{-- Display the edit post button if post belongs to the user and the details are enabled --}}
+		@if(Auth::user()->id == $post->user_id && isset($detail) && $detail == "true")
+			<button type="editPost" class="btn btn-primary btn-sm two-marg" title="Edit this post" style="float:right; margin:2px" id="editPost">
+					<span class="glyphicon glyphicon-pencil"></span>
+			</button>
+		@endif
+		
+	{{-- Display the Delete Post button if user is an admin or the post belongs to the user--}}
+	
 		@if ((Auth::user()->admin == '1')||($post->user_id == Auth::user()->id))
 			{{ Form::open(array('url' => 'deletepost', 'method'=>'post')) }}
 			{{ Form::hidden('id', $post->id) }}
@@ -50,24 +83,261 @@
 			{{ Form::close() }}
 		@endif
 		
+	</div>
+		
+		
 	{{-- Display the post content --}}
 	
         @if (isset($detail) && $detail == "true")
-            <div style="white-space:pre-wrap"> {{ $post->getPurifiedContent() }} </div>
-			<br>
+            <div id="paragraph" style="white-space:pre-wrap">{{$post->getPurifiedContent()}}</div>
         @else
             <div class="list-group" style="margin-left:60px;margin-right:56px;margin-bottom:0px">
                     <h4 style="margin-bottom:5px"><a href="{{URL::to('singlepost', $post->id)}}" class="list-group-item" style="padding-top:4px;line-height:200%;height:46px;overflow:hidden;"> {{{ strip_tags($post->content) }}} </p></a></h4>
             </div>
         @endif
+	
+	{{-- Edit Post functionality --}}
+	
+		@if(Auth::user()->id == $post->user_id && isset($detail) && $detail == "true")
+			
+			{{-- Code Editor --}}
+			<br>
+			{{Form::open()}}
+			{{ Form::hidden('revertCode', $post->code) }}
+			{{ Form::hidden('revertContent', $post->content) }}
+			{{Form::close()}}
+
+			@if (!empty($post->code))
+				<div>
+					<div id="disp-lang">Language: {{{$post->language}}} </div>
+					<div id="editor" class="post-code-collapse" style="width:100%; height:100px; text-align:left"> &#10 &#10 &#10 &#10 </div>
+					
+					<div id="langSelect" class="panel-footer post-code-collapse">
+						Language (for syntax highlighting purposes): 
+						<select id="language-select" class="select2-container" name="language">
+							@foreach(Post::getSupportedLanguages() as $language)
+								@if ($language === $post->language)
+									<option selected value={{{ $language }}}>{{{ ucfirst($language) }}}</option>
+								@else
+									<option value={{ $language }}>{{{ ucfirst($language) }}}</option>
+								@endif
+							@endforeach
+						</select>
+					</div>
+				<script>
+					// Setting up the ace text editor language
+					$( document ).ready(function() {
+						var editor = ace.edit("editor");
+						editor.setValue($('[name="revertCode"]').val().trim());
+						editor.getSession().setUseWorker(false);
+						editor.setTheme("ace/theme/eclipse");
+						var language = "{{$post->language}}";
+						editor.getSession().setMode("ace/mode/" + language);
+						editor.setReadOnly(true);
+						editor.setOptions({
+							maxLines: 50
+						});
+					});
+				</script>
+				</div>
+				<br>
+			@else
+				@if($post->postable_type != 'PostHelpOffer' && $post->postable_type != 'PostProject')
+					<div id="code-panel" class="panel panel-default" style="float:left; width:100%; border-style:none; text-align:center">
+						<div id="code-title" class="panel-body active" style="padding:0px">
+							<a id="addCode">Add code</a>
+						</div>
+						
+						<div id="hidden-editor_div">
+							<input id="hidden-editor" type="hidden" name="code">
+						</div>
+
+						<div id="editor" class="post-code-collapse" style="width:100%; height:100px; text-align:left"> &#10 &#10 &#10 &#10 </div>
+							
+						<div class="panel-footer post-code-collapse">
+							Language (for syntax highlighting purposes): 
+							<select id="language-select" class="select2-container" name="language">
+								@foreach(Post::getSupportedLanguages() as $language)
+									@if ($language === "plain_text")
+										<option selected value={{{ $language }}}>{{{ ucfirst($language) }}}</option>
+									@else
+										<option value={{ $language }}>{{{ ucfirst($language) }}}</option>
+									@endif
+								@endforeach
+							</select>
+						</div>
+					</div>
+					
+					<script>
+						$( document ).ready(function() {
+							// Setting up the ace text editor language
+							var editor = ace.edit("editor");
+							editor.getSession().setUseWorker(false);
+							editor.setTheme("ace/theme/eclipse");
+							editor.getSession().setMode("ace/mode/plain_text");
+							editor.setOptions({
+								maxLines: 50
+							});
+							
+							// Every time the content of the editor changes, update the value of the hidden form field to match
+							editor.getSession().on('change', function(){
+								var code = editor.getSession().getValue();
+								$('#hidden-editor').val(code);
+							});
+					
+							// Set Ace editor language based on language select form element
+							$('#language-select').change(function() {
+								editor.getSession().setMode("ace/mode/" + $('#language-select').val());
+							});
+							
+							// Hide the add code section on start
+							$('.post-code-collapse').hide();
+							
+							// Toggle add code div visibility
+							$('#code-title').click(function() {
+								$('.post-code-collapse').toggle();
+								editor.resize();
+							});
+							
+							// Set up select2 menu
+							$(document).ready(function() { 
+								$(".select2-container").select2();
+							});
+						});
+					</script>
+				@endif
+			@endif
+			<script>
+			
+			$(window).load(function() {
+					$("#saveEditedPost").hide();
+					$("#cancelEditingPost").hide();
+					$("#code-panel").hide();
+					$("#langSelect").hide();
+					$("#old-tags").show();
+					$("#name-time").show();
+					$("#new-tags").hide();
+					@if(Auth::user()->id == $post->user_id)
+						$("#editPost").click(function() { /* assign anonymous function to click event */
+							// Fix some styling
+							$("#post-options-panel").width(400);
+							$("#disp-lang").hide();
+							$("#langSelect").show();
+							$("#old-tags").hide();
+							$("#new-tags").show();
+							$("#name-time").hide();
+							
+							var p = $("#paragraph"); /* store reference to <div> element */
+
+							 /* get p.text() without the formatting */
+							 //var t = p.text().replace("\n", "").replace(/\s{2,}/g, " ").trim();
+							 
+							 // Actually, I'd rather keep the formatting, thank you very much! (also html not text cuz we want tags)
+							 var t = p.html()
+
+							/* create new textarea element with additional attributes */
+							var ta = $("<textarea/>", {
+								"class": "edit form-control",
+								"id": "editbox",
+								"text": t,
+								"css": {
+									"width": p.css('width')
+								}
+							});
+
+							$("#saveEditedPost").show();
+							$("#saveEditedPost").attr("disabled", true);
+							ta.keyup(function() {
+								$('[name="toSave"]').attr('value', $(this).val());
+								$("#saveEditedPost").attr("disabled", false);
+							});
+							
+							$('#tagSelect').on("change", function() {
+								$('[name="toSaveTags"]').attr('value', $("#tagSelect").val());
+								console.log($('[name="toSaveLanguage"]').attr('value'));
+								$("#saveEditedPost").attr("disabled", false);
+							});
+
+							p.replaceWith(ta); /* replace p with ta */
+							$("#cancelEditingPost").show();
+							$("#editPost").hide();
+							@if (!empty($post->code))
+								ace.edit("editor").setReadOnly(false);
+								ace.edit("editor").on("change", function() {
+									$("#saveEditedPost").attr("disabled", false);
+									$('[name="toSaveCode"]').attr('value', ace.edit("editor").getValue().trim());
+									if ($('[name="toSaveCode"]').val() == "") {
+										$('[name="toSaveCode"]').attr('value', "hideCode");	
+									}
+								});
+								$('#language-select').on("change", function() {
+									$('[name="toSaveLanguage"]').attr('value', $(".select2-chosen").html());
+									console.log($('[name="toSaveLanguage"]').attr('value'));
+									$("#saveEditedPost").attr("disabled", false);
+								});
+							@else
+								$("#code-panel").show();
+								ace.edit("editor").on("change", function() {
+									$("#saveEditedPost").attr("disabled", false);
+									$('[name="toSaveNewCode"]').attr('value', ace.edit("editor").getValue().trim());
+								});
+								$('#language-select').on("change", function() {
+									$('[name="toSaveLanguage"]').attr('value', $(".select2-chosen").html());
+								});
+							@endif
+						});
+					@endif
+
+					$("#cancelEditingPost").click(function() {
+						$("#post-options-panel").width(150);
+						$("#langSelect").hide();
+						$("#saveEditedPost").hide();
+						$("#cancelEditingPost").hide();
+						$("#code-panel").hide();
+						$("#disp-lang").show();
+						$("#old-tags").show();
+						$("#new-tags").hide();
+						$("#name-time").show();
+						var p = $("#editbox"); /* store reference to <p> element */
+
+						/* create new textarea element with additional attributes */
+						var ta = $("<div/>", {
+							"id": "paragraph",
+							"html": $('[name="revertContent"]').val(),
+							"css": {
+								"width": p.css('width'),
+								"white-space": p.css('white-space')
+							}
+						});
+
+						p.replaceWith(ta); /* replace p with ta */
+						$('[name="toSave"]').attr('value', "");
+						$("#editPost").show();
+						@if (!empty($post->code))
+							var editor = ace.edit("editor");
+							var code = $('[name="revertCode"]').val().trim();
+							editor.setReadOnly(true);
+							editor.setValue(code);
+							$('[name="toSaveCode"]').attr('value', "");
+							$('[name="toSaveNewCode"]').attr('value', "");
+							$('[name="toSaveNewLanguage"]').attr('value', "");
+						@endif
+					});
+				});
+			
+			</script>
+			
+		@endif
 
     {{-- Display the name of the user who made the post (if the user is not anonymous) --}}
 		
+		<div id="name-time">
         @if ($post->postable_type == "PostHelpRequest" && $post->postable->anonymous == 1)
             <p style="margin-bottom:5px">Anonymous, {{ $post->created_at->diffForHumans() }}</p>
         @else
             <p style="margin-bottom:5px"><a href="{{URL::to('profile', $post->user->id)}}">{{{ $post->user->first }}} {{{ $post->user->last }}}</a>, {{ $post->created_at->diffForHumans() }}</p>
         @endif
+		</div>
 
         {{-- Display tags --}}
 
@@ -83,33 +353,30 @@
             }
         </style>
 
+		<div id="old-tags">
 		@foreach($post->hashtags as $tag)
 			<small class="hashtag" style="color:#000000;">#{{{$tag->name}}}</small>
 		@endforeach
+		</div>
 		
-	{{-- Display code, if it exists and details are enabled --}}
-		
-		@if ($post->code != "" && isset($detail) && $detail == "true")
-			<div style="float:left; width:100%; padding:10px">
-				Language: {{ $post->language }}
-				<div id="editor{{$post->id}}" style="z-index:0">
-					{{{ $post->code }}}
-				</div>
-			</div>
-			{{ HTML::script('assets/js/ace/ace.js') }}
-			<script>
-				// Setting up the ace text editor language
-				var editor = ace.edit("editor{{$post->id}}");
-				editor.getSession().setUseWorker(false);
-				editor.setTheme("ace/theme/eclipse");
-				var language = "{{$post->language}}";
-				editor.getSession().setMode("ace/mode/" + language);
-				editor.setReadOnly(true);
-				editor.setOptions({
-					maxLines: 50
-				});
-			</script>
+		@if(Auth::user()->id == $post->user_id && isset($detail) && $detail == "true")
+		<div id="new-tags" class="form-group">
+			<select multiple class="select2-container-tags classSelect" name="hashtags[]" id="tagSelect" style="width:100%">
+				@foreach($tagHTML as $html)
+					{{$html}}
+				@endforeach
+			</select>
+		</div>
 		@endif
+		
+		<script>
+			$(document).ready(function() { 
+				$(".select2-container-tags").select2({
+					placeholder: "Add some tags"
+				});
+			});
+		</script>
+		
 </div>
 
 {{ HTML::script('assets/js/ajaxUpvote.js') }}

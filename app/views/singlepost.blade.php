@@ -48,7 +48,8 @@
 		<h1>Post Details</h1>
 	@endif
 	
-	{{View::make('common.newsfeedPost')->with('post', $post)->with('detail','true')}}
+	{{View::make('common.newsfeedPost')->with('post', $post)->with('detail','true')->with('tagHTML',$post->getTagsAsHTML())}}
+	
 	
 	@if ($post->postable_type == 'PostHelpOffer')
 		{{--
@@ -59,7 +60,7 @@
 		--}}
 	@elseif ($post->postable_type == 'PostProject')
 		<div class="well">
-			<div class="row" style="text-align:center; float:left">
+			<div class="row" style="text-align:center; float:left; width:100%">
 				@if($post->postable->file)
 					<h3> {{ link_to('/assets/csproject_files/'.$post->postable->file, 'Download') }} </h3>
 				@endif
@@ -67,7 +68,7 @@
 					<h3> {{ link_to($post->postable->link, 'Link To Project') }} </h3>
 				@endif
 			</div>
-			<div class="row" style="text-align:center; float:left">
+			<div class="row" style="text-align:center; float:left; width:100%">
 			{{ HTML::image('assets/img/csproject_images/'.$post->postable->screenshot, 'CS Project Screenshot', array('width' => '512', 'height' => '512')) }}
 			</div>
 			<div class="row">

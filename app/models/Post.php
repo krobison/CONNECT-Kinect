@@ -46,6 +46,25 @@ class Post extends Eloquent {
 			return null;
 		}
 	}
+	
+	public function getTagsAsHTML() {
+		// Generate some html for a select object in the HTML form
+		$tagHTML = array();
+		foreach(Hashtag::all() as $tag) {
+			$notSelected = true;
+			foreach($this->hashtags as $postTags) {
+				if($tag->id == $postTags->id) {
+					array_push($tagHTML, "<option selected value=".$tag->id.">".$tag->name."</option>");
+					$notSelected = false;
+					break;
+				}
+			}
+			if($notSelected) {
+				array_push($tagHTML, "<option value=".$tag->id.">".$tag->name."</option>");
+			}
+		}
+		return $tagHTML;
+	}
 
 	// This really isn't a model function, however, I need to do a bunch of logic on 
 	// data from the file system and it would be worse to put the logic in the blade template -- Thomas
