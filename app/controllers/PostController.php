@@ -6,7 +6,7 @@ class PostController extends BaseController {
 
 	public function createComment() {
 		try {
-			if (Input::get('content') != ''){
+			if (Input::get('content') != '' || Input::get('code') != ''){
 				$comment = new Comment;
 				
 				// Linkify the content

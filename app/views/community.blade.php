@@ -24,7 +24,13 @@
 
 @section('content')
 	<h2>Community Tool</h2>
-
+	
+	<p>
+		An interactive was to search for users with similar interests. Zoom and pan with the mouse.
+	</p>
+	
+	<hr>
+	
 	<a name="focus_graph"></a>
 	
 	<h3 id="header_name">{{ $header }}</h3>
@@ -42,7 +48,7 @@
 		    @if ($user_view)
 		    	<label>You are marked as a star</label>
 		    @else 
-		    	<label>The tags you are subscribed to are marked with a star. <a href="http://toilers.mines.edu/csconnect-thbrown/editprofile?">Edit tags</a> </label>
+		    	<label>The tags you are subscribed to are marked with a star. <a href="{{{URL::to('editprofile')}}}">Edit tags</a> </label>
 		    @endif
 		</div>
 
