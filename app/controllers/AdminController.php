@@ -57,6 +57,7 @@ class AdminController extends BaseController {
 		
 		DB::table('hashtag_post')->where('post_id','=',$post->id)->delete();
 		DB::table('notifications')->where('type','=','tag')->where('origin_id','=',$post->id)->delete();
+		DB::table('notifications')->where('type','=','postComment')->where('origin_id','=',$post->id)->delete();
 		
 		$post->delete();
 		

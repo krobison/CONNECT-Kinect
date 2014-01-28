@@ -249,13 +249,11 @@
 							$("#saveEditedPost").attr("disabled", true);
 							ta.keyup(function() {
 								$('[name="toSave"]').attr('value', $(this).val());
-								$("#saveEditedPost").attr("disabled", false);
+								updateHiddenFields();
 							});
 							
 							$('#tagSelect').on("change", function() {
-								$('[name="toSaveTags"]').attr('value', $("#tagSelect").val());
-								console.log($('[name="toSaveLanguage"]').attr('value'));
-								$("#saveEditedPost").attr("disabled", false);
+								updateHiddenFields();
 							});
 
 							p.replaceWith(ta); /* replace p with ta */
@@ -264,16 +262,13 @@
 							@if (!empty($post->code))
 								ace.edit("editor").setReadOnly(false);
 								ace.edit("editor").on("change", function() {
-									$("#saveEditedPost").attr("disabled", false);
-									$('[name="toSaveCode"]').attr('value', ace.edit("editor").getValue().trim());
+									updateHiddenFields();
 									if ($('[name="toSaveCode"]').val() == "") {
 										$('[name="toSaveCode"]').attr('value', "hideCode");	
 									}
 								});
 								$('#language-select').on("change", function() {
-									$('[name="toSaveLanguage"]').attr('value', $(".select2-chosen").html());
-									console.log($('[name="toSaveLanguage"]').attr('value'));
-									$("#saveEditedPost").attr("disabled", false);
+									updateHiddenFields();
 								});
 							@else
 								$("#code-panel").show();
@@ -282,7 +277,7 @@
 									$('[name="toSaveNewCode"]').attr('value', ace.edit("editor").getValue().trim());
 								});
 								$('#language-select').on("change", function() {
-									$('[name="toSaveLanguage"]').attr('value', $(".select2-chosen").html());
+									updateHiddenFields();
 								});
 							@endif
 						});
@@ -324,6 +319,14 @@
 						@endif
 					});
 				});
+			
+			var updateHiddenFields = function() {
+				// Note the content of the post is saves separately
+				$('[name="toSaveTags"]').attr('value', $("#tagSelect").val());
+				$('[name="toSaveLanguage"]').attr('value', $(".select2-chosen").html());
+				$('[name="toSaveCode"]').attr('value', ace.edit("editor").getValue().trim());
+				$("#saveEditedPost").attr("disabled", false);
+			}
 			
 			</script>
 			

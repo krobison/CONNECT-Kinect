@@ -221,6 +221,9 @@ class PostController extends BaseController {
 			if (!empty($newCode)) {
 					$post->code = $newCode;
 					$post->language = strtolower($language);
+			} else {
+					$post->code = $newCode;
+					$post->language = "";			
 			}
 			if (!empty($language)) {
 					$post->language = strtolower($language);
@@ -228,7 +231,7 @@ class PostController extends BaseController {
 			if (!empty($code)) {
 					if ($code == "hideCode") {
 							$post->code = "";
-					} else{
+					} else {
 							$post->code = $code;
 					}
 			}
@@ -236,7 +239,6 @@ class PostController extends BaseController {
 			DB::table('hashtag_post')->where('post_id','=',$id)->delete();
 			PostController::addTags(array($tags),Post::find($id));
 
-			
 			$post->save();
 			
 			return Redirect::back();

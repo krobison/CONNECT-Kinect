@@ -68,12 +68,15 @@ class ConversationController extends BaseController {
 			DB::table('notes')
 				->where('conversation_id','=',$id)
 				->delete();
-		}else{
+		} else{
 			DB::table('conversation_user')
 				->where('user_id','=',Auth::user()->id)
 				->where('conversation_id','=',$id)
 				->delete();
 		}
+		DB::table('notifications')->where('type','=','conversationCreated')->where('origin_id','=',$id)->delete();
+		DB::table('notifications')->where('type','=','conversationReply')->where('origin_id','=',$id)->delete();
+		DB::table('notifications')->where('type','=','conversationAdd')->where('origin_id','=',$id)->delete();
 
 		return Redirect::to('conversations');
 	}
