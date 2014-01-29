@@ -41,9 +41,8 @@
 		<div class="panel-tagDatater">
 			<input type='hidden' style="width:100%;" id="tag-select" class="five-margin select2-container" name="hashtags[]"> </input>
 			<br>
-			<input type='hidden' disabled style="width:77%;" id="tag-select-suggestions" class="five-margin select2-container" name="hashtag_suggestions[]"> </input>
+			<input type='hidden' disabled style="width:100%;" title="click a tag to add it" id="tag-select-suggestions" class="five-margin select2-container" name="hashtag_suggestions[]"> </input>
 			<noscript> This browser does not support JavaScript or JavaScript is turned off. Tagging is disabled. </noscript>
-			<button type="button" style="width:22%" id="add-these-tags" class="btn btn-default"> <small>Add Suggested Tags</small> </button>
 		</div>
 
 		<hr>
@@ -99,7 +98,7 @@
 		</div>
 		<p>
 			What are you trying to do? <br>
-			What does you environment look like? <br>
+			What does your environment look like? <br>
 			Is this a compiler or run-time error? <br>
 			If run-time, what conditions generate the error? <br>
 			Please provide code if possible/applicable. <br>
@@ -137,6 +136,14 @@
 			</div>
 		</div>
 		
+		<div class="panel-tagDatater">
+			<input type='hidden' style="width:100%;" id="tag-select" class="five-margin select2-container" name="hashtags[]"> </input>
+			<br>
+			<input type='hidden' disabled style="width:100%;" title="Click a tag to add it" id="tag-select-suggestions" class="five-margin select2-container" name="hashtag_suggestions[]"> </input>
+			<noscript> This browser does not support JavaScript or JavaScript is turned off. Tagging is disabled. </noscript>
+		</div>
+
+		
 		<hr>
 		
 		<div class="row">
@@ -155,7 +162,7 @@
 		<div class="form-group">
 			{{ Form::textarea('content', null, array('id' => 'content-form-offer',
 													 'class' => 'form-control',
-													 'placeholder' => 'What do you want to help other people with? When are you Available?',
+													 'placeholder' => 'What do you want to help other people with? When are you available?',
 													 'rows' => '5')) }}
 		</div>
 		
@@ -172,9 +179,8 @@
 		<div class="panel-tagDatater">
 			<input type='hidden' style="width:100%;" id="tag-select-offer" class="five-margin select2-container" name="hashtags[]"> </input>
 			<br>
-			<input type='hidden' disabled style="width:77%;" id="tag-select-suggestions-offer" class="five-margin select2-container" name="hashtag_suggestions[]"> </input>
+			<input type='hidden' disabled style="width:100%;" title="Click a tag to add it" id="tag-select-suggestions-offer" class="five-margin select2-container" name="hashtag_suggestions[]"> </input>
 			<noscript> This browser does not support JavaScript or JavaScript is turned off. Tagging is disabled. </noscript>
-			<button type="button" style="width:22%" id="add-these-tags-offer" class="btn btn-default"> <small>Add Suggested Tags</small> </button>
 		</div>
 
 		<hr>
@@ -236,9 +242,8 @@
 		<div class="panel-tagDatater">
 			<input type='hidden' style="width:100%;" id="tag-select" class="five-margin select2-container" name="hashtags[]"> </input>
 			<br>
-			<input type='hidden' disabled style="width:77%;" id="tag-select-suggestions" class="five-margin select2-container" name="hashtag_suggestions[]"> </input>
+			<input type='hidden' disabled style="width:100%;" title="Click a tag to add it" id="tag-select-suggestions" class="five-margin select2-container" name="hashtag_suggestions[]"> </input>
 			<noscript> This browser does not support JavaScript or JavaScript is turned off. Tagging is disabled. </noscript>
-			<button type="button" style="width:22%" id="add-these-tags" class="btn btn-default"> <small>Add Suggested Tags</small> </button>
 		</div>
 
 		<hr style="padding:7px">
@@ -274,9 +279,8 @@
 		<div class="panel-tagDatater">
 			<input type='hidden' style="width:100%;" id="tag-select" class="five-margin select2-container" name="hashtags[]"> </input>
 			<br>
-			<input type='hidden' disabled style="width:77%;" id="tag-select-suggestions" class="five-margin select2-container" name="hashtag_suggestions[]"> </input>
+			<input type='hidden' disabled style="width:100%;" title="Click a tag to add it" id="tag-select-suggestions" class="five-margin select2-container" name="hashtag_suggestions[]"> </input>
 			<noscript> This browser does not support JavaScript or JavaScript is turned off. Tagging is disabled. </noscript>
-			<button type="button" style="width:22%" id="add-these-tags" class="btn btn-default"> <small>Add Suggested Tags</small> </button>
 		</div>
 
 		<hr>
@@ -343,12 +347,30 @@
 				{id: {{{$tag->id}}}, text: '{{{ $tag->name }}}'},
 			@endforeach
 			];
+			
+	// Get hashtag data from db
+	var tagData = {
+	@foreach(Hashtag::all() as $tag)
+		{{{$tag->id}}} : "{{{$tag->name}}}",
+	@endforeach
+	}
+	
+	// Function to get tag id by tag name
+	var returnbyValue = function(input, v) {
+		for (var prop in input) {
+			if (input[prop].text === v) {
+				return input[prop].id;
+			}
+		}
+		return null;
+	}
+	
 	$(document).ready(function() { 
 		// Set up select2 menus for tagging
 		$("#tag-select").select2({
 			createSearchChoice:function(term, data) { 
 				if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {
-					if(term.length > 2) {
+					if(term.length > 2 && term.length < 32) {
 						return {id:term.replace(/,/g,' '), text:term.replace(/,/g,' ') + " - (This will create a new tag)"};
 					}
 				}
@@ -362,6 +384,25 @@
 			placeholder: "Type some text in the post content and suggested tags will appear here",
 			data: inputTagData
 		});
+		$("#tag-select-suggestions").change( function() {
+			$('#s2id_tag-select-suggestions').unbind().click(function (event) {
+				var new_selections = new Array();;
+				// Collect all the things that were originally in the list
+				existingData = $('#s2id_tag-select').select2("data");
+				for (var selection in existingData) {
+					new_selections.push({id: existingData[selection].id, text: existingData[selection].text});
+				}
+				
+				// Collect the new tag
+				var content = $(event.target ).closest(".select2-search-choice").text().trim();
+				if (content !== "") {
+					new_selections.push({id: returnbyValue(inputTagData, content), text: content});
+				}
+				
+				// Add the newly selected tags to the view
+				$('#s2id_tag-select').select2("data", new_selections);
+			});
+		});
 	});
 		
 	/*
@@ -369,13 +410,6 @@
 	 */
 	 
 	// Populate tagData array
-	
-	// Get hashtag data from db
-	var tagData = {
-	@foreach(Hashtag::all() as $tag)
-		{{{$tag->id}}} : "{{{$tag->name}}}",
-	@endforeach
-	}
 	
 	for(var id in tagData) {
 		{{-- Convert CamelCase to spaces --}}
@@ -392,12 +426,6 @@
 		var splitResult = myStr.split(/[ ,]+/);
 		tagData[id] = splitResult;
 	}
-
-	// Add suggested tags to actual tags on button press
-	$('#add-these-tags').click(function() {
-		var unionOfSelectMenues = union_arrays($("#tag-select-suggestions").val().split(","),$("#tag-select").val().split(","));
-		$("#tag-select").select2('val',unionOfSelectMenues);
-	});
 	
 	// Check for new suggested tags every time content field changes
 	$('#content-form').keyup(function() {
@@ -406,16 +434,19 @@
 			for(var id in tagData) {
 				var toSearch = tagData[id];
 				for(var word in toSearch) {
-					{{-- For security purposes, escape tag text regexp characters. --}}
-					var patt = new RegExp(escapeRegExp(toSearch[word]),'i');
-					if(patt.test($("#content-form").val())) {
-						newSelectTwoValues.push(id);
-						break;
+					if(toSearch[word].length > 3) {
+						{{-- For security purposes, escape tag text regexp characters. --}}
+						var patt = new RegExp(escapeRegExp(toSearch[word]),'i');
+						if(patt.test($("#content-form").val())) {
+							newSelectTwoValues.push(id);
+							break;
+						}
 					}
 				}
 			}
 			$("#tag-select-suggestions").select2('val',newSelectTwoValues);
-		}, 1000 );
+			$("#tag-select-suggestions").change();
+		}, 500 );
 	});
 	
 	// This is a delay function used to require a pause in typing before executing a function with keyup()
@@ -450,13 +481,21 @@
 </script>
 @else
 <script>
-	// The reason for this script duplication is becaus there are two create post elements in the help center, requiring different jquery selectors
+
+	// Get hashtag data from db
+	var tagData = {
+	@foreach(Hashtag::all() as $tag)
+		{{{$tag->id}}} : "{{{$tag->name}}}",
+	@endforeach
+	}
+	
+	// The reason for this script duplication is because there are two create post elements in the help center, requiring different jquery selectors
 	$(document).ready(function() { 
 		// Set up select2 menus for tagging
 		$("#tag-select-offer").select2({
 			createSearchChoice:function(term, data) { 
 				if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {
-					if(term.length > 2) {
+					if(term.length > 2 && term.length < 32) {
 						return {id:term.replace(/,/g,' '), text:term.replace(/,/g,' ') + " - (This will create a new tag)"};
 					}
 				}
@@ -470,20 +509,33 @@
 			placeholder: "Type some text in the post content and suggested tags will appear here",
 			data: inputTagData
 		});
+		$("#tag-select-suggestions-offer").change( function() {
+			$('#s2id_tag-select-suggestions-offer').unbind().click(function (event) {
+				var new_selections = new Array();;
+				// Collect all the things that were originally in the list
+				existingData = $('#s2id_tag-select-offer').select2("data");
+				for (var selection in existingData) {
+					new_selections.push({id: existingData[selection].id, text: existingData[selection].text});
+				}
+				
+				// Collect the new tag
+				var content = $(event.target).closest(".select2-search-choice").text().trim();
+				console.log($(event.target).closest(".select2-search-choice"));
+				if (content !== "") {
+					new_selections.push({id: returnbyValue(inputTagData, content), text: content});
+				}
+				
+				// Add the newly selected tags to the view
+				$('#s2id_tag-select-offer').select2("data", new_selections);
+			});
+		});
 	});
-	
+		
 	/*
 	 * Code for post suggestions functionality
 	 */
 	 
 	// Populate tagData array
-	
-	// Get hashtag data from db
-	var tagData = {
-	@foreach(Hashtag::all() as $tag)
-		{{{$tag->id}}} : "{{{$tag->name}}}",
-	@endforeach
-	}
 	
 	for(var id in tagData) {
 		{{-- Convert CamelCase to spaces --}}
@@ -500,28 +552,57 @@
 		var splitResult = myStr.split(/[ ,]+/);
 		tagData[id] = splitResult;
 	}
-
-	// Add suggested tags to actual tags on button press
-	$('#add-these-tags-offer').click(function() {
-		var unionOfSelectMenues = union_arrays($("#tag-select-suggestions-offer").val().split(","),$("#tag-select-offer").val().split(","));
-		$("#tag-select-offer").select2('val',unionOfSelectMenues);
-	});
 	
 	// Check for new suggested tags every time content field changes
 	$('#content-form-offer').keyup(function() {
-		var newSelectTwoValues = new Array;
-		for(var id in tagData) {
-			var toSearch = tagData[id];
-			for(var word in toSearch) {
-				{{-- For security purposes, escape tag text regexp characters. --}}
-				var patt = new RegExp(escapeRegExp(toSearch[word]),'i');
-				if(patt.test($("#content-form-offer").val())) {
-					newSelectTwoValues.push(id);
-					break;
+		delay(function(){
+			var newSelectTwoValues = new Array;
+			for(var id in tagData) {
+				var toSearch = tagData[id];
+				for(var word in toSearch) {
+					if(toSearch[word].length > 3) {
+						{{-- For security purposes, escape tag text regexp characters. --}}
+						var patt = new RegExp(escapeRegExp(toSearch[word]),'i');
+						if(patt.test($("#content-form-offer").val())) {
+							newSelectTwoValues.push(id);
+							break;
+						}
+					}
 				}
 			}
-		}
-		$("#tag-select-suggestions-offer").select2('val',newSelectTwoValues);
+			$("#tag-select-suggestions-offer").select2('val',newSelectTwoValues);
+			$("#tag-select-suggestions-offer").change();
+			
+		}, 500 );
 	});
+	
+	// This is a delay function used to require a pause in typing before executing a function with keyup()
+	var delay = (function(){
+	  var timer = 0;
+	  return function(callback, ms){
+		clearTimeout (timer);
+		timer = setTimeout(callback, ms);
+	  };
+	})();
+	
+	// Helper function to escape regex
+	function escapeRegExp(str) {
+		return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+	}
+
+	// Helper function for finding the union of two arrays
+	function union_arrays (x, y) {
+		var obj = {};
+		for (var i = x.length-1; i >= 0; -- i)
+			obj[x[i]] = x[i];
+		for (var i = y.length-1; i >= 0; -- i)
+			obj[y[i]] = y[i];
+		var res = []
+		for (var k in obj) {
+			if (obj.hasOwnProperty(k))  // <-- optional
+			res.push(obj[k]);
+		}
+		return res;
+	}
 </script>
 @endif

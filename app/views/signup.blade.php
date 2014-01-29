@@ -368,8 +368,7 @@
 		</div>
 		<div class="row">
 			<div class ="col-xs-10 col-md-8 col-md-offset-2">
-				<input type='hidden' disabled style="width:80%;" id="tag-select-suggestions" class="five-margin" name="hashtag_suggestions[]"> </input>
-				<button type="button" style="width:19%" id="add-these-tags" class="btn btn-default"> <small>Add Suggested Tags</small> </button>
+				<input type='hidden' disabled style="width:100%;" id="tag-select-suggestions" class="five-margin" name="hashtag_suggestions[]"> </input>
 				<noscript> (This browser does not support JavaScript or JavaScript is turned off. Tagging is disabled) </noscript>
 			</div>
 		</div>
@@ -594,38 +593,77 @@
 	 * Code for tag suggestions functionality
 	 */
 	 
+	
 	var inputTagData = [
 			@foreach(Hashtag::orderBy('name', 'ASC')->get() as $tag)
 				{id: {{{$tag->id}}}, text: '{{{ $tag->name }}}'},
 			@endforeach
 			];
-	$(document).ready(function() { 
-		// Set up select2 menus for tagging
-		$("#tag-select").select2({
-			createSearchChoice:function(term, data) { 
-				if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {
-					if(term.length > 2) {
-						return {id:term.replace(/,/g,' '), text:term.replace(/,/g,' ') + " - (This will create a new tag)"};
-					}
-				}
-			},
-			multiple: true,
-			placeholder: "Please select some tags for this post. Consider adding the tags below.",
-			data: inputTagData
-		});
-		$("#tag-select-suggestions").select2({
-			multiple: true,
-			placeholder: "Suggested tags will appear here (based on the 'about you' selection).",
-			data: inputTagData
-		});
-	});
-	
+			
 	// Get hashtag data from db
 	var tagData = {
 	@foreach(Hashtag::all() as $tag)
 		{{{$tag->id}}} : "{{{$tag->name}}}",
 	@endforeach
 	}
+	
+	// Function to get tag id by tag name
+	var returnbyValue = function(input, v) {
+		for (var prop in input) {
+			if (input[prop].text === v) {
+				return input[prop].id;
+			}
+		}
+		return null;
+	}
+	
+	$(document).ready(function() { 
+		// Set up select2 menus for tagging
+		$("#tag-select").select2({
+			createSearchChoice:function(term, data) { 
+				if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {
+					if(term.length > 2 && term.length < 32) {
+						return {id:term.replace(/,/g,' '), text:term.replace(/,/g,' ') + " - (This will create a new tag)"};
+					}
+				}
+			},
+			multiple: true,
+			placeholder: "Please select some tags for this post",
+			data: inputTagData
+		});
+		$("#tag-select-suggestions").select2({
+			multiple: true,
+			placeholder: "Type some text in the post content and suggested tags will appear here",
+			data: inputTagData
+		});
+		$("#tag-select-suggestions").change( function() {
+			console.log("change");
+			$('#s2id_tag-select-suggestions').unbind().click(function (event) {
+				console.log("click");
+				var new_selections = new Array();;
+				// Collect all the things that were originally in the list
+				existingData = $('#s2id_tag-select').select2("data");
+				for (var selection in existingData) {
+					new_selections.push({id: existingData[selection].id, text: existingData[selection].text});
+				}
+				
+				// Collect the new tag
+				var content = $(event.target ).closest(".select2-search-choice").text().trim();
+				if (content !== "") {
+					new_selections.push({id: returnbyValue(inputTagData, content), text: content});
+				}
+				
+				// Add the newly selected tags to the view
+				$('#s2id_tag-select').select2("data", new_selections);
+			});
+		});
+	});
+		
+	/*
+	 * Code for post suggestions functionality
+	 */
+	 
+	// Populate tagData array
 	
 	for(var id in tagData) {
 		{{-- Convert CamelCase to spaces --}}
@@ -636,27 +674,36 @@
 		myStr = myStr.replace(/-|_/g, ' ').toLowerCase();
 		
 		{{-- Convert number letter junctions to spaces --}}
-		//myStr = myStr.replace(/([^0-9])([0-9])/g, '$1 $2').toLowerCase();
+		myStr = myStr.replace(/([^0-9])([0-9])/g, '$1 $2').toLowerCase();
 		
 		{{-- Now split the string in to an array (split on whitespace) --}}
 		var splitResult = myStr.split(/[ ,]+/);
 		tagData[id] = splitResult;
 	}
-
-	// Add suggested tags to actual tags on button press
-	$('#add-these-tags').click(function() {
-		var unionOfSelectMenues = union_arrays($("#tag-select-suggestions").val().split(","),$("#tag-select").val().split(","));
-		$("#tag-select").select2('val',unionOfSelectMenues);
-	});
 	
 	// Check for new suggested tags every time content field changes
 	$('#bio').keyup(function() {
 		delay(function(){
-		  updateSuggestedTags();
-		}, 1000 );
+			var newSelectTwoValues = new Array;
+			for(var id in tagData) {
+				var toSearch = tagData[id];
+				for(var word in toSearch) {
+					if(toSearch[word].length > 3) {
+						{{-- For security purposes, escape tag text regexp characters. --}}
+						var patt = new RegExp(escapeRegExp(toSearch[word]),'i');
+						if(patt.test($("#bio").val())) {
+							newSelectTwoValues.push(id);
+							break;
+						}
+					}
+				}
+			}
+			$("#tag-select-suggestions").select2('val',newSelectTwoValues);
+			$("#tag-select-suggestions").change();
+		}, 500 );
 	});
 	
-	// This is a delay function, it us used above so that there must be a 1000ms pause in typing before the function executes
+	// This is a delay function used to require a pause in typing before executing a function with keyup()
 	var delay = (function(){
 	  var timer = 0;
 	  return function(callback, ms){
@@ -665,45 +712,6 @@
 	  };
 	})();
 	
-	// Also check when a new taking/instructor class is selected
-	$('#classes-taking,#classes-teaching').change(function() {
-		updateSuggestedTags();
-	});
-	
-	var updateSuggestedTags = function() {
-		var newSelectTwoValues = new Array;
-		for(var id in tagData) {
-			var toSearch = tagData[id];
-			for(var word in toSearch) {
-				{{-- For security purposes, escape tag text regexp characters. --}}
-				var patt = new RegExp(escapeRegExp(toSearch[word]),'i');
-				if(patt.test($("#bio").val())) {
-					newSelectTwoValues.push(id);
-					break;
-				}
-				{{-- No longer asking for classes
-				var classData = $("#classes-taking").select2('data');
-				for (var i in classData) {
-					//console.log("Comparing " + classData[i].text + " with " + patt);
-					if(patt.test(classData[i].text)) {
-						newSelectTwoValues.push(id);
-						break;
-					}
-				}
-				classData = $("#classes-teaching").select2('data');
-				for (var i in classData) {
-					//console.log("Comparing " + classData[i].text + " with " + patt);
-					if(patt.test(classData[i].text)) {
-						newSelectTwoValues.push(id);
-						break;
-					}
-				}
-				--}}
-			}
-		}
-		$("#tag-select-suggestions").select2('val',newSelectTwoValues);
-	}
-
 	// Helper function to escape regex
 	function escapeRegExp(str) {
 		return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
@@ -723,7 +731,6 @@
 		}
 		return res;
 	}
-
 </script>
 	
 </body>

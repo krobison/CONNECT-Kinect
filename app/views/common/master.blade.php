@@ -98,7 +98,6 @@
 						</span>
 						</a>
 					@else
-						{{ Auth::user()->notifications()->where('read','=','0')->count() }}
 						<a href='#' class='list-group-item'>
 						<span class='glyphicon glyphicon-exclamation-sign'></span> Notifications 
 						<span style='float:right'>

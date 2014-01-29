@@ -52,7 +52,7 @@
 			<div id="postrequestswrapper">
 			@foreach (Post::where('postable_type', '=', 'PostHelpRequest')->take(5)->orderBy('id', 'DESC')->get() as $post)
 				{{ View::make('common.newsfeedPost')->with('post', $post) }}
-			<div class="{{$post->postable_type}}" id="{{$post->id}}"></div>
+				<div class="{{$post->postable_type}}" id="{{$post->id}}"></div>
 			@endforeach
 			</div>
 			<div id="loadmorerequestsbutton">
@@ -125,12 +125,12 @@
                         if(data){
                             $("#postrequestswrapper").append(data);
                             requestID = $(".PostHelpRequest:last").attr("id");
-							 $('#loadmorerequestsbutton').html('<button type="button" class="btn btn-default">Load more...</button>');
+							$('#loadmorerequestsbutton').html('<button type="button" class="btn btn-default">Load more...</button>');
                         }else{
                             $('#loadmorerequestsbutton').replaceWith('<center>No more posts to show.</center>');
                         }
                     },
-					timeout: 5000,
+					timeout: 6000,
 					error: function(x, t, m){ 
 					 $('#loadmorerequestsbutton').replaceWith('<center>The request to load more posts is taking too long, please try again later.</center>');
 				}
@@ -155,7 +155,7 @@
                             $('#loadmoreoffersbutton').replaceWith('<center>No more posts to show.</center>');
                         }
                     },
-					timeout: 5000,
+					timeout: 6000,
 					error: function(x, t, m){ 
 					 $('#loadmoreoffersbutton').replaceWith('<center>The request to load more posts is taking too long, please try again later.</center>');
 				}
