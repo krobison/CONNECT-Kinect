@@ -5,7 +5,15 @@ function bindUpvoteListener() {
 		var pathArray = window.location.href.split( '/' );
 		var protocol = pathArray[0];
 		var host = pathArray[2];
-		var local_url = protocol + "//" + pathArray[2] + "/" + pathArray[3];
+		
+		// The issue here is that development takes place at toilers.mines.edu/csconnect
+		// Deployment is at connect.mines.edu, so one has a two level base path and one has a one level base path
+		var local_url = "";
+		if(pathArray[2] === "connect.mines.edu") {
+			local_url = protocol + "//" + pathArray[2];
+		} else {
+			local_url = protocol + "//" + pathArray[2] + "/" + pathArray[3];
+		}
 		
 		var post_id = $( event.target ).closest(".ajax-container").find("#post-id").val();
 		var button = $( event.target ).closest(":button");

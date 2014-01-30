@@ -369,16 +369,17 @@
 					{{$html}}
 				@endforeach
 			</select>
+			<script>
+				$(document).ready(function() { 
+					$(".select2-container-tags").select2({
+						placeholder: "Add some tags"
+					});
+				});
+			</script>
 		</div>
 		@endif
 		
-		<script>
-			$(document).ready(function() { 
-				$(".select2-container-tags").select2({
-					placeholder: "Add some tags"
-				});
-			});
-		</script>
+
 		
 </div>
 
