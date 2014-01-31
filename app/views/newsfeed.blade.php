@@ -159,8 +159,19 @@
 			<?php if (!empty($oldhashtags)) { foreach ($oldhashtags as $hashtag):?>
 				sendData = sendData + '&hashtags[]=' + '<?php echo $hashtag->id;?>';
 			<?php endforeach; } ?>
+			
+		function bindScroll(){
+		   if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+			   $(window).unbind('scroll',bindScroll);
+			   console.log("Loading more");
+			   loadMore();
+		   }
+		};
 		
-		$("#loadmorebutton").click(function (){
+		$(window).bind('scroll',bindScroll);
+		$("#loadmorebutton").click(loadMore);
+
+		var loadMore = function (){
 			ID = $(".postitem").length;
 		    $('#loadmorebutton').html('{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}'); 
 			$.ajax({
@@ -171,20 +182,21 @@
 				success: function(data){
 					if(data){
 						$("#postswrapper").append(data);
-						console.log(data);
 						ID = $(".postitem").length;
 						$('#loadmorebutton').html('<button type="button" class="btn btn-default">Load more...</button>');
+						$(window).bind('scroll',bindScroll); // Keep loading content when scrolling to the bottom
 						bindUpvoteListener();
-					}else{
+					} else {
 						$('#loadmorebutton').replaceWith('<center>No more posts to show.</center>');
 					}
 				},
-				timeout: 5000,
+				timeout: 10000,
 				error: function(x, t, m){ 
 					 $('#loadmorebutton').replaceWith('<center>The request to load more posts is taking too long, please try again later.</center>');
 				}
 			});
-		});
+		};
+		
 
 	</script>
 @stop

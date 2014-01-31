@@ -155,6 +155,7 @@
 				<div class="col-sm-4">
 					{{ Form::select('minor[]', 
 						array(
+							'Bioengineering and Life Sciences (BELS)' => 'Bioengineering and Life Science (BELS)',
 							'Chemistry' => 'Chemistry',
 							'Computational & Applied Mathematics' => 'Computational & Applied Mathematics',
 							'Computer Sciences' => 'Computer Sciences',

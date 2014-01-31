@@ -1,4 +1,4 @@
-<div class="ajax-container" style="margin-bottom:16px;padding:5px;border:1px #CCCCCC solid;border-radius:4px; float:left;width:100%">    
+<div class="ajax-container" title="Click to see more" style="margin-bottom:16px;padding:5px;border:1px #CCCCCC solid;border-radius:4px; float:left;width:100%">    
     
 	{{-- Display the profile picture (if it exists) and user is not anonmyous--}}
 	
@@ -92,7 +92,7 @@
             <div id="paragraph" style="white-space:pre-wrap">{{$post->getPurifiedContent()}}</div>
         @else
             <div class="list-group" style="margin-left:60px;margin-right:56px;margin-bottom:0px">
-                    <h4 style="margin-bottom:5px"><a href="{{URL::to('singlepost', $post->id)}}" class="list-group-item" style="padding-top:4px;line-height:200%;height:46px;overflow:hidden;"> {{{ strip_tags($post->content) }}} </p></a></h4>
+                    <h4 style="margin-bottom:5px"><a href="{{URL::to('singlepost', $post->id)}}" class="list-group-item" style="padding-bottom:4px; padding-top:4px; padding-left:7px;max-height:72px;overflow:hidden;font-size:11pt; white-space: pre-wrap; line-height:110%">{{{ strip_tags($post->content) }}}</a></h4>
             </div>
         @endif
 	
@@ -241,7 +241,8 @@
 								"id": "editbox",
 								"text": t,
 								"css": {
-									"width": p.css('width')
+									"width": p.css('width'),
+									"height": "300px"
 								}
 							});
 
