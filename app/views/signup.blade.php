@@ -634,7 +634,7 @@
 		});
 		$("#tag-select-suggestions").select2({
 			multiple: true,
-			placeholder: "Type some text in the post content and suggested tags will appear here",
+			placeholder: "Type some text in the about you section and suggested tags will appear here",
 			data: inputTagData
 		});
 		$("#tag-select-suggestions").change( function() {

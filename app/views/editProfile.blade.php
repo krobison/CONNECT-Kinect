@@ -351,7 +351,7 @@
 				placeholder: "Select Your Classes"
 			}); --}}
 			$(".select2-container-tags").select2({
-				placeholder: "Select Your Classes"
+				placeholder: "Select some tags you are interested in"
 			});
 			
 			$("#major").select2({
