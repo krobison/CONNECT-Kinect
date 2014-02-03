@@ -90,6 +90,8 @@
 		</div>
 		<div class="row">
 			<div class ="col-xs-10 col-md-8 col-md-offset-2">
+				We highly recommend that you do not use the same password for CS Connect as you use for your other school accounts as the connection to this site is unencrypted. This can also be a security concern for
+				<a href="http://xkcd.com/792/" style="color:black" target="_blank" title="" ><u> other reasons</u></a>.
 				{{Form::password('password', array(
 					'id' => 'password',
 					'class' => 'form-control',
