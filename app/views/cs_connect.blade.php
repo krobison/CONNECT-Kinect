@@ -59,10 +59,11 @@
                                 </div>
                                 <div class="panel-body">
                                         <ul class="list-group">
+										  <li class="list-group-item">2/5/2014 - The number of comments on a post can now be seen from the newsfeed</li>
+										  <li class="list-group-item">2/5/2014 - Whitespace is now maintained in conversations</li>
                                           <li class="list-group-item">1/8/2014 - Launch!</li>
                                           <li class="list-group-item">1/5/2014 - Fixed layout/styling bug in the user profile. </li>
                                           <li class="list-group-item">1/4/2014 - New posts on the newsfeed page are now loaded via AJAX. </li>
-                                          <li class="list-group-item">1/2/2014 - Added notifications for new conversations. </li>
                                         </ul>
                                 </div>
                         </div>

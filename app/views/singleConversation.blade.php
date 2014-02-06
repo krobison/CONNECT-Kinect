@@ -81,7 +81,7 @@
 				</a>
 			</div>
 			<b>{{{User::find($note->user_id)->first}}} {{{User::find($note->user_id)->last}}}</b><br>
-			<span>{{$note->content}}</span>
+			<div style="white-space:pre-wrap">{{$note->content}}</div>
 		</div>
 	@endforeach
 	</div>

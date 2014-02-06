@@ -339,7 +339,7 @@
         @if ($post->postable_type == "PostHelpRequest" && $post->postable->anonymous == 1)
             <p style="margin-bottom:5px">Anonymous, {{ $post->created_at->diffForHumans() }}</p>
         @else
-            <p style="margin-bottom:5px"><a href="{{URL::to('profile', $post->user->id)}}">{{{ $post->user->first }}} {{{ $post->user->last }}}</a>, {{ $post->created_at->diffForHumans() }}</p>
+            <p style="margin-bottom:5px"><a href="{{URL::to('profile', $post->user->id)}}">{{{ $post->user->first }}} {{{ $post->user->last }}}</a>, {{ $post->created_at->diffForHumans() }} <span style="float:right; margin-right:150px"><a href="{{URL::to('singlepost', $post->id)}}">{{{$post->comments()->count()}}} Comment(s)</a> </span> </p>
         @endif
 		</div>
 
