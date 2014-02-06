@@ -335,13 +335,22 @@
 
     {{-- Display the name of the user who made the post (if the user is not anonymous) --}}
 		
-		<div id="name-time">
-        @if ($post->postable_type == "PostHelpRequest" && $post->postable->anonymous == 1)
-            <p style="margin-bottom:5px">Anonymous, {{ $post->created_at->diffForHumans() }}</p>
-        @else
-            <p style="margin-bottom:5px"><a href="{{URL::to('profile', $post->user->id)}}">{{{ $post->user->first }}} {{{ $post->user->last }}}</a>, {{ $post->created_at->diffForHumans() }} <span style="float:right; margin-right:150px"><a href="{{URL::to('singlepost', $post->id)}}">{{{$post->comments()->count()}}} Comment(s)</a> </span> </p>
-        @endif
-		</div>
+		@if (isset($detail) && $detail == "true")			<div id="name-time">
+			@if ($post->postable_type == "PostHelpRequest" && $post->postable->anonymous == 1)
+				<p style="margin-bottom:5px">Anonymous, {{ $post->created_at->diffForHumans() }} </p>
+			@else
+				<p style="margin-bottom:5px"><a href="{{URL::to('profile', $post->user->id)}}">{{{ $post->user->first }}} {{{ $post->user->last }}}</a>, {{ $post->created_at->diffForHumans() }} </p>
+			@endif
+			</div>
+		@else
+			<div id="name-time">
+			@if ($post->postable_type == "PostHelpRequest" && $post->postable->anonymous == 1)
+				<p style="margin-bottom:5px">Anonymous, {{ $post->created_at->diffForHumans() }} <span style="float:right"><a href="{{URL::to('singlepost', $post->id)}}">{{{$post->comments()->count()}}} Comment(s)</a> </span></p>
+			@else
+				<p style="margin-bottom:5px"><a href="{{URL::to('profile', $post->user->id)}}">{{{ $post->user->first }}} {{{ $post->user->last }}}</a>, {{ $post->created_at->diffForHumans() }} <span style="float:right; margin-right:150px"><a href="{{URL::to('singlepost', $post->id)}}">{{{$post->comments()->count()}}} Comment(s)</a> </span> </p>
+			@endif
+			</div>
+		@endif
 
         {{-- Display tags --}}
 
