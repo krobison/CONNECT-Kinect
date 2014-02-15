@@ -140,7 +140,7 @@ class UserController extends BaseController {
 			'password' => Input::get('password'));
 		
 		// attempt to login with data
-		if (Auth::attempt($userdata)) {
+		if (Auth::attempt($userdata, true)) {
 			// if the email has not been validated
 			if (Auth::user()->email_validated == '0') {
 				// get email to encrypt
@@ -463,6 +463,7 @@ class UserController extends BaseController {
 		DB::table('posts')->where('user_id','=',$id)->delete();
 		DB::table('questions')->where('user_id','=',$id)->delete();
 		DB::table('upvotes')->where('user_id','=',$id)->delete();
+		DB::table('upvotecomments')->where('user_id','=',$id)->delete();
 		DB::table('hashtag_user')->where('user_id','=',$id)->delete();
 		DB::table('comments')->where('user_id','=',$id)->delete();
 		DB::table('course_user')->where('user_id','=',$id)->delete();

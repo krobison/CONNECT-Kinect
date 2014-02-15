@@ -3,19 +3,19 @@
 class AdminController extends BaseController {
 	
 	public function deleteUser(){
-		$id = Auth::User()->id;
+		$id = Input::get("id");
 		
-		if(!is_null(Auth::User()->picture)) {
-			unlink(base_path().'/assets/img/profile_images/'.Auth::User()->picture);
+		if(!is_null(User::find($id)->picture)) {
+			unlink(base_path().'/assets/img/profile_images/'.User::find($id)->picture);
 		}
 		
 		$user_id['user_id'] = Auth::user()->id;
 		Log::info('account deleted by admin', $user_id);
 
-		Auth::logout();
 		DB::table('posts')->where('user_id','=',$id)->delete();
 		DB::table('questions')->where('user_id','=',$id)->delete();
 		DB::table('upvotes')->where('user_id','=',$id)->delete();
+		DB::table('upvotecomments')->where('user_id','=',$id)->delete();
 		DB::table('hashtag_user')->where('user_id','=',$id)->delete();
 		DB::table('comments')->where('user_id','=',$id)->delete();
 		DB::table('course_user')->where('user_id','=',$id)->delete();
