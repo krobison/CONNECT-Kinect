@@ -121,7 +121,9 @@
 				anythingWrong = true;
 				errors = errors + "Uploaded zip file is too big<br>";
 			}
-			if($("#zip")[0].files[0].type.split('/')[0] != 'application'){
+			var zip_upload = $("#zip")[0].files[0].name.split('.');
+			var extension = zip_upload[zip_upload.length - 1];
+			if(extension != 'zip' && extension != 'jar' && extension != 'JAR' && extension != 'ZIP'){
 				anythingWrong = true;
 				errors = errors + "Uploaded zip file is of the wrong file type<br>";
 			}

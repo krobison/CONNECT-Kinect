@@ -18,15 +18,6 @@
 	<div class="list-group">
 	@foreach ($conversations as $conversation)
 		<div class="list-group-item" style="min-height:96px;">
-			<div style="float:left; padding-right: 10px">
-				@if(is_null(User::find($conversation->owner)->picture))
-					{{ HTML::image('assets/img/dummy.png', 'profile picture', array('width' => '70', 'height' => '70', 'class' => 'img-circle')) }}
-				@else
-					<a href="{{URL::to('profile', $conversation->owner)}}">
-						{{HTML::image(User::find($conversation->owner)->getProfilePictureURL(), '$post->user->id', array('width' => '70', 'height' => '70', 'class' => 'img-circle'))}}
-					</a>
-				@endif 
-			</div>
 			<h2 style="margin:0px; margin-bottom:3px"><a href="{{ URL::to('showConversation/'.$conversation->id) }}">{{{$conversation->name}}}</a></h2>
 			@foreach ($conversation->users()->get() as $conversation_member)
 				<a href="{{URL::to('profile', $conversation_member->id)}}">
