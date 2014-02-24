@@ -1,6 +1,36 @@
 <?php
 
 class AdminController extends BaseController {
+
+	public function showAdminPage() {
+	
+		// Make an array of users an dtheir id's
+		
+		$user_array = array();
+		
+		foreach(User::all() as $user) {
+			$user_array[$user->id] = $user->first . " " . $user->last;
+		}
+	
+		return View::make('admin')
+			->with('all_the_people', $user_array)
+			->with('user', Auth::user());
+	}
+	
+	public function sendEmails() {
+		$users = Input::get('recipients');
+		$sent_emails = array();
+		foreach($users as $user) {
+			$db_user = User::find($user);
+			if($db_user->email_summary == true) {
+				Mail::send('emails.summary', array("reciever" => $user) , function($message) use ($db_user){
+					$message->to($db_user->email, $db_user->first . " " . $db_user->last)->subject('CS CONNECT Summary');
+				});
+				array_push($sent_emails, $db_user->email);
+			}
+		}
+		dd(print_r($sent_emails));
+	}
 	
 	public function deleteUser(){
 		$id = Input::get("id");

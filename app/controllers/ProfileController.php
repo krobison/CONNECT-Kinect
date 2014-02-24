@@ -3,6 +3,13 @@
 class ProfileController extends BaseController {
 	
 	public function showProfile($id) {
+	
+		$log = new CustomLog;	
+		$log->user_id = Auth::user()->id;
+		$log->event_type = "profile visit";
+		$log->additional_info = $id;
+		$log->save();
+	
 		$studentClasses = "";
 		$studentTable = DB::table('course_user')
 		 	->where('user_id','=',$id)

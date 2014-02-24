@@ -132,6 +132,12 @@ Route::group(array('before' => 'auth|admin'), function () {
 	
 	//psot new cs Questions
 	Route::post('createcsquestionpost', 'AdminController@createCSQuestion');
+	
+	//Show the admin tools page
+	Route::get('admin','AdminController@showAdminPage');
+	
+	//Send Admin Emails
+	Route::post('sendEmails','AdminController@sendEmails');
 });
 
 //PASSWORD REMINDER

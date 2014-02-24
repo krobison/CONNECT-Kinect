@@ -319,6 +319,11 @@
 					{{ Form::checkbox('email_comment', true, (Auth::user()->email_comment == '1') ? true : false , array('id' => 'comment_email')) }}
 					Receive an email when somebody comments on a post you made.
 					</div>
+					<br>
+					<div class="row checkbox-label">
+					{{ Form::checkbox('email_summary', true, (Auth::user()->email_summary == '1') ? true : false , array('id' => 'summary_email')) }}
+					Receive an summary email no more than once a week containing site news and new content information.
+					</div>
 				</div>
 			</div>
 			

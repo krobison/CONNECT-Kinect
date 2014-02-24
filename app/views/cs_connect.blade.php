@@ -2,8 +2,7 @@
 
 @section('additionalHeaders')
         {{ HTML::style('assets/css/posts.css') }}
-           {{ HTML::style('assets/css/master.css') }}
-<!-- Loading all scripts at the end for performance-->
+        {{ HTML::style('assets/css/master.css') }}
         {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js') }}
         {{ HTML::script('assets/js/d3.min.js') }}
         
@@ -59,17 +58,50 @@
                                 </div>
                                 <div class="panel-body">
                                         <ul class="list-group">
-										  <li class="list-group-item">2/17/2014 - Profile images of participants are now shown in the conversations view. </li>
-										  <li class="list-group-item">2/14/2014 - Users are now authenticated indefinitely (or until they manually logout). </li>
-										  <li class="list-group-item">2/5/2014 - The number of comments on a post can now be seen from the newsfeed</li>
-										  <li class="list-group-item">2/5/2014 - Whitespace is now maintained in conversations</li>
-                                          <li class="list-group-item">1/8/2014 - Launch!</li>
+											<li class="list-group-item">2/23/2014 - Reversed the order of comments. Added the top contributors section. </li>
+											<li class="list-group-item">2/17/2014 - Profile images of participants are now shown in the conversations view. </li>
+											<li class="list-group-item">2/14/2014 - Users are now authenticated indefinitely (or until they manually logout). </li>
+											<li class="list-group-item">2/5/2014 - The number of comments on a post can now be seen from the newsfeed</li>
+											<li class="list-group-item">2/5/2014 - Whitespace is now maintained in conversations</li>
                                         </ul>
                                 </div>
                         </div>
             </div>
         </div>
-       <div class="row">
+		<div class="row">
+            <div class="col-md-12">
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h3>Top Contributors</h3>
+					</div>
+					<div class="panel-body">
+						<table class="table table-striped">  
+							<thead>  
+								<tr>  
+									<th>First Name</th>  
+									<th>Last Name</th>  
+									<th>Posts</th>  
+									<th>Comments</th>  
+									<th>Total Contributions</th> 
+								</tr>  
+							</thead>  
+							<tbody>  
+							@foreach ($contributions as $contribution)
+								<tr>  
+									<td>{{ $contribution['first'] }}</td>  
+									<td>{{ $contribution['last'] }}</td>
+									<td>{{ $contribution['post_count'] }}</td> 			
+									<td>{{ $contribution['comment_count'] }}</td>  
+									<td>{{ $contribution['score'] }}</td>  
+								</tr> 
+							@endforeach
+							</tbody>  
+						</table>  
+					</div>
+				</div>
+            </div>
+        </div>
+        <div class="row">
                 <div class="col-md-12">
                         <div class="panel panel-info">
                                 <div class="panel-heading">
@@ -101,7 +133,7 @@
             <div class="col-md-12">
                         <div class="panel panel-info">
                                 <div class="panel-heading">
-                                        <h3>All Feedback</h3>
+                                        <h3>Recent Feedback</h3>
                                 </div>
                                 <div class="panel-body">
                                         @foreach ($posts as $post)
@@ -126,7 +158,7 @@
                                                                 Total Number of Users: {{{User::count()}}} <br>
                                                                 Total Number of Posts: {{{Post::count()}}} <br>
                                                                 Total Number of Comments: {{{Comment::count()}}} <br>
-                                                                Total Number of Upvotes: {{{Upvote::count()}}} <br>
+                                                                Total Number of Upvotes: {{{Upvote::count() + Upvotecomment::count()}}} <br>
                                                                 </p>
                                                         </div>
                                                 </div>

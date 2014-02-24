@@ -255,6 +255,8 @@ class UserController extends BaseController {
 			$validator = Validator::make(Input::all(), User::$editrules);
 			if (Hash::check(Input::get('old'),Auth::user()->password)){
 				if($validator->passes()) {
+					// I'm 75% sure that the code in the section never gets executed. Either way, its duplicate code an needs to be re-factored! -- Thomas
+				
 					//PURIFY
 					$pureconfig = HTMLPurifier_Config::createDefault();
 					$purifier = new HTMLPurifier($pureconfig);
@@ -324,6 +326,7 @@ class UserController extends BaseController {
 					$email_conversation = Input::get('email_conversation') == null ? false : false;
 					$email_tag = Input::get('email_tag') == null ? false : false;
 					$email_comment = Input::get('email_comment') == null ? false : false;
+					$email_summary = Input::get('email_summary') == null ? false : false;
 					
 					$major = Input::get("major") == null ? null : implode(', ',Input::get("major"));
 					$minor = Input::get("minor") == null ? null : implode(', ',Input::get("minor"));
@@ -340,7 +343,8 @@ class UserController extends BaseController {
 						'password' => Hash::make(Input::get('new')),
 						'email_conversation' => $email_conversation,
 						'email_tag' => $email_tag,
-						'email_comment' => $email_comment
+						'email_comment' => $email_comment,
+						'email_summary' => $email_summary
 					));
 					return Redirect::to('profile/'.Auth::user()->id);
 				}
@@ -422,6 +426,7 @@ class UserController extends BaseController {
 				$email_conversation = Input::get('email_conversation') == null ? "0" : "1";
 				$email_tag = Input::get('email_tag') == null ? "0" : "1";
 				$email_comment = Input::get('email_comment') == null ? "0" : "1";
+				$email_summary = Input::get('email_summary') == null ? "0" : "1";
 				
 				$major = Input::get("major") == null ? null : implode(', ',Input::get("major"));
 				$minor = Input::get("minor") == null ? null : implode(', ',Input::get("minor"));
@@ -437,7 +442,8 @@ class UserController extends BaseController {
 					'bio' => $bioclean,
 					'email_conversation' => $email_conversation,
 					'email_tag' => $email_tag,
-					'email_comment' => $email_comment
+					'email_comment' => $email_comment,
+					'email_summary' => $email_summary
 				));
 				return Redirect::to('profile/'.Auth::user()->id)->with('<div class="alert alert-danger"> Profile Updated Successfully </div>');
 			}
@@ -457,6 +463,7 @@ class UserController extends BaseController {
 		$log = new CustomLog;	
 		$log->user_id = Auth::user()->id;
 		$log->event_type = "account deleted";
+		$log->additional_info = Auth::user()->last;
 		$log->save();
 
 		Auth::logout();
