@@ -169,6 +169,11 @@ class UserController extends BaseController {
 	
 	public function editUser() {
 		$id = Auth::User()->id;
+		
+		$log = new CustomLog;	
+		$log->user_id = Auth::user()->id;
+		$log->event_type = "edit profile visit";;
+		$log->save();
 
 		$studentClasses = "";
 		$studentTable = DB::table('course_user')
@@ -251,6 +256,12 @@ class UserController extends BaseController {
 	
 	public function changedAccount(){
 		$id = Auth::User()->id;
+		
+		$log = new CustomLog;	
+		$log->user_id = Auth::user()->id;
+		$log->event_type = "user edited profile";
+		$log->save();
+		
 		if (Input::get('old') != ""){
 			$validator = Validator::make(Input::all(), User::$editrules);
 			if (Hash::check(Input::get('old'),Auth::user()->password)){
