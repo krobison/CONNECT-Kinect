@@ -4,6 +4,11 @@ class CommunityController extends BaseController {
 	
 	public function showCommunity() {
 	
+		$log = new CustomLog;	
+		$log->user_id = Auth::user()->id;
+		$log->event_type = "community tool accessed";
+		$log->save();
+	
 		/**
 		 *	Community tool by Andrew Suter-Morris.
 		 *	Imported to Laravel by Peter Choi.
