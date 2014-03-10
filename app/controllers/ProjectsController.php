@@ -14,7 +14,7 @@ class ProjectsController extends BaseController {
 						->where('postsProjects.approved', '=', '1')
 						->orderBy('posts.upvotes', 'DESC')
 						->skip(0)
-						->take(8)
+						->take(12)
 						->select('posts.*')
 						->get();
 		return View::make('projects')->with('user', Auth::user())->with('projectposts', $projectposts);

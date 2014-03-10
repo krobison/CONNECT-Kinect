@@ -130,7 +130,7 @@
 		
 		var namesLoaded = $(".numNames").length;
 		var biosLoaded = $(".numBios").length;
-		var numberOfUsersToLoad = 5;
+		var numberOfUsersToLoad = 25;
 		var nameUrl = '{{ URL::to("loadmorenameresults") }}';
 		var bioUrl = '{{ URL::to("loadmorebioresults") }}';
 		var name = "<?php if(!empty($name)) {echo $name;} ?>"

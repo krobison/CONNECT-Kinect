@@ -58,6 +58,7 @@
                                 </div>
                                 <div class="panel-body">
                                         <ul class="list-group">
+											<li class="list-group-item">3/10/2014 - "Load more" buttons now retrieve more content. Also, more content is shown by default for the search tool and for the projects page.</li>
 											<li class="list-group-item">2/23/2014 - Reversed the order of comments. Added the top contributors section. </li>
 											<li class="list-group-item">2/17/2014 - Profile images of participants are now shown in the conversations view. </li>
 											<li class="list-group-item">2/14/2014 - Users are now authenticated indefinitely (or until they manually logout). </li>

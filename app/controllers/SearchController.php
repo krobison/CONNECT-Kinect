@@ -116,9 +116,9 @@ class SearchController extends BaseController {
 			$query2->where('users.bio', 'LIKE', "%$name%");
 		} 
 
-		$nameresults = $query1->orderBy('users.last', 'asc')->skip(0)->take(5)->select('users.*')->get();
+		$nameresults = $query1->orderBy('users.last', 'asc')->skip(0)->take(10)->select('users.*')->get();
 		if(!empty($name)) {
-			$bioresults = $query2->orderBy('users.last', 'asc')->skip(0)->take(5)->select('users.*')->get();
+			$bioresults = $query2->orderBy('users.last', 'asc')->skip(0)->take(10)->select('users.*')->get();
 		}
 
 		$log = new CustomLog;	
@@ -143,7 +143,7 @@ class SearchController extends BaseController {
 		$log->save();
 		return View::make('search')
 			->with('user', Auth::user())
-			->with('nameresults', DB::table('users')->orderBy('last', 'asc')->skip(0)->take(5)->get());
+			->with('nameresults', DB::table('users')->orderBy('last', 'asc')->skip(0)->take(20)->get());
 	}
 
 	public function loadMoreNames() {

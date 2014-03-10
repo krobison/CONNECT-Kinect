@@ -197,7 +197,7 @@
 		var postsLoaded = $(".PostProject").length;
 		$("#loadmoreprojectsbutton").click(function (){
             $('#loadmoreprojectsbutton').html('{{HTML::image("assets/img/spinner.gif", "none", array("width" => "20", "height" => "20", "class" => "img-circle"))}}'); 
-			morePosts(4,postsLoaded,sort_type);
+			morePosts(12,postsLoaded,sort_type);
         });
 			
 		var morePosts = function(count,offset,sort) {
