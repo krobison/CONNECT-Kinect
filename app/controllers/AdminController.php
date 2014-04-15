@@ -123,10 +123,11 @@ class AdminController extends BaseController {
 			$post->user_id = Auth::user()->id;
 			$post->content = Input::get('content');
 			$post->postable_type = 'PostQuestion';
-			$post->language = Input::get('language');
-			$post->code = Input::get('code');
+			//$post->language = Input::get('language');
+			//$post->code = Input::get('code');
 			$post->save();
 			
+			/*
 			// Add an entry in post_hashtag table to save post tags
 			$hashtags = Input::get('hashtags');
 			$hashtags = preg_split('/(?<!"),(?!")/',$hashtags[0]);
@@ -146,9 +147,10 @@ class AdminController extends BaseController {
 
 			$user_id['user_id'] = Auth::user()->id;
 			Log::info('cs question post created', $user_id);
+			*/
 		} catch( Exception $e ) {
-			//return View::make('debug', array('data' => Input::all()));
-			return Redirect::back()->with('message', '<div class="alert alert-danger" > Your post cannot be created at this time, please try again later. </div>');
+			return View::make('debug', array('data' => Input::all()));
+			//return Redirect::back()->with('message', '<div class="alert alert-danger" > Your post cannot be created at this time, please try again later. </div>');
 		}
 		return Redirect::back();
 		//return Redirect::back()->with('message', '<div class="alert alert-success"> Your post has been successfully created. </div>');

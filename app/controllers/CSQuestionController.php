@@ -55,18 +55,19 @@ class CSQuestionController extends BaseController {
 
 	public function createQuestionPost() {
 	
+		dd("hello");
+	
 		try {
-			// First add a PostHelpRequest to the PostHelpRequest table
-			$post_Q = new PostQuestion;
-			$post_Q->company_sponser = Input::get('company_sponser');
-			$post_Q->save();
-
-			// Then add a Post to the Posts table, associating it with the PostQuestion through a polymorphic relationship
+		
+			// Create A Post in the db
 			$post = new Post;
 			$post->user_id = Auth::user()->id;
-			$post->content = Input::get('content');
-			$post_Q->post()->save($post);
-			
+			$post->content = autolink(Input::get('content'));
+			$post->language = Input::get('language');
+			$post->code = Input::get('code');
+			$post->postable_type = "PostQuestion";
+			$post->save();
+
 		} catch( Exception $e ) {
 			return View::make('debug', array('data' => Input::all()));
 			//return Redirect::back()->with('message', 'Your post cannot be created at this time, please try again later.');

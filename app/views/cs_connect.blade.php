@@ -58,12 +58,11 @@
                                 </div>
                                 <div class="panel-body">
                                         <ul class="list-group">
+											<li class="list-group-item">4/15/2014 - Limited the number of tags in the Community Tool to reduce clutter, tags are now sorted by popularity.</li>
 											<li class="list-group-item">3/10/2014 - "Load more" buttons now retrieve more content. Also, more content is shown by default for the search tool and for the projects page.</li>
 											<li class="list-group-item">2/23/2014 - Reversed the order of comments. Added the top contributors section. </li>
 											<li class="list-group-item">2/17/2014 - Profile images of participants are now shown in the conversations view. </li>
 											<li class="list-group-item">2/14/2014 - Users are now authenticated indefinitely (or until they manually logout). </li>
-											<li class="list-group-item">2/5/2014 - The number of comments on a post can now be seen from the newsfeed</li>
-											<li class="list-group-item">2/5/2014 - Whitespace is now maintained in conversations</li>
                                         </ul>
                                 </div>
                         </div>
@@ -169,7 +168,7 @@
                                                         <div>
 
                                                                 <h4><u> CS Connect Accounts </u></h4>
-                                                                Time: {{{date('m/d/Y',time() - 60*60*24*7*2)}}} to Time: {{{date('m/d/Y')}}}
+                                                                Time: {{{date('m/d/Y',time() - 60*60*24*7*9+60*60*24)}}} to Time: {{{date('m/d/Y')}}}
                                                                 <br>
                                                                         
                                                                 <div id="graph" class="aGraph" ></div>
@@ -182,8 +181,8 @@
                                                                     // create a simple data array that we'll plot with a line (this array represents only the Y values, X will just be the index location)
                                                                     // This does 14 separate db queries, this needs to be optimized later
                                                                     var data = [];
-                                                                    @for ($i = 60*60*24*7*2; $i >= 0; $i -= 60*60*24)
-                                                                        data.push({{{ User::where('created_at', '<=', date('Y-m-d H:i:s',time() - $i))->count() }}});
+                                                                    @for ($i = 60*60*24*7*9+60*60*24; $i >= 0; $i -= 60*60*24)
+                                                                        data.push({{{ User::where('updated_at', '<=', date('Y-m-d H:i:s',time() - $i))->count() }}});
                                                                     @endfor
 
                                                                     //Users::where('timestamp', '>=', time() - (24*60*60))->count();
@@ -219,7 +218,7 @@
                                                                     var xAxis = d3.svg.axis().scale(x).tickSize(-h).tickSubdivide(true);
                                                                     xAxis.tickFormat(function(d, i) {
                                                                         var today = new Date();
-                                                                        today.setDate(today.getDate() - 14 + d);
+                                                                        today.setDate(today.getDate() - 9*7+1 + d);
                                                                         return (today.getMonth() + 1) + "/" + today.getDate();
                                                                     });
                                                                     // Add the x-axis.

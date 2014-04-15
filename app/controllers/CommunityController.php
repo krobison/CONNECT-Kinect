@@ -98,22 +98,32 @@ class CommunityController extends BaseController {
 	
 			// get the list of tags
 			//$tags = Hashtag::all()->orderBy('name', 'desc')->get();
-			$tags = DB::table('hashtags')->orderBy('name', 'asc')->get();
+			//$tags = DB::table('hashtags')->orderBy('name', 'asc')->get();
+			
+			$tags = DB::select(DB::raw('SELECT hashtags.id, hashtags.name, hashtag_id, COUNT(hashtag_id) AS number
+							FROM hashtag_user
+							INNER JOIN hashtags
+							ON hashtag_user.hashtag_id=hashtags.id
+							GROUP BY hashtag_id
+							ORDER BY COUNT(hashtag_id) DESC
+							LIMIT 48'));
+			//dd($tags);
 			
 			// convert
 			// going from stdObject to array
 			// not casting because we also need short_name
 			$interests = array();
 			foreach ($tags as $tag) {
-			
 				$temp = array();
 			 	
 				$temp['id'] = $tag->id;
-				$temp['name'] = $tag->name;
-				if (strlen($tag->name) >= 11)
-					$temp['short_name'] = substr($tag->name, 0, 10) . "...";
+				$name = $tag->name;
+				$temp['name'] = $name . "(".$tag->number.")";
+				
+				if (strlen($name) >= 12)
+					$temp['short_name'] = substr($name, 0, 12) . "..." . "(".$tag->number.")";
 				else
-					$temp['short_name'] = $tag->name;
+					$temp['short_name'] = $name . "(".$tag->number.")";
 			
 				array_push($interests, $temp);
 			
