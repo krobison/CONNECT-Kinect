@@ -49,8 +49,8 @@
 	<p>
 		Check out all the projects that the Mines community has been working on.
 	</p>
-	<div id="new-post" class="panel panel-default">
-	    <div id="hide-new-post-title" class="panel-heading">
+	<div id="new-post"  class="panel panel-default">
+	    <div id="hide-new-post-title"  class="panel-heading">
 		<?php $message = Session::get('message');?>
 			{{$message}}
 			<h4> New Project Post </h4>	

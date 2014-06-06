@@ -155,6 +155,13 @@
 						<a href="{{ URL::to('CSQuestion') }}" class="list-group-item"><span class="glyphicon glyphicon-question-sign"></span>   CS Question</a>
 					@endif
 
+					{{--  CS Kinect --}}
+					@if (Request::path() == "kinect")
+						<a href="{{ URL::to('kinect') }}" class="list-group-item active"><span class="glyphicon glyphicon-hand-up"></span> CS Kinect</a>
+					@else
+						<a href="{{ URL::to('kinect') }}" class="list-group-item"><span class="glyphicon glyphicon-hand-up"></span> CS Kinect</a>
+					@endif
+					
 					{{--  CS Projects --}}
 					@if (Request::path() == "projects")
 						<a href="{{ URL::to('projects') }}" class="list-group-item active"><span class="glyphicon glyphicon-hdd"></span> CS Projects</a>
