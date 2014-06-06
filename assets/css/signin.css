@@ -1,0 +1,302 @@
+/*html, body{
+height: 100%
+
+}*/
+
+#blue-header{
+    background: url("../img/background.png") no-repeat center center fixed;
+    height: auto;
+    width: 100%;
+}
+#blue-footer{
+    background: url("../img/background.png") no-repeat center center fixed;
+      width: 100%;
+      height: 45px;
+
+}
+/*
+##################Header Style##############
+*/
+#header{
+    width:50%;
+    margin-left:25%;
+    min-width:400px;
+    text-align:center;
+    padding-top:6cm;
+    margin-top:-130px;
+}
+/*.loginHeader{
+  padding-top: 30px;
+}*/
+
+#header2{
+    width:50%;
+    margin-left:25%;
+    min-width:256px;
+    text-align:center;
+    padding:32px;
+}
+
+#signinpanel{
+    background-color:rgba(255,255,255,0.05);
+    border: 1px rgba(255,255,255,0.1) solid;
+}
+
+.logo{
+	width:100%;
+	margin-bottom:32px;
+}
+
+
+/*
+###################Button Style###########
+*/
+.btn-primary { 
+	height:64px;
+	padding:0px;
+  width:200px;
+  background-color:#256590;
+  display:inline;
+}
+
+
+.buttonRow{
+width: 50%;
+    margin: 0 auto;
+    min-width:400px;
+    text-align:center;
+    margin-bottom: 60px;
+}
+
+.btn-primary:hover{
+  background-color:rbg#3498db;
+}
+
+.button-div{
+    width:100%;
+    margin:auto;
+}
+
+
+/*
+#################Form Style#################
+*/
+
+#welcome{
+  font-family:"times new roman";
+  color:#222266;
+}
+
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  width:50%;
+  left:25%;
+
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/*
+################Video Style#################
+*/
+.video-container {     
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    height: 0;
+    overflow: hidden;
+	text-align: center;
+}   
+.video-container iframe, 
+.video-container object, 
+.video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+/*
+################Footer Style#################
+*/
+
+#mineslogo{
+    margin-left:20px;
+}
+
+#footer {
+  min-height: 400px;
+  background-color: rgba(255,255,255,1);
+  text-align:center;
+  padding-bottom: -150px;
+
+}
+
+
+
+/**
+ * Scaffolding
+ */
+.boxed
+{
+  width: 100%;
+  margin: auto;
+  padding-left: 60px;
+  margin-bottom: 128px;
+}
+
+.copyright
+{
+
+background-color: white;
+padding: 1cm;
+
+  
+}
+.one_full
+{
+    width: 100%;
+  margin: 0;
+  float: left;
+}
+
+.one_half,
+.one_third,
+.two_third,
+.one_quarter,
+.one_fifth
+{
+  margin: 0;
+    padding-right: 25px;
+  float: left;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.one_full
+{
+    width: 100%;
+}
+
+.one_half
+{
+    width: 512px;
+}
+
+.one_third
+{
+    width: 341.3333px;
+}
+
+.two_third
+{
+    width: 682.6666px;
+}
+
+.one_quarter
+{
+    width: 25%;
+    width: 256px;
+}
+
+.one_fifth
+{
+    width: 204.8px;
+}
+
+.one_half img,
+.one_third img,
+.two_third img,
+.one_quarter img,
+.one_fifth img
+{
+    width: 100%;
+    height: auto;
+}
+/* @end Scaffolding */
+
+h1, h2, h3, h4, h5, h6
+{
+    font-weight: 600;
+    margin-top: 0.5em;
+    margin-bottom: 0.8em;
+    line-height: 1.2em;
+}
+
+h1
+{
+  font-size: 225%;
+}
+
+h2
+{
+  font-size: 130%;
+}
+
+a
+{
+  font-weight: inherit;
+  font-size: inherit;
+  text-decoration: none;
+  -webkit-transition: 250ms linear all;
+  -moz-transition: 250ms linear all;
+  transition: 250ms linear all;
+}
+
+a:focus
+{
+  outline: 0;
+}
+
+a:hover,
+a:active
+{
+  text-decoration: none;
+  outline: 0;
+}
+
+h1, h2, h3, h4, h5, h6
+{
+    color: #444444;
+}
+
+a
+{
+  color: #3498db;
+}
+
+a:hover,
+a:visited:hover
+{
+
+}
+
+a:active
+{
+  color: #000000;
+}
+
+ul { list-style-type: none; }
