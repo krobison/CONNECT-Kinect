@@ -53,11 +53,24 @@
 				alert("You have already voted for "+name+"!");
 			}
 		});
-		$('#vote_2').click(function() {//Pong
+		$('#vote_2').click(function() {//Fall
 			var name = "<?php echo $kinectGames[2]->name; ?>";
 			var votes = parseInt("<?php echo $kinectGames[2]->upVotes; ?>");
 			var id = "<?php echo $user->id ?>";
 			var hasVoted = "<?php checkVote($user->id.$kinectGames[2]->name, $votes); ?>";
+			if (hasVoted == "false") {
+				votes++;
+				vote(name,votes, id);
+				
+			} else {
+				alert("You have already voted for "+name+"!");
+			}
+		});
+		$('#vote_3').click(function() {//Pong
+			var name = "<?php echo $kinectGames[3]->name; ?>";
+			var votes = parseInt("<?php echo $kinectGames[3]->upVotes; ?>");
+			var id = "<?php echo $user->id ?>";
+			var hasVoted = "<?php checkVote($user->id.$kinectGames[3]->name, $votes); ?>";
 			if (hasVoted == "false") {
 				votes++;
 				vote(name,votes, id);
