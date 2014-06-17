@@ -11,8 +11,6 @@ class KinectController extends BaseController {
 			->get();
 		$kinectGames = DB::table('kinectGames')
 						->orderBy('kinectGames.name', 'ASC')
-						->skip(0)
-						->take(4)
 						->get();
 		$kinectScores = DB::table('kinectScores')
 						->leftJoin('users', 'users.id', '=', 'kinectScores.user_id')
